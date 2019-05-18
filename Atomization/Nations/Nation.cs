@@ -10,57 +10,191 @@ namespace Atomization
 	{
 		public const int NumOfNonAdjacentNations = 5;
 
-		#region Fund
 		public const int InitialEcon = 1000000;
-		public event Action<Nation, int, int> OnFundChanged;
+		#region Econ
+		public event OnValueChanged<Nation, int> OnEconChanged;
 		private int econ = InitialEcon;
 		public int Econ
 		{
 			get => econ;
 			set
 			{
-				OnFundChanged(this, econ, value);
-				econ = value;
+				if (value != econ)
+				{
+					OnEconChanged?.Invoke(this, econ, value);
+					econ = value;
+				}
 			}
 		}
-		public delegate void One(Nation nation, int a, int b);
-		public event One OnEconGrowthChanged;
+		#endregion
+		#region EconGrowth
 		private List<int> econGrowth = new List<int>();
+		public event OnValueChanged<Nation, List<int>> OnEconGrowthChanged;
 		public List<int> EconGrowth
 		{
 			get => econGrowth;
 			set
 			{
-				//OnEconGrowthChanged()
-				econGrowth = value;
+				if (value != econGrowth)
+				{
+					OnEconGrowthChanged?.Invoke(this, econGrowth, value);
+					econGrowth = value;
+				}
 			}
 		}
 		#endregion
 
-		#region HighEducationPopulation
 		public const int InitialHiEduPopu = 10000000;
-		public int HiEduPopu { get; set; } = InitialHiEduPopu;
-		public List<int> HiEduPopuGrowth { get; set; } = new List<int>();
+		#region HighEducationPopulation
+		public event OnValueChanged<Nation, int> OnHiEduPopuChanged;
+		private int hiEduPopu = InitialHiEduPopu;
+		public int HiEduPopu
+		{
+			get => hiEduPopu;
+			set
+			{
+				if (value != hiEduPopu)
+				{
+					OnHiEduPopuChanged?.Invoke(this, hiEduPopu, value);
+					hiEduPopu = value;
+				}
+			}
+		}
+		#endregion
+		#region HighEducationPopulationGrowth
+		public event OnValueChanged<Nation, List<int>> OnHiEduPopuGrowthChanged;
+		private List<int> hiEduPopuGrowth = new List<int>();
+		public List<int> HiEduPopuGrowth
+		{
+			get => hiEduPopuGrowth;
+			set
+			{
+				if (value != hiEduPopuGrowth)
+				{
+					OnHiEduPopuGrowthChanged?.Invoke(this, hiEduPopuGrowth, value);
+					hiEduPopuGrowth = value;
+				}
+			}
+		}
 		#endregion
 
-		#region RegularMilitary
 		public const int InitialRegularMilitary = 500000;
-		public int RegularMilitary { get; set; } = InitialRegularMilitary;
-		public List<int> RegularMilitaryGrowth { get; set; } = new List<int>();
+		#region RegularMilitary
+		public event OnValueChanged<Nation, int> OnRegularMilitaryChanged;
+		private int regularMilitary = InitialRegularMilitary;
+		public int RegularMilitary
+		{
+			get => regularMilitary;
+			set
+			{
+				if (value != regularMilitary)
+				{
+					OnRegularMilitaryChanged?.Invoke(this, regularMilitary, value);
+					regularMilitary = value;
+				}
+			}
+		}
+		#endregion
+		#region RegularMilitaryGrowth
+		public event OnValueChanged<Nation, List<int>> OnRegularMilitaryGrowthChanged;
+		private List<int> regularMilitaryGrowth = new List<int>();
+		public List<int> RegularMilitaryGrowth
+		{
+			get => regularMilitaryGrowth;
+			set
+			{
+				if (value != regularMilitaryGrowth)
+				{
+					OnRegularMilitaryGrowthChanged?.Invoke(this, regularMilitaryGrowth, value);
+					regularMilitaryGrowth = value;
+				}
+			}
+		}
 		#endregion
 
-		#region Resource
 		public const int InitialResource = 10000;
-		public int Resource { get; set; } = InitialResource;
-		public List<int> ResourceGrowth { get; set; } = new List<int>();
+		#region Resource
+		public event OnValueChanged<Nation, int> OnResourceChanged;
+		private int resource = InitialResource;
+		public int Resource
+		{
+			get => resource;
+			set
+			{
+				if (value != resource)
+				{
+					OnResourceChanged?.Invoke(this, resource, value);
+					resource = value;
+				}
+			}
+		}
+		#endregion
+		#region ResourceGrowth
+		public event OnValueChanged<Nation, List<int>> OnResourceGrowthChanged;
+		private List<int> resourceGrowth = new List<int>();
+		public List<int> ResourceGrowth
+		{
+			get => resourceGrowth;
+			set
+			{
+				if (value != resourceGrowth)
+				{
+					OnResourceGrowthChanged?.Invoke(this, resourceGrowth, value);
+					resourceGrowth = value;
+				}
+			}
+		}
 		#endregion
 
-		#region Stability
 		public const int InitialStability = 100;
-		public int MaxStability { get; set; } = InitialStability;
-		public int Stability { get; set; } = InitialStability;
+		#region MaxStability
+		public event OnValueChanged<Nation, int> OnMaxStabilityChanged;
+		private int maxStability = InitialStability;
+		public int MaxStability
+		{
+			get => maxStability;
+			set
+			{
+				if (value != maxStability)
+				{
+					OnMaxStabilityChanged?.Invoke(this, maxStability, value);
+					maxStability = value;
+				}
+			}
+		}
+		#endregion
+		#region Stability
+		public event OnValueChanged<Nation, int> OnStabilityChanged;
+		private int stability = InitialStability;
+		public int Stability
+		{
+			get => stability;
+			set
+			{
+				if (value != stability)
+				{
+					OnStabilityChanged?.Invoke(this, stability, value);
+					stability = value;
+				}
+			}
+		}
+		#endregion
+		#region StabilityGrowth
 		public double StabilityPercent => (double)Stability / MaxStability;
-		public List<int> StabilityGrowth = new List<int>();
+		public event OnValueChanged<Nation, List<int>> OnStabilityGrowthChanged;
+		private List<int> stabilityGrowth = new List<int>();
+		public List<int> StabilityGrowth
+		{
+			get => stabilityGrowth;
+			set
+			{
+				if (value != stabilityGrowth)
+				{
+					OnStabilityGrowthChanged?.Invoke(this, stabilityGrowth, value);
+					stabilityGrowth = value;
+				}
+			}
+		}
 		#endregion
 	}
 
@@ -71,7 +205,7 @@ namespace Atomization
 		}
 
 		// null stands for independence
-		public Superpower Sponsor { get; set; } = null;
+		public Superpower Affiliation { get; set; } = null;
 	}
 	public class Superpower : Nation
 	{
