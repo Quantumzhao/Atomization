@@ -1,0 +1,12 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Atomization.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="Font_Bold" Type="System.Windows.Media.FontFamily" Scope="Application">
+      <Value Profile="(Default)">Segoe UI Bold</Value>
+    </Setting>
+    <Setting Name="Font_Semilight" Type="System.Windows.Media.FontFamily" Scope="Application">
+      <Value Profile="(Default)">Segoe UI Semilight</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
