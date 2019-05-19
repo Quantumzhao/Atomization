@@ -10,9 +10,8 @@ namespace Atomization
 	{
 		public string Name { get; set; }
 		public Platform Platform { get; set; }
-		public List<Warhead> Warheads { get; set; }
-		public List<Maneuverability> Maneuverabilities { get; set; }
-		public string Type => Warheads.Count != 1 ? "(Multiple Types)" : Warheads[0].GetType().Name;
+		public GameObjectList<Warhead> Warheads { get; set; } = new GameObjectList<Warhead>();
+		public string WarheadType => Warheads.Count != 1 ? "(Multiple Types)" : Warheads[0].WarheadType;
 	}
 
 	public class NuclearMissile : NuclearWeapon
@@ -22,6 +21,7 @@ namespace Atomization
 
 	public class NuclearBomb : NuclearWeapon
 	{
+		public string TypeName => "NuclearBomb";
 	}
 
 }

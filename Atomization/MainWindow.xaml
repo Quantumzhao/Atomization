@@ -277,5 +277,6 @@
 				Click="MenuItem_Click">
 			</MenuItem>
 		</Menu>
+		<Button Content="Continue &gt;&gt;" Margin="0,14,10,0" VerticalAlignment="Top" HorizontalAlignment="Right" Background="{x:Null}" BorderBrush="Black" Padding="8,5" FontSize="15"/>
 	</Grid>
 </Window>

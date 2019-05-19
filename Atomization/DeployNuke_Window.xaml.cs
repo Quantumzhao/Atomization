@@ -36,20 +36,10 @@ namespace Atomization
 			ParentPage.DeployNuke_Window = null;
 		}
 
-		private void CheckBox_Checked(object sender, RoutedEventArgs e)
-		{
-			NumOfWarheads.IsEnabled = true;
-		}
-
-		private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
-		{
-			NumOfWarheads.IsEnabled = false;
-		}
-
 		private void Button_Click(object sender, RoutedEventArgs e)
 		{
 			NuclearWeapon prefab;
-			switch (CarrierType.SelectedItem.ToString())
+			switch (((ComboBoxItem)CarrierType.SelectedItem)?.Content.ToString())
 			{
 				case "Cruise Missile":
 					prefab = new NuclearMissile();
@@ -66,7 +56,44 @@ namespace Atomization
 				case "Aerial Bomb":
 					prefab = new NuclearBomb();
 					break;
+
+				default:
+					return;
 			}
+
+			Warhead warhead;
+			switch (((ComboBoxItem)WarheadType.SelectedItem)?.Content.ToString())
+			{
+				case "Hydrogen Bomb":
+					warhead = new Hydrogen();
+					break;
+
+				case "Atomic Bomb Gen 1":
+					warhead = new Atomic();
+					break;
+
+				case "Atomic Bomb Gen 2":
+					warhead = new Atomic();
+					break;
+
+				case "Dirty Bomb":
+					warhead = new Dirty();
+					break;
+
+				default:
+					return;
+			}
+
+			prefab.Warheads.Add(warhead);
+
+			prefab.Name = TextBox_Name.Text;
+
+			prefab.Platform = SelectionList.SelectedItem as Platform;
+			if (prefab.Platform == null) return;
+
+			prefab.Platform.NuclearWeapons.Add(prefab);
+			
+			this.Close();
 		}
 
 		private void SelectionList_SelectionChanged(object sender, SelectionChangedEventArgs e)

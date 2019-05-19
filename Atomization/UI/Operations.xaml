@@ -51,7 +51,7 @@
 							<GridViewColumn 
 								Header="Warhead Type" 
 								Width="Auto"
-								DisplayMemberBinding="{Binding Type}">
+								DisplayMemberBinding="{Binding WarheadType}">
 							</GridViewColumn>
 							<GridViewColumn 
 								Header="Warhead Amount"
@@ -61,11 +61,7 @@
 							<GridViewColumn 
 								Header="Type" 
 								Width="Auto"
-								DisplayMemberBinding="{Binding TypeName}">								
-							</GridViewColumn>
-							<GridViewColumn 
-								Header="Maneuverability" 
-								Width="Auto">								
+								DisplayMemberBinding="{Binding TypeName}">
 							</GridViewColumn>
 						</GridView>
 					</ListView.View>
@@ -120,9 +116,7 @@
 					</Label>
 					<ComboBox 
 						Margin="5,5,0,5" 
-						Width="100" 
-						IsEditable="True">						
-					</ComboBox>
+						Width="100"/>
 				</StackPanel>
 				<Expander 
 					Header="Subversion" 
@@ -159,9 +153,7 @@
 							Content="Select an Infrastructure:">							
 						</Label>
 						<ComboBox 
-							IsEditable="True" 
-							Margin="5,0,0,0">							
-						</ComboBox>
+							Margin="5,0,0,0"/>
 						<Button 
 							Content="Execute" 
 							Margin="5,5,0,0" 
@@ -180,10 +172,8 @@
 						<Label 
 							Content="Select Occupation:">							
 						</Label>
-						<ComboBox 
-							IsEditable="True"
-							Margin="5,0,0,0">							
-						</ComboBox>
+						<ComboBox
+							Margin="5,0,0,0"/>
 						<Button 
 							Content="Execute" 
 							Margin="5,5,0,0" 
@@ -273,6 +263,44 @@
 							Content="Execute" 
 							Margin="5,10,0,0" 
 							Padding="5,2.5">							
+						</Button>
+					</StackPanel>
+				</Expander>
+				<Expander 
+					Header="Military Budget Increment" 
+					HorizontalAlignment="Left"
+					Margin="10,10,0,0"
+					VerticalAlignment="Top">
+					<StackPanel 
+						Margin="10,0">
+						<Label 
+							Content="Appropriation" 
+							Margin="0">
+						</Label>
+						<TextBox 
+							Background="{x:Null}" 
+							Height="23" 
+							Margin="5,0,0,0">
+						</TextBox>
+						<Button 
+							Content="Execute" 
+							Margin="5,10,0,0" 
+							Padding="5,2.5">
+						</Button>
+						<Label 
+							Content="New Nuke Strike Platform" 
+							Margin="0">
+						</Label>
+						<ComboBox>
+							<ComboBoxItem Content="Silo" Padding="3"/>
+							<ComboBoxItem Content="Strategic Bomber" Padding="3"/>
+							<ComboBoxItem Content="Missile Launcher" Padding="3"/>
+							<ComboBoxItem Content="Nuke Mine" Padding="3"/>
+						</ComboBox>
+						<Button 
+							Content="Execute" 
+							Margin="5,10,0,0" 
+							Padding="5,2.5">
 						</Button>
 					</StackPanel>
 				</Expander>

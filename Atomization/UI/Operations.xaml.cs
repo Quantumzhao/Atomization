@@ -22,8 +22,10 @@ namespace Atomization
 		public Operations()
 		{
 			InitializeComponent();
-			ListView list = OperationsPage.FindName("NukeList") as ListView;
-			list.Items.Add(Data.Me.NuclearPlatforms[0].NuclearWeapons[0]);
+			foreach (var platform in Data.Me.NuclearPlatforms)
+			{
+				platform.NuclearWeapons.OnAddItem += (list, weapon) => NukeList.Items.Add(weapon);
+			}
 		}
 
 		private void Button_DeployNuke_Click(object sender, RoutedEventArgs e)

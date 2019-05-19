@@ -24,9 +24,9 @@ namespace Atomization
 			// Initialize Adjacent nations
 			foreach (var superpower in Superpowers)
 			{
-				RegularNation nation = new RegularNation();
 				for (int i = 0; i < Superpower.NumOfAdjacentNations; i++)
 				{
+					RegularNation nation = new RegularNation();
 					superpower.Adjacency[i] = nation;
 					RegularNations.Add(nation);
 				}

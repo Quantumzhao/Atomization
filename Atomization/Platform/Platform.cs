@@ -9,26 +9,15 @@ namespace Atomization
 	public abstract class Platform
 	{
 		public Nation DeployNation { get; set; }
-		public int MaxCapacity { get; set; }
-		public int AvailableLoad
-		{
-			get => MaxCapacity - NuclearWeapons.Count;
-		}
-		public List<NuclearWeapon> NuclearWeapons { get; set; } = new List<NuclearWeapon>();
+		public int AvailableLoad => NuclearWeapons.Capacity - NuclearWeapons.Count;
+		public GameObjectList<NuclearWeapon> NuclearWeapons { get; set; } = new GameObjectList<NuclearWeapon>();
 	}
 
 	public class Silo : Platform
 	{
 		public Silo()
 		{
-			MaxCapacity = 1;
-
-			NuclearWeapons.Add(new NuclearMissile()
-			{
-				Platform = this,
-				Warheads = new List<Warhead> { new Atomic() },
-				Name = "Boom"
-			});
+			NuclearWeapons.Capacity = 1;
 		}
 
 		public string TypeName => "Silo";

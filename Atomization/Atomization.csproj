@@ -63,10 +63,6 @@
     <Compile Include="DeployNuke_Window.xaml.cs">
       <DependentUpon>DeployNuke_Window.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GameObjectList.cs" />
-    <Compile Include="Maneuvarability\Maneuverability.cs" />
-    <Compile Include="Maneuvarability\MultiWarhead.cs" />
-    <Compile Include="Maneuvarability\WarheadManeuver.cs" />
     <Compile Include="Misc.cs" />
     <Compile Include="Nations\Nation.cs" />
     <Compile Include="Nuclear Weapon\NuclearWeapon.cs" />
@@ -86,7 +82,6 @@
     <Compile Include="UI\Technology.xaml.cs">
       <DependentUpon>Technology.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Warhead\Atomic.cs" />
     <Compile Include="Warhead\Warhead.cs" />
     <Page Include="DeployNuke_Window.xaml">
       <SubType>Designer</SubType>
