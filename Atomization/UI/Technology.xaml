@@ -8,7 +8,82 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="Technology" Width="620" Height="462">
 
-    <Grid>
-        
-    </Grid>
+	<Grid>
+		<Label 
+			Content="Technology" 
+			Margin="10,10,135,0"
+			VerticalAlignment="Top" 
+			FontSize="15" 
+			FontWeight="Bold" Height="30"/>
+		<StackPanel Orientation="Horizontal" Margin="10,45,10,10">
+			<Grid Margin="10,0,0,0" HorizontalAlignment="Left">
+				<Grid.RowDefinitions>
+					<RowDefinition Height="100*"/>
+					<RowDefinition Height="100*"/>
+				</Grid.RowDefinitions>
+				<ScrollViewer Margin="0,0,0,0" VerticalScrollBarVisibility="Auto" Grid.Row="0">
+					<StackPanel HorizontalAlignment="Left" MinWidth="150">
+						<Label Content="Science" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="15" FontFamily="Segoe UI Light"/>
+						<TreeView Background="{x:Null}" BorderBrush="{x:Null}">
+							<TreeViewItem Header="Aerial Bomb" FontWeight="Bold">
+								<TreeViewItem Header="Miniaturelization" FontWeight="Regular" Margin="0,5,0,0">
+								</TreeViewItem>
+							</TreeViewItem>
+							<TreeViewItem Header="Nuclear Mine" FontWeight="Bold" Margin="0,5,0,0">
+								<TreeViewItem Header="Miniaturelization" FontWeight="Regular" Margin="0,5,0,0">
+								</TreeViewItem>
+							</TreeViewItem>
+							<TreeViewItem Header="Missile" FontWeight="Bold" Margin="0,5,0,0">
+								<TreeViewItem Header="Propellant" FontWeight="Regular" Margin="0,5,0,0">
+								</TreeViewItem>
+								<TreeViewItem Header="Engine" FontWeight="Regular" Margin="0,5,0,0">
+								</TreeViewItem>
+								<TreeViewItem Header="Warhead Capacity" FontWeight="Regular" Margin="0,5,0,0">
+								</TreeViewItem>
+								<TreeViewItem Header="Manuverability" FontWeight="Regular" Margin="0,5,0,0">
+								</TreeViewItem>
+								<TreeViewItem Header="Detectability" FontWeight="Regular" Margin="0,5,0,0">
+								</TreeViewItem>
+								<TreeViewItem Header="Miniaturelization" FontWeight="Regular" Margin="0,5,0,0">
+								</TreeViewItem>
+								<TreeViewItem Header="Cruise Missile" FontWeight="Regular" Margin="0,5,0,0">
+								</TreeViewItem>
+								<TreeViewItem Header="Medium Range Missile" FontWeight="Regular" Margin="0,5,0,0">
+								</TreeViewItem>
+								<TreeViewItem Header="ICBM" FontWeight="Regular" Margin="0,5,0,0">
+								</TreeViewItem>
+							</TreeViewItem>
+							<TreeViewItem Header="Nuclear Science" FontWeight="Bold" Margin="0,5,0,0">
+								<TreeViewItem Header="Dirty Bomb" FontWeight="Regular" Margin="0,5,0,0">
+									<TreeViewItem Header="Atomic Bomb" FontWeight="Regular" Margin="0,5,0,0">
+										<TreeViewItem Header="Hydrogen Bomb" FontWeight="Regular" Margin="0,5,0,0">
+
+										</TreeViewItem>
+									</TreeViewItem>
+								</TreeViewItem>
+							</TreeViewItem>
+						</TreeView>
+					</StackPanel>
+				</ScrollViewer>
+				<ScrollViewer Margin="0,10,0,0" Grid.Row="1" VerticalScrollBarVisibility="Auto">
+					<StackPanel HorizontalAlignment="Left" MinWidth="150">
+						<Label Content="Domestic" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="15" FontFamily="Segoe UI Light"/>
+						<TreeView/>
+					</StackPanel>
+				</ScrollViewer>
+			</Grid>
+			<ScrollViewer Margin="20,0,0,0" VerticalScrollBarVisibility="Auto">
+				<StackPanel MinWidth="150">
+					<Label Content="Military" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="15" FontFamily="Segoe UI Light"/>
+					<TreeView/>
+				</StackPanel>
+			</ScrollViewer>
+			<ScrollViewer VerticalScrollBarVisibility="Auto" Margin="20,0,0,0">
+				<StackPanel MinWidth="200">
+					<Label Content="Information" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="15" FontFamily="Segoe UI Light"/>
+
+				</StackPanel>
+			</ScrollViewer>
+		</StackPanel>
+	</Grid>
 </Page>

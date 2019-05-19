@@ -162,6 +162,18 @@
 					Padding="5,0">
 				</Label>
 			</StackPanel>
+			<StackPanel 
+				Orientation="Horizontal">
+				<Label 
+					Content="Naval Force" 
+					HorizontalAlignment="Left" 
+					Padding="5,0">
+				</Label>
+				<Label 
+					Content="0" 
+					Padding="5,0">
+				</Label>
+			</StackPanel>
 			<StackPanel Orientation="Horizontal">
 				<Label 
 					Content="Resource:" 
