@@ -6,9 +6,29 @@ using System.Threading.Tasks;
 
 namespace Atomization
 {
-	public abstract class Nation
+	public abstract class Region
 	{
+		public string Name { get; set; }
+	}
+
+	public class Waters : Region
+	{
+		public const int NumOfInternationalWaters = 5;
+		public Nation Affiliation { get; set; }
+	}
+
+	public abstract class Nation : Region
+	{
+		public Nation()
+		{
+			TerritorialWaters = new Waters() { Name = Data.WatersNames.Dequeue() };
+			TerritorialWaters.Affiliation = this;
+			Data.Regions.Add(TerritorialWaters = new Waters() { Name = Data.WatersNames.Dequeue()});
+		}
+
 		public const int NumOfNonAdjacentNations = 5;
+
+		public Waters TerritorialWaters { get; }
 
 		public const int InitialEcon = 1000000;
 		#region Econ
@@ -112,6 +132,40 @@ namespace Atomization
 		}
 		#endregion
 
+		public const int InitialNavy = 50000;
+		#region RegularMilitary
+		public event OnValueChanged<Nation, int> OnNavyChanged;
+		private int navy = InitialNavy;
+		public int Navy
+		{
+			get => navy;
+			set
+			{
+				if (value != navy)
+				{
+					OnNavyChanged?.Invoke(this, navy, value);
+					navy = value;
+				}
+			}
+		}
+		#endregion
+		#region RegularMilitaryGrowth
+		public event OnValueChanged<Nation, List<int>> OnNavyGrowthChanged;
+		private List<int> navyGrowth = new List<int>();
+		public List<int> NavyGrowth
+		{
+			get => navyGrowth;
+			set
+			{
+				if (value != navyGrowth)
+				{
+					OnNavyGrowthChanged?.Invoke(this, navyGrowth, value);
+					navyGrowth = value;
+				}
+			}
+		}
+		#endregion
+
 		public const int InitialResource = 10000;
 		#region Resource
 		public event OnValueChanged<Nation, int> OnResourceChanged;
@@ -209,14 +263,19 @@ namespace Atomization
 	}
 	public class Superpower : Nation
 	{
-		public string Name { get; set; }
-
 		public const int InitialNukeSilos = 10;
 		public Superpower() : base()
 		{
 			for (int i = 0; i < InitialNukeSilos; i++)
 			{
 				NuclearPlatforms.Add(new Silo());
+			}
+
+			for (int i = 0; i < NumOfAdjacentNations; i++)
+			{
+				RegularNation nation = new RegularNation() { Name = Data.NationNames.Dequeue() };
+				Data.Regions.Add(nation);
+				Adjacency[i] = nation;
 			}
 		}
 		public const int NumOfAdjacentNations = 5;
@@ -226,7 +285,5 @@ namespace Atomization
 		public RegularNation[] Adjacency { get; set; } = new RegularNation[NumOfAdjacentNations];
 
 		public List<RegularNation> SateliteNations { get; set; } = new List<RegularNation>();
-
-		public event Action<object, EventArgs> OnChanged;
 	}
 }
