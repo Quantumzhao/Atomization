@@ -41,8 +41,13 @@ namespace Atomization
 			selectedItem.FontFamily = Properties.Settings.Default.Font_Bold;
 			current = selectedItem;
 		}
+
 		#endregion
 
-
+		private void Button_MoreInfo_Click(object sender, RoutedEventArgs e)
+		{
+			var infoPanel = new MoreInfoPanel();
+			infoPanel.Show();
+		}
 	}
 }

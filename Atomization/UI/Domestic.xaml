@@ -30,9 +30,6 @@
 			<Label Content="Suppression" VerticalAlignment="Top" FontSize="15" FontWeight="Bold"/>
 			<Button Content="Supress Critics" Margin="10" Padding="5"/>
 		</StackPanel>
-		<StackPanel Grid.Column="1" Margin="0,0,0,10">
-			<Label Content="Execution Results:" VerticalAlignment="Top" FontSize="15" FontWeight="Bold" Margin="10,10,0,0"/>
-		</StackPanel>
 
 	</Grid>
 </Page>

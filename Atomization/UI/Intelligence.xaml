@@ -48,9 +48,6 @@
 				<StackPanel Margin="10,10,10.5,0" VerticalAlignment="Top">
 					<Label Content="Counterintelligence" Margin="0" VerticalAlignment="Top" FontSize="15" FontWeight="Bold"/>
 					<Button Content="Execute Order" Margin="10,15,0,10" Padding="5"/>
-					<Expander Header="Execution Result" Margin="10,0,0,0">
-
-					</Expander>
 				</StackPanel>
 			</StackPanel>
 		</ScrollViewer>

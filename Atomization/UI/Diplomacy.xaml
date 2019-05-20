@@ -37,17 +37,12 @@
 					</StackPanel>
 				</StackPanel>
 			</ScrollViewer>
-			<ScrollViewer VerticalScrollBarVisibility="Auto" MinHeight="200" Grid.Column="1" Height="248" VerticalAlignment="Bottom">
-				<StackPanel VerticalAlignment="Top" Height="144">
-					<Label Content="Detail: " FontSize="15" FontFamily="Segoe UI Light"/>
-				</StackPanel>
-			</ScrollViewer>
-			<StackPanel Margin="0,20,0,0" Grid.Column="1" Height="169" VerticalAlignment="Top">
+			<StackPanel Margin="0,20,0,0" Grid.Column="1">
 				<Label Content="Embargo" Margin="10,10,10,0" VerticalAlignment="Top" FontSize="15" FontFamily="Segoe UI Light"/>
 				<Label Margin="10,5,0,0" VerticalAlignment="Top" HorizontalAlignment="Left">
 					<TextBlock Text="These Nations Must Also Execute the Command:" TextWrapping="WrapWithOverflow" Width="149"/>
 				</Label>
-				<ListView Margin="10,10,10,0" Background="{x:Null}">
+				<ListView Margin="10,10,10,0" Background="{x:Null}" MinHeight="280" Height="Auto">
 					<ListView.View>
 						<GridView>
 							<GridViewColumn Header="Name" Width="50"/>

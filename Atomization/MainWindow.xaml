@@ -213,6 +213,7 @@
 					Padding="5,0">
 				</Label>
 			</StackPanel>
+			<Button Content="More Info" BorderBrush="Black" HorizontalContentAlignment="Center" Padding="5,0" Background="{x:Null}" Margin="20,0,0,0" Click="Button_MoreInfo_Click"/>
 		</StatusBar>
 		<ComboBox 
 			HorizontalAlignment="Left" 

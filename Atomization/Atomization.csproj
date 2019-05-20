@@ -63,6 +63,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Data.cs" />
+    <Compile Include="UI\MoreInfoPanel.xaml.cs">
+      <DependentUpon>MoreInfoPanel.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\DeployNuke_Window.xaml.cs">
       <DependentUpon>DeployNuke_Window.xaml</DependentUpon>
     </Compile>
@@ -89,6 +92,10 @@
       <DependentUpon>Technology.xaml</DependentUpon>
     </Compile>
     <Compile Include="Warhead\Warhead.cs" />
+    <Page Include="UI\MoreInfoPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UI\DeployNuke_Window.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

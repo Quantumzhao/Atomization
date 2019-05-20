@@ -217,32 +217,5 @@
 				</Expander>
 			</StackPanel>
 		</ScrollViewer>
-		<Expander 
-			Header="Armageddon" 
-			Grid.Column="1" 
-			ExpandDirection="Up"
-			BorderThickness="0" 
-			BorderBrush="#FFA2A2A2" 
-			Padding="0,5" 
-			VerticalAlignment="Bottom" 
-			Margin="0,0,0,10" 
-			Background="White">
-			<Grid>
-				<Button 
-					Content="Commence Nuclear Attack" 
-					HorizontalAlignment="Left" 
-					Margin="10,10,0,0" 
-					VerticalAlignment="Top" 
-					Width="219" 
-					Height="29"/>
-				<Label 
-					Content="Please Get My Spaceship Ready" 
-					HorizontalAlignment="Left" 
-					Margin="10,44,0,0" 
-					VerticalAlignment="Top" 
-					FontFamily="Segoe UI Light">					
-				</Label>
-			</Grid>
-		</Expander>
 	</Grid>
 </Page>
