@@ -20,9 +20,15 @@ namespace Atomization
 	public partial class DeployNuke_Window : Window
 	{
 		public Nuclear ParentPage;
-		public DeployNuke_Window()
+
+		private NuclearWeapon selectedWeapon = null;
+		private bool isNewNuke = true;
+		public DeployNuke_Window(Nuclear parentPage)
 		{
 			InitializeComponent();
+
+			ParentPage = parentPage;
+
 			Closing += DeployNuke_Window_Closing;
 			SelectionList.ItemsSource = Data.Me.NuclearPlatforms;
 
@@ -36,6 +42,14 @@ namespace Atomization
 					}
 				)
 			);
+
+			if ((selectedWeapon = ParentPage.NukeList.SelectedItem as NuclearWeapon) != null)
+			{
+				isNewNuke = false;
+				CarrierType.IsEnabled = false;
+				WarheadType.IsEnabled = false;
+				Status.Content = "Configuring an existing nuclear weapon";
+			}
 		}
 
 		private void DeployNuke_Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -45,30 +59,33 @@ namespace Atomization
 
 		private void ExecuteOrder(object sender, RoutedEventArgs e)
 		{
-			NuclearWeapon prefab;
 			switch (((ComboBoxItem)CarrierType.SelectedItem)?.Content.ToString())
 			{
 				case "Cruise Missile":
-					prefab = new NuclearMissile();
+					selectedWeapon = new NuclearMissile();
 					break;
 
 				case "Medium Range Missile":
-					prefab = new NuclearMissile();
+					selectedWeapon = new NuclearMissile();
 					break;
 
 				case "ICBM":
-					prefab = new NuclearMissile();
+					selectedWeapon = new NuclearMissile();
 					break;
 
 				case "Aerial Bomb":
-					prefab = new NuclearBomb();
+					selectedWeapon = new NuclearBomb();
 					break;
+
+				case null:
+					if (isNewNuke) return;
+					else break;
 
 				default:
 					return;
 			}
 
-			Warhead warhead;
+			Warhead warhead = null;
 			switch (((ComboBoxItem)WarheadType.SelectedItem)?.Content.ToString())
 			{
 				case "Hydrogen Bomb":
@@ -87,23 +104,60 @@ namespace Atomization
 					warhead = new Dirty();
 					break;
 
+				case null:
+					if (isNewNuke) return;
+					else break;
+
 				default:
 					return;
 			}
 
-			prefab.Warheads.Add(warhead);
+			if (warhead != null) selectedWeapon.Warheads.Add(warhead);
 
-			prefab.Name = TextBox_Name.Text;
+			selectedWeapon.Name = TextBox_Name.Text;
 
 			string targetName = (Target.SelectedItem as ComboBoxItem)?.Content.ToString();
-			if (targetName == null) return;
-			prefab.Target = Data.Regions.Single(n => n.Name == targetName);
+			if (isNewNuke)
+			{
+				if (targetName == null)
+				{
+					return;
+				}
+				else
+				{
+					selectedWeapon.Target = Data.Regions.Single(n => n.Name == targetName);
+				}
+			}
+			else
+			{
+				if (targetName != null)
+				{
+					selectedWeapon.Target = Data.Regions.Single(n => n.Name == targetName);
+				}
+			}
 
-			prefab.Platform = SelectionList.SelectedItem as Platform;
-			if (prefab.Platform == null) return;
+			if (isNewNuke)
+			{
+				if (SelectionList.SelectedItem != null)
+				{
+					selectedWeapon.Platform = SelectionList.SelectedItem as Platform;
+					selectedWeapon.Platform.NuclearWeapons.Add(selectedWeapon);
+				}
+				else
+				{
+					return;
+				}
+			}
+			else
+			{
+				if (SelectionList.SelectedItem != null)
+				{
+					selectedWeapon.Platform.NuclearWeapons.Remove(selectedWeapon);
+					selectedWeapon.Platform = SelectionList.SelectedItem as Platform;
+					selectedWeapon.Platform.NuclearWeapons.Add(selectedWeapon);
+				}
+			}
 
-			prefab.Platform.NuclearWeapons.Add(prefab);
-			
 			this.Close();
 		}
 

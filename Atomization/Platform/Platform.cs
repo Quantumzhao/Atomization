@@ -9,7 +9,7 @@ namespace Atomization
 	public abstract class Platform
 	{
 		public abstract string TypeName { get; }
-		public Nation DeployNation { get; set; }
+		public Region DeployRegion { get; set; }
 		public int AvailableLoad => NuclearWeapons.Capacity - NuclearWeapons.Count;
 		public GameObjectList<NuclearWeapon> NuclearWeapons { get; set; } = new GameObjectList<NuclearWeapon>();
 	}

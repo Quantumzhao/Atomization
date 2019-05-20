@@ -59,6 +59,11 @@
 								Width="Auto"
 								DisplayMemberBinding="{Binding Target.Name}">
 							</GridViewColumn>
+							<GridViewColumn 
+								Header="Deployment" 
+								Width="Auto"
+								DisplayMemberBinding="{Binding Platform.DeployRegion.Name}">
+							</GridViewColumn>
 						</GridView>
 					</ListView.View>
 				</ListView>
@@ -68,17 +73,19 @@
 				Content="New Nuke Strike Platform" 
 				Margin="0" FontSize="15" FontFamily="Segoe UI Light">
 				</Label>
-				<ComboBox Margin="0,5,0,0">
+				<ComboBox x:Name="NewPlatform" Margin="0,5,0,0" SelectionChanged="NewPlatform_SelectionChanged">
 					<ComboBoxItem Content="Silo" Padding="3"/>
 					<ComboBoxItem Content="Strategic Bomber" Padding="3"/>
 					<ComboBoxItem Content="Missile Launcher" Padding="3"/>
 					<ComboBoxItem Content="Nuclear Submarine" Padding="3"/>
 					<ComboBoxItem Content="Nuke Mine" Padding="3"/>
 				</ComboBox>
+				<Label Content="Region of Deployment" Margin="0,5,0,0"></Label>
+				<ComboBox x:Name="RegionOfDeployment" Margin="0,5,0,0"></ComboBox>
 				<Button 
 					Content="Deploy" 
 					Margin="0,10,0,0" 
-					Padding="5,5,5,5">
+					Padding="5,5,5,5" Click="Button_Deploy_Click">
 				</Button>
 				<Label 
 					Content="Other Actions" 
@@ -86,15 +93,11 @@
 					FontSize="15" 
 					FontFamily="Segoe UI Light"/>
 				<Button 
-					Content="Deploy Nuke" 
+					Content="Edit Deployment Config" 
 					VerticalAlignment="Top"
 					Margin="0,10,0,0" 
 					Padding="5" Click="Button_DeployNuke_Click">
 				</Button>
-				<Button 
-					Content="Edit Dplymnt Config" 
-					VerticalAlignment="Top" 
-					Padding="5" Margin="0,10,0,0"/>
 				<Button x:Name="Button_DisposeNuke" 
 					Content="Dispose Nuke" 
 					VerticalAlignment="Top" 

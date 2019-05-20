@@ -31,11 +31,12 @@ namespace Atomization
 				platform.NuclearWeapons.OnRemoveItem += (list, weapon) => NukeList.Items.Remove(weapon);
 			}
 		}
+
 		private void Button_DeployNuke_Click(object sender, RoutedEventArgs e)
 		{
 			if (DeployNuke_Window == null)
 			{
-				DeployNuke_Window = new DeployNuke_Window() { ParentPage = this };
+				DeployNuke_Window = new DeployNuke_Window(this);
 				DeployNuke_Window.Show();
 			}
 			else
@@ -71,6 +72,96 @@ namespace Atomization
 						break;
 				}
 			}
+		}
+
+		private void NewPlatform_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			RegionOfDeployment.Items.Clear();
+			switch ((NewPlatform.SelectedItem as ComboBoxItem)?.Content.ToString())
+			{
+				case "Silo":
+				case "Missile Launcher":
+				case "Strategic Bomber":
+				case "Nuke Mine":
+					RegionOfDeployment.Items.Add(
+						new ComboBoxItem()
+						{
+							Content = Data.Me.Name,
+							Padding = new Thickness(3)
+						}
+					);
+					foreach (var item in Data.Me.SateliteNations)
+					{
+						RegionOfDeployment.Items.Add(
+							new ComboBoxItem()
+							{
+								Content = item.Name,
+								Padding = new Thickness(3)
+							}
+						);
+					}
+					break;
+
+				case "Nuclear Submarine":
+					RegionOfDeployment.Items.Add(
+						new ComboBoxItem()
+						{
+							Content = Data.Me.TerritorialWaters.Name,
+							Padding = new Thickness(3)
+						}
+					);
+					foreach (var item in Data.Me.SateliteNations)
+					{
+						RegionOfDeployment.Items.Add(
+							new ComboBoxItem()
+							{
+								Content = item.TerritorialWaters.Name,
+								Padding = new Thickness(3)
+							}
+						);
+					}
+
+					break;
+
+				default:
+					return;
+			}
+		}
+
+		private void Button_Deploy_Click(object sender, RoutedEventArgs e)
+		{
+			Platform prefab;
+
+			switch ((NewPlatform.SelectedItem as ComboBoxItem)?.Content.ToString())
+			{
+				case "Silo":
+					prefab = new Silo();
+					break;
+
+				case "Strategic Bomber":
+					prefab = new StrategicBomber();
+					break;
+
+				case "Missile Launcher":
+					throw new NotImplementedException();
+					break;
+
+				case "Nuclear Submarine":
+					throw new NotImplementedException();
+					break;
+
+				case "Nuke Mine":
+					throw new NotImplementedException();
+					break;
+
+				default:
+					return;
+			}
+
+			if (RegionOfDeployment.SelectedItem == null) return;
+			var name = (RegionOfDeployment.SelectedItem as ComboBoxItem).Content.ToString();
+			prefab.DeployRegion = Data.Regions.Single(r => r.Name == name);
+			Data.Me.NuclearPlatforms.Add(prefab);
 		}
 	}
 }

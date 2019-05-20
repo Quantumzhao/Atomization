@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Atomization"
         mc:Ignorable="d"
-        Title="MoreInfoPanel" Height="450" Width="320">
+        Title="MoreInfoPanel" Height="450" Width="320" WindowStartupLocation="CenterScreen">
 	<Window.Resources>
 		<Style x:Key = "TitleStyle" TargetType = "Label">
 			<Setter Property = "Height" Value = "Auto" />

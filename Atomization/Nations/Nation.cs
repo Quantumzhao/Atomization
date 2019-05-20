@@ -268,7 +268,7 @@ namespace Atomization
 		{
 			for (int i = 0; i < InitialNukeSilos; i++)
 			{
-				NuclearPlatforms.Add(new Silo());
+				NuclearPlatforms.Add(new Silo() { DeployRegion = this});
 			}
 
 			for (int i = 0; i < NumOfAdjacentNations; i++)
