@@ -14,9 +14,11 @@ namespace Atomization
 		public new int Capacity { get; set; } = 0;
 		public bool IsLimitedCapacity { get; set; } = false;
 
-		public event Action<GameObjectList<T>, T, T> OnElementChanged;
+		public event Action<GameObjectList<T>, T, T> OnItemChanged;
 
 		public event Action<GameObjectList<T>, T> OnAddItem;
+
+		public event Action<GameObjectList<T>, T> OnRemoveItem;
 		public new bool Add(T item)
 		{
 			if (Count >= Capacity && IsLimitedCapacity)
@@ -30,6 +32,12 @@ namespace Atomization
 
 				return false;
 			}
+		}
+
+		public new bool Remove(T item)
+		{
+			OnRemoveItem?.Invoke(this, item);
+			return base.Remove(item);
 		}
 	}
 }

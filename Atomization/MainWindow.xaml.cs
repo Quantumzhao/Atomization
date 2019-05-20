@@ -27,6 +27,8 @@ namespace Atomization
 			#region Menu item initializations
 			current = MainMenu.Items[0] as MenuItem;
 			#endregion
+
+			Data.Initiaze();
 		}
 
 		#region Menu item actions

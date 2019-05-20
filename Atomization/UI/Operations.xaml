@@ -7,7 +7,7 @@
     xmlns:local="clr-namespace:Atomization"
     mc:Ignorable="d" 
     d:DesignHeight="450"
-    Title="Operations" Height="Auto">
+    Title="Operations" Height="462" Width="620">
 	<Grid>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition 
@@ -17,80 +17,6 @@
 				Width="240*">				
 			</ColumnDefinition>
 		</Grid.ColumnDefinitions>
-		<Grid>
-			<Label 
-				Content="Manage Nuclear Arsenal" 
-				Margin="10,10,10,0"
-				VerticalAlignment="Top" 
-				FontSize="15" 
-				FontWeight="Bold">				
-			</Label>
-			<ScrollViewer 
-				HorizontalScrollBarVisibility="Auto" 
-				VerticalScrollBarVisibility="Auto" 
-				Margin="10,45,10,52">
-				<ListView 
-					x:Name="NukeList" 
-					HorizontalAlignment="Left" 
-					VerticalAlignment="Top" 
-					Width="Auto" 
-					Background="{x:Null}" 
-					BorderBrush="{x:Null}">
-					<ListView.View>
-						<GridView>
-							<GridViewColumn 
-								Header="Name" 
-								Width="Auto"
-								DisplayMemberBinding="{Binding Name}">
-							</GridViewColumn>
-							<GridViewColumn 
-								Header="Platform" 
-								Width="Auto"
-								DisplayMemberBinding="{Binding Platform.TypeName}">
-							</GridViewColumn>
-							<GridViewColumn 
-								Header="Warhead Type" 
-								Width="Auto"
-								DisplayMemberBinding="{Binding WarheadType}">
-							</GridViewColumn>
-							<GridViewColumn 
-								Header="Warhead Amount"
-								Width="Auto"
-								DisplayMemberBinding="{Binding Warheads.Count}">
-							</GridViewColumn>
-							<GridViewColumn 
-								Header="Type" 
-								Width="Auto"
-								DisplayMemberBinding="{Binding TypeName}">
-							</GridViewColumn>
-						</GridView>
-					</ListView.View>
-				</ListView>
-			</ScrollViewer>
-			<StackPanel 
-				Margin="10,0,10,10" 
-				Orientation="Horizontal" 
-				VerticalAlignment="Bottom">
-				<Button 
-					Content="Deploy Nuke" 
-					VerticalAlignment="Top"
-					Margin="0" 
-					Padding="5" Click="Button_DeployNuke_Click">					
-				</Button>
-				<Button 
-					Content="Edit Dplymnt Config" 
-					VerticalAlignment="Top" 
-					Margin="10,0,0,0" 
-					Padding="5">					
-				</Button>
-				<Button 
-					Content="Dispose Nuke" 
-					VerticalAlignment="Top" 
-					Margin="10,0,0,0" 
-					Padding="5">					
-				</Button>
-			</StackPanel>
-		</Grid>
 		<ScrollViewer 
 			Grid.Column="1" 
 			VerticalScrollBarVisibility="Auto" 
@@ -282,21 +208,6 @@
 							Height="23" 
 							Margin="5,0,0,0">
 						</TextBox>
-						<Button 
-							Content="Execute" 
-							Margin="5,10,0,0" 
-							Padding="5,2.5">
-						</Button>
-						<Label 
-							Content="New Nuke Strike Platform" 
-							Margin="0">
-						</Label>
-						<ComboBox>
-							<ComboBoxItem Content="Silo" Padding="3"/>
-							<ComboBoxItem Content="Strategic Bomber" Padding="3"/>
-							<ComboBoxItem Content="Missile Launcher" Padding="3"/>
-							<ComboBoxItem Content="Nuke Mine" Padding="3"/>
-						</ComboBox>
 						<Button 
 							Content="Execute" 
 							Margin="5,10,0,0" 

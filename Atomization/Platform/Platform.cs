@@ -8,6 +8,7 @@ namespace Atomization
 {
 	public abstract class Platform
 	{
+		public abstract string TypeName { get; }
 		public Nation DeployNation { get; set; }
 		public int AvailableLoad => NuclearWeapons.Capacity - NuclearWeapons.Count;
 		public GameObjectList<NuclearWeapon> NuclearWeapons { get; set; } = new GameObjectList<NuclearWeapon>();
@@ -20,10 +21,11 @@ namespace Atomization
 			NuclearWeapons.Capacity = 1;
 		}
 
-		public string TypeName => "Silo";
+		public override string TypeName => "Silo";
 	}
 
 	public class StrategicBomber : Platform
 	{
+		public override string TypeName => throw new NotImplementedException();
 	}
 }

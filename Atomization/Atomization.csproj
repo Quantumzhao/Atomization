@@ -38,6 +38,9 @@
   <PropertyGroup>
     <StartupObject>Atomization.App</StartupObject>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>FormatFactoryicon [256x256].ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -60,7 +63,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Data.cs" />
-    <Compile Include="DeployNuke_Window.xaml.cs">
+    <Compile Include="UI\DeployNuke_Window.xaml.cs">
       <DependentUpon>DeployNuke_Window.xaml</DependentUpon>
     </Compile>
     <Compile Include="Misc.cs" />
@@ -79,11 +82,14 @@
     <Compile Include="UI\Diplomacy.xaml.cs">
       <DependentUpon>Diplomacy.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UI\Nuclear.xaml.cs">
+      <DependentUpon>Nuclear.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\Technology.xaml.cs">
       <DependentUpon>Technology.xaml</DependentUpon>
     </Compile>
     <Compile Include="Warhead\Warhead.cs" />
-    <Page Include="DeployNuke_Window.xaml">
+    <Page Include="UI\DeployNuke_Window.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -112,6 +118,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UI\Diplomacy.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Nuclear.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -163,6 +173,17 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\DataSources\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="FormatFactoryicon [256x256].ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Nations\Nation Names.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Nations\Waters Names.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

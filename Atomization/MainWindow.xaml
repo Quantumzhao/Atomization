@@ -237,7 +237,7 @@
 			x:Name="MainFrame" 
 			Content="Frame" 
 			Margin="265,86,10.5,24.5" 
-			Source="/Atomization;component/UI/Operations.xaml" 
+			Source="/Atomization;component/UI/Nuclear.xaml" 
 			NavigationUIVisibility="Hidden">
 		</Frame>
 		<Menu 
@@ -248,6 +248,12 @@
 			Width="627" 
 			Background="{x:Null}" 
 			Grid.ColumnSpan="2">
+			<MenuItem 
+				Header="Nuclear" 
+				FontSize="15" 
+				FontFamily="Segoe UI Semilight" 
+				Padding="6,0" 
+				Click="MenuItem_Click"/>
 			<MenuItem 
 				Header="Operations" 
 				FontSize="15" 

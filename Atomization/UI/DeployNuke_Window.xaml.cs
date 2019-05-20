@@ -19,16 +19,23 @@ namespace Atomization
 	/// </summary>
 	public partial class DeployNuke_Window : Window
 	{
-		public Operations ParentPage;
+		public Nuclear ParentPage;
 		public DeployNuke_Window()
 		{
 			InitializeComponent();
 			Closing += DeployNuke_Window_Closing;
+			SelectionList.ItemsSource = Data.Me.NuclearPlatforms;
 
-			foreach (var item in Data.Me.NuclearPlatforms)
-			{
-				SelectionList.Items.Add(item);
-			}
+			Target.Items.Clear();
+			Data.Regions.ForEach(
+				r => Target.Items.Add(
+					new ComboBoxItem
+					{
+						Content = r.Name,
+						Padding = new Thickness(3)
+					}
+				)
+			);
 		}
 
 		private void DeployNuke_Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -36,7 +43,7 @@ namespace Atomization
 			ParentPage.DeployNuke_Window = null;
 		}
 
-		private void Button_Click(object sender, RoutedEventArgs e)
+		private void ExecuteOrder(object sender, RoutedEventArgs e)
 		{
 			NuclearWeapon prefab;
 			switch (((ComboBoxItem)CarrierType.SelectedItem)?.Content.ToString())
@@ -98,6 +105,7 @@ namespace Atomization
 
 		private void SelectionList_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
+			#region Control the comboboxes of `CarrierType`
 			if (SelectionList.SelectedItem is StrategicBomber)
 			{
 				for (int i = 0; i < 3; i++)
@@ -116,6 +124,11 @@ namespace Atomization
 					current.IsEnabled = true;
 				}
 			}
+			#endregion
+		}
+
+		private void CarrierType_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
 		}
 	}
 }

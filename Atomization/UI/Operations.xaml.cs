@@ -17,28 +17,10 @@ namespace Atomization
 {	
 	public partial class Operations : Page
 	{
-		public DeployNuke_Window DeployNuke_Window = null;
-
 		public Operations()
 		{
 			InitializeComponent();
-			foreach (var platform in Data.Me.NuclearPlatforms)
-			{
-				platform.NuclearWeapons.OnAddItem += (list, weapon) => NukeList.Items.Add(weapon);
-			}
 		}
 
-		private void Button_DeployNuke_Click(object sender, RoutedEventArgs e)
-		{
-			if (DeployNuke_Window == null)
-			{
-				DeployNuke_Window = new DeployNuke_Window() { ParentPage = this };
-				DeployNuke_Window.Show();
-			}
-			else
-			{
-				DeployNuke_Window.Focus();
-			}
-		}
 	}
 }

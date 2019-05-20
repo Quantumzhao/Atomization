@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,38 +9,39 @@ namespace Atomization
 {
 	public static class Data
 	{
-		static Data()
+		public static List<Region> Regions = new List<Region>();
+		public static Queue<string> WatersNames { get; private set; }
+		public static Queue<string> NationNames { get; private set; }
+
+		public static Superpower Me;
+
+		public static void Initiaze()
 		{
-			#region Initialize Myself
-			Superpowers.Add(new Superpower() { Name = "C" });
-			Me = Superpowers[0];
-			#endregion
-
-			#region Initialize Opponents
-			// Add only one opponent to the board for current stage
-			Superpowers.Add(new Superpower() { Name = "A"});
-			#endregion
-
-			#region Initialize Regular Nation
-			// Initialize Adjacent nations
-			foreach (var superpower in Superpowers)
+			try
 			{
-				for (int i = 0; i < Superpower.NumOfAdjacentNations; i++)
+				WatersNames = new Queue<string>(File.ReadAllLines("..\\..\\Nations\\Waters Names.txt"));
+			}
+			catch (Exception)
+			{
+				for (int i = 0; i < 25; i++)
 				{
-					RegularNation nation = new RegularNation();
-					superpower.Adjacency[i] = nation;
-					RegularNations.Add(nation);
+					WatersNames.Enqueue("");
 				}
 			}
-			// Initialize non-adjacent nations
-			for (int i = 0; i < Nation.NumOfNonAdjacentNations; i++)
+			try
 			{
-				RegularNations.Add(new RegularNation());
+				NationNames = new Queue<string>(File.ReadAllLines("..\\..\\Nations\\Nation Names.txt"));
 			}
-			#endregion
+			catch (Exception)
+			{
+				for (int i = 0; i < 20; i++)
+				{
+					NationNames.Enqueue("");
+				}
+			}
+
+			Regions.Add(Me = new Superpower() { Name = "C" });
+			Regions.Add(new Superpower() { Name = "A" });
 		}
-		public static List<RegularNation> RegularNations { get; set; } = new List<RegularNation>();
-		public static List<Superpower> Superpowers { get; set; } = new List<Superpower>();
-		public static Superpower Me { get; set; }
 	}
 }
