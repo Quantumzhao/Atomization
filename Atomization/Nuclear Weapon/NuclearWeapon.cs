@@ -10,7 +10,7 @@ namespace Atomization
 	{
 		public string Name { get; set; }
 		public Platform Platform { get; set; }
-		public Nation Target { get; set; }
+		public Region Target { get; set; }
 		public GameObjectList<Warhead> Warheads { get; set; } = new GameObjectList<Warhead>();
 		public string WarheadType => Warheads.Count != 1 ? "(Multiple Types)" : Warheads[0].WarheadType;
 	}

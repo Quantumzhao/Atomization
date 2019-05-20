@@ -19,7 +19,7 @@
 			<ScrollViewer 
 				HorizontalScrollBarVisibility="Auto" 
 				VerticalScrollBarVisibility="Auto" 
-				Margin="10,45,0,52" HorizontalAlignment="Left">
+				Margin="10,45,0,52" HorizontalAlignment="Left" MaxWidth="400">
 				<ListView 
 					x:Name="NukeList" 
 					HorizontalAlignment="Left" 

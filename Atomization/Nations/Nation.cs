@@ -23,7 +23,7 @@ namespace Atomization
 		{
 			TerritorialWaters = new Waters() { Name = Data.WatersNames.Dequeue() };
 			TerritorialWaters.Affiliation = this;
-			Data.Regions.Add(TerritorialWaters = new Waters() { Name = Data.WatersNames.Dequeue()});
+			Data.Regions.Add(TerritorialWaters);
 		}
 
 		public const int NumOfNonAdjacentNations = 5;

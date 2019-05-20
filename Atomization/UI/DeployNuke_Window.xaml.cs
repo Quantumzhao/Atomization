@@ -95,6 +95,10 @@ namespace Atomization
 
 			prefab.Name = TextBox_Name.Text;
 
+			string targetName = (Target.SelectedItem as ComboBoxItem)?.Content.ToString();
+			if (targetName == null) return;
+			prefab.Target = Data.Regions.Single(n => n.Name == targetName);
+
 			prefab.Platform = SelectionList.SelectedItem as Platform;
 			if (prefab.Platform == null) return;
 
