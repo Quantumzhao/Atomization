@@ -26,6 +26,16 @@ namespace Atomization
 
 	public class StrategicBomber : Platform
 	{
-		public override string TypeName => throw new NotImplementedException();
+		public override string TypeName => "StrategicBomber";
+	}
+
+	public class MissileLauncher : Platform
+	{
+		public override string TypeName => "MissileLauncher";
+	}
+
+	public class NuclearSubmarine : Platform
+	{
+		public override string TypeName => "NuclearSubmarine";
 	}
 }

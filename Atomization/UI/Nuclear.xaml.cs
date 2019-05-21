@@ -82,7 +82,6 @@ namespace Atomization
 				case "Silo":
 				case "Missile Launcher":
 				case "Strategic Bomber":
-				case "Nuke Mine":
 					RegionOfDeployment.Items.Add(
 						new ComboBoxItem()
 						{
@@ -143,15 +142,11 @@ namespace Atomization
 					break;
 
 				case "Missile Launcher":
-					throw new NotImplementedException();
+					prefab = new MissileLauncher();
 					break;
 
 				case "Nuclear Submarine":
-					throw new NotImplementedException();
-					break;
-
-				case "Nuke Mine":
-					throw new NotImplementedException();
+					prefab = new NuclearSubmarine();
 					break;
 
 				default:
@@ -162,6 +157,12 @@ namespace Atomization
 			var name = (RegionOfDeployment.SelectedItem as ComboBoxItem).Content.ToString();
 			prefab.DeployRegion = Data.Regions.Single(r => r.Name == name);
 			Data.Me.NuclearPlatforms.Add(prefab);
+
+			MessageBox.Show(
+				"New nuclear strike platform deployed successfully", 
+				"Intelligence", 
+				MessageBoxButton.OK, 
+				MessageBoxImage.Information);
 		}
 	}
 }

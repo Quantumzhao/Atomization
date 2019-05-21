@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	  mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="Nuclear" Width="620" Height="462">
+      Title="Nuclear" Width="Auto" Height="Auto">
 
 	<Grid>
 		<Grid>
@@ -19,7 +19,7 @@
 			<ScrollViewer 
 				HorizontalScrollBarVisibility="Auto" 
 				VerticalScrollBarVisibility="Auto" 
-				Margin="10,45,0,52" HorizontalAlignment="Left" MaxWidth="400">
+				Margin="10,45,220,52">
 				<ListView 
 					x:Name="NukeList" 
 					HorizontalAlignment="Left" 
@@ -78,7 +78,6 @@
 					<ComboBoxItem Content="Strategic Bomber" Padding="3"/>
 					<ComboBoxItem Content="Missile Launcher" Padding="3"/>
 					<ComboBoxItem Content="Nuclear Submarine" Padding="3"/>
-					<ComboBoxItem Content="Nuke Mine" Padding="3"/>
 				</ComboBox>
 				<Label Content="Region of Deployment" Margin="0,5,0,0"></Label>
 				<ComboBox x:Name="RegionOfDeployment" Margin="0,5,0,0"></ComboBox>

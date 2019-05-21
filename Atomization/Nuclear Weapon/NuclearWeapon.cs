@@ -15,9 +15,24 @@ namespace Atomization
 		public string WarheadType => Warheads.Count != 1 ? "(Multiple Types)" : Warheads[0].WarheadType;
 	}
 
-	public class NuclearMissile : NuclearWeapon
+	public abstract class NuclearMissile : NuclearWeapon
 	{
-		public string TypeName => "NuclearMissile";
+		public abstract string TypeName { get; }
+	}
+
+	public class CruiseMissile : NuclearMissile
+	{
+		public override string TypeName => "CruiseMissile";
+	}
+
+	public class MediumRangeMissile : NuclearMissile
+	{
+		public override string TypeName => "MediumRangeMissile";
+	}
+
+	public class ICBM : NuclearMissile
+	{
+		public override string TypeName => "ICBM";
 	}
 
 	public class NuclearBomb : NuclearWeapon

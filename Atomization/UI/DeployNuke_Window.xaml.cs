@@ -48,6 +48,7 @@ namespace Atomization
 				isNewNuke = false;
 				CarrierType.IsEnabled = false;
 				WarheadType.IsEnabled = false;
+				Status.Foreground = Brushes.Red;
 				Status.Content = "Configuring an existing nuclear weapon";
 			}
 		}
@@ -62,15 +63,15 @@ namespace Atomization
 			switch (((ComboBoxItem)CarrierType.SelectedItem)?.Content.ToString())
 			{
 				case "Cruise Missile":
-					selectedWeapon = new NuclearMissile();
+					selectedWeapon = new CruiseMissile();
 					break;
 
 				case "Medium Range Missile":
-					selectedWeapon = new NuclearMissile();
+					selectedWeapon = new MediumRangeMissile();
 					break;
 
 				case "ICBM":
-					selectedWeapon = new NuclearMissile();
+					selectedWeapon = new ICBM();
 					break;
 
 				case "Aerial Bomb":
