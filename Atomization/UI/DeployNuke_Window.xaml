@@ -7,73 +7,148 @@
         mc:Ignorable="d"
         Title="DeployNuke_Window" Width="320" Height="650" WindowStartupLocation="CenterScreen" WindowStyle="ToolWindow">
 	<Grid>
-		<StackPanel Margin="10,10,10,0" Height="Auto" VerticalAlignment="Top">
-			<Label Content="Basic Information" FontSize="15" FontWeight="Bold" FontFamily="Segoe UI Light"></Label>
+		<StackPanel Margin="10,10,10,0" 
+					Height="Auto" 
+					VerticalAlignment="Top">
+			<Label Content="Basic Information" 
+				   FontSize="15" 
+				   FontWeight="Bold" 
+				   FontFamily="Segoe UI Light">				
+			</Label>
 			<DockPanel Margin="10,10,0,0">
-				<Label Content="Name:" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top"/>
-				<TextBox x:Name="TextBox_Name" HorizontalAlignment="Right" Margin="0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Padding="5"/>
+				<Label Content="Name:" 
+					   HorizontalAlignment="Left" 
+					   Margin="0" 
+					   VerticalAlignment="Top">					
+				</Label>
+				<TextBox x:Name="TextBox_Name" 
+						 HorizontalAlignment="Right" 
+						 Margin="0" TextWrapping="Wrap" 
+						 VerticalAlignment="Top" 
+						 Width="120" 
+						 Padding="5">					
+				</TextBox>
 			</DockPanel>
 			<StackPanel Margin="0,10,0,0">
-				<Label Content="Platform:" HorizontalAlignment="Left" Margin="10,0" VerticalAlignment="Top"/>
-				<ListView x:Name="SelectionList" Height="300" Margin="0,10,0,0" SelectionChanged="SelectionList_SelectionChanged">
+				<Label Content="Platform:" 
+					   HorizontalAlignment="Left" 
+					   Margin="10,0" 
+					   VerticalAlignment="Top">					
+				</Label>
+				<ListView x:Name="SelectionList" 
+						  Height="300" 
+						  Margin="0,10,0,0" 
+						  SelectionChanged="SelectionList_SelectionChanged">
 					<ListView.View>
 						<GridView>
-							<GridViewColumn 
-							Header="Name" 
-							DisplayMemberBinding="{Binding Name}">
+							<GridViewColumn  Header="Name"  
+											 DisplayMemberBinding="{Binding Name}">
 							</GridViewColumn>
-							<GridViewColumn 
-							Header="Type" 
-							DisplayMemberBinding="{Binding TypeName}">
+							<GridViewColumn Header="Type"  
+											DisplayMemberBinding="{Binding TypeName}">
 							</GridViewColumn>
-							<GridViewColumn 
-							Header="Deployed Region"
-							DisplayMemberBinding="{Binding DeployRegion.Name}">
+							<GridViewColumn Header="Deployed Region"
+											DisplayMemberBinding="{Binding DeployRegion.Name}">
 							</GridViewColumn>
-							<GridViewColumn 
-							Header="Available Load"
-							DisplayMemberBinding="{Binding AvailableLoad}">
+							<GridViewColumn Header="Available Load" 
+											DisplayMemberBinding="{Binding AvailableLoad}">
 							</GridViewColumn>
 						</GridView>
 					</ListView.View>
 				</ListView>
 			</StackPanel>
 			<DockPanel Margin="10,10,0,0">
-				<Label Content="Warhead Type:" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top"/>
-				<ComboBox x:Name="WarheadType" HorizontalAlignment="Right" Margin="0" VerticalAlignment="Top" Width="120" Padding="5">
-					<ComboBoxItem Content="Hydrogen Bomb" Padding="3"/>
-					<ComboBoxItem Content="Atomic Bomb Gen 1" Padding="3"/>
-					<ComboBoxItem Content="Atomic Bomb Gen 2" Padding="3"/>
-					<ComboBoxItem Content="Dirty Bomb" Padding="3"/>
+				<Label Content="Warhead Type:" 
+					   HorizontalAlignment="Left" 
+					   Margin="0" 
+					   VerticalAlignment="Top">
+					
+				</Label>
+				<ComboBox x:Name="WarheadType" 
+						  HorizontalAlignment="Right" 
+						  Margin="0" 
+						  VerticalAlignment="Top" 
+						  Width="120" 
+						  Padding="5">
+					<ComboBoxItem Content="Hydrogen Bomb" 
+								  Padding="3">						
+					</ComboBoxItem>
+					<ComboBoxItem Content="Atomic Bomb Gen 1" 
+								  Padding="3">						
+					</ComboBoxItem>
+					<ComboBoxItem Content="Atomic Bomb Gen 2" 
+								  Padding="3">						
+					</ComboBoxItem>
+					<ComboBoxItem Content="Dirty Bomb"
+								  Padding="3">						
+					</ComboBoxItem>
 				</ComboBox>
 			</DockPanel>
 			<DockPanel Margin="10,10,0,0">
-				<Label Content="Carrier Type:" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top"/>
-				<ComboBox x:Name="CarrierType" HorizontalAlignment="Right" Margin="0" VerticalAlignment="Top" Width="120" Padding="5">
-					<ComboBoxItem Content="Cruise Missile" Padding="3"/>
-					<ComboBoxItem Content="Medium Range Missile" Padding="3"/>
-					<ComboBoxItem Content="ICBM" Padding="3"/>
-					<ComboBoxItem Content="Aerial Bomb" Padding="3"/>
+				<Label Content="Carrier Type:" 
+					   HorizontalAlignment="Left" 
+					   Margin="0" 
+					   VerticalAlignment="Top">					
+				</Label>
+				<ComboBox x:Name="CarrierType" 
+						  HorizontalAlignment="Right" 
+						  Margin="0" 
+						  VerticalAlignment="Top"
+						  Width="120" 
+						  Padding="5">
+					<ComboBoxItem Content="Cruise Missile" 
+								  Padding="3">						
+					</ComboBoxItem>
+					<ComboBoxItem Content="Medium Range Missile" 
+								  Padding="3">						
+					</ComboBoxItem>
+					<ComboBoxItem Content="ICBM" 
+								  Padding="3">						
+					</ComboBoxItem>
+					<ComboBoxItem Content="Aerial Bomb" 
+								  Padding="3">						
+					</ComboBoxItem>
 				</ComboBox>
 			</DockPanel>
 			<DockPanel Margin="10,10,0,0">
-				<Label Content="Target" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top"/>
-				<ComboBox x:Name="Target" HorizontalAlignment="Right" Margin="0" VerticalAlignment="Top" Width="120" Padding="5">
+				<Label Content="Target" 
+					   HorizontalAlignment="Left" 
+					   Margin="0" 
+					   VerticalAlignment="Top">					
+				</Label>
+				<ComboBox x:Name="Target" 
+						  HorizontalAlignment="Right" 
+						  Margin="0" 
+						  VerticalAlignment="Top" 
+						  Width="120" 
+						  Padding="5">
 				</ComboBox>
 			</DockPanel>
 
-			<Button Content="Deploy" Margin="0,10,0,0" Padding="5" VerticalAlignment="Top" Click="ExecuteOrder">
+			<Button Content="Deploy" 
+					Margin="0,10,0,0" 
+					Padding="5" 
+					VerticalAlignment="Top" 
+					Click="ExecuteOrder">
 				<Button.ToolTip>
 					<StackPanel>
-						<Label Content="Info" FontWeight="Light" FontSize="15"></Label>
-						<Label Content="Hi-Edu Population:" Margin="10, 10"></Label>
+						<Label Content="Info" 
+							   FontWeight="Light" 
+							   FontSize="15">							
+						</Label>
+						<Label Content="Hi-Edu Population:" 
+							   Margin="10, 10">							
+						</Label>
 					</StackPanel>
 				</Button.ToolTip>
 			</Button>
 		</StackPanel>
-		<StatusBar Height="Auto" VerticalAlignment="Bottom">
+		<StatusBar Height="Auto" 
+				   VerticalAlignment="Bottom">
 			<StackPanel>
-				<Label x:Name="Status" Content="Deploying a new Nuclear Weapon"></Label>
+				<Label x:Name="Status" 
+					   Content="Deploying a new Nuclear Weapon">					
+				</Label>
 			</StackPanel>
 		</StatusBar>
 	</Grid>

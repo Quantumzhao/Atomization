@@ -8,214 +8,191 @@
     mc:Ignorable="d" 
     d:DesignHeight="450"
     Title="Operations" Height="462" Width="620">
-	<Grid>
+	<Grid Height="462" VerticalAlignment="Top" HorizontalAlignment="Left" Width="620">
 		<Grid.ColumnDefinitions>
-			<ColumnDefinition 
-				Width="370*">				
-			</ColumnDefinition>
-			<ColumnDefinition 
-				Width="240*">				
-			</ColumnDefinition>
+			<ColumnDefinition Width="80*"/>
+			<ColumnDefinition Width="60*"/>
+			<ColumnDefinition Width="60*"/>
 		</Grid.ColumnDefinitions>
-		<ScrollViewer 
-			Grid.Column="1" 
-			VerticalScrollBarVisibility="Auto" 
-			Margin="0,0,0,41">
-			<StackPanel 
-				HorizontalAlignment="Left"
-				Height="Auto" 
-				Margin="0" 
+		<StackPanel 
+			Orientation="Horizontal" Margin="0,10,30,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="160" Grid.Column="1" Grid.ColumnSpan="2">
+			<Label 
+				Content="Target:" 
+				Margin="10,3,0,0">
+			</Label>
+			<ComboBox 
+				Margin="5,5,0,5" 
+				Width="100"/>
+		</StackPanel>
+		<StackPanel 
+			Margin="10,47,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+			<Label Content="Subversion" FontFamily="Segoe UI Light" FontSize="15"></Label>
+			<CheckBox 
+				Content="Subvert and Support a Puppet" 
+				Margin="10,10,10,0" 
+				VerticalAlignment="Top" 
+				HorizontalAlignment="Left" 
+				FontFamily="Segoe UI Regular"/>
+			<Label Content="Military Forces Involved: " Margin="5,10,5,0"/>
+			<TextBox x:Name="MilitaryForces" Margin="10,0" Padding="3"></TextBox>
+			<Label Content="From My Nation: " Margin="5,10,0,0"></Label>
+			<Slider 
+				AutoToolTipPlacement="TopLeft" 
+				Maximum="{Binding Text, ElementName=MilitaryForces, UpdateSourceTrigger=PropertyChanged}" 
+				TickPlacement="BottomRight" 
+				Margin="10,0,10,0">
+			</Slider>
+			<Label Content="From Alliance: " Margin="5,0,0,0"></Label>
+			<Slider AutoToolTipPlacement="TopLeft" TickPlacement="BottomRight" Margin="10,0,10,0"></Slider>
+			<Button
+				Content="Subvert" 
+				Padding="5,2.5"
+				Margin="10" 
 				VerticalAlignment="Top">
-				<Label 
-					Content="Millitary Adventures" 
-					HorizontalAlignment="Left" 
-					VerticalAlignment="Top" 
-					FontSize="15" 
-					FontWeight="Bold" 
-					Margin="0,10,0,0">					
-				</Label>
-				<StackPanel 
-					Orientation="Horizontal">
-					<Label 
-						Content="Target:" 
-						Margin="10,3,0,0">						
-					</Label>
-					<ComboBox 
-						Margin="5,5,0,5" 
-						Width="100"/>
-				</StackPanel>
-				<Expander 
-					Header="Subversion" 
-					HorizontalAlignment="Left" 
-					Margin="10,10,0,0" 
-					VerticalAlignment="Top">
-					<StackPanel 
-						Margin="10,0">
-						<CheckBox 
-							Content="Subvert and Supprot a Puppet" 
-							Padding="5,0" 
-							Margin="10,5,10,0" 
-							VerticalAlignment="Top" 
-							HorizontalAlignment="Left" 
-							FontFamily="Segoe UI Semilight">							
-						</CheckBox>
-						<Button 
-							Content="Subvert" 
-							Padding="5,2.5"
-							Margin="10,10,10,0" 
-							VerticalAlignment="Top">							
-						</Button>
-					</StackPanel>
-				</Expander>
-				<Expander 
-					Header="Sabotage" 
-					HorizontalAlignment="Left" 
-					Margin="10,10,0,0" 
-					VerticalAlignment="Top" 
-					Width="180">
-					<StackPanel 
-						Margin="10,0">
-						<Label 
-							Content="Select an Infrastructure:">							
-						</Label>
-						<ComboBox 
-							Margin="5,0,0,0"/>
-						<Button 
-							Content="Execute" 
-							Margin="5,5,0,0" 
-							Padding="5,2.5">							
-						</Button>
-					</StackPanel>
-				</Expander>
-				<Expander 
-					Header="Assasination" 
-					HorizontalAlignment="Left"
-					Margin="10,10,0,0" 
-					VerticalAlignment="Top" 
-					Width="180">
-					<StackPanel 
-						Margin="10,0">
-						<Label 
-							Content="Select Occupation:">							
-						</Label>
-						<ComboBox
-							Margin="5,0,0,0"/>
-						<Button 
-							Content="Execute" 
-							Margin="5,5,0,0" 
-							Padding="5,2.5">							
-						</Button>
-					</StackPanel>
-				</Expander>
-				<Expander 
-					Header="Blockade" 
-					HorizontalAlignment="Left" 
-					Margin="10,10,0,0" 
-					VerticalAlignment="Top" 
-					Width="180">
-					<StackPanel 
-						Margin="10,0">
-						<ListBox 
-							Background="{x:Null}" 
-							Height="100" 
-							MaxHeight="100" 
-							Margin="0,5,0,0">
-							<CheckBox 
-								Content="Checkbox1">								
-							</CheckBox>
-							<CheckBox 
-								Content="Checkbox2">								
-							</CheckBox>
-						</ListBox>
-						<Button 
-							Content="Execute" 
-							Margin="0,10,0,0" 
-							Padding="5,2.5">							
-						</Button>
-					</StackPanel>
-				</Expander>
-				<Expander 
-					Header="Maneuver" 
-					HorizontalAlignment="Left" 
-					Margin="10,10,0,0" 
-					VerticalAlignment="Top">
-					<StackPanel 
-						Margin="10,0">
-						<Label 
-							Content="Millitary Forces Involved in:">							
-						</Label>
-						<TextBox 
-							Background="{x:Null}" 
-							Height="23" 
-							Margin="5,0,0,0">							
-						</TextBox>
-						<Label 
-							Content="Nuclear Weapons Involved in:">							
-						</Label>
-						<ListBox 
-							Margin="5,0,0,0" 
-							Background="{x:Null}">
-							<ListBoxItem 
-								Content="Nuke1">								
-							</ListBoxItem>
-							<ListBoxItem 
-								Content="Nuke2">								
-							</ListBoxItem>
-						</ListBox>
-						<Button 
-							Content="Execute" 
-							Margin="0,10,0,0" 
-							Padding="5,2.5">							
-						</Button>
-					</StackPanel>
-				</Expander>
-				<Expander 
-					Header="Invasion" 
-					HorizontalAlignment="Left"
-					Margin="10,10,0,0"
-					VerticalAlignment="Top">
-					<StackPanel 
-						Margin="10,0">
-						<Label 
-							Content="Millitary Forces Involved in:" 
-							Margin="0">							
-						</Label>
-						<TextBox 
-							Background="{x:Null}" 
-							Height="23" 
-							Margin="5,0,0,0">							
-						</TextBox>
-						<Button 
-							Content="Execute" 
-							Margin="5,10,0,0" 
-							Padding="5,2.5">							
-						</Button>
-					</StackPanel>
-				</Expander>
-				<Expander 
-					Header="Military Budget Increment" 
-					HorizontalAlignment="Left"
-					Margin="10,10,0,0"
-					VerticalAlignment="Top">
-					<StackPanel 
-						Margin="10,0">
-						<Label 
-							Content="Appropriation" 
-							Margin="0">
-						</Label>
-						<TextBox 
-							Background="{x:Null}" 
-							Height="23" 
-							Margin="5,0,0,0">
-						</TextBox>
-						<Button 
-							Content="Execute" 
-							Margin="5,10,0,0" 
-							Padding="5,2.5">
-						</Button>
-					</StackPanel>
-				</Expander>
+				<Button.ToolTip>
+					<DockPanel>
+						<Label Content="Estimated Probability: " HorizontalAlignment="Left"></Label>
+						<Label Content="" HorizontalAlignment="Right"></Label>
+					</DockPanel>
+				</Button.ToolTip>
+			</Button>
+		</StackPanel>
+		<StackPanel 
+			Margin="10,184,10,0" Grid.Column="1" VerticalAlignment="Top" Grid.ColumnSpan="2">
+			<Label Content="Blockade" FontFamily="Segoe UI Light" FontSize="15"></Label>
+			<ListView Height="134">
+				<ListView.View>
+					<GridView>
+						<GridViewColumn Header="Name" Width="120">
+
+						</GridViewColumn>
+						<GridViewColumn Header="Sovereign Right" Width="120">
+
+						</GridViewColumn>
+						<GridViewColumn Header="Affiliation" Width="120">
+
+						</GridViewColumn>
+
+					</GridView>
+				</ListView.View>
+			</ListView>
+			<DockPanel Margin="0,10,0,0">
+				<Label Content="Required Naval Force: "></Label>
+				<Label Content=""></Label>
+				<Button 
+					Content="Execute" 
+					Margin="0" 
+					Padding="5,2.5" 
+					HorizontalAlignment="Right"
+					Width="100">					
+				</Button>
+			</DockPanel>
+		</StackPanel>
+		<Label 
+			Content="Millitary Adventures" 
+			HorizontalAlignment="Left" 
+			VerticalAlignment="Top" 
+			FontSize="15" 
+			FontWeight="Bold" 
+			Margin="10,10,0,0"/>
+		<StackPanel 
+	  Margin="0,47,10,278" Grid.Column="2">
+			<Label Content="Sabotage" FontFamily="Segoe UI Light" FontSize="15"></Label>
+			<Label 
+		  Content="Select Infrastructure:" Margin="5,0,0,0"/>
+			<ComboBox
+		  Margin="10,0" Padding="5,3"/>
+			<Button 
+		  Content="Execute" 
+		  Margin="10,10,10,0" 
+		  Padding="5,2.5"/>
+		</StackPanel>
+		<StackPanel 
+	  Margin="0,47,10,278" Grid.Column="1">
+			<Label Content="Assasination" FontFamily="Segoe UI Light" FontSize="15"/>
+			<Label 
+		  Content="Select Infrastructure:" Margin="5,0,0,0"/>
+			<ComboBox
+		  Margin="10,0,0,0" Padding="5,3"/>
+			<Button 
+		  Content="Execute" 
+		  Margin="10,10,0,0" 
+		  Padding="5,2.5"/>
+		</StackPanel>
+		<StackPanel 
+			Margin="10,320,38,10">
+			<Label Content="Invasion/Stationary" FontFamily="Segoe UI Light" FontSize="15"></Label>
+			<Label 
+				Content="Millitary Forces Involved in:" 
+				Margin="0">
+			</Label>
+			<TextBox 
+				Background="{x:Null}" 
+				Height="23" 
+				Margin="5,0,10,0">
+			</TextBox>
+			<Button 
+				Content="Execute" 
+				Margin="5,10,10,0" 
+				Padding="5,2.5">
+			</Button>
+		</StackPanel>
+		<Expander x:Name="Expander_Maneuver" 
+			Header="Maneuver" 
+			Grid.Column="1" 
+			ExpandDirection="Up" 
+			VerticalAlignment="Bottom" 
+			Margin="10,0,10,30" 
+			Background="White" 
+			BorderBrush="{x:Null}" 
+			Padding="5" 
+			Expanded="Expander_Expanded"
+			Collapsed="Expander_Collapsed">
+			<StackPanel 
+				Margin="10,0">
+				<TextBlock 
+					Text="Millitary Forces Involved in:" Margin="5,0,0,0" TextWrapping="Wrap"/>
+				<TextBox 
+					Background="{x:Null}" 
+					Height="23" 
+					Margin="5,5,0,0"/>
+				<TextBlock 
+					Text="Nuclear Weapons Involved in:" Margin="0,10,0,0" TextWrapping="Wrap" Padding="5,0,0,0"/>
+				<ListBox x:Name="Maneuver_NumNukes" 
+					Margin="5,0,0,0" 
+					Background="{x:Null}" MaxHeight="100">
+				</ListBox>
+				<Button 
+					Content="Execute" 
+					Margin="0,10,0,0" 
+					Padding="5,2.5"/>
 			</StackPanel>
-		</ScrollViewer>
+		</Expander>
+		<Expander 
+			Header="Military Budget Increment"
+			VerticalAlignment="Bottom" 
+			Grid.Column="2" 
+			ExpandDirection="Up" 
+			Margin="0,0,10,30" 
+			Background="White" 
+			Padding="5" 
+			Expanded="Expander_Expanded"
+			Collapsed="Expander_Collapsed">
+			<StackPanel 
+				Margin="10,0">
+				<Label 
+					Content="Appropriation" 
+					Margin="0"/>
+				<TextBox 
+					Background="{x:Null}" 
+					Height="23" 
+					Margin="5,0,0,0"/>
+				<Button 
+					Content="Execute" 
+					Margin="5,10,0,0" 
+					Padding="5,2.5"/>
+			</StackPanel>
+		</Expander>
+
 	</Grid>
 </Page>

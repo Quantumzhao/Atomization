@@ -1,12 +1,12 @@
-﻿<Page x:Class="Atomization.Nuclear"
-      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-	  mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
-      Title="Nuclear" Width="Auto" Height="Auto">
-
+﻿<Page 
+	x:Class="Atomization.Nuclear"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	mc:Ignorable="d" 
+    d:DesignHeight="450" d:DesignWidth="800"
+    Title="Nuclear" Width="Auto" Height="Auto">
 	<Grid>
 		<Grid>
 			<Label 
@@ -68,29 +68,57 @@
 					</ListView.View>
 				</ListView>
 			</ScrollViewer>
-			<StackPanel Margin="0,44,30,10" HorizontalAlignment="Right">
+			<StackPanel 
+				Margin="0,44,30,10" 
+				HorizontalAlignment="Right">
 				<Label 
-				Content="New Nuke Strike Platform" 
-				Margin="0" FontSize="15" FontFamily="Segoe UI Light">
+					Content="New Nuke Strike Platform" 
+					Margin="0" 
+					FontSize="15" 
+					FontFamily="Segoe UI Light">
 				</Label>
-				<ComboBox x:Name="NewPlatform" Margin="0,5,0,0" SelectionChanged="NewPlatform_SelectionChanged">
-					<ComboBoxItem Content="Silo" Padding="3"/>
-					<ComboBoxItem Content="Strategic Bomber" Padding="3"/>
-					<ComboBoxItem Content="Missile Launcher" Padding="3"/>
-					<ComboBoxItem Content="Nuclear Submarine" Padding="3"/>
+				<ComboBox 
+					x:Name="NewPlatform" 
+					Margin="0,5,0,0" 
+					SelectionChanged="NewPlatform_SelectionChanged">
+					<ComboBoxItem 
+						Content="Silo"
+						Padding="3">						
+					</ComboBoxItem>
+					<ComboBoxItem 
+						Content="Strategic 
+						Bomber" 
+						Padding="3">						
+					</ComboBoxItem>
+					<ComboBoxItem 
+						Content="Missile Launcher" 
+						Padding="3">						
+					</ComboBoxItem>
+					<ComboBoxItem 
+						Content="Nuclear Submarine" 
+						Padding="3">						
+					</ComboBoxItem>
 				</ComboBox>
-				<Label Content="Region of Deployment" Margin="0,5,0,0"></Label>
-				<ComboBox x:Name="RegionOfDeployment" Margin="0,5,0,0"></ComboBox>
+				<Label 
+					Content="Region of Deployment"
+					Margin="0,5,0,0">					
+				</Label>
+				<ComboBox 
+					x:Name="RegionOfDeployment" 
+					Margin="0,5,0,0">					
+				</ComboBox>
 				<Button 
 					Content="Deploy" 
 					Margin="0,10,0,0" 
-					Padding="5,5,5,5" Click="Button_Deploy_Click">
+					Padding="5,5,5,5" 
+					Click="Button_Deploy_Click">
 				</Button>
 				<Label 
 					Content="Other Actions" 
 					Margin="0,40,0,0" 
 					FontSize="15" 
-					FontFamily="Segoe UI Light"/>
+					FontFamily="Segoe UI Light">					
+				</Label>
 				<Button 
 					Content="Edit Deployment Config" 
 					VerticalAlignment="Top"
@@ -100,7 +128,10 @@
 				<Button x:Name="Button_DisposeNuke" 
 					Content="Dispose Nuke" 
 					VerticalAlignment="Top" 
-					Padding="5" Click="Button_DisposeNuke_Click" Margin="0,10,0,0"/>
+					Padding="5" 
+					Click="Button_DisposeNuke_Click" 
+					Margin="0,10,0,0">					
+				</Button>
 			</StackPanel>
 		</Grid>
 	</Grid>

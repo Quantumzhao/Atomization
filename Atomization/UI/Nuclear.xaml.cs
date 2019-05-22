@@ -25,6 +25,7 @@ namespace Atomization
 		public Nuclear()
 		{
 			InitializeComponent();
+
 			foreach (var platform in Data.Me.NuclearPlatforms)
 			{
 				platform.NuclearWeapons.OnAddItem += (list, weapon) => NukeList.Items.Add(weapon);
