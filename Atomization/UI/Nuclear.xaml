@@ -126,7 +126,7 @@
 					Padding="5" Click="Button_DeployNuke_Click">
 				</Button>
 				<Button x:Name="Button_DisposeNuke" 
-					Content="Dispose Nuke" 
+					Content="Destroy Nuke" 
 					VerticalAlignment="Top" 
 					Padding="5" 
 					Click="Button_DisposeNuke_Click" 

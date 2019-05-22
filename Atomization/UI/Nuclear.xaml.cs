@@ -26,11 +26,12 @@ namespace Atomization
 		{
 			InitializeComponent();
 
-			foreach (var platform in Data.Me.NuclearPlatforms)
-			{
-				platform.NuclearWeapons.OnAddItem += (list, weapon) => NukeList.Items.Add(weapon);
-				platform.NuclearWeapons.OnRemoveItem += (list, weapon) => NukeList.Items.Remove(weapon);
-			}
+			//foreach (var platform in Data.Me.NuclearPlatforms)
+			//{
+			//	platform.NuclearWeapons.OnItemAdded += (list, weapon) => NukeList.Items.Add(weapon);
+			//	platform.NuclearWeapons.OnItemRemoved += (list, weapon) => NukeList.Items.Remove(weapon);
+			//}
+			NukeList.ItemsSource = Data.myNuclearWeapons;
 		}
 
 		private void Button_DeployNuke_Click(object sender, RoutedEventArgs e)
