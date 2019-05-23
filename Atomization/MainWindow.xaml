@@ -175,15 +175,16 @@
 				</Label>
 			</StackPanel>
 			<StackPanel Orientation="Horizontal">
-				<Label 
-					Content="Resource:" 
-					HorizontalAlignment="Left" 
-					Padding="5,0">
-				</Label>
-				<Label 
-					Content="0" 
-					Padding="5,0">
-				</Label>
+				<Label Content="Food: " Padding="5,0"></Label>
+				<Label Content="0" Padding="5,0"></Label>
+			</StackPanel>
+			<StackPanel Orientation="Horizontal">
+				<Label Content="Raw Material: " Padding="5,0"></Label>
+				<Label Content="0" Padding="5,0"></Label>
+			</StackPanel>
+			<StackPanel Orientation="Horizontal">
+				<Label Content="Nuclear Material: " Padding="5,0"></Label>
+				<Label Content="0" Padding="5,0"></Label>
 			</StackPanel>
 			<StackPanel Orientation="Horizontal" Width="Auto">
 				<Label 
@@ -213,7 +214,6 @@
 					Padding="5,0">
 				</Label>
 			</StackPanel>
-			<Button Content="More Info" BorderBrush="Black" HorizontalContentAlignment="Center" Padding="5,0" Background="{x:Null}" Margin="20,0,0,0" Click="Button_MoreInfo_Click"/>
 		</StatusBar>
 		<ComboBox 
 			HorizontalAlignment="Left" 
@@ -297,5 +297,6 @@
 			</MenuItem>
 		</Menu>
 		<Button Content="Continue &gt;&gt;" Margin="0,14,10,0" VerticalAlignment="Top" HorizontalAlignment="Right" Background="{x:Null}" BorderBrush="Black" Padding="8,5" FontSize="15"/>
+		<Button Content="More Info" BorderBrush="Black" HorizontalContentAlignment="Center" Padding="8,5" Background="{x:Null}" Margin="0,14,127,0" Click="Button_MoreInfo_Click" FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Top"/>
 	</Grid>
 </Window>

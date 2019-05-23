@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,9 +17,10 @@ namespace Atomization
 
 		public event Action<GameObjectList<T>, T, T> OnItemChanged;
 
-		public event Action<GameObjectList<T>, T> OnAddItem;
+		public event Action<GameObjectList<T>, T> OnItemAdded;
 
-		public event Action<GameObjectList<T>, T> OnRemoveItem;
+		public event Action<GameObjectList<T>, T> OnItemRemoved;
+
 		public new bool Add(T item)
 		{
 			if (Count >= Capacity && IsLimitedCapacity)
@@ -28,7 +30,7 @@ namespace Atomization
 			else
 			{
 				base.Add(item);
-				OnAddItem?.Invoke(this, item);
+				OnItemAdded?.Invoke(this, item);
 
 				return false;
 			}
@@ -36,7 +38,7 @@ namespace Atomization
 
 		public new bool Remove(T item)
 		{
-			OnRemoveItem?.Invoke(this, item);
+			OnItemRemoved?.Invoke(this, item);
 			return base.Remove(item);
 		}
 	}

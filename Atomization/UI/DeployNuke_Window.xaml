@@ -122,6 +122,11 @@
 						  VerticalAlignment="Top" 
 						  Width="120" 
 						  Padding="5">
+					<ComboBox.ItemTemplate>
+						<DataTemplate>
+							<TextBlock Text="{Binding Name}" Padding="2"></TextBlock>
+						</DataTemplate>
+					</ComboBox.ItemTemplate>
 				</ComboBox>
 			</DockPanel>
 

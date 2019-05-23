@@ -26,12 +26,7 @@ namespace Atomization
 		{
 			InitializeComponent();
 
-			//foreach (var platform in Data.Me.NuclearPlatforms)
-			//{
-			//	platform.NuclearWeapons.OnItemAdded += (list, weapon) => NukeList.Items.Add(weapon);
-			//	platform.NuclearWeapons.OnItemRemoved += (list, weapon) => NukeList.Items.Remove(weapon);
-			//}
-			NukeList.ItemsSource = Data.myNuclearWeapons;
+			NukeList.ItemsSource = Data.MyNuclearWeapons;			
 		}
 
 		private void Button_DeployNuke_Click(object sender, RoutedEventArgs e)
@@ -136,7 +131,10 @@ namespace Atomization
 			switch ((NewPlatform.SelectedItem as ComboBoxItem)?.Content.ToString())
 			{
 				case "Silo":
-					prefab = new Silo();
+					prefab = new Silo(
+						onItemAdded: (list, item) => Data.MyNuclearWeapons.Add(item),
+						onItemRemoved: (list, item) => Data.MyNuclearWeapons.Remove(item)
+					);
 					break;
 
 				case "Strategic Bomber":

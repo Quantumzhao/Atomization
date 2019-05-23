@@ -60,17 +60,23 @@
 		<StackPanel 
 			Margin="10,184,10,0" Grid.Column="1" VerticalAlignment="Top" Grid.ColumnSpan="2">
 			<Label Content="Blockade" FontFamily="Segoe UI Light" FontSize="15"></Label>
-			<ListView Height="134" Margin="0,0,10,0">
+			<ListView Height="134" Margin="0,0,10,0" x:Name="SelectionList">
 				<ListView.View>
 					<GridView>
-						<GridViewColumn Header="Name" Width="Auto">
-
+						<GridViewColumn 
+							Header="Name" 
+							Width="Auto" 
+							DisplayMemberBinding="{Binding Name}">
 						</GridViewColumn>
-						<GridViewColumn Header="Sovereign Right" Width="Auto">
-
+						<GridViewColumn 
+							Header="Sovereign Right" 
+							Width="Auto" 
+							DisplayMemberBinding="{Binding Affiliation.Name}">
 						</GridViewColumn>
-						<GridViewColumn Header="Affiliation" Width="Auto">
-
+						<GridViewColumn 
+							Header="Affiliation" 
+							Width="Auto" 
+							DisplayMemberBinding="{Binding Affiliation.Affiliation.Name}">
 						</GridViewColumn>
 
 					</GridView>

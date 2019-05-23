@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,11 +19,15 @@ namespace Atomization
 {	
 	public partial class Operations : Page
 	{
+		public ObservableCollection<Region> waters => new ObservableCollection<Region>(Data.Regions.Where(r => r is Waters));
+
 		public Operations()
 		{
 			InitializeComponent();
 
 			Expander_Maneuver.Expanded += LoadNumNukeListBox;
+
+			SelectionList.ItemsSource = waters;
 		}
 
 		private void Expander_Expanded(object sender, RoutedEventArgs e)

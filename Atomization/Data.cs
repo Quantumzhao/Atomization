@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel;
+using System.Collections.ObjectModel;
 
 namespace Atomization
 {
@@ -14,6 +16,12 @@ namespace Atomization
 		public static Queue<string> NationNames { get; private set; }
 
 		public static Superpower Me;
+
+		public static ObservableCollection<NuclearWeapon> MyNuclearWeapons { get; set; }
+			= new ObservableCollection<NuclearWeapon>();
+
+		//public static GameObjectList<NuclearWeapon> myNuclearWeapons { get; private set; }
+		//	= new GameObjectList<NuclearWeapon>();
 
 		public static void Initiaze()
 		{
@@ -40,7 +48,12 @@ namespace Atomization
 				}
 			}
 
-			Regions.Add(Me = new Superpower() { Name = "C" });
+			Regions.Add(
+				Me = new Superpower(
+					onItemAdded: (list, item) => MyNuclearWeapons.Add(item), 
+					onItemRemoved: (list, item) => MyNuclearWeapons.Remove(item)
+				) { Name = "C"}
+			);
 			Regions.Add(new Superpower() { Name = "A" });
 		}
 	}

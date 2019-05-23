@@ -8,6 +8,15 @@ namespace Atomization
 {
 	public abstract class Platform
 	{
+		public Platform(
+			Action<GameObjectList<NuclearWeapon>, NuclearWeapon> onItemAdded = null,
+			Action<GameObjectList<NuclearWeapon>, NuclearWeapon> onItemRemoved = null
+		)
+		{
+			NuclearWeapons.OnItemAdded += onItemAdded;
+			NuclearWeapons.OnItemRemoved += onItemRemoved;
+		}
+
 		public abstract string TypeName { get; }
 		public Region DeployRegion { get; set; }
 		public int AvailableLoad => NuclearWeapons.Capacity - NuclearWeapons.Count;
@@ -16,7 +25,10 @@ namespace Atomization
 
 	public class Silo : Platform
 	{
-		public Silo()
+		public Silo(
+			Action<GameObjectList<NuclearWeapon>, NuclearWeapon> onItemAdded = null,
+			Action<GameObjectList<NuclearWeapon>, NuclearWeapon> onItemRemoved = null
+		) : base(onItemAdded: onItemAdded, onItemRemoved: onItemRemoved)
 		{
 			NuclearWeapons.Capacity = 1;
 		}

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,6 +24,7 @@ namespace Atomization
 
 		private NuclearWeapon selectedWeapon = null;
 		private bool isNewNuke = true;
+
 		public DeployNuke_Window(Nuclear parentPage)
 		{
 			InitializeComponent();
@@ -33,15 +35,7 @@ namespace Atomization
 			SelectionList.ItemsSource = Data.Me.NuclearPlatforms;
 
 			Target.Items.Clear();
-			Data.Regions.ForEach(
-				r => Target.Items.Add(
-					new ComboBoxItem
-					{
-						Content = r.Name,
-						Padding = new Thickness(3)
-					}
-				)
-			);
+			Target.ItemsSource = Data.Regions;
 
 			if ((selectedWeapon = ParentPage.NukeList.SelectedItem as NuclearWeapon) != null)
 			{

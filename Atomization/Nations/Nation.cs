@@ -264,11 +264,14 @@ namespace Atomization
 	public class Superpower : Nation
 	{
 		public const int InitialNukeSilos = 10;
-		public Superpower() : base()
+		public Superpower(
+			Action<GameObjectList<NuclearWeapon>, NuclearWeapon> onItemAdded = null, 
+			Action<GameObjectList<NuclearWeapon>, NuclearWeapon> onItemRemoved = null
+		) : base()
 		{
 			for (int i = 0; i < InitialNukeSilos; i++)
 			{
-				NuclearPlatforms.Add(new Silo() { DeployRegion = this});
+				NuclearPlatforms.Add(new Silo(onItemAdded, onItemRemoved) { DeployRegion = this});
 			}
 
 			for (int i = 0; i < NumOfAdjacentNations; i++)
@@ -280,7 +283,7 @@ namespace Atomization
 		}
 		public const int NumOfAdjacentNations = 5;
 
-		public List<Platform> NuclearPlatforms { get; set; } = new List<Platform>();
+		public GameObjectList<Platform> NuclearPlatforms { get; set; } = new GameObjectList<Platform>();
 
 		public RegularNation[] Adjacency { get; set; } = new RegularNation[NumOfAdjacentNations];
 
