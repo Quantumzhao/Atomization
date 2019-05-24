@@ -86,8 +86,7 @@
 						Padding="3">						
 					</ComboBoxItem>
 					<ComboBoxItem 
-						Content="Strategic 
-						Bomber" 
+						Content="Strategic Bomber" 
 						Padding="3">						
 					</ComboBoxItem>
 					<ComboBoxItem 
@@ -105,7 +104,12 @@
 				</Label>
 				<ComboBox 
 					x:Name="RegionOfDeployment" 
-					Margin="0,5,0,0">					
+					Margin="0,5,0,0">
+					<ComboBox.ItemTemplate>
+						<DataTemplate>
+							<TextBlock Text="{Binding Name}" Padding="2"></TextBlock>
+						</DataTemplate>
+					</ComboBox.ItemTemplate>
 				</ComboBox>
 				<Button 
 					Content="Deploy" 

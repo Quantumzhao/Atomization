@@ -73,50 +73,16 @@ namespace Atomization
 
 		private void NewPlatform_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
-			RegionOfDeployment.Items.Clear();
 			switch ((NewPlatform.SelectedItem as ComboBoxItem)?.Content.ToString())
 			{
 				case "Silo":
 				case "Missile Launcher":
 				case "Strategic Bomber":
-					RegionOfDeployment.Items.Add(
-						new ComboBoxItem()
-						{
-							Content = Data.Me.Name,
-							Padding = new Thickness(3)
-						}
-					);
-					foreach (var item in Data.Me.SateliteNations)
-					{
-						RegionOfDeployment.Items.Add(
-							new ComboBoxItem()
-							{
-								Content = item.Name,
-								Padding = new Thickness(3)
-							}
-						);
-					}
+					RegionOfDeployment.ItemsSource = new List<Nation>(Data.Me.SateliteNations) { Data.Me };
 					break;
 
 				case "Nuclear Submarine":
-					RegionOfDeployment.Items.Add(
-						new ComboBoxItem()
-						{
-							Content = Data.Me.TerritorialWaters.Name,
-							Padding = new Thickness(3)
-						}
-					);
-					foreach (var item in Data.Me.SateliteNations)
-					{
-						RegionOfDeployment.Items.Add(
-							new ComboBoxItem()
-							{
-								Content = item.TerritorialWaters.Name,
-								Padding = new Thickness(3)
-							}
-						);
-					}
-
+					RegionOfDeployment.ItemsSource = new List<Region>(Data.Regions.Where(r => r is Waters));
 					break;
 
 				default:
@@ -127,26 +93,39 @@ namespace Atomization
 		private void Button_Deploy_Click(object sender, RoutedEventArgs e)
 		{
 			Platform prefab;
+			Action<GameObjectList<NuclearWeapon>, NuclearWeapon> addHandler =
+				(list, item) => Data.MyNuclearWeapons.Add(item);
+			Action<GameObjectList<NuclearWeapon>, NuclearWeapon> RemoveHandler =
+				(list, item) => Data.MyNuclearWeapons.Remove(item);
 
 			switch ((NewPlatform.SelectedItem as ComboBoxItem)?.Content.ToString())
 			{
 				case "Silo":
 					prefab = new Silo(
-						onItemAdded: (list, item) => Data.MyNuclearWeapons.Add(item),
-						onItemRemoved: (list, item) => Data.MyNuclearWeapons.Remove(item)
+						onItemAdded: addHandler,
+						onItemRemoved: RemoveHandler
 					);
 					break;
 
 				case "Strategic Bomber":
-					prefab = new StrategicBomber();
+					prefab = new StrategicBomber(
+						onItemAdded: addHandler,
+						onItemRemoved: RemoveHandler
+					);
 					break;
 
 				case "Missile Launcher":
-					prefab = new MissileLauncher();
+					prefab = new MissileLauncher(
+						onItemAdded: addHandler,
+						onItemRemoved: RemoveHandler
+					);
 					break;
 
 				case "Nuclear Submarine":
-					prefab = new NuclearSubmarine();
+					prefab = new NuclearSubmarine(
+						onItemAdded: addHandler,
+						onItemRemoved: RemoveHandler
+					);
 					break;
 
 				default:
@@ -154,8 +133,7 @@ namespace Atomization
 			}
 
 			if (RegionOfDeployment.SelectedItem == null) return;
-			var name = (RegionOfDeployment.SelectedItem as ComboBoxItem).Content.ToString();
-			prefab.DeployRegion = Data.Regions.Single(r => r.Name == name);
+			prefab.DeployRegion = RegionOfDeployment.SelectedItem as Region;
 			Data.Me.NuclearPlatforms.Add(prefab);
 
 			MessageBox.Show(

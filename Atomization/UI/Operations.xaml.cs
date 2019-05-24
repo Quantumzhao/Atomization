@@ -19,17 +19,23 @@ namespace Atomization
 {	
 	public partial class Operations : Page
 	{
-		public ObservableCollection<Region> waters => new ObservableCollection<Region>(Data.Regions.Where(r => r is Waters));
+		public ObservableCollection<Region> waters => 
+			new ObservableCollection<Region>(Data.Regions.Where(r => r is Waters));
 
 		public Operations()
 		{
 			InitializeComponent();
 
-			Expander_Maneuver.Expanded += LoadNumNukeListBox;
-
 			SelectionList.ItemsSource = waters;
+
+			Target.ItemsSource = Data.Regions;
+
+			Maneuver_NumNukes.ItemsSource = new ObservableCollection<NuclearWeapon>(
+				Data.MyNuclearWeapons.Where(w => !(w.Platform is Silo))
+			);
 		}
 
+		#region Tpggle Expander Appearance
 		private void Expander_Expanded(object sender, RoutedEventArgs e)
 		{
 			(sender as Expander).Effect = new DropShadowEffect()
@@ -46,19 +52,16 @@ namespace Atomization
 			(sender as Expander).Effect = null;
 		}
 
-		private void LoadNumNukeListBox(object sender, RoutedEventArgs e)
+		#endregion
+
+		private void StackPanel_MouseEnter(object sender, MouseEventArgs e)
 		{
-			foreach (var platform in Data.Me.NuclearPlatforms)
-			{
-				foreach (var weapon in platform.NuclearWeapons)
-				{
-					Maneuver_NumNukes.Items.Add(weapon.Name);
-				}
-			}
+			Target.IsEnabled = false;
 		}
-		private void UnloadNumNukeListBox(object sender, RoutedEventArgs e)
+
+		private void StackPanel_MouseLeave(object sender, MouseEventArgs e)
 		{
-			Maneuver_NumNukes.Items.Clear();
+			Target.IsEnabled = true;
 		}
 	}
 }

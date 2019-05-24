@@ -20,9 +20,15 @@
 				Content="Target:" 
 				Margin="10,3,0,0">
 			</Label>
-			<ComboBox 
+			<ComboBox x:Name="Target" 
 				Margin="5,5,0,5" 
-				Width="100"/>
+				Width="100">
+				<ComboBox.ItemTemplate>
+					<DataTemplate>
+						<TextBlock Text="{Binding Name}" Padding="2"></TextBlock>
+					</DataTemplate>
+				</ComboBox.ItemTemplate>
+			</ComboBox>
 		</StackPanel>
 		<StackPanel 
 			Margin="10,47,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
@@ -33,21 +39,19 @@
 				VerticalAlignment="Top" 
 				HorizontalAlignment="Left" 
 				FontFamily="Segoe UI Regular"/>
-			<Label Content="Military Forces Involved: " Margin="5,10,5,0"/>
-			<TextBox x:Name="MilitaryForces" Margin="10,0" Padding="3"></TextBox>
-			<Label Content="From My Nation: " Margin="5,10,0,0"></Label>
-			<Slider 
-				AutoToolTipPlacement="TopLeft" 
-				Maximum="{Binding Text, ElementName=MilitaryForces, UpdateSourceTrigger=PropertyChanged}" 
-				TickPlacement="BottomRight" 
-				Margin="10,0,10,0">
-			</Slider>
-			<Label Content="From Alliance: " Margin="5,0,0,0"></Label>
-			<Slider AutoToolTipPlacement="TopLeft" TickPlacement="BottomRight" Margin="10,0,10,0"></Slider>
+			<Label Content="Military Forces Involved in: " Margin="5,10,5,0" FontWeight="Bold"/>
+			<DockPanel Margin="5,5,0,0">
+				<Label Content="From My Nation: " Margin="0"></Label>
+				<TextBox Width="80" HorizontalAlignment="Right" DockPanel.Dock="Right"/>
+			</DockPanel>
+			<DockPanel Margin="5,5,0,0">
+				<Label Content="From Alliance: " Margin="0"></Label>
+				<TextBox Width="80" HorizontalAlignment="Right" DockPanel.Dock="Right"/>
+			</DockPanel>
 			<Button
 				Content="Subvert" 
 				Padding="5,2.5"
-				Margin="10" 
+				Margin="10,10,0,10" 
 				VerticalAlignment="Top">
 				<Button.ToolTip>
 					<DockPanel>
@@ -58,7 +62,7 @@
 			</Button>
 		</StackPanel>
 		<StackPanel 
-			Margin="10,184,10,0" Grid.Column="1" VerticalAlignment="Top" Grid.ColumnSpan="2">
+			Margin="10,184,10,0" Grid.Column="1" VerticalAlignment="Top" Grid.ColumnSpan="2" MouseEnter="StackPanel_MouseEnter" MouseLeave="StackPanel_MouseLeave">
 			<Label Content="Blockade" FontFamily="Segoe UI Light" FontSize="15"></Label>
 			<ListView Height="134" Margin="0,0,10,0" x:Name="SelectionList">
 				<ListView.View>
@@ -117,7 +121,7 @@
 	  Margin="0,47,10,278" Grid.Column="1">
 			<Label Content="Assasination" FontFamily="Segoe UI Light" FontSize="15"/>
 			<Label 
-		  Content="Select Infrastructure:" Margin="5,0,0,0"/>
+		  Content="Select Target Figure:" Margin="5,0,0,0"/>
 			<ComboBox
 		  Margin="10,0,0,0" Padding="5,3"/>
 			<Button 
@@ -126,20 +130,20 @@
 		  Padding="5,2.5"/>
 		</StackPanel>
 		<StackPanel 
-			Margin="10,320,38,10">
+			Margin="10,248,38,0" VerticalAlignment="Top">
 			<Label Content="Invasion/Stationary" FontFamily="Segoe UI Light" FontSize="15"></Label>
-			<Label 
-				Content="Millitary Forces Involved in:" 
-				Margin="0">
-			</Label>
-			<TextBox 
-				Background="{x:Null}" 
-				Height="23" 
-				Margin="5,0,10,0">
-			</TextBox>
+			<Label Content="Military Forces Involved in: " Margin="5,0" FontWeight="Bold"/>
+			<DockPanel Margin="5,5,0,0">
+				<Label Content="From My Nation: " Margin="0"></Label>
+				<TextBox Width="80" HorizontalAlignment="Right" DockPanel.Dock="Right"/>
+			</DockPanel>
+			<DockPanel Margin="5,5,0,0">
+				<Label Content="From Alliance: " Margin="0"></Label>
+				<TextBox Width="80" HorizontalAlignment="Right" DockPanel.Dock="Right"/>
+			</DockPanel>
 			<Button 
 				Content="Execute" 
-				Margin="5,10,10,0" 
+				Margin="5,10,0,0" 
 				Padding="5,2.5">
 			</Button>
 		</StackPanel>
@@ -167,6 +171,11 @@
 				<ListBox x:Name="Maneuver_NumNukes" 
 					Margin="5,0,0,0" 
 					Background="{x:Null}" MaxHeight="100">
+					<ListBox.ItemTemplate>
+						<DataTemplate>
+							<TextBlock Text="{Binding Name}" Padding="2"></TextBlock>
+						</DataTemplate>
+					</ListBox.ItemTemplate>
 				</ListBox>
 				<Button 
 					Content="Execute" 

@@ -111,23 +111,23 @@ namespace Atomization
 
 			selectedWeapon.Name = TextBox_Name.Text;
 
-			string targetName = (Target.SelectedItem as ComboBoxItem)?.Content.ToString();
+			Region target = Target.SelectedItem as Region;
 			if (isNewNuke)
 			{
-				if (targetName == null)
+				if (target == null)
 				{
 					return;
 				}
 				else
 				{
-					selectedWeapon.Target = Data.Regions.Single(n => n.Name == targetName);
+					selectedWeapon.Target = target;
 				}
 			}
 			else
 			{
-				if (targetName != null)
+				if (target != null)
 				{
-					selectedWeapon.Target = Data.Regions.Single(n => n.Name == targetName);
+					selectedWeapon.Target = target;
 				}
 			}
 
