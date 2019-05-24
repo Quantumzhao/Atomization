@@ -24,232 +24,82 @@ namespace Atomization
 			TerritorialWaters = new Waters() { Name = Data.WatersNames.Dequeue() };
 			TerritorialWaters.Affiliation = this;
 			Data.Regions.Add(TerritorialWaters);
+
+			Economy = new ValueComplex(this, 1000000);
+			HiEduPopu = new ValueComplex(this, 10000000);
+			Army = new ValueComplex(this, 500000);
+			Navy = new ValueComplex(this, 50000);
+			Food = new ValueComplex(this, 5000);
+			RawMaterial = new ValueComplex(this, 4000);
+			NuclearMaterial = new ValueComplex(this, 1000);
+			Stability = new ValueComplex(this, 100) { Maximum = new ValueComplex.InternalValue(this, 100) };
 		}
 
 		public const int NumOfNonAdjacentNations = 5;
 
 		public Waters TerritorialWaters { get; }
 
-		public const int InitialEcon = 1000000;
-		#region Econ
-		public event OnValueChanged<Nation, int> OnEconChanged;
-		private int econ = InitialEcon;
-		public int Econ
-		{
-			get => econ;
-			set
-			{
-				if (value != econ)
-				{
-					OnEconChanged?.Invoke(this, econ, value);
-					econ = value;
-				}
-			}
-		}
-		#endregion
-		#region EconGrowth
-		private List<int> econGrowth = new List<int>();
-		public event OnValueChanged<Nation, List<int>> OnEconGrowthChanged;
-		public List<int> EconGrowth
-		{
-			get => econGrowth;
-			set
-			{
-				if (value != econGrowth)
-				{
-					OnEconGrowthChanged?.Invoke(this, econGrowth, value);
-					econGrowth = value;
-				}
-			}
-		}
-		#endregion
+		public ValueComplex Economy { get; set; }
+		public ValueComplex HiEduPopu { get; set; }
+		public ValueComplex Army { get; set; }
+		public ValueComplex Navy { get; set; }
+		public ValueComplex Food { get; set; }
+		public ValueComplex RawMaterial { get; set; }
+		public ValueComplex NuclearMaterial { get; set; }
+		public ValueComplex Stability { get; set; }
 
-		public const int InitialHiEduPopu = 10000000;
-		#region HighEducationPopulation
-		public event OnValueChanged<Nation, int> OnHiEduPopuChanged;
-		private int hiEduPopu = InitialHiEduPopu;
-		public int HiEduPopu
+		public class ValueComplex
 		{
-			get => hiEduPopu;
-			set
+			public ValueComplex(Nation parent, double initialValue = 0)
 			{
-				if (value != hiEduPopu)
-				{
-					OnHiEduPopuChanged?.Invoke(this, hiEduPopu, value);
-					hiEduPopu = value;
-				}
+				Value = new InternalValue(parent, initialValue);
+				Maximum = new InternalValue(parent, double.MaxValue);
+				Minimum = new InternalValue(parent, double.MinValue);
+				Growth = new Value_Growth(parent);
 			}
-		}
-		#endregion
-		#region HighEducationPopulationGrowth
-		public event OnValueChanged<Nation, List<int>> OnHiEduPopuGrowthChanged;
-		private List<int> hiEduPopuGrowth = new List<int>();
-		public List<int> HiEduPopuGrowth
-		{
-			get => hiEduPopuGrowth;
-			set
-			{
-				if (value != hiEduPopuGrowth)
-				{
-					OnHiEduPopuGrowthChanged?.Invoke(this, hiEduPopuGrowth, value);
-					hiEduPopuGrowth = value;
-				}
-			}
-		}
-		#endregion
 
-		public const int InitialRegularMilitary = 500000;
-		#region RegularMilitary
-		public event OnValueChanged<Nation, int> OnRegularMilitaryChanged;
-		private int regularMilitary = InitialRegularMilitary;
-		public int RegularMilitary
-		{
-			get => regularMilitary;
-			set
-			{
-				if (value != regularMilitary)
-				{
-					OnRegularMilitaryChanged?.Invoke(this, regularMilitary, value);
-					regularMilitary = value;
-				}
-			}
-		}
-		#endregion
-		#region RegularMilitaryGrowth
-		public event OnValueChanged<Nation, List<int>> OnRegularMilitaryGrowthChanged;
-		private List<int> regularMilitaryGrowth = new List<int>();
-		public List<int> RegularMilitaryGrowth
-		{
-			get => regularMilitaryGrowth;
-			set
-			{
-				if (value != regularMilitaryGrowth)
-				{
-					OnRegularMilitaryGrowthChanged?.Invoke(this, regularMilitaryGrowth, value);
-					regularMilitaryGrowth = value;
-				}
-			}
-		}
-		#endregion
+			public InternalValue Value { get; set; }
+			public InternalValue Maximum { get; set; }
+			public InternalValue Minimum { get; set; }
+			public Value_Growth Growth { get; set; }
 
-		public const int InitialNavy = 50000;
-		#region RegularMilitary
-		public event OnValueChanged<Nation, int> OnNavyChanged;
-		private int navy = InitialNavy;
-		public int Navy
-		{
-			get => navy;
-			set
+			public class InternalValue
 			{
-				if (value != navy)
+				public InternalValue(Nation parent, double initialValue)
 				{
-					OnNavyChanged?.Invoke(this, navy, value);
-					navy = value;
+					this.parent = parent;
+					value = initialValue;
 				}
-			}
-		}
-		#endregion
-		#region RegularMilitaryGrowth
-		public event OnValueChanged<Nation, List<int>> OnNavyGrowthChanged;
-		private List<int> navyGrowth = new List<int>();
-		public List<int> NavyGrowth
-		{
-			get => navyGrowth;
-			set
-			{
-				if (value != navyGrowth)
-				{
-					OnNavyGrowthChanged?.Invoke(this, navyGrowth, value);
-					navyGrowth = value;
-				}
-			}
-		}
-		#endregion
 
-		public const int InitialResource = 10000;
-		#region Resource
-		public event OnValueChanged<Nation, int> OnResourceChanged;
-		private int resource = InitialResource;
-		public int Resource
-		{
-			get => resource;
-			set
-			{
-				if (value != resource)
-				{
-					OnResourceChanged?.Invoke(this, resource, value);
-					resource = value;
-				}
-			}
-		}
-		#endregion
-		#region ResourceGrowth
-		public event OnValueChanged<Nation, List<int>> OnResourceGrowthChanged;
-		private List<int> resourceGrowth = new List<int>();
-		public List<int> ResourceGrowth
-		{
-			get => resourceGrowth;
-			set
-			{
-				if (value != resourceGrowth)
-				{
-					OnResourceGrowthChanged?.Invoke(this, resourceGrowth, value);
-					resourceGrowth = value;
-				}
-			}
-		}
-		#endregion
+				private Nation parent;
+				public event OnValueChanged<Nation, double> OnValueChanged;
 
-		public const int InitialStability = 100;
-		#region MaxStability
-		public event OnValueChanged<Nation, int> OnMaxStabilityChanged;
-		private int maxStability = InitialStability;
-		public int MaxStability
-		{
-			get => maxStability;
-			set
-			{
-				if (value != maxStability)
+				private double value;
+				public double Value
 				{
-					OnMaxStabilityChanged?.Invoke(this, maxStability, value);
-					maxStability = value;
+					get => value;
+					set
+					{
+						if (value != this.value)
+						{
+							OnValueChanged?.Invoke(parent, this.value, value);
+							this.value = value;
+						}
+					}
 				}
 			}
-		}
-		#endregion
-		#region Stability
-		public event OnValueChanged<Nation, int> OnStabilityChanged;
-		private int stability = InitialStability;
-		public int Stability
-		{
-			get => stability;
-			set
+
+			public class Value_Growth
 			{
-				if (value != stability)
+				public Value_Growth(Nation parent)
 				{
-					OnStabilityChanged?.Invoke(this, stability, value);
-					stability = value;
+					this.parent = parent;
 				}
+
+				private Nation parent;
+				public List<InternalValue> Values { get; set; } = new List<InternalValue>();
 			}
 		}
-		#endregion
-		#region StabilityGrowth
-		public double StabilityPercent => (double)Stability / MaxStability;
-		public event OnValueChanged<Nation, List<int>> OnStabilityGrowthChanged;
-		private List<int> stabilityGrowth = new List<int>();
-		public List<int> StabilityGrowth
-		{
-			get => stabilityGrowth;
-			set
-			{
-				if (value != stabilityGrowth)
-				{
-					OnStabilityGrowthChanged?.Invoke(this, stabilityGrowth, value);
-					stabilityGrowth = value;
-				}
-			}
-		}
-		#endregion
 	}
 
 	public class RegularNation : Nation
