@@ -38,16 +38,38 @@ namespace Atomization
 
 	public class StrategicBomber : Platform
 	{
+		public StrategicBomber(
+			Action<GameObjectList<NuclearWeapon>, NuclearWeapon> onItemAdded = null,
+			Action<GameObjectList<NuclearWeapon>, NuclearWeapon> onItemRemoved = null
+		) : base(onItemAdded: onItemAdded, onItemRemoved: onItemRemoved)
+		{
+			NuclearWeapons.Capacity = 1;
+		}
 		public override string TypeName => "StrategicBomber";
 	}
 
 	public class MissileLauncher : Platform
 	{
+		public MissileLauncher(
+			Action<GameObjectList<NuclearWeapon>, NuclearWeapon> onItemAdded = null,
+			Action<GameObjectList<NuclearWeapon>, NuclearWeapon> onItemRemoved = null
+		) : base(onItemAdded: onItemAdded, onItemRemoved: onItemRemoved)
+		{
+			NuclearWeapons.Capacity = 1;
+		}
 		public override string TypeName => "MissileLauncher";
 	}
 
 	public class NuclearSubmarine : Platform
 	{
+		public NuclearSubmarine(
+			Action<GameObjectList<NuclearWeapon>, NuclearWeapon> onItemAdded = null,
+			Action<GameObjectList<NuclearWeapon>, NuclearWeapon> onItemRemoved = null
+		) : base(onItemAdded: onItemAdded, onItemRemoved: onItemRemoved)
+		{
+			NuclearWeapons.Capacity = 8;
+		}
+
 		public override string TypeName => "NuclearSubmarine";
 	}
 }
