@@ -97,7 +97,8 @@ namespace Atomization
 				}
 
 				private Nation parent;
-				public List<InternalValue> Values { get; set; } = new List<InternalValue>();
+				public Dictionary<string, InternalValue> Values { get; set; } 
+					= new Dictionary<string, InternalValue>();
 			}
 		}
 	}
@@ -130,6 +131,8 @@ namespace Atomization
 				Data.Regions.Add(nation);
 				Adjacency[i] = nation;
 			}
+
+			Economy.Growth.Values.Add("Military Budget (Army)", new ValueComplex.InternalValue(this, 5));
 		}
 		public const int NumOfAdjacentNations = 5;
 

@@ -129,13 +129,13 @@
 			<StackPanel 
 				Orientation="Horizontal">
 				<Label 
-					Content="Fund:" 
+					Content="Econ:" 
 					HorizontalAlignment="Left" 
-					Padding="5,0">
+					Padding="5,0,0,0">
 				</Label>
-				<Label 
+				<Label x:Name="Economy" 
 					Content="0" 
-					Padding="5,0">
+					Padding="5,0,0,0">
 				</Label>
 			</StackPanel>
 			<StackPanel 
@@ -143,65 +143,64 @@
 				<Label 
 					Content="Hi-Edu Popu:" 
 					HorizontalAlignment="Left" 
-					Padding="5,0">
+					Padding="5,0,0,0">
 				</Label>
-				<Label 
+				<Label x:Name="HiEduPopu" 
 					Content="0"
-					Padding="5,0">
+					Padding="5,0,0,0">
 				</Label>
 			</StackPanel>
 			<StackPanel 
 				Orientation="Horizontal">
 				<Label 
-					Content="Reg Millitary:" 
+					Content="Army:" 
 					HorizontalAlignment="Left" 
-					Padding="5,0">
+					Padding="5,0,0,0">
 				</Label>
-				<Label 
+				<Label x:Name="Army" 
 					Content="0" 
-					Padding="5,0">
+					Padding="5,0,0,0">
 				</Label>
 			</StackPanel>
 			<StackPanel 
 				Orientation="Horizontal">
 				<Label 
-					Content="Naval Force" 
+					Content="Navy:" 
 					HorizontalAlignment="Left" 
-					Padding="5,0">
+					Padding="5,0,0,0">
 				</Label>
-				<Label 
+				<Label x:Name="Navy" 
 					Content="0" 
-					Padding="5,0">
+					Padding="5,0,0,0">
 				</Label>
 			</StackPanel>
 			<StackPanel Orientation="Horizontal">
-				<Label Content="Food: " Padding="5,0"></Label>
-				<Label Content="0" Padding="5,0"></Label>
+				<Label Content="Food: " Padding="5,0,0,0"></Label>
+				<Label x:Name="Food" Content="0" Padding="5,0,0,0"></Label>
 			</StackPanel>
 			<StackPanel Orientation="Horizontal">
-				<Label Content="Raw Material: " Padding="5,0"></Label>
-				<Label Content="0" Padding="5,0"></Label>
+				<Label Content="Raw Mtrl:" Padding="5,0,0,0"></Label>
+				<Label x:Name="RawMaterial" Content="0" Padding="5,0,0,0"></Label>
 			</StackPanel>
 			<StackPanel Orientation="Horizontal">
-				<Label Content="Nuclear Material: " Padding="5,0"></Label>
-				<Label Content="0" Padding="5,0"></Label>
+				<Label Content="Nuke Mtrl:" Padding="5,0,0,0"></Label>
+				<Label x:Name="NuclearMaterial" Content="0" Padding="5,0,0,0"></Label>
 			</StackPanel>
 			<StackPanel Orientation="Horizontal" Width="Auto">
 				<Label 
-					Content="Stability" 
+					Content="Stblty" 
 					HorizontalAlignment="Left" 
 					Padding="5,0">
 				</Label>
-				<ProgressBar 
-					Width="100" 
+				<ProgressBar x:Name="ProgBar_Stability" 
+					Width="80" 
 					Padding="0" 
-					Margin="0,5" 
-					Value="100">
+					Margin="0,5" >
 				</ProgressBar>
-				<Label 
+				<Label x:Name="Stability" 
 					Content="100" 
 					HorizontalAlignment="Left" 
-					Padding="5,0">
+					Padding="5,0,0,0">
 				</Label>
 				<Label 
 					Content="/" 
@@ -211,7 +210,7 @@
 				<Label 
 					Content="100" 
 					HorizontalAlignment="Left" 
-					Padding="5,0">
+					Padding="0">
 				</Label>
 			</StackPanel>
 		</StatusBar>

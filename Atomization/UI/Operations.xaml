@@ -198,10 +198,7 @@
 				<Label 
 					Content="Appropriation" 
 					Margin="0"/>
-				<TextBox 
-					Background="{x:Null}" 
-					Height="23" 
-					Margin="5,0,0,0"/>
+				<Slider Maximum="100" TickPlacement="BottomRight" AutoToolTipPlacement="TopLeft" LargeChange="10" SmallChange="1" TickFrequency="10"></Slider>
 				<Button 
 					Content="Execute" 
 					Margin="5,10,0,0" 

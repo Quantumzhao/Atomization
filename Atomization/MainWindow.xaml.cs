@@ -29,6 +29,41 @@ namespace Atomization
 			#endregion
 
 			Data.Initiaze();
+
+			DataContext = this;
+
+			#region Economy initialization
+			Economy.Content = (int)Data.Me.Economy.Value.Value;
+			Data.Me.Economy.Value.OnValueChanged += (n, pv, nv) => Economy.Content = (int)nv;
+
+			#endregion
+
+			HiEduPopu.Content = (int)Data.Me.HiEduPopu.Value.Value;
+			Data.Me.HiEduPopu.Value.OnValueChanged += (n, pv, nv) => HiEduPopu.Content = (int)nv;
+
+			Army.Content = (int)Data.Me.Army.Value.Value;
+			Data.Me.Army.Value.OnValueChanged += (n, pv, nv) => Army.Content = (int)nv;
+
+			Navy.Content = (int)Data.Me.Navy.Value.Value;
+			Data.Me.Navy.Value.OnValueChanged += (n, pv, nv) => Navy.Content = (int)nv;
+
+			Food.Content = (int)Data.Me.Food.Value.Value;
+			Data.Me.Food.Value.OnValueChanged += (n, pv, nv) => Food.Content = (int)nv;
+
+			RawMaterial.Content = (int)Data.Me.Economy.Value.Value;
+			Data.Me.RawMaterial.Value.OnValueChanged += (n, pv, nv) => RawMaterial.Content = (int)nv;
+
+			NuclearMaterial.Content = (int)Data.Me.NuclearMaterial.Value.Value;
+			Data.Me.NuclearMaterial.Value.OnValueChanged += (n, pv, nv) => NuclearMaterial.Content = (int)nv;
+
+			ProgBar_Stability.Value = Data.Me.Stability.Value.Value;
+			Stability.Content = (int)Data.Me.Stability.Value.Value;
+			Data.Me.Stability.Value.OnValueChanged += (n, pv, nv) =>
+			{
+				Stability.Content = (int)nv;
+				ProgBar_Stability.Value = nv;
+			};
+
 		}
 
 		#region Menu item actions
