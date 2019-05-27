@@ -1,8 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Collections.Specialized;
 
 namespace Atomization
 {
@@ -25,20 +28,20 @@ namespace Atomization
 			TerritorialWaters.Affiliation = this;
 			Data.Regions.Add(TerritorialWaters);
 
-			Economy = new ValueComplex(this, 1000000);
-			HiEduPopu = new ValueComplex(this, 10000000);
-			Army = new ValueComplex(this, 500000);
-			Navy = new ValueComplex(this, 50000);
-			Food = new ValueComplex(this, 5000);
-			RawMaterial = new ValueComplex(this, 4000);
-			NuclearMaterial = new ValueComplex(this, 1000);
-			Stability = new ValueComplex(this, 100) { Maximum = new ValueComplex.InternalValue(this, 100) };
+			Economy = new ValueComplex(this, 20000);		// x10^9
+			HiEduPopu = new ValueComplex(this, 20000);		// x10^6
+			Army = new ValueComplex(this, 50000);			// x10^3
+			Navy = new ValueComplex(this, 5000);			// x10^3
+			Food = new ValueComplex(this, 20000);			// x10^6
+			RawMaterial = new ValueComplex(this, 4000);		// x10^3
+			NuclearMaterial = new ValueComplex(this, 100);	// x10^3
+			Stability = new ValueComplex(this, 75) { Maximum = new ValueComplex.InternalValue(this, 100) };
 		}
 
 		public const int NumOfNonAdjacentNations = 5;
 
+		#region Value Definitions
 		public Waters TerritorialWaters { get; }
-
 		public ValueComplex Economy { get; set; }
 		public ValueComplex HiEduPopu { get; set; }
 		public ValueComplex Army { get; set; }
@@ -47,21 +50,33 @@ namespace Atomization
 		public ValueComplex RawMaterial { get; set; }
 		public ValueComplex NuclearMaterial { get; set; }
 		public ValueComplex Stability { get; set; }
+		#endregion
 
 		public class ValueComplex
 		{
 			public ValueComplex(Nation parent, double initialValue = 0)
 			{
-				Value = new InternalValue(parent, initialValue);
+				value = new InternalValue(parent, initialValue);
 				Maximum = new InternalValue(parent, double.MaxValue);
 				Minimum = new InternalValue(parent, double.MinValue);
-				Growth = new Value_Growth(parent);
+				Growth = new Value_Growth(parent, value);
 			}
 
-			public InternalValue Value { get; set; }
+			private InternalValue value;
+			public double Value
+			{
+				get => value.Value;
+				set => this.value.Value = value;
+			}
 			public InternalValue Maximum { get; set; }
 			public InternalValue Minimum { get; set; }
 			public Value_Growth Growth { get; set; }
+
+			public event OnValueChanged<Nation, double> OnValueChanged
+			{
+				add => this.value.OnValueChanged += value;
+				remove => this.value.OnValueChanged -= value;
+			}
 
 			public class InternalValue
 			{
@@ -89,16 +104,55 @@ namespace Atomization
 				}
 			}
 
-			public class Value_Growth
+			public class Value_Growth : INotifyCollectionChanged
 			{
-				public Value_Growth(Nation parent)
+				public Value_Growth(Nation parent, InternalValue bindedValue)
 				{
 					this.parent = parent;
+					this.bindedValue = bindedValue;
 				}
 
+				private InternalValue bindedValue;
 				private Nation parent;
+
+				public event NotifyCollectionChangedEventHandler CollectionChanged;
+
 				public Dictionary<string, InternalValue> Values { get; set; } 
 					= new Dictionary<string, InternalValue>();
+
+				public void Add(string name, int number)
+				{
+					var value = new InternalValue(parent, number);
+					value.OnValueChanged += (n, pv, nv) => CollectionChanged?.Invoke(
+						this, 
+						new NotifyCollectionChangedEventArgs(
+							NotifyCollectionChangedAction.Replace, 
+							value
+						)
+					);
+					Values.Add(name, value);
+					CollectionChanged?.Invoke(
+						this, 
+						new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, value)
+					);
+				}
+				public void Add(string name, double percent)
+				{
+					Add(name, (int)(bindedValue.Value * percent));
+				}
+
+				public int Sum
+				{
+					get
+					{
+						double sum = 0;
+						foreach (var item in Values)
+						{
+							sum += item.Value.Value;
+						}
+						return (int)sum;
+					}
+				}
 			}
 		}
 	}
@@ -132,7 +186,24 @@ namespace Atomization
 				Adjacency[i] = nation;
 			}
 
-			Economy.Growth.Values.Add("Military Budget (Army)", new ValueComplex.InternalValue(this, 5));
+			Economy.Growth.Add("Military Budget (Army)", -0.025);
+			Economy.Growth.Add("Military Budget (Navy)", -0.01);
+			Economy.Growth.Add("Taxation", 0.2);
+			Economy.Growth.Add("Gross Domestic Production", 0.8);
+
+			HiEduPopu.Growth.Add("Graduates", 1000);
+
+			Army.Growth.Add("Army Expansion", 0.01);
+
+			Navy.Growth.Add("Navy Expansion", 0.005);
+
+			Food.Growth.Add("Domestic Production", 42000);
+			Food.Growth.Add("Domestic Consumption", -2.0);
+
+			RawMaterial.Growth.Add("Domestic Production", 10200);
+			RawMaterial.Growth.Add("Industrial Consumption", -10000);
+
+			NuclearMaterial.Growth.Add("Production", 1);
 		}
 		public const int NumOfAdjacentNations = 5;
 

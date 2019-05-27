@@ -20,9 +20,6 @@ namespace Atomization
 		public static ObservableCollection<NuclearWeapon> MyNuclearWeapons { get; set; }
 			= new ObservableCollection<NuclearWeapon>();
 
-		//public static GameObjectList<NuclearWeapon> myNuclearWeapons { get; private set; }
-		//	= new GameObjectList<NuclearWeapon>();
-
 		public static void Initiaze()
 		{
 			try

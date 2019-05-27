@@ -131,6 +131,8 @@ namespace Atomization
 				default:
 					return;
 			}
+			prefab.NuclearWeapons.OnItemAdded += (list, item) => Data.MyNuclearWeapons.Add(item);
+			prefab.NuclearWeapons.OnItemRemoved += (list, item) => Data.MyNuclearWeapons.Remove(item);
 
 			if (RegionOfDeployment.SelectedItem == null) return;
 			prefab.DeployRegion = RegionOfDeployment.SelectedItem as Region;

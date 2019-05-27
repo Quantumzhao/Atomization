@@ -137,6 +137,25 @@
 					Content="0" 
 					Padding="5,0,0,0">
 				</Label>
+				<StackPanel.ToolTip>
+					<StackPanel>
+						<ListView x:Name="EconomyGrowth" BorderBrush="{x:Null}" Background="{x:Null}">
+							<ListView.ItemTemplate>
+								<DataTemplate>
+									<DockPanel Width="200">
+										<TextBlock Text="{Binding Key}" Margin="0,5,0,0"></TextBlock>
+										<TextBlock Text=":" Margin="0,5,5,0"></TextBlock>
+										<TextBlock Text="{Binding Value.Value}" Margin="0,5,0,0" DockPanel.Dock="Right" HorizontalAlignment="Right"></TextBlock>
+									</DockPanel>
+								</DataTemplate>
+							</ListView.ItemTemplate>
+						</ListView>
+						<DockPanel Width="200">
+							<TextBlock Text="Sum:" Margin="0,0,5,0" FontWeight="Bold"></TextBlock>
+							<TextBlock x:Name="EconomyGrowth_Sum" Text="{Binding Sum}" FontWeight="Bold" DockPanel.Dock="Right" HorizontalAlignment="Right"></TextBlock>
+						</DockPanel>
+					</StackPanel>
+				</StackPanel.ToolTip>
 			</StackPanel>
 			<StackPanel 
 				Orientation="Horizontal">
@@ -149,6 +168,25 @@
 					Content="0"
 					Padding="5,0,0,0">
 				</Label>
+				<StackPanel.ToolTip>
+					<StackPanel>
+						<ListView x:Name="HiEduGrowth" BorderBrush="{x:Null}" Background="{x:Null}">
+							<ListView.ItemTemplate>
+								<DataTemplate>
+									<DockPanel Width="200">
+										<TextBlock Text="{Binding Key}" Margin="0,5,0,0"></TextBlock>
+										<TextBlock Text=":" Margin="0,5,5,0"></TextBlock>
+										<TextBlock Text="{Binding Value.Value}" Margin="0,5,0,0" DockPanel.Dock="Right" HorizontalAlignment="Right"></TextBlock>
+									</DockPanel>
+								</DataTemplate>
+							</ListView.ItemTemplate>
+						</ListView>
+						<DockPanel Width="200">
+							<TextBlock Text="Sum:" Margin="0,0,5,0" FontWeight="Bold"></TextBlock>
+							<TextBlock x:Name="HiEduGrowth_Sum" Text="{Binding Sum}" FontWeight="Bold" DockPanel.Dock="Right" HorizontalAlignment="Right"></TextBlock>
+						</DockPanel>
+					</StackPanel>
+				</StackPanel.ToolTip>
 			</StackPanel>
 			<StackPanel 
 				Orientation="Horizontal">
@@ -161,6 +199,25 @@
 					Content="0" 
 					Padding="5,0,0,0">
 				</Label>
+				<StackPanel.ToolTip>
+					<StackPanel>
+						<ListView x:Name="ArmyGrowth" BorderBrush="{x:Null}" Background="{x:Null}">
+							<ListView.ItemTemplate>
+								<DataTemplate>
+									<DockPanel Width="200">
+										<TextBlock Text="{Binding Key}" Margin="0,5,0,0"></TextBlock>
+										<TextBlock Text=":" Margin="0,5,5,0"></TextBlock>
+										<TextBlock Text="{Binding Value.Value}" Margin="0,5,0,0" DockPanel.Dock="Right" HorizontalAlignment="Right"></TextBlock>
+									</DockPanel>
+								</DataTemplate>
+							</ListView.ItemTemplate>
+						</ListView>
+						<DockPanel Width="200">
+							<TextBlock Text="Sum:" Margin="0,0,5,0" FontWeight="Bold"></TextBlock>
+							<TextBlock x:Name="ArmyGrowth_Sum" Text="{Binding Sum}" FontWeight="Bold" DockPanel.Dock="Right" HorizontalAlignment="Right"></TextBlock>
+						</DockPanel>
+					</StackPanel>
+				</StackPanel.ToolTip>
 			</StackPanel>
 			<StackPanel 
 				Orientation="Horizontal">
@@ -173,18 +230,94 @@
 					Content="0" 
 					Padding="5,0,0,0">
 				</Label>
+				<StackPanel.ToolTip>
+					<StackPanel>
+						<ListView x:Name="NavyGrowth" BorderBrush="{x:Null}" Background="{x:Null}">
+							<ListView.ItemTemplate>
+								<DataTemplate>
+									<DockPanel Width="200">
+										<TextBlock Text="{Binding Key}" Margin="0,5,0,0"></TextBlock>
+										<TextBlock Text=":" Margin="0,5,5,0"></TextBlock>
+										<TextBlock Text="{Binding Value.Value}" Margin="0,5,0,0" DockPanel.Dock="Right" HorizontalAlignment="Right"></TextBlock>
+									</DockPanel>
+								</DataTemplate>
+							</ListView.ItemTemplate>
+						</ListView>
+						<DockPanel Width="200">
+							<TextBlock Text="Sum:" Margin="0,0,5,0" FontWeight="Bold"></TextBlock>
+							<TextBlock x:Name="NavyGrowth_Sum" Text="{Binding Sum}" FontWeight="Bold" DockPanel.Dock="Right" HorizontalAlignment="Right"></TextBlock>
+						</DockPanel>
+					</StackPanel>
+				</StackPanel.ToolTip>
 			</StackPanel>
 			<StackPanel Orientation="Horizontal">
 				<Label Content="Food: " Padding="5,0,0,0"></Label>
 				<Label x:Name="Food" Content="0" Padding="5,0,0,0"></Label>
+				<StackPanel.ToolTip>
+					<StackPanel>
+						<ListView x:Name="FoodGrowth" BorderBrush="{x:Null}" Background="{x:Null}">
+							<ListView.ItemTemplate>
+								<DataTemplate>
+									<DockPanel Width="200">
+										<TextBlock Text="{Binding Key}" Margin="0,5,0,0"></TextBlock>
+										<TextBlock Text=":" Margin="0,5,5,0"></TextBlock>
+										<TextBlock Text="{Binding Value.Value}" Margin="0,5,0,0" DockPanel.Dock="Right" HorizontalAlignment="Right"></TextBlock>
+									</DockPanel>
+								</DataTemplate>
+							</ListView.ItemTemplate>
+						</ListView>
+						<DockPanel Width="200">
+							<TextBlock Text="Sum:" Margin="0,0,5,0" FontWeight="Bold"></TextBlock>
+							<TextBlock x:Name="FoodGrowth_SUm" Text="{Binding Sum}" FontWeight="Bold" DockPanel.Dock="Right" HorizontalAlignment="Right"></TextBlock>
+						</DockPanel>
+					</StackPanel>
+				</StackPanel.ToolTip>
 			</StackPanel>
 			<StackPanel Orientation="Horizontal">
 				<Label Content="Raw Mtrl:" Padding="5,0,0,0"></Label>
 				<Label x:Name="RawMaterial" Content="0" Padding="5,0,0,0"></Label>
+				<StackPanel.ToolTip>
+					<StackPanel>
+						<ListView x:Name="RawMaterialGrowth" BorderBrush="{x:Null}" Background="{x:Null}">
+							<ListView.ItemTemplate>
+								<DataTemplate>
+									<DockPanel Width="200">
+										<TextBlock Text="{Binding Key}" Margin="0,5,0,0"></TextBlock>
+										<TextBlock Text=":" Margin="0,5,5,0"></TextBlock>
+										<TextBlock Text="{Binding Value.Value}" Margin="0,5,0,0" DockPanel.Dock="Right" HorizontalAlignment="Right"></TextBlock>
+									</DockPanel>
+								</DataTemplate>
+							</ListView.ItemTemplate>
+						</ListView>
+						<DockPanel Width="200">
+							<TextBlock Text="Sum:" Margin="0,0,5,0" FontWeight="Bold"></TextBlock>
+							<TextBlock x:Name="RawMaterialGrowth_Sum" Text="{Binding Sum}" FontWeight="Bold" DockPanel.Dock="Right" HorizontalAlignment="Right"></TextBlock>
+						</DockPanel>
+					</StackPanel>
+				</StackPanel.ToolTip>
 			</StackPanel>
 			<StackPanel Orientation="Horizontal">
 				<Label Content="Nuke Mtrl:" Padding="5,0,0,0"></Label>
 				<Label x:Name="NuclearMaterial" Content="0" Padding="5,0,0,0"></Label>
+				<StackPanel.ToolTip>
+					<StackPanel>
+						<ListView x:Name="NuclearMaterialGrowth" BorderBrush="{x:Null}" Background="{x:Null}">
+							<ListView.ItemTemplate>
+								<DataTemplate>
+									<DockPanel Width="200">
+										<TextBlock Text="{Binding Key}" Margin="0,5,0,0"></TextBlock>
+										<TextBlock Text=":" Margin="0,5,5,0"></TextBlock>
+										<TextBlock Text="{Binding Value.Value}" Margin="0,5,0,0" DockPanel.Dock="Right" HorizontalAlignment="Right"></TextBlock>
+									</DockPanel>
+								</DataTemplate>
+							</ListView.ItemTemplate>
+						</ListView>
+						<DockPanel Width="200">
+							<TextBlock Text="Sum:" Margin="0,0,5,0" FontWeight="Bold"></TextBlock>
+							<TextBlock x:Name="NuclearMaterialGrowth_Sum" Text="{Binding Sum}" FontWeight="Bold" DockPanel.Dock="Right" HorizontalAlignment="Right"></TextBlock>
+						</DockPanel>
+					</StackPanel>
+				</StackPanel.ToolTip>
 			</StackPanel>
 			<StackPanel Orientation="Horizontal" Width="Auto">
 				<Label 
@@ -212,6 +345,25 @@
 					HorizontalAlignment="Left" 
 					Padding="0">
 				</Label>
+				<StackPanel.ToolTip>
+					<StackPanel>
+						<ListView x:Name="StabilityGrowth" BorderBrush="{x:Null}" Background="{x:Null}">
+							<ListView.ItemTemplate>
+								<DataTemplate>
+									<DockPanel Width="200">
+										<TextBlock Text="{Binding Key}" Margin="0,5,0,0"></TextBlock>
+										<TextBlock Text=":" Margin="0,5,5,0"></TextBlock>
+										<TextBlock Text="{Binding Value.Value}" Margin="0,5,0,0" DockPanel.Dock="Right" HorizontalAlignment="Right"></TextBlock>
+									</DockPanel>
+								</DataTemplate>
+							</ListView.ItemTemplate>
+						</ListView>
+						<DockPanel Width="200">
+							<TextBlock Text="Sum:" Margin="0,0,5,0" FontWeight="Bold"></TextBlock>
+							<TextBlock x:Name="StabilityGrowth_Sum" Text="{Binding Sum}" FontWeight="Bold" DockPanel.Dock="Right" HorizontalAlignment="Right"></TextBlock>
+						</DockPanel>
+					</StackPanel>
+				</StackPanel.ToolTip>
 			</StackPanel>
 		</StatusBar>
 		<ComboBox 
@@ -291,11 +443,19 @@
 				Header="Diplomacy" 
 				FontSize="15" 
 				FontFamily="Segoe UI Semilight" 
-				Padding="6,0" 
-				Click="MenuItem_Click">
+				Padding="6,0">
 			</MenuItem>
 		</Menu>
-		<Button Content="Continue &gt;&gt;" Margin="0,14,10,0" VerticalAlignment="Top" HorizontalAlignment="Right" Background="{x:Null}" BorderBrush="Black" Padding="8,5" FontSize="15"/>
+		<Button x:Name="Continue" 
+			Content="Continue &gt;&gt;" 
+			Margin="0,14,10,0" 
+			VerticalAlignment="Top" 
+			HorizontalAlignment="Right" 
+			Background="{x:Null}" 
+			BorderBrush="Black" 
+			Padding="8,5" 
+			FontSize="15">			
+		</Button>
 		<Button Content="More Info" BorderBrush="Black" HorizontalContentAlignment="Center" Padding="8,5" Background="{x:Null}" Margin="0,14,127,0" Click="Button_MoreInfo_Click" FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Top"/>
 	</Grid>
 </Window>
