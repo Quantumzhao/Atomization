@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 
 namespace Atomization
 {
@@ -47,8 +48,17 @@ namespace Atomization
 
 			Regions.Add(
 				Me = new Superpower(
-					onItemAdded: (list, item) => MyNuclearWeapons.Add(item), 
-					onItemRemoved: (list, item) => MyNuclearWeapons.Remove(item)
+					(sender, e) =>
+					{
+						if (e.Action == NotifyCollectionChangedAction.Add)
+						{
+							MyNuclearWeapons.Add(e.NewItems[0] as NuclearWeapon);
+						}
+						else if (e.Action == NotifyCollectionChangedAction.Remove)
+						{
+							MyNuclearWeapons.Remove(e.NewItems[0] as NuclearWeapon);
+						}
+					}
 				) { Name = "C"}
 			);
 			Regions.Add(new Superpower() { Name = "A" });

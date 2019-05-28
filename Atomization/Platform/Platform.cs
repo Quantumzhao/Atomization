@@ -3,18 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Collections.Specialized;
 
 namespace Atomization
 {
 	public abstract class Platform
 	{
-		public Platform(
-			Action<GameObjectList<NuclearWeapon>, NuclearWeapon> onItemAdded = null,
-			Action<GameObjectList<NuclearWeapon>, NuclearWeapon> onItemRemoved = null
-		)
+		public Platform(NotifyCollectionChangedEventHandler onCollectionChanged = null)
 		{
-			NuclearWeapons.OnItemAdded += onItemAdded;
-			NuclearWeapons.OnItemRemoved += onItemRemoved;
+			//NuclearWeapons.OnItemAdded += onItemAdded;
+			//NuclearWeapons.OnItemRemoved += onItemRemoved;
+			NuclearWeapons.CollectionChanged += onCollectionChanged;
 		}
 
 		public abstract string TypeName { get; }
@@ -25,10 +24,8 @@ namespace Atomization
 
 	public class Silo : Platform
 	{
-		public Silo(
-			Action<GameObjectList<NuclearWeapon>, NuclearWeapon> onItemAdded = null,
-			Action<GameObjectList<NuclearWeapon>, NuclearWeapon> onItemRemoved = null
-		) : base(onItemAdded: onItemAdded, onItemRemoved: onItemRemoved)
+		public Silo(NotifyCollectionChangedEventHandler onCollectionChanged = null)
+			: base(onCollectionChanged)
 		{
 			NuclearWeapons.Capacity = 1;
 		}
@@ -38,10 +35,8 @@ namespace Atomization
 
 	public class StrategicBomber : Platform
 	{
-		public StrategicBomber(
-			Action<GameObjectList<NuclearWeapon>, NuclearWeapon> onItemAdded = null,
-			Action<GameObjectList<NuclearWeapon>, NuclearWeapon> onItemRemoved = null
-		) : base(onItemAdded: onItemAdded, onItemRemoved: onItemRemoved)
+		public StrategicBomber(NotifyCollectionChangedEventHandler onCollectionChanged = null)
+			: base(onCollectionChanged)
 		{
 			NuclearWeapons.Capacity = 1;
 		}
@@ -50,10 +45,8 @@ namespace Atomization
 
 	public class MissileLauncher : Platform
 	{
-		public MissileLauncher(
-			Action<GameObjectList<NuclearWeapon>, NuclearWeapon> onItemAdded = null,
-			Action<GameObjectList<NuclearWeapon>, NuclearWeapon> onItemRemoved = null
-		) : base(onItemAdded: onItemAdded, onItemRemoved: onItemRemoved)
+		public MissileLauncher(NotifyCollectionChangedEventHandler onCollectionChanged = null)
+			: base(onCollectionChanged)
 		{
 			NuclearWeapons.Capacity = 1;
 		}
@@ -62,10 +55,8 @@ namespace Atomization
 
 	public class NuclearSubmarine : Platform
 	{
-		public NuclearSubmarine(
-			Action<GameObjectList<NuclearWeapon>, NuclearWeapon> onItemAdded = null,
-			Action<GameObjectList<NuclearWeapon>, NuclearWeapon> onItemRemoved = null
-		) : base(onItemAdded: onItemAdded, onItemRemoved: onItemRemoved)
+		public NuclearSubmarine(NotifyCollectionChangedEventHandler onCollectionChanged = null)
+			: base(onCollectionChanged)
 		{
 			NuclearWeapons.Capacity = 8;
 		}

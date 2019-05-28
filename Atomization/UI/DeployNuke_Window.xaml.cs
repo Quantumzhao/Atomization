@@ -183,5 +183,31 @@ namespace Atomization
 		private void CarrierType_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
 		}
+
+		private void MenuItem_Click(object sender, RoutedEventArgs e)
+		{
+			if ((SelectionList.SelectedItem as Platform).NuclearWeapons.Count == 0)
+			{
+				var result = MessageBox.Show(
+					"Are you sure to abandon this nuclear strike platform? ", 
+					"Information", 
+					MessageBoxButton.OKCancel, 
+					MessageBoxImage.Warning
+				);
+				if (result == MessageBoxResult.OK)
+				{
+					Data.Me.NuclearPlatforms.Remove(SelectionList.SelectedItem as Platform);
+				}
+			}
+			else
+			{
+				MessageBox.Show(
+					"All nuclear weapons must be disposed before abandoning this platform",
+					"Error", 
+					MessageBoxButton.OK, 
+					MessageBoxImage.Error
+				);
+			}
+		}
 	}
 }

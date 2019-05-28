@@ -169,14 +169,11 @@ namespace Atomization
 	public class Superpower : Nation
 	{
 		public const int InitialNukeSilos = 10;
-		public Superpower(
-			Action<GameObjectList<NuclearWeapon>, NuclearWeapon> onItemAdded = null, 
-			Action<GameObjectList<NuclearWeapon>, NuclearWeapon> onItemRemoved = null
-		) : base()
+		public Superpower(NotifyCollectionChangedEventHandler onCollectionChanged = null) : base()
 		{
 			for (int i = 0; i < InitialNukeSilos; i++)
 			{
-				NuclearPlatforms.Add(new Silo(onItemAdded, onItemRemoved) { DeployRegion = this});
+				NuclearPlatforms.Add(new Silo(onCollectionChanged) { DeployRegion = this});
 			}
 
 			for (int i = 0; i < NumOfAdjacentNations; i++)

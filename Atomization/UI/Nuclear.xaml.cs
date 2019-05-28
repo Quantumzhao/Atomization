@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Collections.Specialized;
 
 namespace Atomization
 {
@@ -93,46 +94,41 @@ namespace Atomization
 		private void Button_Deploy_Click(object sender, RoutedEventArgs e)
 		{
 			Platform prefab;
-			Action<GameObjectList<NuclearWeapon>, NuclearWeapon> addHandler =
-				(list, item) => Data.MyNuclearWeapons.Add(item);
-			Action<GameObjectList<NuclearWeapon>, NuclearWeapon> RemoveHandler =
-				(list, item) => Data.MyNuclearWeapons.Remove(item);
+
+			NotifyCollectionChangedEventHandler onCollectionChanged =
+			(isender, ie) =>
+			{
+				if (ie.Action == NotifyCollectionChangedAction.Add)
+				{
+					Data.MyNuclearWeapons.Add(ie.NewItems[0] as NuclearWeapon);
+				}
+				else if (ie.Action == NotifyCollectionChangedAction.Remove)
+				{
+					Data.MyNuclearWeapons.Remove(ie.NewItems[0] as NuclearWeapon);
+				}
+			};
 
 			switch ((NewPlatform.SelectedItem as ComboBoxItem)?.Content.ToString())
 			{
 				case "Silo":
-					prefab = new Silo(
-						onItemAdded: addHandler,
-						onItemRemoved: RemoveHandler
-					);
+					prefab = new Silo(onCollectionChanged);
 					break;
 
 				case "Strategic Bomber":
-					prefab = new StrategicBomber(
-						onItemAdded: addHandler,
-						onItemRemoved: RemoveHandler
-					);
+					prefab = new StrategicBomber(onCollectionChanged);
 					break;
 
 				case "Missile Launcher":
-					prefab = new MissileLauncher(
-						onItemAdded: addHandler,
-						onItemRemoved: RemoveHandler
-					);
+					prefab = new MissileLauncher(onCollectionChanged);
 					break;
 
 				case "Nuclear Submarine":
-					prefab = new NuclearSubmarine(
-						onItemAdded: addHandler,
-						onItemRemoved: RemoveHandler
-					);
+					prefab = new NuclearSubmarine(onCollectionChanged);
 					break;
 
 				default:
 					return;
 			}
-			prefab.NuclearWeapons.OnItemAdded += (list, item) => Data.MyNuclearWeapons.Add(item);
-			prefab.NuclearWeapons.OnItemRemoved += (list, item) => Data.MyNuclearWeapons.Remove(item);
 
 			if (RegionOfDeployment.SelectedItem == null) return;
 			prefab.DeployRegion = RegionOfDeployment.SelectedItem as Region;
