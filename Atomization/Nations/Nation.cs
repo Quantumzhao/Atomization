@@ -183,10 +183,10 @@ namespace Atomization
 				Adjacency[i] = nation;
 			}
 
-			Economy.Growth.Add("Military Budget (Army)", -0.025);
-			Economy.Growth.Add("Military Budget (Navy)", -0.01);
-			Economy.Growth.Add("Taxation", 0.2);
-			Economy.Growth.Add("Gross Domestic Production", 0.8);
+			Economy.Growth.Add("Army Maintenance", (int)(-0.001 * Army.Value));
+			Economy.Growth.Add("Navy Maintenance Cost", (int)(-0.005 * Navy.Value));
+			Economy.Growth.Add("Domestic Development", -0.9);
+			Economy.Growth.Add("Government Revenue", 20000);
 
 			HiEduPopu.Growth.Add("Graduates", 1000);
 

@@ -5,22 +5,28 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Atomization"
         mc:Ignorable="d"
-        Title="MoreInfoPanel" Height="450" Width="320" WindowStartupLocation="CenterScreen">
+        Title="MoreInfoPanel" Height="450" Width="600" WindowStartupLocation="CenterScreen">
 	<Window.Resources>
-		<Style x:Key = "TitleStyle" TargetType = "Label">
+		<!--<Style x:Key = "TitleStyle" TargetType = "TextBlock">
 			<Setter Property = "Height" Value = "Auto" />
 			<Setter Property = "Width" Value = "Auto" />
 			<Setter Property = "Foreground" Value = "Black" />
 			<Setter Property = "FontSize" Value = "15" />
 			<Setter Property = "Margin" Value = "0,10" />
-		</Style>
+		</Style>-->
 	</Window.Resources>
 	<Grid>
 		<Label Content="Information" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontSize="20" FontFamily="Segoe UI Light"/>
 		<ScrollViewer Margin="0,52,0,0.5" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
-			<StackPanel x:Name="InfoPanel">
-
-			</StackPanel>
+			<ListView>
+				<ListView.View>
+					<GridView>
+						<GridViewColumn Header="Title" Width="Auto"/>
+						<GridViewColumn Header="Time to Take Effect" Width="Auto"/>
+						<GridViewColumn Header="Description" Width="Auto"/>
+					</GridView>
+				</ListView.View>
+			</ListView>
 		</ScrollViewer>
 		<Menu HorizontalAlignment="Right" Margin="0,14,10,0" VerticalAlignment="Top" Background="{x:Null}" BorderBrush="Black">
 			<MenuItem Header="Other Info" FontFamily="Segoe UI Semilight" FontSize="15" BorderBrush="Black" Padding="5">

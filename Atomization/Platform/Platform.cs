@@ -18,6 +18,9 @@ namespace Atomization
 
 		public abstract string TypeName { get; }
 		public Region DeployRegion { get; set; }
+		public abstract int BuildTime { get; set; }
+		public abstract double BuildCost { get; set; }
+		public abstract double Maintenance { get; set; }
 		public int AvailableLoad => NuclearWeapons.Capacity - NuclearWeapons.Count;
 		public GameObjectList<NuclearWeapon> NuclearWeapons { get; set; } = new GameObjectList<NuclearWeapon>();
 	}
@@ -31,6 +34,9 @@ namespace Atomization
 		}
 
 		public override string TypeName => "Silo";
+		public override int BuildTime { get; set; } = 4;
+		public override double BuildCost { get; set; } = 40;
+		public override double Maintenance { get; set; }
 	}
 
 	public class StrategicBomber : Platform
@@ -41,6 +47,10 @@ namespace Atomization
 			NuclearWeapons.Capacity = 1;
 		}
 		public override string TypeName => "StrategicBomber";
+
+		public override int BuildTime { get; set; } = 7;
+		public override double BuildCost { get; set; }
+		public override double Maintenance { get; set; }
 	}
 
 	public class MissileLauncher : Platform
@@ -51,6 +61,10 @@ namespace Atomization
 			NuclearWeapons.Capacity = 1;
 		}
 		public override string TypeName => "MissileLauncher";
+
+		public override int BuildTime { get; set; } = 6;
+		public override double BuildCost { get; set; }
+		public override double Maintenance { get; set; }
 	}
 
 	public class NuclearSubmarine : Platform
@@ -62,5 +76,9 @@ namespace Atomization
 		}
 
 		public override string TypeName => "NuclearSubmarine";
+
+		public override int BuildTime { get; set; } = 12;
+		public override double BuildCost { get; set; }
+		public override double Maintenance { get; set; }
 	}
 }

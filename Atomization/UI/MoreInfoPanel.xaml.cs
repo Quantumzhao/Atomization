@@ -11,6 +11,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.ComponentModel;
+using System.Collections.Specialized;
 
 namespace Atomization
 {
@@ -22,67 +24,30 @@ namespace Atomization
 		public MoreInfoPanel()
 		{
 			InitializeComponent();
-
-			Renderer = new Renderer(InfoPanel);
 		}
-
-		public Renderer Renderer { get; private set; }
 	}
 
-	public class Renderer
+	public class Sentence : INotifyCollectionChanged, INotifyPropertyChanged
 	{
-		public Renderer(StackPanel infoPanel)
-		{
+		private Dictionary<string, object> texts = new Dictionary<string, object>();
 
+		public event NotifyCollectionChangedEventHandler CollectionChanged;
+		public event PropertyChangedEventHandler PropertyChanged;
+
+		public void Add(string name, object value)
+		{
+			texts.Add(name, value);
+			CollectionChanged?.Invoke(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add));
 		}
 
-		private List<IElement> elements = new List<IElement>();
-
-		public void AddTitle()
+		public override string ToString()
 		{
-
-		}
-		public void AddSubtitle()
-		{
-
-		}
-		public void AddText()
-		{
-
-		}
-
-		public void Update()
-		{
-
-		}
-
-		private interface IElement
-		{
-			string Name { get; set; }
-			string Content { get; set; }
-			string Caption { get; set; }
-		}
-
-		private class Title : IElement
-		{
-			public string Name { get; set; }
-			public string Content { get; set; }
-			public string Caption { get; set; }
-		}
-
-		private class Subtitle : IElement
-		{
-			public string Name { get; set; }
-			public string Content { get; set; }
-			public string Caption { get; set; }
-		}
-
-		private class Text : IElement
-		{
-			public string Name { get; set; }
-			public string Content { get; set; }
-			public string Caption { get; set; }
-			public string Value { get; set; }
+			StringBuilder builder = new StringBuilder();
+			foreach (var item in texts)
+			{
+				builder.Append(item.ToString());
+			}
+			return builder.ToString();
 		}
 	}
 }
