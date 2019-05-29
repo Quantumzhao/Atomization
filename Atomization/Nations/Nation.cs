@@ -35,7 +35,7 @@ namespace Atomization
 			Food = new ValueComplex(this, 20000);			// x10^6
 			RawMaterial = new ValueComplex(this, 4000);		// x10^3
 			NuclearMaterial = new ValueComplex(this, 100);	// x10^3
-			Stability = new ValueComplex(this, 75) { Maximum = new ValueComplex.InternalValue(this, 100) };
+			Stability = new ValueComplex(this, 75) { Maximum = new InternalValue(this, 100) };
 		}
 
 		public const int NumOfNonAdjacentNations = 5;
@@ -51,110 +51,6 @@ namespace Atomization
 		public ValueComplex NuclearMaterial { get; set; }
 		public ValueComplex Stability { get; set; }
 		#endregion
-
-		public class ValueComplex
-		{
-			public ValueComplex(Nation parent, double initialValue = 0)
-			{
-				value = new InternalValue(parent, initialValue);
-				Maximum = new InternalValue(parent, double.MaxValue);
-				Minimum = new InternalValue(parent, double.MinValue);
-				Growth = new Value_Growth(parent, value);
-			}
-
-			private InternalValue value;
-			public double Value
-			{
-				get => value.Value;
-				set => this.value.Value = value;
-			}
-			public InternalValue Maximum { get; set; }
-			public InternalValue Minimum { get; set; }
-			public Value_Growth Growth { get; set; }
-
-			public event OnValueChanged<Nation, double> OnValueChanged
-			{
-				add => this.value.OnValueChanged += value;
-				remove => this.value.OnValueChanged -= value;
-			}
-
-			public class InternalValue
-			{
-				public InternalValue(Nation parent, double initialValue)
-				{
-					this.parent = parent;
-					value = initialValue;
-				}
-
-				private Nation parent;
-				public event OnValueChanged<Nation, double> OnValueChanged;
-
-				private double value;
-				public double Value
-				{
-					get => value;
-					set
-					{
-						if (value != this.value)
-						{
-							OnValueChanged?.Invoke(parent, this.value, value);
-							this.value = value;
-						}
-					}
-				}
-			}
-
-			public class Value_Growth : INotifyCollectionChanged
-			{
-				public Value_Growth(Nation parent, InternalValue bindedValue)
-				{
-					this.parent = parent;
-					this.bindedValue = bindedValue;
-				}
-
-				private InternalValue bindedValue;
-				private Nation parent;
-
-				public event NotifyCollectionChangedEventHandler CollectionChanged;
-
-				public Dictionary<string, InternalValue> Values { get; set; } 
-					= new Dictionary<string, InternalValue>();
-
-				public void Add(string name, int number)
-				{
-					var value = new InternalValue(parent, number);
-					value.OnValueChanged += (n, pv, nv) => CollectionChanged?.Invoke(
-						this, 
-						new NotifyCollectionChangedEventArgs(
-							NotifyCollectionChangedAction.Replace, 
-							value
-						)
-					);
-					Values.Add(name, value);
-					CollectionChanged?.Invoke(
-						this, 
-						new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, value)
-					);
-				}
-				public void Add(string name, double percent)
-				{
-					Add(name, (int)(bindedValue.Value * percent));
-				}
-
-				public int Sum
-				{
-					get
-					{
-						double sum = 0;
-						foreach (var item in Values)
-						{
-							sum += item.Value.Value;
-						}
-						return (int)sum;
-					}
-				}
-			}
-		}
 	}
 
 	public class RegularNation : Nation
@@ -183,8 +79,8 @@ namespace Atomization
 				Adjacency[i] = nation;
 			}
 
-			Economy.Growth.Add("Army Maintenance", (int)(-0.001 * Army.Value));
-			Economy.Growth.Add("Navy Maintenance Cost", (int)(-0.005 * Navy.Value));
+			Economy.Growth.Add("Army Maintenance", (float)(-0.001 * Army.Value));
+			Economy.Growth.Add("Navy Maintenance Cost", (float)(-0.005 * Navy.Value));
 			Economy.Growth.Add("Domestic Development", -0.9);
 			Economy.Growth.Add("Government Revenue", 20000);
 
@@ -201,6 +97,21 @@ namespace Atomization
 			RawMaterial.Growth.Add("Industrial Consumption", -10000);
 
 			NuclearMaterial.Growth.Add("Production", 1);
+
+			string title = "Nuclear Arsenal Maintenance";
+			foreach (var p in NuclearPlatforms)
+			{
+				var c = p.BuildCost;
+				if (c.Economy != null) Economy.Growth.Add(title, (float)c.Economy.Value);
+				if (c.HiEduPopu != null) HiEduPopu.Growth.Add(title, (float)c.HiEduPopu.Value);
+				if (c.Army != null) Army.Growth.Add(title, (float)c.Army.Value);
+				if (c.Navy != null) Navy.Growth.Add(title, (float)c.Navy.Value);
+				if (c.Food != null) Food.Growth.Add(title, (float)c.Food.Value);
+				if (c.RawMaterial != null) RawMaterial.Growth.Add(title, (float)c.RawMaterial.Value);
+				if (c.NuclearMaterial != null) NuclearMaterial.Growth.Add(title, (float)c.NuclearMaterial.Value);
+				if (c.Stability != null) Stability.Growth.Add(title, (float)c.Stability.Value);
+
+			}
 		}
 		public const int NumOfAdjacentNations = 5;
 
