@@ -32,8 +32,8 @@ namespace Atomization
 		{
 			NuclearWeapons.Capacity = 1;
 
-			BuildCost = new Cost(this, "Missile Silo Construction", economy: 40, rawMaterial: 60);
-			Maintenance = new Cost(this, "Nuclear Arsenal Maintenance", economy: 2, rawMaterial: 5);
+			BuildCost = new Cost(this, "Missile Silo Construction", economy: -40, rawMaterial: -60);
+			Maintenance = new Cost(this, "Nuclear Arsenal Maintenance", economy: -2, rawMaterial: -5);
 		}
 
 		public override string TypeName => "Silo";
@@ -49,8 +49,8 @@ namespace Atomization
 		{
 			NuclearWeapons.Capacity = 1;
 
-			BuildCost = new Cost(this, "Strategic Bomber Construction", economy: 30, rawMaterial: 5);
-			Maintenance = new Cost(this, "Nuclear Arsenal Maintenance", economy: 10, rawMaterial: 30);
+			BuildCost = new Cost(this, "Strategic Bomber Construction", economy: -30, rawMaterial: -5);
+			Maintenance = new Cost(this, "Nuclear Arsenal Maintenance", economy: -10, rawMaterial: -30);
 		}
 		public override string TypeName => "StrategicBomber";
 
@@ -66,8 +66,8 @@ namespace Atomization
 		{
 			NuclearWeapons.Capacity = 1;
 
-			BuildCost = new Cost(this, "Missile Launcher Construction", economy: 45, rawMaterial: 8);
-			Maintenance = new Cost(this, "Nuclear Arsenal Maintenance", economy: 6, rawMaterial: 4);
+			BuildCost = new Cost(this, "Missile Launcher Construction", economy: -45, rawMaterial: -8);
+			Maintenance = new Cost(this, "Nuclear Arsenal Maintenance", economy: -6, rawMaterial: -4);
 		}
 		public override string TypeName => "MissileLauncher";
 
@@ -83,8 +83,8 @@ namespace Atomization
 		{
 			NuclearWeapons.Capacity = 8;
 
-			BuildCost = new Cost(this, "Nuclear Submarine Construction", economy: 100, rawMaterial: 200, nuclearMaterial: 1);
-			Maintenance = new Cost(this, "Nuclear Arsenal Maintenance", economy: 15, rawMaterial: 10, nuclearMaterial: 0.05);
+			BuildCost = new Cost(this, "Nuclear Submarine Construction", economy: -100, rawMaterial: -200, nuclearMaterial: -1);
+			Maintenance = new Cost(this, "Nuclear Arsenal Maintenance", economy: -15, rawMaterial: -10, nuclearMaterial: -0.05);
 		}
 
 		public override string TypeName => "NuclearSubmarine";

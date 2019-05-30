@@ -101,7 +101,7 @@ namespace Atomization
 			string title = "Nuclear Arsenal Maintenance";
 			foreach (var p in NuclearPlatforms)
 			{
-				var c = p.BuildCost;
+				var c = p.Maintenance;
 				if (c.Economy != null) Economy.Growth.Add(title, (float)c.Economy.Value);
 				if (c.HiEduPopu != null) HiEduPopu.Growth.Add(title, (float)c.HiEduPopu.Value);
 				if (c.Army != null) Army.Growth.Add(title, (float)c.Army.Value);
@@ -110,7 +110,18 @@ namespace Atomization
 				if (c.RawMaterial != null) RawMaterial.Growth.Add(title, (float)c.RawMaterial.Value);
 				if (c.NuclearMaterial != null) NuclearMaterial.Growth.Add(title, (float)c.NuclearMaterial.Value);
 				if (c.Stability != null) Stability.Growth.Add(title, (float)c.Stability.Value);
-
+				foreach (var w in p.NuclearWeapons)
+				{
+					var c1 = w.Maintenance;
+					if (c1.Economy != null) Economy.Growth.Add(title, (float)c1.Economy.Value);
+					if (c1.HiEduPopu != null) HiEduPopu.Growth.Add(title, (float)c1.HiEduPopu.Value);
+					if (c1.Army != null) Army.Growth.Add(title, (float)c1.Army.Value);
+					if (c1.Navy != null) Navy.Growth.Add(title, (float)c1.Navy.Value);
+					if (c1.Food != null) Food.Growth.Add(title, (float)c1.Food.Value);
+					if (c1.RawMaterial != null) RawMaterial.Growth.Add(title, (float)c1.RawMaterial.Value);
+					if (c1.NuclearMaterial != null) NuclearMaterial.Growth.Add(title, (float)c1.NuclearMaterial.Value);
+					if (c1.Stability != null) Stability.Growth.Add(title, (float)c1.Stability.Value);
+				}
 			}
 		}
 		public const int NumOfAdjacentNations = 5;
