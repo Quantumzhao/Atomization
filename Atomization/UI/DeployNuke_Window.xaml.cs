@@ -1,17 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace Atomization
 {
@@ -189,9 +178,9 @@ namespace Atomization
 			if ((SelectionList.SelectedItem as Platform).NuclearWeapons.Count == 0)
 			{
 				var result = MessageBox.Show(
-					"Are you sure to abandon this nuclear strike platform? ", 
-					"Information", 
-					MessageBoxButton.OKCancel, 
+					"Are you sure to abandon this nuclear strike platform? ",
+					"Information",
+					MessageBoxButton.OKCancel,
 					MessageBoxImage.Warning
 				);
 				if (result == MessageBoxResult.OK)
@@ -203,8 +192,8 @@ namespace Atomization
 			{
 				MessageBox.Show(
 					"All nuclear weapons must be disposed before abandoning this platform",
-					"Error", 
-					MessageBoxButton.OK, 
+					"Error",
+					MessageBoxButton.OK,
 					MessageBoxImage.Error
 				);
 			}

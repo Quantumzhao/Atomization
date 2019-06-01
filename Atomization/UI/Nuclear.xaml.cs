@@ -1,18 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Collections.Specialized;
 
 namespace Atomization
 {
@@ -27,7 +18,7 @@ namespace Atomization
 		{
 			InitializeComponent();
 
-			NukeList.ItemsSource = Data.MyNuclearWeapons;			
+			NukeList.ItemsSource = Data.MyNuclearWeapons;
 		}
 
 		private void Button_DeployNuke_Click(object sender, RoutedEventArgs e)
@@ -77,7 +68,7 @@ namespace Atomization
 			switch ((NewPlatform.SelectedItem as ComboBoxItem)?.Content.ToString())
 			{
 				case "Silo":
-					Deploy_ToolTip.Items.Add(new TextBlock() { Text = $"Building Silo Takes 4 turns"});
+					Deploy_ToolTip.Items.Add(new TextBlock() { Text = $"Building Silo Takes 4 turns" });
 					Deploy_ToolTip.Items.Add(new TextBlock() { Text = $"Building Silo Costs 4 turns" });
 
 					goto setLandBase;
@@ -148,9 +139,9 @@ namespace Atomization
 			Data.Me.NuclearPlatforms.Add(prefab);
 
 			MessageBox.Show(
-				"New nuclear strike platform deployed successfully", 
-				"Intelligence", 
-				MessageBoxButton.OK, 
+				"New nuclear strike platform deployed successfully",
+				"Intelligence",
+				MessageBoxButton.OK,
 				MessageBoxImage.Information);
 		}
 

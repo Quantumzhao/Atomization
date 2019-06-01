@@ -1,17 +1,6 @@
 ﻿using System;
-using System.Linq;
-using System.Text;
 using System.Windows;
-using System.Windows.Data;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Shapes;
-using System.Threading.Tasks;
 using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Navigation;
-using System.Collections.Generic;
-using System.Windows.Media.Imaging;
 
 namespace Atomization
 {
@@ -39,10 +28,10 @@ namespace Atomization
 			EconomyGrowth.ItemsSource = Data.Me.Economy.Growth.Values;
 
 			EconomyGrowth_Sum.Text = Data.Me.Economy.Growth.Sum.ToString();
-			Data.Me.Economy.Growth.CollectionChanged += (sender, e) => 
+			Data.Me.Economy.Growth.CollectionChanged += (sender, e) =>
 				EconomyGrowth_Sum.Text = Data.Me.Economy.Growth.Sum.ToString();
 			#endregion
-			
+
 			#region High Education Population Initialization
 			HiEduPopu.Content = (int)Data.Me.HiEduPopu.Value;
 			Data.Me.HiEduPopu.OnValueChanged += (n, pv, nv) => HiEduPopu.Content = (int)nv;
@@ -154,7 +143,7 @@ namespace Atomization
 		}
 		private void updateStatusBar()
 		{
-			
+
 		}
 
 	}

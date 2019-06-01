@@ -1,10 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
+﻿using System.Collections.Generic;
 using System.Collections.Specialized;
 
 namespace Atomization
@@ -27,15 +21,6 @@ namespace Atomization
 			TerritorialWaters = new Waters() { Name = Data.WatersNames.Dequeue() };
 			TerritorialWaters.Affiliation = this;
 			Data.Regions.Add(TerritorialWaters);
-
-			Economy = new ValueComplex(this, 20000);		// x10^9
-			HiEduPopu = new ValueComplex(this, 20000);		// x10^6
-			Army = new ValueComplex(this, 50000);			// x10^3
-			Navy = new ValueComplex(this, 5000);			// x10^3
-			Food = new ValueComplex(this, 20000);			// x10^6
-			RawMaterial = new ValueComplex(this, 4000);		// x10^3
-			NuclearMaterial = new ValueComplex(this, 100);	// x10^3
-			Stability = new ValueComplex(this, 75) { Maximum = new InternalValue(this, 100) };
 		}
 
 		public const int NumOfNonAdjacentNations = 5;
@@ -67,9 +52,18 @@ namespace Atomization
 		public const int InitialNukeSilos = 10;
 		public Superpower(NotifyCollectionChangedEventHandler onCollectionChanged = null) : base()
 		{
+			Economy = new ValueComplex(20000);        // x10^9
+			HiEduPopu = new ValueComplex(20000);      // x10^6
+			Army = new ValueComplex(50000);           // x10^3
+			Navy = new ValueComplex(5000);            // x10^3
+			Food = new ValueComplex(20000);           // x10^6
+			RawMaterial = new ValueComplex(4000);     // x10^3
+			NuclearMaterial = new ValueComplex(100);  // x10^3
+			Stability = new ValueComplex(75) { Maximum = new InternalValue(100) };
+
 			for (int i = 0; i < InitialNukeSilos; i++)
 			{
-				NuclearPlatforms.Add(new Silo(onCollectionChanged) { DeployRegion = this});
+				NuclearPlatforms.Add(new Silo(onCollectionChanged) { DeployRegion = this });
 			}
 
 			for (int i = 0; i < NumOfAdjacentNations; i++)

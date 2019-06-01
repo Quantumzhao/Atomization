@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Atomization
+﻿namespace Atomization
 {
 	public abstract class NuclearWeapon
 	{
@@ -27,8 +21,8 @@ namespace Atomization
 	{
 		public CruiseMissile()
 		{
-			BuildCost = new Cost(this, "Cruis Missile Construction", economy: -20, rawMaterial: -30);
-			Maintenance = new Cost(this, "Nuclear Arsenal Maintenance", economy: -4, rawMaterial: -0.1);
+			BuildCost = new Cost("Cruis Missile Construction", economy: -20, rawMaterial: -30);
+			Maintenance = new Cost("Nuclear Arsenal Maintenance", economy: -4, rawMaterial: -0.1);
 		}
 
 		public override string TypeName => "CruiseMissile";
@@ -41,8 +35,8 @@ namespace Atomization
 	{
 		public MediumRangeMissile()
 		{
-			BuildCost = new Cost(this, "Medium Range Missile Construction", economy: -40, rawMaterial: -70);
-			Maintenance = new Cost(this, "Nuclear Arsenal Maintenance", economy: -8, rawMaterial: -0.2);
+			BuildCost = new Cost("Medium Range Missile Construction", economy: -40, rawMaterial: -70);
+			Maintenance = new Cost("Nuclear Arsenal Maintenance", economy: -8, rawMaterial: -0.2);
 		}
 		public override string TypeName => "MediumRangeMissile";
 		public override int BuildTime { get; set; } = 4;
@@ -54,8 +48,8 @@ namespace Atomization
 	{
 		public ICBM()
 		{
-			BuildCost = new Cost(this, "ICBM Construction", economy: -80, rawMaterial: -100);
-			Maintenance = new Cost(this, "Nuclear Arsenal Maintenance", economy: -20, rawMaterial: -1);
+			BuildCost = new Cost("ICBM Construction", economy: -80, rawMaterial: -100);
+			Maintenance = new Cost("Nuclear Arsenal Maintenance", economy: -20, rawMaterial: -1);
 		}
 		public override string TypeName => "ICBM";
 		public override int BuildTime { get; set; } = 6;
@@ -67,8 +61,8 @@ namespace Atomization
 	{
 		public NuclearBomb()
 		{
-			BuildCost = new Cost(this, "Nuclear Bomb Construction", economy: -20, rawMaterial: -10);
-			Maintenance = new Cost(this, "Nuclear Arsenal Maintenance", economy: -1, rawMaterial: -0.05);
+			BuildCost = new Cost("Nuclear Bomb Construction", economy: -20, rawMaterial: -10);
+			Maintenance = new Cost("Nuclear Arsenal Maintenance", economy: -1, rawMaterial: -0.05);
 		}
 
 		public override string TypeName => "NuclearBomb";

@@ -1,12 +1,8 @@
 ﻿using System;
-using System.IO;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.ComponentModel;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.IO;
 
 namespace Atomization
 {
@@ -59,7 +55,8 @@ namespace Atomization
 							MyNuclearWeapons.Remove(e.NewItems[0] as NuclearWeapon);
 						}
 					}
-				) { Name = "C"}
+				)
+				{ Name = "C" }
 			);
 			Regions.Add(new Superpower() { Name = "A" });
 		}
