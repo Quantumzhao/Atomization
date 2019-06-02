@@ -1,14 +1,30 @@
 ﻿using System.Collections.Specialized;
+using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace Atomization
 {
 	public abstract class Platform
 	{
-		public Platform(NotifyCollectionChangedEventHandler onCollectionChanged = null)
+		protected Platform()
 		{
-			NuclearWeapons.CollectionChanged += onCollectionChanged;
+			if (IsFriend)
+			{
+				NuclearWeapons.CollectionChanged +=
+				(sender, e) =>
+				{
+					if (e.Action == NotifyCollectionChangedAction.Add)
+					{
+						Data.MyNuclearWeapons.Add(e.NewItems[0] as NuclearWeapon);
+					}
+					else if (e.Action == NotifyCollectionChangedAction.Remove)
+					{
+						Data.MyNuclearWeapons.Remove(e.OldItems[0] as NuclearWeapon);
+					}
+				};
+			}
 		}
-
+		public bool IsFriend { get; set; } = true;
 		public abstract string TypeName { get; }
 		public Region DeployRegion { get; set; }
 		public abstract int BuildTime { get; set; }
@@ -20,13 +36,19 @@ namespace Atomization
 
 	public class Silo : Platform
 	{
-		public Silo(NotifyCollectionChangedEventHandler onCollectionChanged = null)
-			: base(onCollectionChanged)
+		public Silo(Nation deployRegion) : base()
 		{
+			DeployRegion = deployRegion;
+
 			NuclearWeapons.Capacity = 1;
 
 			BuildCost = new Cost("Missile Silo Construction", economy: -40, rawMaterial: -60);
 			Maintenance = new Cost("Nuclear Arsenal Maintenance", economy: -2, rawMaterial: -5);
+
+			if (IsFriend)
+			{
+				(DeployRegion as Nation).Affiliation.AddExpenditureAndRevenue(Maintenance);
+			}
 		}
 
 		public override string TypeName => "Silo";
@@ -37,8 +59,7 @@ namespace Atomization
 
 	public class StrategicBomber : Platform
 	{
-		public StrategicBomber(NotifyCollectionChangedEventHandler onCollectionChanged = null)
-			: base(onCollectionChanged)
+		public StrategicBomber() : base()
 		{
 			NuclearWeapons.Capacity = 1;
 
@@ -54,8 +75,7 @@ namespace Atomization
 
 	public class MissileLauncher : Platform
 	{
-		public MissileLauncher(NotifyCollectionChangedEventHandler onCollectionChanged = null)
-			: base(onCollectionChanged)
+		public MissileLauncher() : base()
 		{
 			NuclearWeapons.Capacity = 1;
 
@@ -71,8 +91,7 @@ namespace Atomization
 
 	public class NuclearSubmarine : Platform
 	{
-		public NuclearSubmarine(NotifyCollectionChangedEventHandler onCollectionChanged = null)
-			: base(onCollectionChanged)
+		public NuclearSubmarine() : base()
 		{
 			NuclearWeapons.Capacity = 8;
 

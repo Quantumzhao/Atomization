@@ -2,6 +2,15 @@
 {
 	public abstract class NuclearWeapon
 	{
+		protected NuclearWeapon()
+		{
+			if (IsFriend)
+			{
+				Data.Me.AddExpenditureAndRevenue(Maintenance);
+			}
+		}
+
+		public bool IsFriend = true;
 		public string Name { get; set; }
 		public Platform Platform { get; set; }
 		public Region Target { get; set; }
@@ -19,7 +28,7 @@
 
 	public class CruiseMissile : NuclearMissile
 	{
-		public CruiseMissile()
+		public CruiseMissile() : base()
 		{
 			BuildCost = new Cost("Cruis Missile Construction", economy: -20, rawMaterial: -30);
 			Maintenance = new Cost("Nuclear Arsenal Maintenance", economy: -4, rawMaterial: -0.1);
@@ -33,7 +42,7 @@
 
 	public class MediumRangeMissile : NuclearMissile
 	{
-		public MediumRangeMissile()
+		public MediumRangeMissile() : base()
 		{
 			BuildCost = new Cost("Medium Range Missile Construction", economy: -40, rawMaterial: -70);
 			Maintenance = new Cost("Nuclear Arsenal Maintenance", economy: -8, rawMaterial: -0.2);
@@ -46,7 +55,7 @@
 
 	public class ICBM : NuclearMissile
 	{
-		public ICBM()
+		public ICBM() : base()
 		{
 			BuildCost = new Cost("ICBM Construction", economy: -80, rawMaterial: -100);
 			Maintenance = new Cost("Nuclear Arsenal Maintenance", economy: -20, rawMaterial: -1);
@@ -59,7 +68,7 @@
 
 	public class NuclearBomb : NuclearWeapon
 	{
-		public NuclearBomb()
+		public NuclearBomb() : base()
 		{
 			BuildCost = new Cost("Nuclear Bomb Construction", economy: -20, rawMaterial: -10);
 			Maintenance = new Cost("Nuclear Arsenal Maintenance", economy: -1, rawMaterial: -0.05);

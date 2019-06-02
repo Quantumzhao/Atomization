@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Collections.ObjectModel;
 
 namespace Atomization
 {
@@ -173,13 +174,11 @@ namespace Atomization
 
 	public class InternalValue
 	{
-		public InternalValue(/*object parent, */double initialValue)
+		public InternalValue(double initialValue)
 		{
-			//this.parent = parent;
 			value = initialValue;
 		}
 
-		private object parent;
 		public event OnValueChanged<object, double> OnValueChanged;
 
 		private double value;
@@ -190,7 +189,7 @@ namespace Atomization
 			{
 				if (value != this.value)
 				{
-					OnValueChanged?.Invoke(parent, this.value, value);
+					OnValueChanged?.Invoke(this, this.value, value);
 					this.value = value;
 				}
 			}
@@ -205,7 +204,6 @@ namespace Atomization
 		}
 
 		private InternalValue bindedValue;
-		private Nation parent;
 
 		public event NotifyCollectionChangedEventHandler CollectionChanged;
 
@@ -217,6 +215,11 @@ namespace Atomization
 			get => Values[name];
 		}
 
+		public void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+		{
+			CollectionChanged?.Invoke(sender, e);
+		}
+
 		public bool Contains(string name)
 		{
 			return Values.ContainsKey(name);
@@ -226,7 +229,7 @@ namespace Atomization
 			return Values.ContainsValue(value);
 		}
 
-		public void Add(string name, float number)
+		public void Add_AbsValue(string name, double number)
 		{
 			var value = new InternalValue(number);
 			value.OnValueChanged += (n, pv, nv) => CollectionChanged?.Invoke(
@@ -249,9 +252,9 @@ namespace Atomization
 				new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, value)
 			);
 		}
-		public void Add(string name, double percent)
+		public void Add_Percent(string name, double percent)
 		{
-			Add(name, (int)(bindedValue.Value * percent));
+			Add_AbsValue(name, (int)(bindedValue.Value * percent));
 		}
 
 		public int Sum
@@ -272,30 +275,84 @@ namespace Atomization
 		public Cost(
 			string name,
 			double economy = 0,
+			bool isEconomyAbs = true,
 			double hiEduPopu = 0,
+			bool isHiEduPopuAbs = true,
 			double army = 0,
+			bool isArmyAbs = true,
 			double navy = 0,
+			bool isNavyAbs = true,
+			double food = 0,
+			bool isFoodAbs = true,
 			double rawMaterial = 0,
+			bool isRawMaterialAbs = true,
 			double nuclearMaterial = 0,
-			double stability = 0
+			bool isNuclearMaterialAbs = true,
+			double stability = 0,
+			bool isStabilityAbs = true
 		)
 		{
-			if (economy != 0) Economy = new InternalValue(economy);
-			if (hiEduPopu != 0) HiEduPopu = new InternalValue(hiEduPopu);
-			if (army != 0) Army = new InternalValue(army);
-			if (navy != 0) Navy = new InternalValue(navy);
-			if (rawMaterial != 0) RawMaterial = new InternalValue(rawMaterial);
-			if (nuclearMaterial != 0) NuclearMaterial = new InternalValue(nuclearMaterial);
-			if (stability != 0) Stability = new InternalValue(stability);
+			Name = name;
+
+			// the number of properties
+			Values = new ObservableCollection<KeyValuePair<InternalValue, bool>>();
+			for (int i = 0; i < 8; i++)
+			{
+				Values.Add(new KeyValuePair<InternalValue, bool>(null, true));
+			}
+
+			Values[0] = new KeyValuePair<InternalValue, bool>(new InternalValue(economy), isEconomyAbs);
+			Values[1] = new KeyValuePair<InternalValue, bool>(new InternalValue(hiEduPopu), isHiEduPopuAbs);
+			Values[2] = new KeyValuePair<InternalValue, bool>(new InternalValue(army), isArmyAbs);
+			Values[3] = new KeyValuePair<InternalValue, bool>(new InternalValue(navy), isNavyAbs);
+			Values[4] = new KeyValuePair<InternalValue, bool>(new InternalValue(food), isFoodAbs);
+			Values[5] = new KeyValuePair<InternalValue, bool>(new InternalValue(rawMaterial), isRawMaterialAbs);
+			Values[6] = new KeyValuePair<InternalValue, bool>(new InternalValue(nuclearMaterial), isNuclearMaterialAbs);
+			Values[7] = new KeyValuePair<InternalValue, bool>(new InternalValue(stability), isStabilityAbs);
+
 		}
 
-		public InternalValue Economy { get; set; }
-		public InternalValue HiEduPopu { get; set; }
-		public InternalValue Army { get; set; }
-		public InternalValue Navy { get; set; }
-		public InternalValue Food { get; set; }
-		public InternalValue RawMaterial { get; set; }
-		public InternalValue NuclearMaterial { get; set; }
-		public InternalValue Stability { get; set; }
+		// stores value, and the information of whether it is in absolute value
+		public readonly ObservableCollection<KeyValuePair<InternalValue, bool>> Values;
+
+		public string Name { get; set; }
+		public InternalValue Economy
+		{
+			get => Values[0].Key;
+		}
+		public InternalValue HiEduPopu
+		{
+			get => Values[1].Key;
+		}
+
+		public InternalValue Army
+		{
+			get => Values[2].Key;
+		}
+
+		public InternalValue Navy
+		{
+			get => Values[3].Key;
+		}
+
+		public InternalValue Food
+		{
+			get => Values[4].Key;
+		}
+
+		public InternalValue RawMaterial
+		{
+			get => Values[5].Key;
+		}
+
+		public InternalValue NuclearMaterial
+		{
+			get => Values[6].Key;
+		}
+
+		public InternalValue Stability
+		{
+			get => Values[7].Key;
+		}
 	}
 }

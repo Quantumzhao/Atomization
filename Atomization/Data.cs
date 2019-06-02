@@ -19,6 +19,7 @@ namespace Atomization
 
 		public static void Initiaze()
 		{
+			#region Initializa names of regions
 			try
 			{
 				WatersNames = new Queue<string>(File.ReadAllLines("..\\..\\Nations\\Waters Names.txt"));
@@ -27,7 +28,7 @@ namespace Atomization
 			{
 				for (int i = 0; i < 25; i++)
 				{
-					WatersNames.Enqueue("");
+					WatersNames.Enqueue("[Error]");
 				}
 			}
 			try
@@ -38,26 +39,12 @@ namespace Atomization
 			{
 				for (int i = 0; i < 20; i++)
 				{
-					NationNames.Enqueue("");
+					NationNames.Enqueue("[Error]");
 				}
 			}
+			#endregion
 
-			Regions.Add(
-				Me = new Superpower(
-					(sender, e) =>
-					{
-						if (e.Action == NotifyCollectionChangedAction.Add)
-						{
-							MyNuclearWeapons.Add(e.NewItems[0] as NuclearWeapon);
-						}
-						else if (e.Action == NotifyCollectionChangedAction.Remove)
-						{
-							MyNuclearWeapons.Remove(e.NewItems[0] as NuclearWeapon);
-						}
-					}
-				)
-				{ Name = "C" }
-			);
+			Regions.Add(Me = Superpower.InitializeMe("C"));
 			Regions.Add(new Superpower() { Name = "A" });
 		}
 	}

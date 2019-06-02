@@ -68,8 +68,8 @@ namespace Atomization
 			switch ((NewPlatform.SelectedItem as ComboBoxItem)?.Content.ToString())
 			{
 				case "Silo":
-					Deploy_ToolTip.Items.Add(new TextBlock() { Text = $"Building Silo Takes 4 turns" });
-					Deploy_ToolTip.Items.Add(new TextBlock() { Text = $"Building Silo Costs 4 turns" });
+					Deploy_ToolTip.Items.Add(new TextBlock() { Text = "Building Silo Takes 4 turns" });
+					Deploy_ToolTip.Items.Add(new TextBlock() { Text = "Building Silo Costs 4 turns" });
 
 					goto setLandBase;
 
@@ -99,35 +99,22 @@ namespace Atomization
 		{
 			Platform prefab;
 
-			NotifyCollectionChangedEventHandler onCollectionChanged =
-			(isender, ie) =>
-			{
-				if (ie.Action == NotifyCollectionChangedAction.Add)
-				{
-					Data.MyNuclearWeapons.Add(ie.NewItems[0] as NuclearWeapon);
-				}
-				else if (ie.Action == NotifyCollectionChangedAction.Remove)
-				{
-					Data.MyNuclearWeapons.Remove(ie.NewItems[0] as NuclearWeapon);
-				}
-			};
-
 			switch ((NewPlatform.SelectedItem as ComboBoxItem)?.Content.ToString())
 			{
 				case "Silo":
-					prefab = new Silo(onCollectionChanged);
+					prefab = new Silo(Data.Me);
 					break;
 
 				case "Strategic Bomber":
-					prefab = new StrategicBomber(onCollectionChanged);
+					prefab = new StrategicBomber();
 					break;
 
 				case "Missile Launcher":
-					prefab = new MissileLauncher(onCollectionChanged);
+					prefab = new MissileLauncher();
 					break;
 
 				case "Nuclear Submarine":
-					prefab = new NuclearSubmarine(onCollectionChanged);
+					prefab = new NuclearSubmarine();
 					break;
 
 				default:
