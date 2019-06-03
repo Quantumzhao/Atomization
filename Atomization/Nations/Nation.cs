@@ -21,6 +21,17 @@ namespace Atomization
 			TerritorialWaters = new Waters() { Name = Data.WatersNames.Dequeue() };
 			TerritorialWaters.Affiliation = this;
 			Data.Regions.Add(TerritorialWaters);
+			ExpenditureAndRevenue.CollectionChanged += (sender, e) =>
+			{
+				if (e.Action == NotifyCollectionChangedAction.Add)
+				{
+					AddExpenditureAndRevenue(e.NewItems[0] as Cost);
+				}
+				else if (e.Action == NotifyCollectionChangedAction.Remove)
+				{
+					RemoveExpenditureAndRevenue(e.OldItems[0] as Cost);
+				}
+			};
 		}
 
 		// null stands for independence
@@ -31,6 +42,7 @@ namespace Atomization
 
 		#region Value Definitions
 		protected ValueComplex[] Values = new ValueComplex[8];
+		protected GameObjectList<Cost> ExpenditureAndRevenue = new GameObjectList<Cost>();
 		public ValueComplex Economy
 		{
 			get => Values[0];
@@ -76,7 +88,7 @@ namespace Atomization
 		}
 		#endregion
 
-		public void AddExpenditureAndRevenue(Cost cost)
+		private void AddExpenditureAndRevenue(Cost cost)
 		{
 			for (int i = 0; i < cost.Values.Count; i++)
 			{
@@ -91,6 +103,16 @@ namespace Atomization
 						Values[i].Growth.Add_Percent(cost.Name, cost.Values[i].Key.Value);
 					}
 					cost.Values.CollectionChanged += this.Values[i].Growth.OnCollectionChanged;
+				}
+			}
+		}
+		private void RemoveExpenditureAndRevenue(Cost cost)
+		{
+			for (int i = 0; i < cost.Values.Count; i++)
+			{
+				if (cost.Values[i].Key.Value != 0)
+				{
+
 				}
 			}
 		}
