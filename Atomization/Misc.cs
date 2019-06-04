@@ -355,4 +355,18 @@ namespace Atomization
 			get => Values[7].Key;
 		}
 	}
+
+	public class Expression
+	{
+		public Expression(InternalValue para, double coefficient)
+		{
+			Parameter = para;
+			Coefficient = coefficient;
+		}
+
+		public InternalValue Parameter { get; set; }
+		public double Coefficient { get; set; }
+
+		public 
+	}
 }
