@@ -2,6 +2,7 @@
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Collections.ObjectModel;
+using System;
 
 namespace Atomization
 {
@@ -274,102 +275,120 @@ namespace Atomization
 	{
 		public Cost(
 			string name,
-			double economy = 0,
-			bool isEconomyAbs = true,
-			double hiEduPopu = 0,
-			bool isHiEduPopuAbs = true,
-			double army = 0,
-			bool isArmyAbs = true,
-			double navy = 0,
-			bool isNavyAbs = true,
-			double food = 0,
-			bool isFoodAbs = true,
-			double rawMaterial = 0,
-			bool isRawMaterialAbs = true,
-			double nuclearMaterial = 0,
-			bool isNuclearMaterialAbs = true,
-			double stability = 0,
-			bool isStabilityAbs = true
+			Expression economy = null,
+			Expression hiEduPopu = null,
+			Expression army = null,
+			Expression navy = null,
+			Expression food = null,
+			Expression rawMaterial = null,
+			Expression nuclearMaterial = null,
+			Expression stability = null
 		)
 		{
 			Name = name;
 
 			// the number of properties
-			Values = new ObservableCollection<KeyValuePair<InternalValue, bool>>();
+			Values = new ObservableCollection<Expression>();
 			for (int i = 0; i < 8; i++)
 			{
-				Values.Add(new KeyValuePair<InternalValue, bool>(null, true));
+				Values.Add(null);
 			}
 
-			Values[0] = new KeyValuePair<InternalValue, bool>(new InternalValue(economy), isEconomyAbs);
-			Values[1] = new KeyValuePair<InternalValue, bool>(new InternalValue(hiEduPopu), isHiEduPopuAbs);
-			Values[2] = new KeyValuePair<InternalValue, bool>(new InternalValue(army), isArmyAbs);
-			Values[3] = new KeyValuePair<InternalValue, bool>(new InternalValue(navy), isNavyAbs);
-			Values[4] = new KeyValuePair<InternalValue, bool>(new InternalValue(food), isFoodAbs);
-			Values[5] = new KeyValuePair<InternalValue, bool>(new InternalValue(rawMaterial), isRawMaterialAbs);
-			Values[6] = new KeyValuePair<InternalValue, bool>(new InternalValue(nuclearMaterial), isNuclearMaterialAbs);
-			Values[7] = new KeyValuePair<InternalValue, bool>(new InternalValue(stability), isStabilityAbs);
-
+			Values[0] = economy ?? new Expression(0);
+			Values[1] = hiEduPopu ?? new Expression(0);
+			Values[2] = army ?? new Expression(0);
+			Values[3] = navy ?? new Expression(0);
+			Values[4] = food ?? new Expression(0);
+			Values[5] = rawMaterial ?? new Expression(0);
+			Values[6] = nuclearMaterial ?? new Expression(0);
+			Values[7] = stability ?? new Expression(0);
 		}
+		public Cost(
+			string name, 
+			double economy = 0,
+			double hiEduPopu = 0,
+			double army = 0,
+			double navy = 0,
+			double food = 0,
+			double rawMaterial = 0,
+			double nuclearMaterial = 0,
+			double stability = 0
+		) : this
+		(
+			name,
+			new Expression(economy),
+			new Expression(hiEduPopu),
+			new Expression(army),
+			new Expression(navy),
+			new Expression(food),
+			new Expression(rawMaterial),
+			new Expression(nuclearMaterial),
+			new Expression(stability)
+		) { }
 
 		// stores value, and the information of whether it is in absolute value
-		public readonly ObservableCollection<KeyValuePair<InternalValue, bool>> Values;
+		public readonly ObservableCollection<Expression> Values;
 
 		public string Name { get; set; }
-		public InternalValue Economy
+		public double Economy
 		{
-			get => Values[0].Key;
+			get => Values[0].Value;
 		}
-		public InternalValue HiEduPopu
+		public double HiEduPopu
 		{
-			get => Values[1].Key;
-		}
-
-		public InternalValue Army
-		{
-			get => Values[2].Key;
+			get => Values[1].Value;
 		}
 
-		public InternalValue Navy
+		public double Army
 		{
-			get => Values[3].Key;
+			get => Values[2].Value;
 		}
 
-		public InternalValue Food
+		public double Navy
 		{
-			get => Values[4].Key;
+			get => Values[3].Value;
 		}
 
-		public InternalValue RawMaterial
+		public double Food
 		{
-			get => Values[5].Key;
+			get => Values[4].Value;
 		}
 
-		public InternalValue NuclearMaterial
+		public double RawMaterial
 		{
-			get => Values[6].Key;
+			get => Values[5].Value;
 		}
 
-		public InternalValue Stability
+		public double NuclearMaterial
 		{
-			get => Values[7].Key;
+			get => Values[6].Value;
+		}
+
+		public double Stability
+		{
+			get => Values[7].Value;
 		}
 	}
 
 	public class Expression
 	{
-		public Expression(InternalValue para, double coefficient)
+		public Expression(InternalValue para, Func<InternalValue, double> function)
 		{
 			Parameter = para;
-			Coefficient = coefficient;
+			Function = p => 0;
 
 			para.OnValueChanged += OnValueChanged;
 		}
+		public Expression(double value)
+		{
+			Parameter = null;
+			Function = p => value;
+		}
 
 		public InternalValue Parameter { get; set; }
-		public double Coefficient { get; set; }
+		public Func<InternalValue, double> Function { get; set; }
 
-		public double Value => Coefficient * Parameter.Value;
+		public double Value => Function(Parameter);
 
 		public event OnValueChanged<object, double> OnValueChanged;
 	}
