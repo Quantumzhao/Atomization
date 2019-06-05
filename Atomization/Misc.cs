@@ -362,11 +362,15 @@ namespace Atomization
 		{
 			Parameter = para;
 			Coefficient = coefficient;
+
+			para.OnValueChanged += OnValueChanged;
 		}
 
 		public InternalValue Parameter { get; set; }
 		public double Coefficient { get; set; }
 
-		public 
+		public double Value => Coefficient * Parameter.Value;
+
+		public event OnValueChanged<object, double> OnValueChanged;
 	}
 }
