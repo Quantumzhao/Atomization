@@ -112,7 +112,7 @@ namespace Atomization
 			{
 				if (cost.Values[i].Key.Value != 0)
 				{
-
+					
 				}
 			}
 		}
