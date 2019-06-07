@@ -88,31 +88,28 @@ namespace Atomization
 		}
 		#endregion
 
-		private void AddExpenditureAndRevenue(Cost cost)
+		public void AddExpenditureAndRevenue(Cost cost)
 		{
 			for (int i = 0; i < cost.Values.Count; i++)
 			{
-				if (cost.Values[i].Key.Value != 0)
+				if (cost.Values[i].Value != 0)
 				{
-					if (cost.Values[i].Value)
-					{
-						Values[i].Growth.Add_AbsValue(cost.Name, cost.Values[i].Key.Value);
-					}
-					else
-					{
-						Values[i].Growth.Add_Percent(cost.Name, cost.Values[i].Key.Value);
-					}
+					this.Values[i].Growth.AddValue(cost.Name, cost.Values[i].Value);
 					cost.Values.CollectionChanged += this.Values[i].Growth.OnCollectionChanged;
 				}
 			}
 		}
-		private void RemoveExpenditureAndRevenue(Cost cost)
+		public void RemoveExpenditureAndRevenue(Cost cost)
 		{
 			for (int i = 0; i < cost.Values.Count; i++)
 			{
-				if (cost.Values[i].Key.Value != 0)
+				if (cost.Values[i].Value != 0)
 				{
-					
+					this.Values[i].Growth.Values[cost.Name].Value -= cost.Values[i].Value;
+					if (this.Values[i].Growth.Values[cost.Name].Value == 0)
+					{
+						this.Values[i].Growth.Values.Remove(cost.Name);
+					}
 				}
 			}
 		}
@@ -166,11 +163,23 @@ namespace Atomization
 			}
 
 			superpower.AddExpenditureAndRevenue(
-				new Cost("Army Maintenance", economy: -0.001 * superpower.Army.Value));
+				new Cost(
+					"Army Maintenance", 
+					new Expression(superpower.Army.Value_Object, v => -0.001 * v.Value)
+					)
+				);
 			superpower.AddExpenditureAndRevenue(
-				new Cost("Navy Maintenance", economy: -0.005 * superpower.Navy.Value));
+				new Cost(
+					"Navy Maintenance", 
+					economy: new Expression(superpower.Navy.Value_Object, v => -0.005 * v.Value)
+					)
+				);
 			superpower.AddExpenditureAndRevenue(
-				new Cost("Domestic Development", economy: -0.9, isEconomyAbs: false));
+				new Cost(
+					"Domestic Development", 
+					new Expression(superpower.Economy.Value_Object, v => -0.9 * v.Value)
+				)
+			);
 			superpower.AddExpenditureAndRevenue(
 				new Cost("Government Revenue", economy: 20000));
 			superpower.AddExpenditureAndRevenue(
@@ -178,7 +187,11 @@ namespace Atomization
 			superpower.AddExpenditureAndRevenue(
 				new Cost("Domestic Production", food: 42000));
 			superpower.AddExpenditureAndRevenue(
-				new Cost("Domestic Consumption", food: -2.0 * superpower.HiEduPopu.Value));
+				new Cost(
+					"Domestic Consumption", 
+					food: new Expression(superpower.HiEduPopu.Value_Object, v => -2 * v.Value)
+				)
+			);
 			superpower.AddExpenditureAndRevenue(
 				new Cost("Domestic Production", rawMaterial: 10200));
 			superpower.AddExpenditureAndRevenue(

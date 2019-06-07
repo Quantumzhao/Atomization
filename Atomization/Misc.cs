@@ -150,17 +150,17 @@ namespace Atomization
 	{
 		public ValueComplex(double initialValue = 0)
 		{
-			value = new InternalValue(initialValue);
+			Value_Object = new InternalValue(initialValue);
 			Maximum = new InternalValue(double.MaxValue);
 			Minimum = new InternalValue(double.MinValue);
-			Growth = new Value_Growth(value);
+			Growth = new Value_Growth(Value_Object);
 		}
 
-		private InternalValue value;
-		public double Value
+		public InternalValue Value_Object { get; set; }
+		public double Value_Numerical
 		{
-			get => value.Value;
-			set => this.value.Value = value;
+			get => Value_Object.Value;
+			set => this.Value_Object.Value = value;
 		}
 		public InternalValue Maximum { get; set; }
 		public InternalValue Minimum { get; set; }
@@ -168,8 +168,8 @@ namespace Atomization
 
 		public event OnValueChanged<object, double> OnValueChanged
 		{
-			add => this.value.OnValueChanged += value;
-			remove => this.value.OnValueChanged -= value;
+			add => this.Value_Object.OnValueChanged += value;
+			remove => this.Value_Object.OnValueChanged -= value;
 		}
 	}
 
@@ -230,7 +230,7 @@ namespace Atomization
 			return Values.ContainsValue(value);
 		}
 
-		public void Add_AbsValue(string name, double number)
+		public void AddValue(string name, double number)
 		{
 			var value = new InternalValue(number);
 			value.OnValueChanged += (n, pv, nv) => CollectionChanged?.Invoke(
@@ -252,10 +252,6 @@ namespace Atomization
 				this,
 				new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, value)
 			);
-		}
-		public void Add_Percent(string name, double percent)
-		{
-			Add_AbsValue(name, (int)(bindedValue.Value * percent));
 		}
 
 		public int Sum

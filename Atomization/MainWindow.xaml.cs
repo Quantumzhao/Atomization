@@ -22,7 +22,7 @@ namespace Atomization
 			DataContext = this;
 
 			#region Economy initialization
-			Economy.Content = (int)Data.Me.Economy.Value;
+			Economy.Content = (int)Data.Me.Economy.Value_Numerical;
 			Data.Me.Economy.OnValueChanged += (n, pv, nv) => Economy.Content = (int)nv;
 
 			EconomyGrowth.ItemsSource = Data.Me.Economy.Growth.Values;
@@ -33,7 +33,7 @@ namespace Atomization
 			#endregion
 
 			#region High Education Population Initialization
-			HiEduPopu.Content = (int)Data.Me.HiEduPopu.Value;
+			HiEduPopu.Content = (int)Data.Me.HiEduPopu.Value_Numerical;
 			Data.Me.HiEduPopu.OnValueChanged += (n, pv, nv) => HiEduPopu.Content = (int)nv;
 
 			HiEduGrowth.ItemsSource = Data.Me.HiEduPopu.Growth.Values;
@@ -44,7 +44,7 @@ namespace Atomization
 			#endregion
 
 			#region Army Initialization
-			Army.Content = (int)Data.Me.Army.Value;
+			Army.Content = (int)Data.Me.Army.Value_Numerical;
 			Data.Me.Army.OnValueChanged += (n, pv, nv) => Army.Content = (int)nv;
 
 			ArmyGrowth.ItemsSource = Data.Me.Army.Growth.Values;
@@ -55,7 +55,7 @@ namespace Atomization
 			#endregion
 
 			#region Navy Initialization
-			Navy.Content = (int)Data.Me.Navy.Value;
+			Navy.Content = (int)Data.Me.Navy.Value_Numerical;
 			Data.Me.Navy.OnValueChanged += (n, pv, nv) => Navy.Content = (int)nv;
 
 			NavyGrowth.ItemsSource = Data.Me.Navy.Growth.Values;
@@ -66,7 +66,7 @@ namespace Atomization
 			#endregion
 
 			#region Food Initialization
-			Food.Content = (int)Data.Me.Food.Value;
+			Food.Content = (int)Data.Me.Food.Value_Numerical;
 			Data.Me.Food.OnValueChanged += (n, pv, nv) => Food.Content = (int)nv;
 
 			FoodGrowth.ItemsSource = Data.Me.Food.Growth.Values;
@@ -78,7 +78,7 @@ namespace Atomization
 			#endregion
 
 			#region Raw Material Initialization
-			RawMaterial.Content = (int)Data.Me.Economy.Value;
+			RawMaterial.Content = (int)Data.Me.Economy.Value_Numerical;
 			Data.Me.RawMaterial.OnValueChanged += (n, pv, nv) => RawMaterial.Content = (int)nv;
 
 			RawMaterialGrowth.ItemsSource = Data.Me.RawMaterial.Growth.Values;
@@ -89,7 +89,7 @@ namespace Atomization
 			#endregion
 
 			#region Nuclear Initialization
-			NuclearMaterial.Content = (int)Data.Me.NuclearMaterial.Value;
+			NuclearMaterial.Content = (int)Data.Me.NuclearMaterial.Value_Numerical;
 			Data.Me.NuclearMaterial.OnValueChanged += (n, pv, nv) => NuclearMaterial.Content = (int)nv;
 
 			NuclearMaterialGrowth.ItemsSource = Data.Me.NuclearMaterial.Growth.Values;
@@ -100,8 +100,8 @@ namespace Atomization
 			#endregion
 
 			#region Stability Initialization
-			ProgBar_Stability.Value = Data.Me.Stability.Value;
-			Stability.Content = (int)Data.Me.Stability.Value;
+			ProgBar_Stability.Value = Data.Me.Stability.Value_Numerical;
+			Stability.Content = (int)Data.Me.Stability.Value_Numerical;
 			Data.Me.Stability.OnValueChanged += (n, pv, nv) =>
 			{
 				Stability.Content = (int)nv;
