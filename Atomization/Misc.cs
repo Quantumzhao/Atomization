@@ -6,7 +6,7 @@ using System;
 
 namespace Atomization
 {
-	public delegate void OnValueChanged<in S, T>(S sender, T previousValue, T newValue);
+	public delegate void ValueChange<in S, T>(S sender, T previousValue, T newValue);
 	public class GameObjectList<T> : List<T>, INotifyCollectionChanged, INotifyPropertyChanged
 	{
 		public new int Capacity { get; set; } = 0;
@@ -61,7 +61,7 @@ namespace Atomization
 			public InternalValue Minimum { get; set; }
 			public Value_Growth Growth { get; set; }
 
-			public event OnValueChanged<object, double> OnValueChanged
+			public event ValueChange<object, double> OnValueChanged
 			{
 				add => this.value.OnValueChanged += value;
 				remove => this.value.OnValueChanged -= value;
@@ -76,7 +76,7 @@ namespace Atomization
 				}
 
 				private Nation parent;
-				public event OnValueChanged<object, double> OnValueChanged;
+				public event ValueChange<object, double> OnValueChanged;
 
 				private double value;
 				public double Value
@@ -166,10 +166,10 @@ namespace Atomization
 		public InternalValue Minimum { get; set; }
 		public Value_Growth Growth { get; set; }
 
-		public event OnValueChanged<object, double> OnValueChanged
+		public event ValueChange<object, double> OnValueChanged
 		{
-			add => this.Value_Object.OnValueChanged += value;
-			remove => this.Value_Object.OnValueChanged -= value;
+			add => this.Value_Object.ValueChange += value;
+			remove => this.Value_Object.ValueChange -= value;
 		}
 	}
 
@@ -180,7 +180,7 @@ namespace Atomization
 			value = initialValue;
 		}
 
-		public event OnValueChanged<object, double> OnValueChanged;
+		public event ValueChange<object, double> ValueChange;
 
 		private double value;
 		public double Value
@@ -190,10 +190,15 @@ namespace Atomization
 			{
 				if (value != this.value)
 				{
-					OnValueChanged?.Invoke(this, this.value, value);
+					ValueChange?.Invoke(this, this.value, value);
 					this.value = value;
 				}
 			}
+		}
+
+		public void OnValueChanged(object sender, double oldValue, double newValue)
+		{
+			ValueChange?.Invoke(sender, oldValue, newValue);
 		}
 	}
 
@@ -233,7 +238,7 @@ namespace Atomization
 		public void AddValue(string name, double number)
 		{
 			var value = new InternalValue(number);
-			value.OnValueChanged += (n, pv, nv) => CollectionChanged?.Invoke(
+			value.ValueChange += (n, pv, nv) => CollectionChanged?.Invoke(
 				this,
 				new NotifyCollectionChangedEventArgs(
 					NotifyCollectionChangedAction.Add,
@@ -267,7 +272,7 @@ namespace Atomization
 			}
 		}
 	}
-	public class Cost
+	public class Cost : INotifyCollectionChanged
 	{
 		public Cost(
 			string name,
@@ -290,7 +295,15 @@ namespace Atomization
 				Values.Add(null);
 			}
 
-			Values[0] = economy ?? new Expression(0);
+			if (economy != null)
+			{
+				Values[0] = new Expression(0);
+				Values[1].OnValueChanged += (sender, oldValue, newValue)
+					=> CollectionChanged?.Invoke(
+						sender,
+						new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Replace, newItem)
+					);
+			}
 			Values[1] = hiEduPopu ?? new Expression(0);
 			Values[2] = army ?? new Expression(0);
 			Values[3] = navy ?? new Expression(0);
@@ -325,45 +338,25 @@ namespace Atomization
 		// stores value, and the information of whether it is in absolute value
 		public readonly ObservableCollection<Expression> Values;
 
+		public event NotifyCollectionChangedEventHandler CollectionChanged;
+
 		public string Name { get; set; }
-		public double Economy
-		{
-			get => Values[0].Value;
-		}
-		public double HiEduPopu
-		{
-			get => Values[1].Value;
-		}
 
-		public double Army
-		{
-			get => Values[2].Value;
-		}
+		public double Economy => Values[0].Value;
 
-		public double Navy
-		{
-			get => Values[3].Value;
-		}
+		public double HiEduPopu => Values[1].Value;
 
-		public double Food
-		{
-			get => Values[4].Value;
-		}
+		public double Army => Values[2].Value;
 
-		public double RawMaterial
-		{
-			get => Values[5].Value;
-		}
+		public double Navy => Values[3].Value;
 
-		public double NuclearMaterial
-		{
-			get => Values[6].Value;
-		}
+		public double Food => Values[4].Value;
 
-		public double Stability
-		{
-			get => Values[7].Value;
-		}
+		public double RawMaterial => Values[5].Value;
+
+		public double NuclearMaterial => Values[6].Value;
+
+		public double Stability => Values[7].Value;
 	}
 
 	public class Expression
@@ -371,9 +364,9 @@ namespace Atomization
 		public Expression(InternalValue para, Func<InternalValue, double> function)
 		{
 			Parameter = para;
-			Function = p => 0;
+			Function = function;
 
-			para.OnValueChanged += OnValueChanged;
+			para.ValueChange += OnValueChanged;
 		}
 		public Expression(double value)
 		{
@@ -382,10 +375,21 @@ namespace Atomization
 		}
 
 		public InternalValue Parameter { get; set; }
-		public Func<InternalValue, double> Function { get; set; }
+
+		private Func<InternalValue, double> function;
+		public Func<InternalValue, double> Function
+		{
+			get => function;
+			set
+			{
+				double tempV = Value;
+				function = value;
+				OnValueChanged?.Invoke(this, tempV, Value);
+			}
+		}
 
 		public double Value => Function(Parameter);
 
-		public event OnValueChanged<object, double> OnValueChanged;
+		public event ValueChange<object, double> OnValueChanged;
 	}
 }
