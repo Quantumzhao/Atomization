@@ -295,22 +295,27 @@ namespace Atomization
 				Values.Add(null);
 			}
 
-			if (economy != null)
+			Values[0] = economy;
+			Values[1] = hiEduPopu;
+			Values[2] = army;
+			Values[3] = navy;
+			Values[4] = food;
+			Values[5] = rawMaterial;
+			Values[6] = nuclearMaterial;
+			Values[7] = stability;
+
+			for (int i = 0; i < 8; i++)
 			{
-				Values[0] = new Expression(0);
-				Values[1].OnValueChanged += (sender, oldValue, newValue)
-					=> CollectionChanged?.Invoke(
-						sender,
-						new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Replace, newItem)
-					);
+				if (Values[i] == null)
+				{
+					Values[i] = new Expression(0);
+					Values[i].OnValueChanged += (sender, oldValue, newValue)
+						=> CollectionChanged?.Invoke(
+							sender,
+							new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Replace, oldValue, newValue)
+						);
+				}
 			}
-			Values[1] = hiEduPopu ?? new Expression(0);
-			Values[2] = army ?? new Expression(0);
-			Values[3] = navy ?? new Expression(0);
-			Values[4] = food ?? new Expression(0);
-			Values[5] = rawMaterial ?? new Expression(0);
-			Values[6] = nuclearMaterial ?? new Expression(0);
-			Values[7] = stability ?? new Expression(0);
 		}
 		public Cost(
 			string name, 
@@ -364,14 +369,13 @@ namespace Atomization
 		public Expression(InternalValue para, Func<InternalValue, double> function)
 		{
 			Parameter = para;
-			Function = function;
+			this.function = function;
 
 			para.ValueChange += OnValueChanged;
 		}
 		public Expression(double value)
 		{
-			Parameter = null;
-			Function = p => value;
+			function = p => value;			
 		}
 
 		public InternalValue Parameter { get; set; }
