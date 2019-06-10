@@ -41,8 +41,8 @@ namespace Atomization
 		public Waters TerritorialWaters { get; }
 
 		#region Value Definitions
-		protected ValueComplex[] Values = new ValueComplex[8];
-		protected GameObjectList<Cost> ExpenditureAndRevenue = new GameObjectList<Cost>();
+		public ValueComplex[] Values = new ValueComplex[8];
+		public GameObjectList<Cost> ExpenditureAndRevenue = new GameObjectList<Cost>();
 		public ValueComplex Economy
 		{
 			get => Values[0];
@@ -88,7 +88,7 @@ namespace Atomization
 		}
 		#endregion
 
-		public void AddExpenditureAndRevenue(Cost cost)
+		private void AddExpenditureAndRevenue(Cost cost)
 		{
 			for (int i = 0; i < cost.Values.Count; i++)
 			{
@@ -99,7 +99,7 @@ namespace Atomization
 				}
 			}
 		}
-		public void RemoveExpenditureAndRevenue(Cost cost)
+		private void RemoveExpenditureAndRevenue(Cost cost)
 		{
 			for (int i = 0; i < cost.Values.Count; i++)
 			{
@@ -162,41 +162,41 @@ namespace Atomization
 				superpower.NuclearPlatforms.Add(new Silo(superpower));
 			}
 
-			superpower.AddExpenditureAndRevenue(
+			superpower.ExpenditureAndRevenue.Add(
 				new Cost(
 					"Army Maintenance", 
 					new Expression(superpower.Army.Value_Object, v => -0.001 * v.Value)
 					)
 				);
-			superpower.AddExpenditureAndRevenue(
+			superpower.ExpenditureAndRevenue.Add(
 				new Cost(
 					"Navy Maintenance", 
 					economy: new Expression(superpower.Navy.Value_Object, v => -0.005 * v.Value)
 					)
 				);
-			superpower.AddExpenditureAndRevenue(
+			superpower.ExpenditureAndRevenue.Add(
 				new Cost(
 					"Domestic Development", 
 					new Expression(superpower.Economy.Value_Object, v => -0.9 * v.Value)
 				)
 			);
-			superpower.AddExpenditureAndRevenue(
+			superpower.ExpenditureAndRevenue.Add(
 				new Cost("Government Revenue", economy: 20000));
-			superpower.AddExpenditureAndRevenue(
+			superpower.ExpenditureAndRevenue.Add(
 				new Cost("Graduates", hiEduPopu: 1000));
-			superpower.AddExpenditureAndRevenue(
+			superpower.ExpenditureAndRevenue.Add(
 				new Cost("Domestic Production", food: 42000));
-			superpower.AddExpenditureAndRevenue(
+			superpower.ExpenditureAndRevenue.Add(
 				new Cost(
 					"Domestic Consumption", 
 					food: new Expression(superpower.HiEduPopu.Value_Object, v => -2 * v.Value)
 				)
 			);
-			superpower.AddExpenditureAndRevenue(
+			superpower.ExpenditureAndRevenue.Add(
 				new Cost("Domestic Production", rawMaterial: 10200));
-			superpower.AddExpenditureAndRevenue(
+			superpower.ExpenditureAndRevenue.Add(
 				new Cost("Industrial Consumption", rawMaterial: -10000));
-			superpower.AddExpenditureAndRevenue(
+			superpower.ExpenditureAndRevenue.Add(
 				new Cost("Production", nuclearMaterial: 1));
 			
 			return superpower;

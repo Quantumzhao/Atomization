@@ -74,18 +74,18 @@ namespace Atomization
 					goto setLandBase;
 
 				case "Missile Launcher":
-					Deploy_ToolTip.Items.Add(new TextBlock() { Text = $"Building Missile Launcher Takes 6 turns" });
+					Deploy_ToolTip.Items.Add(new TextBlock() { Text = "Building Missile Launcher Takes 6 turns" });
 					goto setLandBase;
 
 				case "Strategic Bomber":
-					Deploy_ToolTip.Items.Add(new TextBlock() { Text = $"Building Silo Takes 7 turns" });
+					Deploy_ToolTip.Items.Add(new TextBlock() { Text = "Building Silo Takes 7 turns" });
 
 				setLandBase:
 					RegionOfDeployment.ItemsSource = new List<Nation>(Data.Me.SateliteNations) { Data.Me };
 					break;
 
 				case "Nuclear Submarine":
-					Deploy_ToolTip.Items.Add(new TextBlock() { Text = $"Building Silo Takes 12 turns" });
+					Deploy_ToolTip.Items.Add(new TextBlock() { Text = "Building Silo Takes 12 turns" });
 
 					RegionOfDeployment.ItemsSource = new List<Region>(Data.Regions.Where(r => r is Waters));
 					break;

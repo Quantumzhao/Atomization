@@ -6,7 +6,7 @@
 		{
 			if (IsFriend)
 			{
-				Data.Me.AddExpenditureAndRevenue(Maintenance);
+				Data.Me.ExpenditureAndRevenue.Add(Maintenance);
 			}
 		}
 

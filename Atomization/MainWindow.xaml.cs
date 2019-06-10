@@ -26,7 +26,7 @@ namespace Atomization
 			Data.Me.Economy.OnValueChanged += (n, pv, nv) => Economy.Content = (int)nv;
 
 			EconomyGrowth.ItemsSource = Data.Me.Economy.Growth.Values;
-
+			
 			EconomyGrowth_Sum.Text = Data.Me.Economy.Growth.Sum.ToString();
 			Data.Me.Economy.Growth.CollectionChanged += (sender, e) =>
 				EconomyGrowth_Sum.Text = Data.Me.Economy.Growth.Sum.ToString();

@@ -40,110 +40,6 @@ namespace Atomization
 			);
 			return base.Remove(item);
 		}
-
-		public class ValueComplex
-		{
-			public ValueComplex(Nation parent, double initialValue = 0)
-			{
-				value = new InternalValue(parent, initialValue);
-				Maximum = new InternalValue(parent, double.MaxValue);
-				Minimum = new InternalValue(parent, double.MinValue);
-				Growth = new Value_Growth(parent, value);
-			}
-
-			private InternalValue value;
-			public double Value
-			{
-				get => value.Value;
-				set => this.value.Value = value;
-			}
-			public InternalValue Maximum { get; set; }
-			public InternalValue Minimum { get; set; }
-			public Value_Growth Growth { get; set; }
-
-			public event ValueChange<object, double> OnValueChanged
-			{
-				add => this.value.OnValueChanged += value;
-				remove => this.value.OnValueChanged -= value;
-			}
-
-			public class InternalValue
-			{
-				public InternalValue(Nation parent, double initialValue)
-				{
-					this.parent = parent;
-					value = initialValue;
-				}
-
-				private Nation parent;
-				public event ValueChange<object, double> OnValueChanged;
-
-				private double value;
-				public double Value
-				{
-					get => value;
-					set
-					{
-						if (value != this.value)
-						{
-							OnValueChanged?.Invoke(parent, this.value, value);
-							this.value = value;
-						}
-					}
-				}
-			}
-
-			public class Value_Growth : INotifyCollectionChanged
-			{
-				public Value_Growth(Nation parent, InternalValue bindedValue)
-				{
-					this.parent = parent;
-					this.bindedValue = bindedValue;
-				}
-
-				private InternalValue bindedValue;
-				private Nation parent;
-
-				public event NotifyCollectionChangedEventHandler CollectionChanged;
-
-				public Dictionary<string, InternalValue> Values { get; set; }
-					= new Dictionary<string, InternalValue>();
-
-				public void Add(string name, int number)
-				{
-					var value = new InternalValue(parent, number);
-					value.OnValueChanged += (n, pv, nv) => CollectionChanged?.Invoke(
-						this,
-						new NotifyCollectionChangedEventArgs(
-							NotifyCollectionChangedAction.Replace,
-							value
-						)
-					);
-					Values.Add(name, value);
-					CollectionChanged?.Invoke(
-						this,
-						new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, value)
-					);
-				}
-				public void Add(string name, double percent)
-				{
-					Add(name, (int)(bindedValue.Value * percent));
-				}
-
-				public int Sum
-				{
-					get
-					{
-						double sum = 0;
-						foreach (var item in Values)
-						{
-							sum += item.Value.Value;
-						}
-						return (int)sum;
-					}
-				}
-			}
-		}
 	}
 
 	public class ValueComplex
@@ -207,14 +103,16 @@ namespace Atomization
 		public Value_Growth(InternalValue bindedValue)
 		{
 			this.bindedValue = bindedValue;
+
+			Values.CollectionChanged += CollectionChanged;
 		}
 
 		private InternalValue bindedValue;
 
 		public event NotifyCollectionChangedEventHandler CollectionChanged;
 
-		public Dictionary<string, InternalValue> Values { get; set; }
-			= new Dictionary<string, InternalValue>();
+		public GameObjectDictionary<string, InternalValue> Values { get; set; }
+			= new GameObjectDictionary<string, InternalValue>();
 
 		public InternalValue this[string name]
 		{
@@ -241,7 +139,7 @@ namespace Atomization
 			value.ValueChange += (n, pv, nv) => CollectionChanged?.Invoke(
 				this,
 				new NotifyCollectionChangedEventArgs(
-					NotifyCollectionChangedAction.Add,
+					NotifyCollectionChangedAction.Replace,
 					value
 				)
 			);
@@ -395,5 +293,62 @@ namespace Atomization
 		public double Value => Function(Parameter);
 
 		public event ValueChange<object, double> OnValueChanged;
+	}
+
+	public class GameObject<T> : INotifyPropertyChanged
+	{
+		public GameObject(T wrappedObject)
+		{
+			value = wrappedObject;
+		}
+
+		private T value;
+		public T Value
+		{
+			get => value;
+			set
+			{
+				if (!this.value.Equals(value))
+				{
+					this.value = value;
+					PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Value)));
+				}
+			}
+		}
+
+		public event PropertyChangedEventHandler PropertyChanged;
+	}
+
+	public class GameObjectDictionary<K, V> : Dictionary<K, V>, INotifyCollectionChanged
+	{
+		public event NotifyCollectionChangedEventHandler CollectionChanged;
+
+		public new void Add(K key, V value)
+		{
+			base.Add(key, value);
+			CollectionChanged?.Invoke(this, 
+				new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add));
+		}
+
+		public new void Remove(K key)
+		{
+			base.Remove(key);
+			CollectionChanged?.Invoke(this, 
+				new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove));
+		}
+
+		public new V this[K key]
+		{
+			get => base[key];
+			set
+			{
+				if (value.Equals(base[key]))
+				{
+					base[key] = value;
+					CollectionChanged?.Invoke(this, 
+						new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Replace));
+				}
+			}
+		}
 	}
 }

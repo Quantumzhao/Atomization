@@ -47,7 +47,7 @@ namespace Atomization
 
 			if (IsFriend)
 			{
-				(DeployRegion as Nation).Affiliation.AddExpenditureAndRevenue(Maintenance);
+				(DeployRegion as Nation).Affiliation.ExpenditureAndRevenue.Add(Maintenance);
 			}
 		}
 
