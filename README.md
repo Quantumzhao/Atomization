@@ -15,3 +15,5 @@ This game (simulator) is not adapted from any existed historical events. The dev
 ____
 ## Current Progress
 ![picture](Screenshot.jpg)
+___
+**This game is still under developement, and tons of bugs exist. If you have any problems and ideas about the source code, it is welcomed to be posted in ISSUES**
