@@ -40,6 +40,11 @@ namespace Atomization
 			);
 			return base.Remove(item);
 		}
+
+		public void OnCollectionChanged(NotifyCollectionChangedEventArgs e)
+		{
+			CollectionChanged?.Invoke(this, e);
+		}
 	}
 
 	public class ValueComplex
@@ -86,8 +91,9 @@ namespace Atomization
 			{
 				if (value != this.value)
 				{
-					ValueChange?.Invoke(this, this.value, value);
+					var temp = this.value;
 					this.value = value;
+					ValueChange?.Invoke(this, temp, value);
 				}
 			}
 		}
@@ -119,9 +125,9 @@ namespace Atomization
 			get => Values[name];
 		}
 
-		public void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+		public void OnCollectionChanged(NotifyCollectionChangedEventArgs e)
 		{
-			CollectionChanged?.Invoke(sender, e);
+			CollectionChanged?.Invoke(this, e);
 		}
 
 		public bool Contains(string name)
@@ -135,26 +141,14 @@ namespace Atomization
 
 		public void AddValue(string name, double number)
 		{
-			var value = new InternalValue(number);
-			value.ValueChange += (n, pv, nv) => CollectionChanged?.Invoke(
-				this,
-				new NotifyCollectionChangedEventArgs(
-					NotifyCollectionChangedAction.Replace,
-					value
-				)
-			);
 			if (Values.ContainsKey(name))
 			{
 				Values[name].Value += number;
 			}
 			else
 			{
-				Values.Add(name, value);
+				Values.Add(name, new InternalValue(number));
 			}
-			CollectionChanged?.Invoke(
-				this,
-				new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, value)
-			);
 		}
 
 		public int Sum
@@ -170,7 +164,7 @@ namespace Atomization
 			}
 		}
 	}
-	public class Cost : INotifyCollectionChanged
+	public class Cost
 	{
 		public Cost(
 			string name,
@@ -187,7 +181,7 @@ namespace Atomization
 			Name = name;
 
 			// the number of properties
-			Values = new ObservableCollection<Expression>();
+			Values = new GameObjectList<Expression>();
 			for (int i = 0; i < 8; i++)
 			{
 				Values.Add(null);
@@ -207,9 +201,8 @@ namespace Atomization
 				if (Values[i] == null)
 				{
 					Values[i] = new Expression(0);
-					Values[i].OnValueChanged += (sender, oldValue, newValue)
-						=> CollectionChanged?.Invoke(
-							sender,
+					Values[i].OnValueChanged += (sender, oldValue, newValue) => 
+						Values.OnCollectionChanged(
 							new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Replace, oldValue, newValue)
 						);
 				}
@@ -238,10 +231,7 @@ namespace Atomization
 			new Expression(stability)
 		) { }
 
-		// stores value, and the information of whether it is in absolute value
-		public readonly ObservableCollection<Expression> Values;
-
-		public event NotifyCollectionChangedEventHandler CollectionChanged;
+		public readonly GameObjectList<Expression> Values;
 
 		public string Name { get; set; }
 
@@ -325,6 +315,18 @@ namespace Atomization
 
 		public new void Add(K key, V value)
 		{
+			//(value as InternalValue).ValueChange += (n, pv, nv) =>
+			//{
+			//	var e = new NotifyCollectionChangedEventArgs(
+			//		NotifyCollectionChangedAction.Replace,
+			//		n, n
+			//	);
+
+			//	CollectionChanged?.Invoke(
+			//		this, e
+			//	);
+			//};
+
 			base.Add(key, value);
 			CollectionChanged?.Invoke(this, 
 				new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add));
@@ -350,5 +352,10 @@ namespace Atomization
 				}
 			}
 		}
+	}
+
+	public interface IValueChanged<S, T>
+	{
+		event ValueChange<S, T> ValueChanged;
 	}
 }

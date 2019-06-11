@@ -95,7 +95,14 @@ namespace Atomization
 				if (cost.Values[i].Value != 0)
 				{
 					this.Values[i].Growth.AddValue(cost.Name, cost.Values[i].Value);
-					cost.Values.CollectionChanged += this.Values[i].Growth.OnCollectionChanged;
+					cost.Values[i].OnValueChanged += (sender, nV, oV) =>
+					{
+						this.Values[i].Growth.OnCollectionChanged(
+							new NotifyCollectionChangedEventArgs(
+								NotifyCollectionChangedAction.Replace, sender, sender
+							)
+						);
+					};
 				}
 			}
 		}
