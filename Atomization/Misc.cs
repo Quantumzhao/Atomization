@@ -150,7 +150,6 @@ namespace Atomization
 				Values.Add(name, new InternalValue(number));
 			}
 		}
-
 		public int Sum
 		{
 			get
@@ -352,10 +351,5 @@ namespace Atomization
 				}
 			}
 		}
-	}
-
-	public interface IValueChanged<S, T>
-	{
-		event ValueChange<S, T> ValueChanged;
 	}
 }
