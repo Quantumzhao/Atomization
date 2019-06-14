@@ -134,7 +134,7 @@
 					Padding="5,0,0,0">
 				</Label>
 				<Label x:Name="Economy" 
-					Content="0" 
+					Content="{Binding Value_Numerical}" 
 					Padding="5,0,0,0">
 				</Label>
 				<StackPanel.ToolTip>

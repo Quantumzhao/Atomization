@@ -22,7 +22,7 @@ namespace Atomization
 			DataContext = this;
 
 			#region Economy initialization
-			Economy.Content = (int)Data.Me.Economy.Value_Numerical;
+			Economy.DataContext = Data.Me.Economy;
 			Data.Me.Economy.OnValueChanged += (n, pv, nv) => Economy.Content = (int)nv;
 
 			EconomyGrowth.ItemsSource = Data.Me.Economy.Growth.Values;

@@ -3,24 +3,42 @@ using System.Collections.Specialized;
 
 namespace Atomization
 {
+	/// <summary>
+	///		The very basic (not acidic) class of all geometric entities such as 
+	///		nations and territorial and international oceans. 
+	///		More properties will be defined in the future. 
+	/// </summary>
 	public abstract class Region
 	{
 		public string Name { get; set; }
 	}
 
+	/// <summary>
+	///		Defining the behaviors of all waters. 
+	/// </summary>
 	public class Waters : Region
 	{
+		// The number of international waters in this game is set to be 5
 		public const int NumOfInternationalWaters = 5;
+		// Each sea belongs to a certain nation. 
+		// if the property is null, then it is international water
 		public Nation Affiliation { get; set; }
 	}
 
+	/// <summary>
+	///		The base class of all nations, including regular nation and superpower
+	/// </summary>
 	public abstract class Nation : Region
 	{
 		public Nation()
 		{
+			// Initialize its territorial water, and name the water as well
 			TerritorialWaters = new Waters() { Name = Data.WatersNames.Dequeue() };
 			TerritorialWaters.Affiliation = this;
 			Data.Regions.Add(TerritorialWaters);
+			// set the data binding of gov exp and rev
+			// when the national government is entitled a new expenditure/revenue, 
+			//     it adds the new item to this list, and update the binded property
 			ExpenditureAndRevenue.CollectionChanged += (sender, e) =>
 			{
 				if (e.Action == NotifyCollectionChangedAction.Add)
@@ -92,9 +110,12 @@ namespace Atomization
 		{
 			for (int i = 0; i < cost.Values.Count; i++)
 			{
+				// if any of the values of cost is meaningful (i.e. with an actual number), do this
 				if (cost.Values[i].Value != 0)
 				{
 					this.Values[i].Growth.AddValue(cost.Name, cost.Values[i].Value);
+					// set the data binding so that it can update the exp&rev list 
+					//     as soon as its value changed
 					cost.Values[i].OnValueChanged += (sender, nV, oV) =>
 					{
 						this.Values[i].Growth.OnCollectionChanged(
@@ -110,8 +131,10 @@ namespace Atomization
 		{
 			for (int i = 0; i < cost.Values.Count; i++)
 			{
+				// vice versa
 				if (cost.Values[i].Value != 0)
 				{
+					// v.v.
 					this.Values[i].Growth.Values[cost.Name].Value -= cost.Values[i].Value;
 					if (this.Values[i].Growth.Values[cost.Name].Value == 0)
 					{
@@ -137,6 +160,7 @@ namespace Atomization
 			{
 				RegularNation nation = new RegularNation() { Name = Data.NationNames.Dequeue() };
 				Data.Regions.Add(nation);
+				// initialize the no. of adj nations
 				Adjacency[i] = nation;
 			}
 
