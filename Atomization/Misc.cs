@@ -2,6 +2,7 @@
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Collections.ObjectModel;
+using System.Windows;
 using System;
 
 namespace Atomization
@@ -104,21 +105,17 @@ namespace Atomization
 		}
 	}
 
-	public class Value_Growth : INotifyCollectionChanged
+	public class Value_Growth
 	{
 		public Value_Growth(InternalValue bindedValue)
 		{
 			this.bindedValue = bindedValue;
-
-			Values.CollectionChanged += CollectionChanged;
 		}
 
 		private InternalValue bindedValue;
 
-		public event NotifyCollectionChangedEventHandler CollectionChanged;
-
-		public GameObjectDictionary<string, InternalValue> Values { get; set; }
-			= new GameObjectDictionary<string, InternalValue>();
+		public GameObjectDictionary Values { get; set; }
+			= new GameObjectDictionary();
 
 		public InternalValue this[string name]
 		{
@@ -127,7 +124,7 @@ namespace Atomization
 
 		public void OnCollectionChanged(NotifyCollectionChangedEventArgs e)
 		{
-			CollectionChanged?.Invoke(this, e);
+			Values.OnCollectionChanged(e);
 		}
 
 		public bool Contains(string name)
@@ -308,37 +305,30 @@ namespace Atomization
 		public event PropertyChangedEventHandler PropertyChanged;
 	}
 
-	public class GameObjectDictionary<K, V> : Dictionary<K, V>, INotifyCollectionChanged
+	public class GameObjectDictionary : Dictionary<string, InternalValue>, INotifyCollectionChanged
 	{
 		public event NotifyCollectionChangedEventHandler CollectionChanged;
 
-		public new void Add(K key, V value)
+		public new void Add(string key, InternalValue value)
 		{
-			//(value as InternalValue).ValueChange += (n, pv, nv) =>
-			//{
-			//	var e = new NotifyCollectionChangedEventArgs(
-			//		NotifyCollectionChangedAction.Replace,
-			//		n, n
-			//	);
-
-			//	CollectionChanged?.Invoke(
-			//		this, e
-			//	);
-			//};
-
+			//value.ValueChange += (sender, oldV, newV) => CollectionChanged?.Invoke(this, 
+			//	new NotifyCollectionChangedEventArgs(
+			//		NotifyCollectionChangedAction.Replace, sender, sender
+			//	)
+			//);
 			base.Add(key, value);
 			CollectionChanged?.Invoke(this, 
 				new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add));
 		}
 
-		public new void Remove(K key)
+		public new void Remove(string key)
 		{
 			base.Remove(key);
 			CollectionChanged?.Invoke(this, 
 				new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove));
 		}
 
-		public new V this[K key]
+		public new InternalValue this[string key]
 		{
 			get => base[key];
 			set
@@ -350,6 +340,66 @@ namespace Atomization
 						new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Replace));
 				}
 			}
+		}
+
+		public void OnCollectionChanged(NotifyCollectionChangedEventArgs e)
+		{
+			CollectionChanged?.Invoke(this, e);
+		}
+	}
+
+	public class DataUpdater
+	{
+		private Dictionary<string, DataBinder> UiElements = new Dictionary<string, DataBinder>();
+
+		public object GetUiElement(string name)
+		{
+			return UiElements[name].UiElement;
+		}
+
+		/// <summary>
+		///		gets and sets the source of the field of UIElement that needs to be updated
+		/// </summary>
+		/// <param name="bindedUiElementName">
+		///		the name of the UIElement
+		/// </param>
+		/// <returns>
+		///		the source of the binded field
+		/// </returns>
+		public object this[string bindedUiElementName]
+		{
+			get => UiElements[bindedUiElementName].Source;
+			set
+			{
+				if (value != UiElements[bindedUiElementName].Source)
+				{
+					UiElements[bindedUiElementName].UiElement = value;
+					UiElements[bindedUiElementName].Source = value;
+				}
+			}
+		}
+
+		public void Add(object uiElement, string elementName, object source)
+		{
+			UiElements.Add(elementName, new DataBinder(ref uiElement, source));
+		}
+
+		public void Refresh(string bindedUiElementName)
+		{
+			UiElements[bindedUiElementName].UiElement = UiElements[bindedUiElementName].Source;
+		}
+
+		public class DataBinder
+		{
+			public DataBinder(ref object uiElement, object source)
+			{
+				UiElement = uiElement;
+				uiElement = source;
+				Source = source;
+			}
+
+			public object UiElement { get; set; }
+			public object Source { get; set; }
 		}
 	}
 }
