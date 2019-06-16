@@ -26,7 +26,7 @@ namespace Atomization
 			Target.Items.Clear();
 			Target.ItemsSource = Data.Regions;
 
-			if ((selectedWeapon = ParentPage.NukeList.SelectedItem as NuclearWeapon) != null)
+			if ((selectedWeapon = (ParentPage.NukeList.SelectedItem as VM<NuclearWeapon>)?.ObjectData) != null)
 			{
 				isNewNuke = false;
 				CarrierType.IsEnabled = false;

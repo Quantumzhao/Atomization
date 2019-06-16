@@ -22,13 +22,9 @@ namespace Atomization
 			DataContext = this;
 
 			#region Economy initialization
-			Economy.DataContext = new VM<ValueComplex>(Data.Me.Economy);
-
+			Economy.DataContext = Data.Me.Economy;
 			EconomyGrowth.ItemsSource = Data.Me.Economy.Growth.Items;
-			
-			EconomyGrowth_Sum.Text = Data.Me.Economy.Growth.Sum.ToString();
-			Data.Me.Economy.Growth.Items.CollectionChanged += (sender, e) =>
-				EconomyGrowth_Sum.Text = Data.Me.Economy.Growth.Sum.ToString();
+			EconomyGrowth_Sum.DataContext = Data.Me.Economy.Growth;
 			#endregion
 
 			#region High Education Population Initialization

@@ -21,8 +21,8 @@ namespace Atomization
 
 			Target.ItemsSource = Data.Regions;
 
-			Maneuver_NumNukes.ItemsSource = new ObservableCollection<NuclearWeapon>(
-				Data.MyNuclearWeapons.Where(w => !(w.Platform is Silo))
+			Maneuver_NumNukes.ItemsSource = new ObservableCollection<VM<NuclearWeapon>>(
+				Data.MyNuclearWeapons.Where(w => !(w.ObjectData.Platform is Silo))
 			);
 		}
 

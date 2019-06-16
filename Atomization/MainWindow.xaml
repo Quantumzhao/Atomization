@@ -143,9 +143,9 @@
 							<ListView.ItemTemplate>
 								<DataTemplate>
 									<DockPanel Width="200">
-										<TextBlock Text="{Binding Key}" Margin="0,5,0,0"></TextBlock>
+										<TextBlock Text="{Binding Path=Key}" Margin="0,5,0,0"></TextBlock>
 										<TextBlock Text=":" Margin="0,5,5,0"></TextBlock>
-										<TextBlock Text="{Binding Value.Value}" Margin="0,5,0,0" DockPanel.Dock="Right" HorizontalAlignment="Right"></TextBlock>
+										<TextBlock Text="{Binding Path=Value}" Margin="0,5,0,0" DockPanel.Dock="Right" HorizontalAlignment="Right"></TextBlock>
 									</DockPanel>
 								</DataTemplate>
 							</ListView.ItemTemplate>
@@ -176,7 +176,7 @@
 									<DockPanel Width="200">
 										<TextBlock Text="{Binding Key}" Margin="0,5,0,0"></TextBlock>
 										<TextBlock Text=":" Margin="0,5,5,0"></TextBlock>
-										<TextBlock Text="{Binding Value.Value}" Margin="0,5,0,0" DockPanel.Dock="Right" HorizontalAlignment="Right"></TextBlock>
+										<TextBlock Text="{Binding Value}" Margin="0,5,0,0" DockPanel.Dock="Right" HorizontalAlignment="Right"></TextBlock>
 									</DockPanel>
 								</DataTemplate>
 							</ListView.ItemTemplate>
@@ -207,7 +207,7 @@
 									<DockPanel Width="200">
 										<TextBlock Text="{Binding Key}" Margin="0,5,0,0"></TextBlock>
 										<TextBlock Text=":" Margin="0,5,5,0"></TextBlock>
-										<TextBlock Text="{Binding Value.Value}" Margin="0,5,0,0" DockPanel.Dock="Right" HorizontalAlignment="Right"></TextBlock>
+										<TextBlock Text="{Binding Value}" Margin="0,5,0,0" DockPanel.Dock="Right" HorizontalAlignment="Right"></TextBlock>
 									</DockPanel>
 								</DataTemplate>
 							</ListView.ItemTemplate>
@@ -238,7 +238,7 @@
 									<DockPanel Width="200">
 										<TextBlock Text="{Binding Key}" Margin="0,5,0,0"></TextBlock>
 										<TextBlock Text=":" Margin="0,5,5,0"></TextBlock>
-										<TextBlock Text="{Binding Value.Value}" Margin="0,5,0,0" DockPanel.Dock="Right" HorizontalAlignment="Right"></TextBlock>
+										<TextBlock Text="{Binding Value}" Margin="0,5,0,0" DockPanel.Dock="Right" HorizontalAlignment="Right"></TextBlock>
 									</DockPanel>
 								</DataTemplate>
 							</ListView.ItemTemplate>
@@ -265,7 +265,7 @@
 									<DockPanel Width="200">
 										<TextBlock Text="{Binding Key}" Margin="0,5,0,0"></TextBlock>
 										<TextBlock Text=":" Margin="0,5,5,0"></TextBlock>
-										<TextBlock Text="{Binding Value.Value}" Margin="0,5,0,0" DockPanel.Dock="Right" HorizontalAlignment="Right"></TextBlock>
+										<TextBlock Text="{Binding Value}" Margin="0,5,0,0" DockPanel.Dock="Right" HorizontalAlignment="Right"></TextBlock>
 									</DockPanel>
 								</DataTemplate>
 							</ListView.ItemTemplate>
@@ -292,7 +292,7 @@
 									<DockPanel Width="200">
 										<TextBlock Text="{Binding Key}" Margin="0,5,0,0"></TextBlock>
 										<TextBlock Text=":" Margin="0,5,5,0"></TextBlock>
-										<TextBlock Text="{Binding Value.Value}" Margin="0,5,0,0" DockPanel.Dock="Right" HorizontalAlignment="Right"></TextBlock>
+										<TextBlock Text="{Binding Value}" Margin="0,5,0,0" DockPanel.Dock="Right" HorizontalAlignment="Right"></TextBlock>
 									</DockPanel>
 								</DataTemplate>
 							</ListView.ItemTemplate>
@@ -319,7 +319,7 @@
 									<DockPanel Width="200">
 										<TextBlock Text="{Binding Key}" Margin="0,5,0,0"></TextBlock>
 										<TextBlock Text=":" Margin="0,5,5,0"></TextBlock>
-										<TextBlock Text="{Binding Value.Value}" Margin="0,5,0,0" DockPanel.Dock="Right" HorizontalAlignment="Right"></TextBlock>
+										<TextBlock Text="{Binding Value}" Margin="0,5,0,0" DockPanel.Dock="Right" HorizontalAlignment="Right"></TextBlock>
 									</DockPanel>
 								</DataTemplate>
 							</ListView.ItemTemplate>
@@ -366,7 +366,7 @@
 									<DockPanel Width="200">
 										<TextBlock Text="{Binding Key}" Margin="0,5,0,0"></TextBlock>
 										<TextBlock Text=":" Margin="0,5,5,0"></TextBlock>
-										<TextBlock Text="{Binding Value.Value.Value}" Margin="0,5,0,0" DockPanel.Dock="Right" HorizontalAlignment="Right"></TextBlock>
+										<TextBlock Text="{Binding Value}" Margin="0,5,0,0" DockPanel.Dock="Right" HorizontalAlignment="Right"></TextBlock>
 									</DockPanel>
 								</DataTemplate>
 							</ListView.ItemTemplate>

@@ -14,8 +14,8 @@ namespace Atomization
 
 		public static Superpower Me;
 
-		public static GameObjectList<NuclearWeapon> MyNuclearWeapons { get; set; }
-			= new GameObjectList<NuclearWeapon>();
+		public static VMList<VM<NuclearWeapon>> MyNuclearWeapons { get; set; }
+			= new VMList<VM<NuclearWeapon>>();
 
 		public static void Initiaze()
 		{

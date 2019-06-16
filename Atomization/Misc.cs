@@ -90,7 +90,7 @@ namespace Atomization
 		}
 	}
 
-	public class Growth
+	public class Growth : IViewModel
 	{
 		public VMDictionary<VM<string>, VM<double>> Items { get; set; }
 			= new VMDictionary<VM<string>, VM<double>>();
@@ -100,6 +100,8 @@ namespace Atomization
 			get => Items.Find(p => p.Key.ObjectData == name).Value;
 		}
 
+		public event PropertyChangedEventHandler PropertyChanged;
+
 		public void OnCollectionChanged(NotifyCollectionChangedEventArgs e)
 		{
 			Items.OnCollectionChanged(e);
@@ -107,11 +109,11 @@ namespace Atomization
 
 		public bool Contains(string name)
 		{
-			return Items.Where(p => p.Key.ObjectData == name) != null;
+			return Items.Where(p => p.Key.ObjectData == name).Count() != 0;
 		}
 		public bool Contains(VM<double> value)
 		{
-			return Items.Where(p => p.Value.ObjectData.Equals(value)) != null;
+			return Items.Where(p => p.Value.ObjectData.Equals(value)).Count() != 0;
 		}
 
 		public void AddValue(string name, double number)
@@ -123,9 +125,18 @@ namespace Atomization
 			}
 			else
 			{
-				Items.Add(vMName, new VM<double>(number));
+				var pair = new VMKVPair<VM<string>, VM<double>>(vMName, new VM<double>(number));
+				pair.PropertyChanged += (sender, e) => 
+					PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Sum)));
+				Items.Add(pair);
 			}
 		}
+
+		public bool IsSame(IViewModel viewModel)
+		{
+			throw new NotImplementedException();
+		}
+
 		public int Sum
 		{
 			get
@@ -302,6 +313,11 @@ namespace Atomization
 
 			return false;
 		}
+
+		public override string ToString()
+		{
+			return objectData.ToString();
+		}
 	}
 
 	public class VMList<V> : List<V>, INotifyCollectionChanged, IViewModel
@@ -322,7 +338,7 @@ namespace Atomization
 
 		public new void Remove(V oldValue)
 		{
-			base.Remove(oldValue);
+			var vmOldValue = Find(v => v.IsSame(new VM<V>(oldValue)));
 			CollectionChanged?.Invoke(this,
 				new NotifyCollectionChangedEventArgs(
 					NotifyCollectionChangedAction.Remove, oldValue

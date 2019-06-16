@@ -1,6 +1,8 @@
-﻿namespace Atomization
+﻿using System.ComponentModel;
+
+namespace Atomization
 {
-	public abstract class NuclearWeapon
+	public abstract class NuclearWeapon : IViewModel
 	{
 		protected NuclearWeapon()
 		{
@@ -11,15 +13,63 @@
 		}
 
 		public bool IsFriend = true;
-		public string Name { get; set; }
-		public Platform Platform { get; set; }
-		public Region Target { get; set; }
+
+		public event PropertyChangedEventHandler PropertyChanged;
+
+		private string name;
+		public string Name
+		{
+			get => name;
+			set
+			{
+				if (value != name)
+				{
+					name = value;
+					PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Name)));
+				}
+			}
+		}
+
+		private Platform platform;
+		public Platform Platform
+		{
+			get => platform;
+			set
+			{
+				if (value != platform)
+				{
+					platform = value;
+					PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Platform)));
+				}
+			}
+		}
+
+		private Region target;
+		public Region Target
+		{
+			get => target;
+			set
+			{
+				if (value != target)
+				{
+					target = value;
+					PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Target)));
+				}
+			}
+		}
+
 		public abstract int BuildTime { get; set; }
 		public abstract Cost BuildCost { get; set; }
 		public abstract Cost Maintenance { get; set; }
 		public abstract string TypeName { get; }
+
 		public GameObjectList<Warhead> Warheads { get; set; } = new GameObjectList<Warhead>();
 		public string WarheadType => Warheads.Count != 1 ? "(Multiple Types)" : Warheads[0].WarheadType;
+
+		public bool IsSame(IViewModel viewModel)
+		{
+			throw new System.NotImplementedException();
+		}
 	}
 
 	public abstract class NuclearMissile : NuclearWeapon

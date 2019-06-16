@@ -32,37 +32,37 @@
 							<GridViewColumn 
 								Header="Name" 
 								Width="Auto"
-								DisplayMemberBinding="{Binding Name}">
+								DisplayMemberBinding="{Binding Path=ObjectData.Name}">
 							</GridViewColumn>
 							<GridViewColumn 
 								Header="Platform" 
 								Width="Auto"
-								DisplayMemberBinding="{Binding Platform.TypeName}">
+								DisplayMemberBinding="{Binding Path=ObjectData.Platform.TypeName}">
 							</GridViewColumn>
 							<GridViewColumn 
 								Header="Warhead Type" 
 								Width="Auto"
-								DisplayMemberBinding="{Binding WarheadType}">
+								DisplayMemberBinding="{Binding Path=ObjectData.WarheadType}">
 							</GridViewColumn>
 							<GridViewColumn 
 								Header="Warhead Amount"
 								Width="Auto"
-								DisplayMemberBinding="{Binding Warheads.Count}">
+								DisplayMemberBinding="{Binding Path=ObjectData.Warheads.Count}">
 							</GridViewColumn>
 							<GridViewColumn 
 								Header="Type" 
 								Width="Auto"
-								DisplayMemberBinding="{Binding TypeName}">
+								DisplayMemberBinding="{Binding Path=ObjectData.TypeName}">
 							</GridViewColumn>
 							<GridViewColumn 
 								Header="Target" 
 								Width="Auto"
-								DisplayMemberBinding="{Binding Target.Name}">
+								DisplayMemberBinding="{Binding Path=ObjectData.Target.Name}">
 							</GridViewColumn>
 							<GridViewColumn 
 								Header="Deployment" 
 								Width="Auto"
-								DisplayMemberBinding="{Binding Platform.DeployRegion.Name}">
+								DisplayMemberBinding="{Binding Path=ObjectData.Platform.DeployRegion.Name}">
 							</GridViewColumn>
 						</GridView>
 					</ListView.View>
