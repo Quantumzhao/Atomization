@@ -114,31 +114,23 @@ namespace Atomization
 				if (cost.Values[i].Value != 0)
 				{
 					this.Values[i].Growth.AddValue(cost.Name, cost.Values[i].Value);
-					// set the data binding so that it can update the exp&rev list 
-					//     as soon as its value changed
-					cost.Values[i].OnValueChanged += (sender, nV, oV) =>
-					{
-						this.Values[i].Growth.OnCollectionChanged(
-							new NotifyCollectionChangedEventArgs(
-								NotifyCollectionChangedAction.Replace, sender, sender
-							)
-						);
-					};
 				}
 			}
 		}
 		private void RemoveExpenditureAndRevenue(Cost cost)
 		{
+			var costName = new VM<string>(cost.Name);
+
 			for (int i = 0; i < cost.Values.Count; i++)
 			{
 				// vice versa
 				if (cost.Values[i].Value != 0)
 				{
 					// v.v.
-					this.Values[i].Growth.Values[cost.Name].Value -= cost.Values[i].Value;
-					if (this.Values[i].Growth.Values[cost.Name].Value == 0)
+					this.Values[i].Growth.Items[costName].ObjectData -= cost.Values[i].Value;
+					if (this.Values[i].Growth.Items[costName].ObjectData == 0)
 					{
-						this.Values[i].Growth.Values.Remove(cost.Name);
+						this.Values[i].Growth.Items.Remove(costName);
 					}
 				}
 			}
@@ -186,7 +178,7 @@ namespace Atomization
 			superpower.Food = new ValueComplex(20000);           // x10^6
 			superpower.RawMaterial = new ValueComplex(4000);     // x10^3
 			superpower.NuclearMaterial = new ValueComplex(100);  // x10^3
-			superpower.Stability = new ValueComplex(75) { Maximum = new InternalValue(100) };
+			superpower.Stability = new ValueComplex(75) { Maximum = new VM<double>(100) };
 
 			for (int i = 0; i < InitialNukeSilos; i++)
 			{
@@ -196,19 +188,19 @@ namespace Atomization
 			superpower.ExpenditureAndRevenue.Add(
 				new Cost(
 					"Army Maintenance", 
-					new Expression(superpower.Army.Value_Object, v => -0.001 * v.Value)
+					new Expression(superpower.Army.Value_Object, v => -0.001 * v.ObjectData)
 					)
 				);
 			superpower.ExpenditureAndRevenue.Add(
 				new Cost(
 					"Navy Maintenance", 
-					economy: new Expression(superpower.Navy.Value_Object, v => -0.005 * v.Value)
+					economy: new Expression(superpower.Navy.Value_Object, v => -0.005 * v.ObjectData)
 					)
 				);
 			superpower.ExpenditureAndRevenue.Add(
 				new Cost(
 					"Domestic Development", 
-					new Expression(superpower.Economy.Value_Object, v => -0.9 * v.Value)
+					new Expression(superpower.Economy.Value_Object, v => -0.9 * v.ObjectData)
 				)
 			);
 			superpower.ExpenditureAndRevenue.Add(
@@ -220,7 +212,7 @@ namespace Atomization
 			superpower.ExpenditureAndRevenue.Add(
 				new Cost(
 					"Domestic Consumption", 
-					food: new Expression(superpower.HiEduPopu.Value_Object, v => -2 * v.Value)
+					food: new Expression(superpower.HiEduPopu.Value_Object, v => -2 * v.ObjectData)
 				)
 			);
 			superpower.ExpenditureAndRevenue.Add(
@@ -229,7 +221,7 @@ namespace Atomization
 				new Cost("Industrial Consumption", rawMaterial: -10000));
 			superpower.ExpenditureAndRevenue.Add(
 				new Cost("Production", nuclearMaterial: 1));
-			
+
 			return superpower;
 		}
 	}

@@ -134,7 +134,7 @@
 					Padding="5,0,0,0">
 				</Label>
 				<Label x:Name="Economy" 
-					Content="{Binding Value_Numerical}" 
+					Content="{Binding Path=Value_Numeric}" 
 					Padding="5,0,0,0">
 				</Label>
 				<StackPanel.ToolTip>
@@ -165,7 +165,7 @@
 					Padding="5,0,0,0">
 				</Label>
 				<Label x:Name="HiEduPopu" 
-					Content="0"
+					Content="{Binding Path=Value_Numeric}"
 					Padding="5,0,0,0">
 				</Label>
 				<StackPanel.ToolTip>
@@ -196,7 +196,7 @@
 					Padding="5,0,0,0">
 				</Label>
 				<Label x:Name="Army" 
-					Content="0" 
+					Content="{Binding Path=Value_Numeric}"
 					Padding="5,0,0,0">
 				</Label>
 				<StackPanel.ToolTip>
@@ -227,7 +227,7 @@
 					Padding="5,0,0,0">
 				</Label>
 				<Label x:Name="Navy" 
-					Content="0" 
+					Content="{Binding Path=Value_Numeric}"
 					Padding="5,0,0,0">
 				</Label>
 				<StackPanel.ToolTip>
@@ -252,7 +252,11 @@
 			</StackPanel>
 			<StackPanel Orientation="Horizontal">
 				<Label Content="Food: " Padding="5,0,0,0"></Label>
-				<Label x:Name="Food" Content="0" Padding="5,0,0,0"></Label>
+				<Label 
+					x:Name="Food" 
+					Content="{Binding Path=Value_Numeric}" 
+					Padding="5,0,0,0">					
+				</Label>
 				<StackPanel.ToolTip>
 					<StackPanel>
 						<ListView x:Name="FoodGrowth" BorderBrush="{x:Null}" Background="{x:Null}">
@@ -275,7 +279,11 @@
 			</StackPanel>
 			<StackPanel Orientation="Horizontal">
 				<Label Content="Raw Mtrl:" Padding="5,0,0,0"></Label>
-				<Label x:Name="RawMaterial" Content="0" Padding="5,0,0,0"></Label>
+				<Label 
+					x:Name="RawMaterial" 
+					Content="{Binding Path=Value_Numeric}"
+					Padding="5,0,0,0">					
+				</Label>
 				<StackPanel.ToolTip>
 					<StackPanel>
 						<ListView x:Name="RawMaterialGrowth" BorderBrush="{x:Null}" Background="{x:Null}">
@@ -298,7 +306,11 @@
 			</StackPanel>
 			<StackPanel Orientation="Horizontal">
 				<Label Content="Nuke Mtrl:" Padding="5,0,0,0"></Label>
-				<Label x:Name="NuclearMaterial" Content="0" Padding="5,0,0,0"></Label>
+				<Label 
+					x:Name="NuclearMaterial" 
+					Content="{Binding Path=Value_Numeric}"
+					Padding="5,0,0,0">					
+				</Label>
 				<StackPanel.ToolTip>
 					<StackPanel>
 						<ListView x:Name="NuclearMaterialGrowth" BorderBrush="{x:Null}" Background="{x:Null}">
@@ -325,13 +337,14 @@
 					HorizontalAlignment="Left" 
 					Padding="5,0">
 				</Label>
-				<ProgressBar x:Name="ProgBar_Stability" 
+				<ProgressBar x:Name="ProgBar_Stability"
+					Value="{Binding Path=Value_Numeric}"
 					Width="80" 
 					Padding="0" 
 					Margin="0,5" >
 				</ProgressBar>
-				<Label x:Name="Stability" 
-					Content="100" 
+				<Label x:Name="Stability"
+					Content="{Binding Path=Value_Numeric}"
 					HorizontalAlignment="Left" 
 					Padding="5,0,0,0">
 				</Label>
@@ -455,8 +468,19 @@
 			Background="{x:Null}" 
 			BorderBrush="Black" 
 			Padding="8,5" 
-			FontSize="15">			
+			FontSize="15"
+			Click="Continue_Click">			
 		</Button>
-		<Button Content="More Info" BorderBrush="Black" HorizontalContentAlignment="Center" Padding="8,5" Background="{x:Null}" Margin="0,14,127,0" Click="Button_MoreInfo_Click" FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Top"/>
+		<Button 
+			Content="More Info" 
+			BorderBrush="Black" 
+			HorizontalContentAlignment="Center" 
+			Padding="8,5" Background="{x:Null}" 
+			Margin="0,14,127,0" 
+			Click="Button_MoreInfo_Click" 
+			FontSize="15" 
+			HorizontalAlignment="Right" 
+			VerticalAlignment="Top">			
+		</Button>
 	</Grid>
 </Window>

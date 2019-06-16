@@ -31,13 +31,12 @@
 		public CruiseMissile() : base()
 		{
 			BuildCost = new Cost("Cruis Missile Construction", economy: -20, rawMaterial: -30);
-			Maintenance = new Cost("Nuclear Arsenal Maintenance", economy: -4, rawMaterial: -0.1);
 		}
 
 		public override string TypeName => "CruiseMissile";
 		public override int BuildTime { get; set; } = 2;
 		public override Cost BuildCost { get; set; }
-		public override Cost Maintenance { get; set; }
+		public override Cost Maintenance { get; set; } = new Cost("Nuclear Arsenal Maintenance", economy: -4, rawMaterial: -0.1);
 	}
 
 	public class MediumRangeMissile : NuclearMissile
@@ -45,12 +44,11 @@
 		public MediumRangeMissile() : base()
 		{
 			BuildCost = new Cost("Medium Range Missile Construction", economy: -40, rawMaterial: -70);
-			Maintenance = new Cost("Nuclear Arsenal Maintenance", economy: -8, rawMaterial: -0.2);
 		}
 		public override string TypeName => "MediumRangeMissile";
 		public override int BuildTime { get; set; } = 4;
 		public override Cost BuildCost { get; set; }
-		public override Cost Maintenance { get; set; }
+		public override Cost Maintenance { get; set; } = new Cost("Nuclear Arsenal Maintenance", economy: -8, rawMaterial: -0.2);
 	}
 
 	public class ICBM : NuclearMissile

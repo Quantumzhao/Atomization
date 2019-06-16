@@ -14,8 +14,8 @@ namespace Atomization
 
 		public static Superpower Me;
 
-		public static ObservableCollection<NuclearWeapon> MyNuclearWeapons { get; set; }
-			= new ObservableCollection<NuclearWeapon>();
+		public static GameObjectList<NuclearWeapon> MyNuclearWeapons { get; set; }
+			= new GameObjectList<NuclearWeapon>();
 
 		public static void Initiaze()
 		{

@@ -22,97 +22,56 @@ namespace Atomization
 			DataContext = this;
 
 			#region Economy initialization
-			Economy.DataContext = Data.Me.Economy;
-			Data.Me.Economy.OnValueChanged += (n, pv, nv) => Economy.Content = (int)nv;
+			Economy.DataContext = new VM<ValueComplex>(Data.Me.Economy);
 
-			EconomyGrowth.ItemsSource = Data.Me.Economy.Growth.Values;
+			EconomyGrowth.ItemsSource = Data.Me.Economy.Growth.Items;
 			
 			EconomyGrowth_Sum.Text = Data.Me.Economy.Growth.Sum.ToString();
-			Data.Me.Economy.Growth.CollectionChanged += (sender, e) =>
+			Data.Me.Economy.Growth.Items.CollectionChanged += (sender, e) =>
 				EconomyGrowth_Sum.Text = Data.Me.Economy.Growth.Sum.ToString();
 			#endregion
 
 			#region High Education Population Initialization
-			HiEduPopu.Content = (int)Data.Me.HiEduPopu.Value_Numerical;
-			Data.Me.HiEduPopu.OnValueChanged += (n, pv, nv) => HiEduPopu.Content = (int)nv;
-
-			HiEduGrowth.ItemsSource = Data.Me.HiEduPopu.Growth.Values;
-
-			HiEduGrowth_Sum.Text = Data.Me.HiEduPopu.Growth.Sum.ToString();
-			Data.Me.HiEduPopu.Growth.CollectionChanged += (sender, e) =>
-				HiEduGrowth_Sum.Text = Data.Me.HiEduPopu.Growth.Sum.ToString();
+			HiEduPopu.DataContext = Data.Me.HiEduPopu;
+			HiEduGrowth.ItemsSource = Data.Me.HiEduPopu.Growth.Items;
+			HiEduGrowth_Sum.DataContext = Data.Me.HiEduPopu.Growth;
 			#endregion
 
 			#region Army Initialization
-			Army.Content = (int)Data.Me.Army.Value_Numerical;
-			Data.Me.Army.OnValueChanged += (n, pv, nv) => Army.Content = (int)nv;
-
-			ArmyGrowth.ItemsSource = Data.Me.Army.Growth.Values;
-
-			ArmyGrowth_Sum.Text = Data.Me.Army.Growth.Sum.ToString();
-			Data.Me.Army.Growth.CollectionChanged += (sender, e) =>
-				ArmyGrowth_Sum.Text = Data.Me.Army.Growth.Sum.ToString();
+			Army.DataContext = Data.Me.Army;
+			ArmyGrowth.ItemsSource = Data.Me.Army.Growth.Items;
+			ArmyGrowth_Sum.DataContext = Data.Me.Army.Growth;
 			#endregion
 
 			#region Navy Initialization
-			Navy.Content = (int)Data.Me.Navy.Value_Numerical;
-			Data.Me.Navy.OnValueChanged += (n, pv, nv) => Navy.Content = (int)nv;
-
-			NavyGrowth.ItemsSource = Data.Me.Navy.Growth.Values;
-
-			NavyGrowth_Sum.Text = Data.Me.Navy.Growth.Sum.ToString();
-			Data.Me.Navy.Growth.CollectionChanged += (sender, e) =>
-				NavyGrowth_Sum.Text = Data.Me.Navy.Growth.Sum.ToString();
+			Navy.DataContext = Data.Me.Navy;
+			NavyGrowth.ItemsSource = Data.Me.Navy.Growth.Items;
+			NavyGrowth_Sum.DataContext = Data.Me.Navy.Growth;
 			#endregion
 
 			#region Food Initialization
-			Food.Content = (int)Data.Me.Food.Value_Numerical;
-			Data.Me.Food.OnValueChanged += (n, pv, nv) => Food.Content = (int)nv;
-
-			FoodGrowth.ItemsSource = Data.Me.Food.Growth.Values;
-
-			FoodGrowth_SUm.Text = Data.Me.Food.Growth.Sum.ToString();
-			Data.Me.Food.Growth.CollectionChanged += (sender, e) =>
-				FoodGrowth_SUm.Text = Data.Me.Food.Growth.Sum.ToString();
-
+			Food.DataContext = Data.Me.Food;
+			FoodGrowth.ItemsSource = Data.Me.Food.Growth.Items;
+			FoodGrowth_SUm.DataContext = Data.Me.Food.Growth;
 			#endregion
 
 			#region Raw Material Initialization
-			RawMaterial.Content = (int)Data.Me.Economy.Value_Numerical;
-			Data.Me.RawMaterial.OnValueChanged += (n, pv, nv) => RawMaterial.Content = (int)nv;
-
-			RawMaterialGrowth.ItemsSource = Data.Me.RawMaterial.Growth.Values;
-
-			RawMaterialGrowth_Sum.Text = Data.Me.RawMaterial.Growth.Sum.ToString();
-			Data.Me.RawMaterial.Growth.CollectionChanged += (sender, e) =>
-				RawMaterialGrowth_Sum.Text = Data.Me.RawMaterial.Growth.Sum.ToString();
+			RawMaterial.DataContext = Data.Me.RawMaterial;
+			RawMaterialGrowth.ItemsSource = Data.Me.RawMaterial.Growth.Items;
+			RawMaterialGrowth_Sum.DataContext = Data.Me.RawMaterial.Growth;
 			#endregion
 
-			#region Nuclear Initialization
-			NuclearMaterial.Content = (int)Data.Me.NuclearMaterial.Value_Numerical;
-			Data.Me.NuclearMaterial.OnValueChanged += (n, pv, nv) => NuclearMaterial.Content = (int)nv;
-
-			NuclearMaterialGrowth.ItemsSource = Data.Me.NuclearMaterial.Growth.Values;
-
-			NuclearMaterialGrowth_Sum.Text = Data.Me.NuclearMaterial.Growth.Sum.ToString();
-			Data.Me.NuclearMaterial.Growth.CollectionChanged += (sender, e) =>
-				NuclearMaterialGrowth_Sum.Text = Data.Me.NuclearMaterial.Growth.Sum.ToString();
+			#region Nuclear Material Initialization
+			NuclearMaterial.DataContext = Data.Me.NuclearMaterial;
+			NuclearMaterialGrowth.ItemsSource = Data.Me.NuclearMaterial.Growth.Items;
+			NuclearMaterialGrowth_Sum.DataContext = Data.Me.NuclearMaterial.Growth;
 			#endregion
 
 			#region Stability Initialization
-			ProgBar_Stability.Value = Data.Me.Stability.Value_Numerical;
-			Stability.Content = (int)Data.Me.Stability.Value_Numerical;
-			Data.Me.Stability.OnValueChanged += (n, pv, nv) =>
-			{
-				Stability.Content = (int)nv;
-				ProgBar_Stability.Value = nv;
-			};
-
-			StabilityGrowth.ItemsSource = Data.Me.Stability.Growth.Values;
-
-			StabilityGrowth_Sum.Text = Data.Me.Stability.Growth.Sum.ToString();
-			Data.Me.Stability.Growth.CollectionChanged += (sender, e) =>
-				StabilityGrowth_Sum.Text = Data.Me.Stability.Growth.Sum.ToString();
+			ProgBar_Stability.DataContext = Data.Me.Stability;
+			Stability.DataContext = Data.Me.Stability;
+			StabilityGrowth.ItemsSource = Data.Me.Stability.Growth.Items;
+			StabilityGrowth_Sum.DataContext = Data.Me.Stability.Growth;
 			#endregion
 		}
 
@@ -146,5 +105,13 @@ namespace Atomization
 
 		}
 
+		private void Button_Click(object sender, RoutedEventArgs e)
+		{
+
+		}
+
+		private void Continue_Click(object sender, RoutedEventArgs e)
+		{
+		}
 	}
 }
