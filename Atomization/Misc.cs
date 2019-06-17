@@ -78,7 +78,15 @@ namespace Atomization
 		public double Value_Numeric
 		{
 			get => Value_Object.ObjectData;
-			set => this.Value_Object.ObjectData = value;
+			set
+			{
+				if (value != Value_Object.ObjectData)
+				{
+					this.Value_Object.ObjectData = value;
+					PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Value_Object)));
+					PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Value_Numeric)));
+				}
+			}
 		}
 		public VM<double> Maximum { get; set; }
 		public VM<double> Minimum { get; set; }

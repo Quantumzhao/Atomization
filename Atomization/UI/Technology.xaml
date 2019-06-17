@@ -45,10 +45,8 @@
 					<Label Content="Science" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="15" FontFamily="Segoe UI Light"/>
 					<TreeView Background="{x:Null}" BorderBrush="{x:Null}">
 						<TreeViewItem Header="Aerial Bomb" FontWeight="Bold">
-							<TreeViewItem Header="Miniaturelization" FontWeight="Regular" Margin="0,5,0,0"/>
 						</TreeViewItem>
 						<TreeViewItem Header="Nuclear Mine" FontWeight="Bold" Margin="0,5,0,0">
-							<TreeViewItem Header="Miniaturelization" FontWeight="Regular" Margin="0,5,0,0"/>
 						</TreeViewItem>
 						<TreeViewItem Header="Missile" FontWeight="Bold" Margin="0,5,0,0">
 							<TreeViewItem Header="Propellant" FontWeight="Regular" Margin="0,5,0,0"/>
@@ -63,9 +61,46 @@
 						</TreeViewItem>
 						<TreeViewItem Header="Nuclear Science" FontWeight="Bold" Margin="0,5,0,0">
 							<TreeViewItem Header="Dirty Bomb" FontWeight="Regular" Margin="0,5,0,0">
-								<TreeViewItem Header="Atomic Bomb" FontWeight="Regular" Margin="0,5,0,0">
-									<TreeViewItem Header="Hydrogen Bomb" FontWeight="Regular" Margin="0,5,0,0"/>
+							</TreeViewItem>
+							<TreeViewItem Header="Atomic Bomb" FontWeight="Regular" Margin="0,5,0,0">
+							</TreeViewItem>
+							<TreeViewItem Header="Hydrogen Bomb" FontWeight="Regular" Margin="0,5,0,0">								
+							</TreeViewItem>
+							<TreeViewItem Header="Doomsday Machine" FontWeight="Regular" Margin="0,5,0,0">
+							</TreeViewItem>
+						</TreeViewItem>
+						<TreeViewItem Header="Electronics" FontWeight="Bold" Margin="0,5,0,0">
+							<TreeViewItem Header="Computer" FontWeight="Regular" Margin="0,5,0,0">
+								<TreeViewItem Header="Super Computer" Margin="0,5,0,0">
+									<TreeViewItem Header="Level I"></TreeViewItem>
+									<TreeViewItem Header="Level II"></TreeViewItem>
+									<TreeViewItem Header="Level III"></TreeViewItem>
 								</TreeViewItem>
+								<TreeViewItem Header="Miniaturelization" Margin="0,5,0,0">
+									<TreeViewItem Header="Level I"></TreeViewItem>
+									<TreeViewItem Header="Level II"></TreeViewItem>
+									<TreeViewItem Header="Level III"></TreeViewItem>
+								</TreeViewItem>
+							</TreeViewItem>
+							<TreeViewItem Header="Microchip" FontWeight="Regular" Margin="0,5,0,0">
+								<TreeViewItem Header="Level I"></TreeViewItem>
+								<TreeViewItem Header="Level II"></TreeViewItem>
+								<TreeViewItem Header="Level III"></TreeViewItem>
+							</TreeViewItem>
+							<TreeViewItem Header="Robustness" FontWeight="Regular" Margin="0,5,0,0">
+								<TreeViewItem Header="Level I"></TreeViewItem>
+								<TreeViewItem Header="Level II"></TreeViewItem>
+								<TreeViewItem Header="Level III"></TreeViewItem>
+							</TreeViewItem>
+						</TreeViewItem>
+						<TreeViewItem Header="Engineering" FontWeight="Bold" Margin="0,5,0,0">
+							<TreeViewItem Header="Warhead Miniaturelization" FontWeight="Regular" Margin="0,5,0,0">
+								<TreeViewItem Header="Level I"></TreeViewItem>
+								<TreeViewItem Header="Level II"></TreeViewItem>
+								<TreeViewItem Header="Level III"></TreeViewItem>
+							</TreeViewItem>
+							<TreeViewItem Header="Material Science" FontWeight="Regular" Margin="0,5,0,0">
+								
 							</TreeViewItem>
 						</TreeViewItem>
 					</TreeView>

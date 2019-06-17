@@ -135,6 +135,14 @@ namespace Atomization
 				}
 			}
 		}
+
+		public void COstOfExecution(Cost cost)
+		{
+			for (int i = 0; i < cost.Values.Count; i++)
+			{
+				Values[i].Value_Numeric -= cost.Values[i].Value;
+			}
+		}
 	}
 
 	public class RegularNation : Nation

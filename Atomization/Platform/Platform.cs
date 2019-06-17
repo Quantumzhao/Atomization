@@ -59,12 +59,19 @@ namespace Atomization
 
 	public class StrategicBomber : Platform
 	{
-		public StrategicBomber() : base()
+		public StrategicBomber(Nation deployRegion) : base()
 		{
+			DeployRegion = deployRegion;
+
 			NuclearWeapons.Capacity = 1;
 
 			BuildCost = new Cost("Strategic Bomber Construction", economy: -30, rawMaterial: -5);
 			Maintenance = new Cost("Nuclear Arsenal Maintenance", economy: -10, rawMaterial: -30);
+
+			if (IsFriend)
+			{
+				(DeployRegion as Nation).Affiliation.ExpenditureAndRevenue.Add(Maintenance);
+			}
 		}
 		public override string TypeName => "StrategicBomber";
 
@@ -75,12 +82,19 @@ namespace Atomization
 
 	public class MissileLauncher : Platform
 	{
-		public MissileLauncher() : base()
+		public MissileLauncher(Nation deployRegion) : base()
 		{
+			DeployRegion = deployRegion;
+
 			NuclearWeapons.Capacity = 1;
 
 			BuildCost = new Cost("Missile Launcher Construction", economy: -45, rawMaterial: -8);
 			Maintenance = new Cost("Nuclear Arsenal Maintenance", economy: -6, rawMaterial: -4);
+
+			if (IsFriend)
+			{
+				(DeployRegion as Nation).Affiliation.ExpenditureAndRevenue.Add(Maintenance);
+			}
 		}
 		public override string TypeName => "MissileLauncher";
 
@@ -91,12 +105,19 @@ namespace Atomization
 
 	public class NuclearSubmarine : Platform
 	{
-		public NuclearSubmarine() : base()
+		public NuclearSubmarine(Region deployRegion) : base()
 		{
+			DeployRegion = deployRegion;
+
 			NuclearWeapons.Capacity = 8;
 
 			BuildCost = new Cost("Nuclear Submarine Construction", economy: -100, rawMaterial: -200, nuclearMaterial: -1);
 			Maintenance = new Cost("Nuclear Arsenal Maintenance", economy: -15, rawMaterial: -10, nuclearMaterial: -0.05);
+
+			if (IsFriend)
+			{
+				(DeployRegion as Nation).Affiliation.ExpenditureAndRevenue.Add(Maintenance);
+			}
 		}
 
 		public override string TypeName => "NuclearSubmarine";

@@ -106,15 +106,15 @@ namespace Atomization
 					break;
 
 				case "Strategic Bomber":
-					prefab = new StrategicBomber();
+					prefab = new StrategicBomber(Data.Me);
 					break;
 
 				case "Missile Launcher":
-					prefab = new MissileLauncher();
+					prefab = new MissileLauncher(Data.Me);
 					break;
 
 				case "Nuclear Submarine":
-					prefab = new NuclearSubmarine();
+					prefab = new NuclearSubmarine(Data.Me);
 					break;
 
 				default:
