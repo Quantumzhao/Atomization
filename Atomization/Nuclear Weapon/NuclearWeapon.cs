@@ -2,19 +2,15 @@
 
 namespace Atomization
 {
-	public abstract class NuclearWeapon : IViewModel
+	public abstract class NuclearWeapon : DeployableObject
 	{
 		protected NuclearWeapon()
 		{
-			if (IsFriend)
+			if (IsMine)
 			{
 				Data.Me.ExpenditureAndRevenue.Add(Maintenance);
 			}
 		}
-
-		public bool IsFriend = true;
-
-		public event PropertyChangedEventHandler PropertyChanged;
 
 		private string name;
 		public string Name
@@ -25,7 +21,7 @@ namespace Atomization
 				if (value != name)
 				{
 					name = value;
-					PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Name)));
+					OnPropertyChanged(new PropertyChangedEventArgs(nameof(Name)));
 				}
 			}
 		}
@@ -39,7 +35,7 @@ namespace Atomization
 				if (value != platform)
 				{
 					platform = value;
-					PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Platform)));
+					OnPropertyChanged(new PropertyChangedEventArgs(nameof(Platform)));
 				}
 			}
 		}
@@ -53,23 +49,13 @@ namespace Atomization
 				if (value != target)
 				{
 					target = value;
-					PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Target)));
+					OnPropertyChanged(new PropertyChangedEventArgs(nameof(Target)));
 				}
 			}
 		}
 
-		public abstract int BuildTime { get; set; }
-		public abstract Cost BuildCost { get; set; }
-		public abstract Cost Maintenance { get; set; }
-		public abstract string TypeName { get; }
-
 		public GameObjectList<Warhead> Warheads { get; set; } = new GameObjectList<Warhead>();
 		public string WarheadType => Warheads.Count != 1 ? "(Multiple Types)" : Warheads[0].WarheadType;
-
-		public bool IsSame(IViewModel viewModel)
-		{
-			throw new System.NotImplementedException();
-		}
 	}
 
 	public abstract class NuclearMissile : NuclearWeapon
@@ -80,51 +66,45 @@ namespace Atomization
 	{
 		public CruiseMissile() : base()
 		{
-			BuildCost = new Cost("Cruis Missile Construction", economy: -20, rawMaterial: -30);
+			buildTime = new VM<int>(2);
+			maintenance = new Cost("Nuclear Arsenal Maintenance", economy: -4, rawMaterial: -0.1);
+			buildCost = new Cost("Cruis Missile Construction", economy: -20, rawMaterial: -30);
 		}
 
 		public override string TypeName => "CruiseMissile";
-		public override int BuildTime { get; set; } = 2;
-		public override Cost BuildCost { get; set; }
-		public override Cost Maintenance { get; set; } = new Cost("Nuclear Arsenal Maintenance", economy: -4, rawMaterial: -0.1);
 	}
 
 	public class MediumRangeMissile : NuclearMissile
 	{
 		public MediumRangeMissile() : base()
 		{
+			buildTime = new VM<int>(4);
+			maintenance = new Cost("Nuclear Arsenal Maintenance", economy: -8, rawMaterial: -0.2);
 			BuildCost = new Cost("Medium Range Missile Construction", economy: -40, rawMaterial: -70);
 		}
 		public override string TypeName => "MediumRangeMissile";
-		public override int BuildTime { get; set; } = 4;
-		public override Cost BuildCost { get; set; }
-		public override Cost Maintenance { get; set; } = new Cost("Nuclear Arsenal Maintenance", economy: -8, rawMaterial: -0.2);
 	}
 
 	public class ICBM : NuclearMissile
 	{
 		public ICBM() : base()
 		{
+			buildTime = new VM<int>(6);
 			BuildCost = new Cost("ICBM Construction", economy: -80, rawMaterial: -100);
 			Maintenance = new Cost("Nuclear Arsenal Maintenance", economy: -20, rawMaterial: -1);
 		}
 		public override string TypeName => "ICBM";
-		public override int BuildTime { get; set; } = 6;
-		public override Cost BuildCost { get; set; }
-		public override Cost Maintenance { get; set; }
 	}
 
 	public class NuclearBomb : NuclearWeapon
 	{
 		public NuclearBomb() : base()
 		{
+			buildTime = new VM<int>(1);
 			BuildCost = new Cost("Nuclear Bomb Construction", economy: -20, rawMaterial: -10);
 			Maintenance = new Cost("Nuclear Arsenal Maintenance", economy: -1, rawMaterial: -0.05);
 		}
 
 		public override string TypeName => "NuclearBomb";
-		public override int BuildTime { get; set; } = 1;
-		public override Cost BuildCost { get; set; }
-		public override Cost Maintenance { get; set; }
 	}
 }

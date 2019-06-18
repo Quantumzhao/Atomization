@@ -8,6 +8,8 @@ using System.Linq;
 
 namespace Atomization
 {
+	public delegate void ConstructionCompleted(DeployableObject deployableObject);
+
 	public class GameObjectList<T> : List<T>, INotifyCollectionChanged, INotifyPropertyChanged
 	{
 		public new int Capacity { get; set; } = 0;
@@ -158,7 +160,7 @@ namespace Atomization
 			}
 		}
 	}
-	public class Cost
+	public class Cost : IViewModel
 	{
 		public Cost(
 			string name,
@@ -223,6 +225,8 @@ namespace Atomization
 
 		public readonly GameObjectList<Expression> Values;
 
+		public event PropertyChangedEventHandler PropertyChanged;
+
 		public string Name { get; set; }
 
 		public double Economy => Values[0].Value;
@@ -240,6 +244,11 @@ namespace Atomization
 		public double NuclearMaterial => Values[6].Value;
 
 		public double Stability => Values[7].Value;
+
+		public bool IsSame(IViewModel viewModel)
+		{
+			throw new NotImplementedException();
+		}
 	}
 
 	public class Expression : INotifyPropertyChanged
@@ -470,5 +479,88 @@ namespace Atomization
 	public interface IViewModel : INotifyPropertyChanged
 	{
 		bool IsSame(IViewModel viewModel);
+	}
+
+	public interface IBuild : IViewModel
+	{
+		int BuildTime { get; set; }
+		Cost BuildCost { get; set; }
+	}
+
+	public abstract class DeployableObject : IBuild
+	{
+		public event ConstructionCompleted ConstructionCompleted;
+
+		protected VM<int> buildTime;
+		public int BuildTime
+		{
+			get => buildTime.ObjectData;
+			set
+			{
+				if (value == 0)
+				{
+					ConstructionCompleted?.Invoke(this);
+					buildTime.ObjectData = -1;
+					return;
+				}
+				else if (buildTime.ObjectData == -1)
+				{
+					return;
+				}
+
+				if (value != buildTime.ObjectData)
+				{
+					buildTime.ObjectData = value;
+					PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(BuildTime)));
+				}
+			}
+		}
+
+		protected Cost buildCost;
+		public Cost BuildCost
+		{
+			get => buildCost;
+			set
+			{
+				if (value != buildCost)
+				{
+					buildCost = value;
+					buildCost.PropertyChanged += (sender, e) => 
+						PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(BuildCost)));
+					PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(BuildCost)));
+				}
+			}
+		}
+
+		protected Cost maintenance;
+		public Cost Maintenance
+		{
+			get => maintenance;
+			set
+			{
+				if (value != maintenance)
+				{
+					maintenance = value;
+					maintenance.PropertyChanged += (sender, e) =>
+						PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(maintenance)));
+					PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(maintenance)));
+				}
+			}
+		}
+
+		public bool IsMine { get; set; } = true;
+		public abstract string TypeName { get; }
+
+		public event PropertyChangedEventHandler PropertyChanged;
+
+		public virtual bool IsSame(IViewModel viewModel)
+		{
+			throw new NotImplementedException();
+		}
+
+		public void OnPropertyChanged(PropertyChangedEventArgs e)
+		{
+			PropertyChanged?.Invoke(this, e);
+		}
 	}
 }

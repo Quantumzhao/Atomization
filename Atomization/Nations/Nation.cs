@@ -106,6 +106,9 @@ namespace Atomization
 		}
 		#endregion
 
+		public VMList<DeployableObject> ConstructionSequence { get; private set; } 
+			= new VMList<DeployableObject>();
+
 		private void AddExpenditureAndRevenue(Cost cost)
 		{
 			for (int i = 0; i < cost.Values.Count; i++)
@@ -136,7 +139,7 @@ namespace Atomization
 			}
 		}
 
-		public void COstOfExecution(Cost cost)
+		public void CostOfExecution(Cost cost)
 		{
 			for (int i = 0; i < cost.Values.Count; i++)
 			{
