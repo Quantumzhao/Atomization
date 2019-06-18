@@ -4,7 +4,7 @@ using System.ComponentModel;
 
 namespace Atomization
 {
-	public abstract class Platform : DeployableObject
+	public abstract class Platform : ConstructableObject
 	{
 		protected Platform() : base()
 		{
@@ -22,6 +22,18 @@ namespace Atomization
 					else if (e.Action == NotifyCollectionChangedAction.Remove)
 					{
 						Data.MyNuclearWeapons.Remove(new VM<NuclearWeapon>(e.OldItems[0] as NuclearWeapon));
+					}
+				};
+
+				ConstructionCompleted += item =>
+				{
+					if (DeployRegion is Nation)
+					{
+						(DeployRegion as Nation).Affiliation.ExpenditureAndRevenue.Add(item.Maintenance);
+					}
+					else
+					{
+						(DeployRegion as Waters).Affiliation.Affiliation.ExpenditureAndRevenue.Add(item.Maintenance);
 					}
 				};
 			}
@@ -46,7 +58,7 @@ namespace Atomization
 
 			if (IsMine)
 			{
-				(DeployRegion as Nation).Affiliation.ExpenditureAndRevenue.Add(Maintenance);
+				(DeployRegion as Nation).Affiliation.AddCostOfExecution(BuildCost);
 			}
 		}
 
@@ -68,7 +80,7 @@ namespace Atomization
 
 			if (IsMine)
 			{
-				(DeployRegion as Nation).Affiliation.ExpenditureAndRevenue.Add(Maintenance);
+				(DeployRegion as Nation).Affiliation.AddCostOfExecution(BuildCost);
 			}
 		}
 		public override string TypeName => "StrategicBomber";
@@ -89,7 +101,7 @@ namespace Atomization
 
 			if (IsMine)
 			{
-				(DeployRegion as Nation).Affiliation.ExpenditureAndRevenue.Add(Maintenance);
+				(DeployRegion as Nation).Affiliation.AddCostOfExecution(BuildCost);
 			}
 		}
 		public override string TypeName => "MissileLauncher";
@@ -110,7 +122,7 @@ namespace Atomization
 
 			if (IsMine)
 			{
-				(DeployRegion as Nation).Affiliation.ExpenditureAndRevenue.Add(Maintenance);
+				(DeployRegion as Nation).Affiliation.AddCostOfExecution(BuildCost);
 			}
 		}
 

@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace Atomization
 {
-	public delegate void ConstructionCompleted(DeployableObject deployableObject);
+	public delegate void ConstructionCompleted(ConstructableObject deployableObject);
 
 	public class GameObjectList<T> : List<T>, INotifyCollectionChanged, INotifyPropertyChanged
 	{
@@ -487,7 +487,7 @@ namespace Atomization
 		Cost BuildCost { get; set; }
 	}
 
-	public abstract class DeployableObject : IBuild
+	public abstract class ConstructableObject : IBuild
 	{
 		public event ConstructionCompleted ConstructionCompleted;
 

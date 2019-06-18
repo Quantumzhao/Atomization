@@ -50,6 +50,15 @@ namespace Atomization
 					RemoveExpenditureAndRevenue(e.OldItems[0] as Cost);
 				}
 			};
+
+			ConstructionSequence.CollectionChanged += (sender, e) =>
+			{
+				if (e.Action == NotifyCollectionChangedAction.Add)
+				{
+					(e.NewItems[0] as ConstructableObject).ConstructionCompleted += item =>
+					(sender as VMList<ConstructableObject>).Remove(item);
+				}
+			};
 		}
 
 		// null stands for independence
@@ -106,8 +115,8 @@ namespace Atomization
 		}
 		#endregion
 
-		public VMList<DeployableObject> ConstructionSequence { get; private set; } 
-			= new VMList<DeployableObject>();
+		public VMList<ConstructableObject> ConstructionSequence { get; private set; } 
+			= new VMList<ConstructableObject>();
 
 		private void AddExpenditureAndRevenue(Cost cost)
 		{
@@ -139,11 +148,11 @@ namespace Atomization
 			}
 		}
 
-		public void CostOfExecution(Cost cost)
+		public void AddCostOfExecution(Cost cost)
 		{
 			for (int i = 0; i < cost.Values.Count; i++)
 			{
-				Values[i].Value_Numeric -= cost.Values[i].Value;
+				Values[i].Value_Numeric += cost.Values[i].Value;
 			}
 		}
 	}
@@ -182,7 +191,7 @@ namespace Atomization
 			Superpower superpower = new Superpower();
 
 			superpower.Name = name;
-			superpower.Economy = new ValueComplex(20000);        // x10^9
+			superpower.Economy = new ValueComplex(20000 + 400);  // x10^9
 			superpower.HiEduPopu = new ValueComplex(20000);      // x10^6
 			superpower.Army = new ValueComplex(50000);           // x10^3
 			superpower.Navy = new ValueComplex(5000);            // x10^3
