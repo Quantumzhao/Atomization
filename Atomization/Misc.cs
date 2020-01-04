@@ -54,38 +54,36 @@ namespace Atomization
 	{
 		public ValueComplex(double initialValue = 0)
 		{
-			value_Object = new VM<double>(initialValue);
+			_CurrentValue = new VM<double>(initialValue);
 			Maximum = new VM<double>(double.MaxValue);
 			Minimum = new VM<double>(double.MinValue);
 			Growth = new Growth();
 		}
 
-		private VM<double> value_Object;
-
+		private VM<double> _CurrentValue;
 		public event PropertyChangedEventHandler PropertyChanged;
-
-		public VM<double> Value_Object
+		public VM<double> CurrentValue
 		{
-			get => value_Object;
+			get => _CurrentValue;
 			set
 			{
-				if (value != value_Object)
+				if (value != _CurrentValue)
 				{
-					value_Object = value;
-					PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Value_Object)));
+					_CurrentValue = value;
+					PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CurrentValue)));
 					PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Value_Numeric)));
 				}
 			}
 		}
 		public double Value_Numeric
 		{
-			get => Value_Object.ObjectData;
+			get => CurrentValue.ObjectData;
 			set
 			{
-				if (value != Value_Object.ObjectData)
+				if (value != CurrentValue.ObjectData)
 				{
-					this.Value_Object.ObjectData = value;
-					PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Value_Object)));
+					this.CurrentValue.ObjectData = value;
+					PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CurrentValue)));
 					PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Value_Numeric)));
 				}
 			}

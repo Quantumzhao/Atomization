@@ -26,7 +26,7 @@ namespace Atomization
 			);
 		}
 
-		#region Tpggle Expander Appearance
+		#region Toggle Expander Appearance
 		private void Expander_Expanded(object sender, RoutedEventArgs e)
 		{
 			(sender as Expander).Effect = new DropShadowEffect()

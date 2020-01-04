@@ -32,7 +32,7 @@
 		</StackPanel>
 		<StackPanel 
 			Margin="10,47,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
-			<Label Content="Subversion" FontFamily="Segoe UI Light" FontSize="15"></Label>
+			<Label Content="Invasion/Stationary" FontFamily="Segoe UI Light" FontSize="15"></Label>
 			<CheckBox 
 				Content="Subvert and Support a Puppet" 
 				Margin="10,10,10,0" 
@@ -49,7 +49,7 @@
 				<TextBox Width="80" HorizontalAlignment="Right" DockPanel.Dock="Right"/>
 			</DockPanel>
 			<Button
-				Content="Subvert" 
+				Content="Execute" 
 				Padding="5,2.5"
 				Margin="10,10,0,10" 
 				VerticalAlignment="Top">
@@ -128,24 +128,6 @@
 		  Content="Execute" 
 		  Margin="10,10,0,0" 
 		  Padding="5,2.5"/>
-		</StackPanel>
-		<StackPanel 
-			Margin="10,248,38,0" VerticalAlignment="Top">
-			<Label Content="Invasion/Stationary" FontFamily="Segoe UI Light" FontSize="15"></Label>
-			<Label Content="Military Forces Involved in: " Margin="5,0" FontWeight="Bold"/>
-			<DockPanel Margin="5,5,0,0">
-				<Label Content="From My Nation: " Margin="0"></Label>
-				<TextBox Width="80" HorizontalAlignment="Right" DockPanel.Dock="Right"/>
-			</DockPanel>
-			<DockPanel Margin="5,5,0,0">
-				<Label Content="From Alliance: " Margin="0"></Label>
-				<TextBox Width="80" HorizontalAlignment="Right" DockPanel.Dock="Right"/>
-			</DockPanel>
-			<Button 
-				Content="Execute" 
-				Margin="5,10,0,0" 
-				Padding="5,2.5">
-			</Button>
 		</StackPanel>
 		<Expander x:Name="Expander_Maneuver" 
 			Header="Maneuver" 

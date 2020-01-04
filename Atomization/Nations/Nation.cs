@@ -3,11 +3,6 @@ using System.Collections.Specialized;
 
 namespace Atomization
 {
-	/// <summary>
-	///		The very basic (not acidic) class of all geometric entities such as 
-	///		nations and territorial and international oceans. 
-	///		More properties will be defined in the future. 
-	/// </summary>
 	public abstract class Region
 	{
 		public string Name { get; set; }
@@ -36,6 +31,7 @@ namespace Atomization
 			TerritorialWaters = new Waters() { Name = Data.WatersNames.Dequeue() };
 			TerritorialWaters.Affiliation = this;
 			Data.Regions.Add(TerritorialWaters);
+
 			// set the data binding of gov exp and rev
 			// when the national government is entitled a new expenditure/revenue, 
 			//     it adds the new item to this list, and update the binded property
@@ -90,6 +86,7 @@ namespace Atomization
 			get => Values[3];
 			protected set => Values[3] = value;
 		}
+		public double Tactics { get; set; }
 		public ValueComplex Food
 		{
 			get => Values[4];
@@ -198,7 +195,7 @@ namespace Atomization
 			superpower.Food = new ValueComplex(20000);           // x10^6
 			superpower.RawMaterial = new ValueComplex(4000);     // x10^3
 			superpower.NuclearMaterial = new ValueComplex(100);  // x10^3
-			superpower.Stability = new ValueComplex(75) { Maximum = new VM<double>(100) };
+			superpower.Stability = new ValueComplex(80) { Maximum = new VM<double>(100) };
 
 			for (int i = 0; i < InitialNukeSilos; i++)
 			{
@@ -208,19 +205,19 @@ namespace Atomization
 			superpower.ExpenditureAndRevenue.Add(
 				new Cost(
 					"Army Maintenance", 
-					new Expression(superpower.Army.Value_Object, v => -0.001 * v.ObjectData)
+					new Expression(superpower.Army.CurrentValue, v => -0.001 * v.ObjectData)
 					)
 				);
 			superpower.ExpenditureAndRevenue.Add(
 				new Cost(
 					"Navy Maintenance", 
-					economy: new Expression(superpower.Navy.Value_Object, v => -0.005 * v.ObjectData)
+					economy: new Expression(superpower.Navy.CurrentValue, v => -0.005 * v.ObjectData)
 					)
 				);
 			superpower.ExpenditureAndRevenue.Add(
 				new Cost(
 					"Domestic Development", 
-					new Expression(superpower.Economy.Value_Object, v => -0.9 * v.ObjectData)
+					new Expression(superpower.Economy.CurrentValue, v => -0.9 * v.ObjectData)
 				)
 			);
 			superpower.ExpenditureAndRevenue.Add(
@@ -232,7 +229,7 @@ namespace Atomization
 			superpower.ExpenditureAndRevenue.Add(
 				new Cost(
 					"Domestic Consumption", 
-					food: new Expression(superpower.HiEduPopu.Value_Object, v => -2 * v.ObjectData)
+					food: new Expression(superpower.HiEduPopu.CurrentValue, v => -2 * v.ObjectData)
 				)
 			);
 			superpower.ExpenditureAndRevenue.Add(

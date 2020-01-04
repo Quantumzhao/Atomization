@@ -6,10 +6,6 @@ namespace Atomization
 	{
 		protected NuclearWeapon()
 		{
-			if (IsMine)
-			{
-				Data.Me.ExpenditureAndRevenue.Add(Maintenance);
-			}
 		}
 
 		private string name;
@@ -69,6 +65,11 @@ namespace Atomization
 			buildTime = new VM<int>(2);
 			maintenance = new Cost("Nuclear Arsenal Maintenance", economy: -4, rawMaterial: -0.1);
 			buildCost = new Cost("Cruis Missile Construction", economy: -20, rawMaterial: -30);
+
+			if (IsMine)
+			{
+				Data.Me.ExpenditureAndRevenue.Add(Maintenance);
+			}
 		}
 
 		public override string TypeName => "CruiseMissile";
@@ -81,6 +82,11 @@ namespace Atomization
 			buildTime = new VM<int>(4);
 			maintenance = new Cost("Nuclear Arsenal Maintenance", economy: -8, rawMaterial: -0.2);
 			BuildCost = new Cost("Medium Range Missile Construction", economy: -40, rawMaterial: -70);
+
+			if (IsMine)
+			{
+				Data.Me.ExpenditureAndRevenue.Add(Maintenance);
+			}
 		}
 		public override string TypeName => "MediumRangeMissile";
 	}
@@ -92,6 +98,11 @@ namespace Atomization
 			buildTime = new VM<int>(6);
 			BuildCost = new Cost("ICBM Construction", economy: -80, rawMaterial: -100);
 			Maintenance = new Cost("Nuclear Arsenal Maintenance", economy: -20, rawMaterial: -1);
+
+			if (IsMine)
+			{
+				Data.Me.ExpenditureAndRevenue.Add(Maintenance);
+			}
 		}
 		public override string TypeName => "ICBM";
 	}
@@ -103,6 +114,11 @@ namespace Atomization
 			buildTime = new VM<int>(1);
 			BuildCost = new Cost("Nuclear Bomb Construction", economy: -20, rawMaterial: -10);
 			Maintenance = new Cost("Nuclear Arsenal Maintenance", economy: -1, rawMaterial: -0.05);
+
+			if (IsMine)
+			{
+				Data.Me.ExpenditureAndRevenue.Add(Maintenance);
+			}
 		}
 
 		public override string TypeName => "NuclearBomb";
