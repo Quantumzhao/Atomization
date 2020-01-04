@@ -2,7 +2,7 @@
 
 namespace Atomization
 {
-	public abstract class NuclearWeapon : ConstructableObject
+	public abstract class NuclearWeapon : DeployableObject
 	{
 		protected NuclearWeapon()
 		{
