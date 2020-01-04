@@ -17,11 +17,11 @@ namespace Atomization
 				{
 					if (e.Action == NotifyCollectionChangedAction.Add)
 					{
-						Data.MyNuclearWeapons.Add(new VM<NuclearWeapon>(e.NewItems[0] as NuclearWeapon));
+						Data.MyNuclearWeapons.Add(e.NewItems[0] as NuclearWeapon);
 					}
 					else if (e.Action == NotifyCollectionChangedAction.Remove)
 					{
-						Data.MyNuclearWeapons.Remove(new VM<NuclearWeapon>(e.OldItems[0] as NuclearWeapon));
+						Data.MyNuclearWeapons.Remove(e.OldItems[0] as NuclearWeapon);
 					}
 				};
 
@@ -47,7 +47,7 @@ namespace Atomization
 	{
 		public Silo(Nation deployRegion) : base()
 		{
-			buildTime = new VM<int>(4);
+			_BuildTime = 4;
 
 			DeployRegion = deployRegion;
 
@@ -69,7 +69,7 @@ namespace Atomization
 	{
 		public StrategicBomber(Nation deployRegion) : base()
 		{
-			buildTime = new VM<int>(7);
+			_BuildTime = 7;
 
 			DeployRegion = deployRegion;
 
@@ -90,7 +90,7 @@ namespace Atomization
 	{
 		public MissileLauncher(Nation deployRegion) : base()
 		{
-			buildTime = new VM<int>(6);
+			_BuildTime = 6;
 
 			DeployRegion = deployRegion;
 
@@ -111,7 +111,7 @@ namespace Atomization
 	{
 		public NuclearSubmarine(Region deployRegion) : base()
 		{
-			buildTime = new VM<int>(12);
+			_BuildTime = 12;
 
 			DeployRegion = deployRegion;
 

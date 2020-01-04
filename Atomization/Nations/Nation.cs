@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 
 namespace Atomization
@@ -52,7 +53,7 @@ namespace Atomization
 				if (e.Action == NotifyCollectionChangedAction.Add)
 				{
 					(e.NewItems[0] as ConstructableObject).ConstructionCompleted += item =>
-					(sender as VMList<ConstructableObject>).Remove(item);
+					(sender as ObservableCollection<ConstructableObject>).Remove(item);
 				}
 			};
 		}
@@ -112,8 +113,8 @@ namespace Atomization
 		}
 		#endregion
 
-		public VMList<ConstructableObject> ConstructionSequence { get; private set; } 
-			= new VMList<ConstructableObject>();
+		public ObservableCollection<ConstructableObject> ConstructionSequence { get; private set; } 
+			= new ObservableCollection<ConstructableObject>();
 
 		private void AddExpenditureAndRevenue(Cost cost)
 		{
@@ -128,18 +129,16 @@ namespace Atomization
 		}
 		private void RemoveExpenditureAndRevenue(Cost cost)
 		{
-			var costName = new VM<string>(cost.Name);
-
 			for (int i = 0; i < cost.Values.Count; i++)
 			{
 				// vice versa
 				if (cost.Values[i].Value != 0)
 				{
 					// v.v.
-					this.Values[i].Growth.Items[costName].ObjectData -= cost.Values[i].Value;
-					if (this.Values[i].Growth.Items[costName].ObjectData == 0)
+					this.Values[i].Growth.Items[cost.Name] -= cost.Values[i].Value;
+					if (this.Values[i].Growth.Items[cost.Name] == 0)
 					{
-						this.Values[i].Growth.Items.Remove(costName);
+						this.Values[i].Growth.Items.Remove(cost.Name);
 					}
 				}
 			}
@@ -149,7 +148,7 @@ namespace Atomization
 		{
 			for (int i = 0; i < cost.Values.Count; i++)
 			{
-				Values[i].Value_Numeric += cost.Values[i].Value;
+				Values[i].CurrentValue += cost.Values[i].Value;
 			}
 		}
 	}
@@ -195,7 +194,7 @@ namespace Atomization
 			superpower.Food = new ValueComplex(20000);           // x10^6
 			superpower.RawMaterial = new ValueComplex(4000);     // x10^3
 			superpower.NuclearMaterial = new ValueComplex(100);  // x10^3
-			superpower.Stability = new ValueComplex(75) { Maximum = new VM<double>(100) };
+			superpower.Stability = new ValueComplex(75) { Maximum = 100 };
 
 			for (int i = 0; i < InitialNukeSilos; i++)
 			{
@@ -205,19 +204,19 @@ namespace Atomization
 			superpower.ExpenditureAndRevenue.Add(
 				new Cost(
 					"Army Maintenance", 
-					new Expression(superpower.Army.CurrentValue, v => -0.001 * v.ObjectData)
+					new Expression(superpower.Army.CurrentValue, v => -0.001 * v)
 					)
 				);
 			superpower.ExpenditureAndRevenue.Add(
 				new Cost(
 					"Navy Maintenance", 
-					economy: new Expression(superpower.Navy.CurrentValue, v => -0.005 * v.ObjectData)
+					economy: new Expression(superpower.Navy.CurrentValue, v => -0.005 * v)
 					)
 				);
 			superpower.ExpenditureAndRevenue.Add(
 				new Cost(
 					"Domestic Development", 
-					new Expression(superpower.Economy.CurrentValue, v => -0.9 * v.ObjectData)
+					new Expression(superpower.Economy.CurrentValue, v => -0.9 * v)
 				)
 			);
 			superpower.ExpenditureAndRevenue.Add(
@@ -229,7 +228,7 @@ namespace Atomization
 			superpower.ExpenditureAndRevenue.Add(
 				new Cost(
 					"Domestic Consumption", 
-					food: new Expression(superpower.HiEduPopu.CurrentValue, v => -2 * v.ObjectData)
+					food: new Expression(superpower.HiEduPopu.CurrentValue, v => -2 * v)
 				)
 			);
 			superpower.ExpenditureAndRevenue.Add(

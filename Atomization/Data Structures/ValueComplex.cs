@@ -6,49 +6,31 @@ namespace Atomization
 	{
 		public ValueComplex(double initialValue = 0)
 		{
-			value_Object = new VM<double>(initialValue);
+			_CurrentValue = initialValue;
 			Maximum = double.MaxValue;
 			Minimum = double.MinValue;
 			Growth = new Growth();
 		}
 
-		private VM<double> value_Object;
+		private double _CurrentValue;
 
 		public event PropertyChangedEventHandler PropertyChanged;
 
-		public VM<double> Value_Object
+		public double CurrentValue
 		{
-			get => value_Object;
+			get => _CurrentValue;
 			set
 			{
-				if (value != value_Object)
+				if (value != _CurrentValue)
 				{
-					value_Object = value;
-					PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Value_Object)));
-					PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Value_Numeric)));
+					_CurrentValue = value;
+					PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CurrentValue)));
 				}
 			}
 		}
-		public double Value_Numeric
-		{
-			get => Value_Object.ObjectData;
-			set
-			{
-				if (value != Value_Object.ObjectData)
-				{
-					this.Value_Object.ObjectData = value;
-					PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Value_Object)));
-					PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Value_Numeric)));
-				}
-			}
-		}
+
 		public double Maximum { get; set; }
 		public double Minimum { get; set; }
 		public Growth Growth { get; set; }
-
-		//public bool IsSame(IValue viewModel)
-		//{
-		//	throw new NotImplementedException();
-		//}
 	}
 }

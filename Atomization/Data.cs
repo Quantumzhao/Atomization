@@ -14,8 +14,8 @@ namespace Atomization
 
 		public static Superpower Me;
 
-		public static VMList<VM<NuclearWeapon>> MyNuclearWeapons { get; set; }
-			= new VMList<VM<NuclearWeapon>>();
+		public static ObservableCollection<NuclearWeapon> MyNuclearWeapons { get; set; }
+			= new ObservableCollection<NuclearWeapon>();
 
 		public static void Initiaze()
 		{

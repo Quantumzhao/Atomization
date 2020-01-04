@@ -8,141 +8,30 @@ using System.Linq;
 
 namespace Atomization
 {
-	public delegate void ConstructionCompleted(ConstructableObject deployableObject);
+	public delegate void ConstructionCompletedHandler(ConstructableObject deployableObject);
 
-	public class GameObjectList<T> : List<T>, INotifyCollectionChanged, INotifyPropertyChanged
+	public class Growth
 	{
-		public new int Capacity { get; set; } = 0;
-		public bool IsLimitedCapacity { get; set; } = false;
+		public Dictionary<string, double> Items { get; set; } = new Dictionary<string, double>();
 
-		public event NotifyCollectionChangedEventHandler CollectionChanged;
-		public event PropertyChangedEventHandler PropertyChanged;
-
-		public new bool Add(T item)
-		{
-			if (Count >= Capacity && IsLimitedCapacity)
-			{
-				return false;
-			}
-			else
-			{
-				base.Add(item);
-				CollectionChanged?.Invoke(
-					this,
-					new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, item)
-				);
-				return false;
-			}
-		}
-
-		public new bool Remove(T item)
-		{
-			CollectionChanged?.Invoke(
-				this,
-				new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, item)
-			);
-			return base.Remove(item);
-		}
-
-		public void OnCollectionChanged(NotifyCollectionChangedEventArgs e)
-		{
-			CollectionChanged?.Invoke(this, e);
-		}
-	}
-
-	public class ValueComplex : IViewModel
-	{
-		public ValueComplex(double initialValue = 0)
-		{
-			_CurrentValue = new VM<double>(initialValue);
-			Maximum = new VM<double>(double.MaxValue);
-			Minimum = new VM<double>(double.MinValue);
-			Growth = new Growth();
-		}
-
-		private VM<double> _CurrentValue;
-		public event PropertyChangedEventHandler PropertyChanged;
-		public VM<double> CurrentValue
-		{
-			get => _CurrentValue;
-			set
-			{
-				if (value != _CurrentValue)
-				{
-					_CurrentValue = value;
-					PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CurrentValue)));
-					PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Value_Numeric)));
-				}
-			}
-		}
-		public double Value_Numeric
-		{
-			get => CurrentValue.ObjectData;
-			set
-			{
-				if (value != CurrentValue.ObjectData)
-				{
-					this.CurrentValue.ObjectData = value;
-					PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CurrentValue)));
-					PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Value_Numeric)));
-				}
-			}
-		}
-		public VM<double> Maximum { get; set; }
-		public VM<double> Minimum { get; set; }
-		public Growth Growth { get; set; }
-
-		public bool IsSame(IViewModel viewModel)
-		{
-			throw new NotImplementedException();
-		}
-	}
-
-	public class Growth : IViewModel
-	{
-		public VMDictionary<VM<string>, VM<double>> Items { get; set; }
-			= new VMDictionary<VM<string>, VM<double>>();
-
-		public VM<double> this[string name]
-		{
-			get => Items.Find(p => p.Key.ObjectData == name).Value;
-		}
+		public double this[string name] => Items[name];
 
 		public event PropertyChangedEventHandler PropertyChanged;
 
-		public void OnCollectionChanged(NotifyCollectionChangedEventArgs e)
-		{
-			Items.OnCollectionChanged(e);
-		}
-
-		public bool Contains(string name)
-		{
-			return Items.Where(p => p.Key.ObjectData == name).Count() != 0;
-		}
-		public bool Contains(VM<double> value)
-		{
-			return Items.Where(p => p.Value.ObjectData.Equals(value)).Count() != 0;
-		}
+		public bool Contains(string name) => Items.ContainsKey(name);
+		public bool Contains(double value) => Items.ContainsValue(value);
 
 		public void AddValue(string name, double number)
 		{
-			VM<string> vMName = new VM<string>(name);
 			if (Contains(name))
 			{
-				Items[vMName].ObjectData += number;
+				Items[name] += number;
 			}
 			else
 			{
-				var pair = new VMKVPair<VM<string>, VM<double>>(vMName, new VM<double>(number));
-				pair.PropertyChanged += (sender, e) => 
-					PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Sum)));
-				Items.Add(pair);
+				Items.Add(name, number);
 			}
-		}
-
-		public bool IsSame(IViewModel viewModel)
-		{
-			throw new NotImplementedException();
+			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Sum)));
 		}
 
 		public int Sum
@@ -152,13 +41,13 @@ namespace Atomization
 				double sum = 0;
 				foreach (var item in Items)
 				{
-					sum += item.Value.ObjectData;
+					sum += item.Value;
 				}
 				return (int)sum;
 			}
 		}
 	}
-	public class Cost : IViewModel
+	public class Cost
 	{
 		public Cost(
 			string name,
@@ -242,41 +131,33 @@ namespace Atomization
 		public double NuclearMaterial => Values[6].Value;
 
 		public double Stability => Values[7].Value;
-
-		public bool IsSame(IViewModel viewModel)
-		{
-			throw new NotImplementedException();
-		}
 	}
 
 	public class Expression : INotifyPropertyChanged
 	{
-		public Expression(VM<double> para, Func<VM<double>, double> function)
+		public Expression(double para, Func<double, double> function)
 		{
 			Parameter = para;
-			this.function = function;
-
-			para.PropertyChanged += (sender, e) => PropertyChanged?.Invoke(
-				this, new PropertyChangedEventArgs(nameof(Parameter)));
+			this._Function = function;
 		}
 		public Expression(double value)
 		{
-			function = p => value;			
+			_Function = p => value;			
 		}
 
-		public VM<double> Parameter { get; set; }
+		public double Parameter { get; set; }
 
 		public event PropertyChangedEventHandler PropertyChanged;
 
-		private Func<VM<double>, double> function;
-		public Func<VM<double>, double> Function
+		private Func<double, double> _Function;
+		public Func<double, double> Function
 		{
-			get => function;
+			get => _Function;
 			set
 			{
-				if (value != function)
+				if (value != _Function)
 				{
-					function = value;
+					_Function = value;
 					PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Function)));
 				}
 			}
@@ -285,280 +166,47 @@ namespace Atomization
 		public double Value => Function(Parameter);
 	}
 
-	public class VM<V> : IViewModel
-	{
-		public VM(V value)
-		{
-			if (value is INotifyPropertyChanged)
-			{
-				(value as INotifyPropertyChanged).PropertyChanged += (sender, e) => 
-					PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ObjectData)));
-			}
-			objectData = value;
-		}
+	//public class VMList<V> : List<V>, INotifyCollectionChanged
+	//{
+	//	public event PropertyChangedEventHandler PropertyChanged;
+	//	public event NotifyCollectionChangedEventHandler CollectionChanged;
 
-		public event PropertyChangedEventHandler PropertyChanged;
+	//	public new void Add(V newValue)
+	//	{
+	//		base.Add(newValue);
+	//		CollectionChanged?.Invoke(this, 
+	//			new NotifyCollectionChangedEventArgs(
+	//				NotifyCollectionChangedAction.Add, newValue
+	//			)
+	//		);
+	//	}
 
-		private V objectData;
-		public V ObjectData
-		{
-			get => objectData;
-			set
-			{
-				if (!value.Equals(objectData))
-				{
-					objectData = value;
-					PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(objectData)));
-				}
-			}
-		}
+	//	public new bool Remove(V oldValue)
+	//	{
+	//		if (base.Remove(oldValue))
+	//		{
+	//			CollectionChanged?.Invoke(this,
+	//				new NotifyCollectionChangedEventArgs(
+	//					NotifyCollectionChangedAction.Remove, oldValue
+	//				)
+	//			);
+	//			return true;
+	//		}
+	//		else
+	//		{
+	//			return false;
+	//		}
+	//	}
 
-		public void OnPropertyChanged(PropertyChangedEventArgs e)
-		{
-			PropertyChanged?.Invoke(this, e);
-		}
+	//	//public void OnCollectionChanged(NotifyCollectionChangedEventArgs e)
+	//	//{
+	//	//	CollectionChanged?.Invoke(this, e);
+	//	//}
+	//}
 
-		public bool IsSame(IViewModel viewModel)
-		{
-			if (viewModel is VM<V>)
-			{
-				VM<V> vM = viewModel as VM<V>;
-				return vM.objectData.Equals(objectData);
-			}
-
-			return false;
-		}
-
-		public override string ToString()
-		{
-			return objectData.ToString();
-		}
-	}
-
-	public class VMList<V> : List<V>, INotifyCollectionChanged, IViewModel
-		where V : IViewModel
-	{
-		public event PropertyChangedEventHandler PropertyChanged;
-		public event NotifyCollectionChangedEventHandler CollectionChanged;
-
-		public new void Add(V newValue)
-		{
-			base.Add(newValue);
-			CollectionChanged?.Invoke(this, 
-				new NotifyCollectionChangedEventArgs(
-					NotifyCollectionChangedAction.Add, newValue
-				)
-			);
-		}
-
-		public new void Remove(V oldValue)
-		{
-			var vmOldValue = Find(v => v.IsSame(new VM<V>(oldValue)));
-			CollectionChanged?.Invoke(this,
-				new NotifyCollectionChangedEventArgs(
-					NotifyCollectionChangedAction.Remove, oldValue
-				)
-			);
-		}
-
-		public void OnCollectionChanged(NotifyCollectionChangedEventArgs e)
-		{
-			CollectionChanged?.Invoke(this, e);
-		}
-
-		public bool IsSame(IViewModel viewModel)
-		{
-			throw new NotImplementedException();
-		}
-	}
-
-	public class VMDictionary<K, V> : VMList<VMKVPair<K, V>>
-		where K : IViewModel where V : IViewModel
-	{
-		public void Add(K key, V value)
-		{
-			var pair = new VMKVPair<K, V>(key, value);
-			Add(pair);
-		}
-
-		public void Remove(K key)
-		{
-			var pair = Find(p => p.Key.Equals(key));
-			Remove(pair);
-		}
-
-		public V this[K key]
-		{
-			get => Find(pair => pair.Key.IsSame(key)).Value;
-			set
-			{
-				if (!value.IsSame(this[key]))
-				{
-					this[key] = value;
-				}
-			}
-		}
-
-		public bool ContainsKey(K key)
-		{
-			foreach (var item in this)
-			{
-				if (item.Key.IsSame(key))
-				{
-					return true;
-				}
-			}
-
-			return false;
-		}
-
-		public new bool Contains(VMKVPair<K, V> keyValuePair)
-		{
-			foreach (var item in this)
-			{
-				if (item.IsSame(keyValuePair))
-				{
-					return true;
-				}
-			}
-
-			return false;
-		}
-	}
-
-	public class VMKVPair<K, V> : IViewModel where K : IViewModel where V : IViewModel
-	{
-		public VMKVPair(K key, V value)
-		{
-			key.PropertyChanged += (sender, e) =>
-				PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Key)));
-			this.key = key;
-			value.PropertyChanged += (sender, e) =>
-				PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Value)));
-			this.value = value;
-		}
-
-		public event PropertyChangedEventHandler PropertyChanged;
-
-		private K key;
-		public K Key
-		{
-			get => key;
-			set
-			{
-				key = value;
-				PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Key)));
-			}
-		}
-
-		private V value;
-		public V Value
-		{
-			get => value;
-			set
-			{
-				this.value = value;
-				PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Value)));
-			}
-		}
-
-		public bool IsSame(IViewModel viewModel)
-		{
-			if (viewModel is VMKVPair<K, V>)
-			{
-				var vm = viewModel as VMKVPair<K, V>;
-				return vm.key.IsSame(key) && vm.value.IsSame(value);
-			}
-
-			return false;
-		}
-	}
-
-	public interface IViewModel : INotifyPropertyChanged
-	{
-		bool IsSame(IViewModel viewModel);
-	}
-
-	public interface IBuild : IViewModel
+	public interface IBuild
 	{
 		int BuildTime { get; set; }
 		Cost BuildCost { get; set; }
-	}
-
-	public abstract class ConstructableObject : IBuild
-	{
-		public event ConstructionCompleted ConstructionCompleted;
-
-		protected VM<int> buildTime;
-		public int BuildTime
-		{
-			get => buildTime.ObjectData;
-			set
-			{
-				if (value == 0)
-				{
-					ConstructionCompleted?.Invoke(this);
-					buildTime.ObjectData = -1;
-					return;
-				}
-				else if (buildTime.ObjectData == -1)
-				{
-					return;
-				}
-
-				if (value != buildTime.ObjectData)
-				{
-					buildTime.ObjectData = value;
-					PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(BuildTime)));
-				}
-			}
-		}
-
-		protected Cost buildCost;
-		public Cost BuildCost
-		{
-			get => buildCost;
-			set
-			{
-				if (value != buildCost)
-				{
-					buildCost = value;
-					buildCost.PropertyChanged += (sender, e) => 
-						PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(BuildCost)));
-					PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(BuildCost)));
-				}
-			}
-		}
-
-		protected Cost maintenance;
-		public Cost Maintenance
-		{
-			get => maintenance;
-			set
-			{
-				if (value != maintenance)
-				{
-					maintenance = value;
-					maintenance.PropertyChanged += (sender, e) =>
-						PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(maintenance)));
-					PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(maintenance)));
-				}
-			}
-		}
-
-		public bool IsMine { get; set; } = true;
-		public abstract string TypeName { get; }
-
-		public event PropertyChangedEventHandler PropertyChanged;
-
-		public virtual bool IsSame(IViewModel viewModel)
-		{
-			throw new NotImplementedException();
-		}
-
-		public void OnPropertyChanged(PropertyChangedEventArgs e)
-		{
-			PropertyChanged?.Invoke(this, e);
-		}
 	}
 }

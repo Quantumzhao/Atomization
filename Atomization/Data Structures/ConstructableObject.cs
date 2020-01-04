@@ -4,28 +4,28 @@ namespace Atomization
 {
 	public abstract class ConstructableObject : IBuild
 	{
-		public event ConstructionCompleted ConstructionCompleted;
+		public event ConstructionCompletedHandler ConstructionCompleted;
 
-		protected VM<int> buildTime;
+		protected int _BuildTime;
 		public int BuildTime
 		{
-			get => buildTime.ObjectData;
+			get => _BuildTime;
 			set
 			{
 				if (value == 0)
 				{
 					ConstructionCompleted?.Invoke(this);
-					buildTime.ObjectData = -1;
+					_BuildTime = -1;
 					return;
 				}
-				else if (buildTime.ObjectData == -1)
+				else if (_BuildTime == -1)
 				{
 					return;
 				}
 
-				if (value != buildTime.ObjectData)
+				if (value != _BuildTime)
 				{
-					buildTime.ObjectData = value;
+					_BuildTime = value;
 					PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(BuildTime)));
 				}
 			}

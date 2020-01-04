@@ -62,7 +62,7 @@ namespace Atomization
 	{
 		public CruiseMissile() : base()
 		{
-			buildTime = new VM<int>(2);
+			_BuildTime = 2;
 			maintenance = new Cost("Nuclear Arsenal Maintenance", economy: -4, rawMaterial: -0.1);
 			buildCost = new Cost("Cruis Missile Construction", economy: -20, rawMaterial: -30);
 
@@ -79,7 +79,7 @@ namespace Atomization
 	{
 		public MediumRangeMissile() : base()
 		{
-			buildTime = new VM<int>(4);
+			_BuildTime = 4;
 			maintenance = new Cost("Nuclear Arsenal Maintenance", economy: -8, rawMaterial: -0.2);
 			BuildCost = new Cost("Medium Range Missile Construction", economy: -40, rawMaterial: -70);
 
@@ -95,7 +95,7 @@ namespace Atomization
 	{
 		public ICBM() : base()
 		{
-			buildTime = new VM<int>(6);
+			_BuildTime = 6;
 			BuildCost = new Cost("ICBM Construction", economy: -80, rawMaterial: -100);
 			Maintenance = new Cost("Nuclear Arsenal Maintenance", economy: -20, rawMaterial: -1);
 
@@ -111,7 +111,7 @@ namespace Atomization
 	{
 		public NuclearBomb() : base()
 		{
-			buildTime = new VM<int>(1);
+			_BuildTime = 1;
 			BuildCost = new Cost("Nuclear Bomb Construction", economy: -20, rawMaterial: -10);
 			Maintenance = new Cost("Nuclear Arsenal Maintenance", economy: -1, rawMaterial: -0.05);
 
