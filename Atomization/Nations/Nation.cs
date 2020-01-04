@@ -198,7 +198,7 @@ namespace Atomization
 			superpower.Food = new ValueComplex(20000);           // x10^6
 			superpower.RawMaterial = new ValueComplex(4000);     // x10^3
 			superpower.NuclearMaterial = new ValueComplex(100);  // x10^3
-			superpower.Stability = new ValueComplex(75) { Maximum = new VM<double>(100) };
+			superpower.Stability = new ValueComplex(75) { Maximum = 100 };
 
 			for (int i = 0; i < InitialNukeSilos; i++)
 			{

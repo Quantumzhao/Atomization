@@ -10,97 +10,7 @@ namespace Atomization
 {
 	public delegate void ConstructionCompleted(ConstructableObject deployableObject);
 
-	public class GameObjectList<T> : List<T>, INotifyCollectionChanged, INotifyPropertyChanged
-	{
-		public new int Capacity { get; set; } = 0;
-		public bool IsLimitedCapacity { get; set; } = false;
-
-		public event NotifyCollectionChangedEventHandler CollectionChanged;
-		public event PropertyChangedEventHandler PropertyChanged;
-
-		public new bool Add(T item)
-		{
-			if (Count >= Capacity && IsLimitedCapacity)
-			{
-				return false;
-			}
-			else
-			{
-				base.Add(item);
-				CollectionChanged?.Invoke(
-					this,
-					new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, item)
-				);
-				return false;
-			}
-		}
-
-		public new bool Remove(T item)
-		{
-			CollectionChanged?.Invoke(
-				this,
-				new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, item)
-			);
-			return base.Remove(item);
-		}
-
-		public void OnCollectionChanged(NotifyCollectionChangedEventArgs e)
-		{
-			CollectionChanged?.Invoke(this, e);
-		}
-	}
-
-	public class ValueComplex : IViewModel
-	{
-		public ValueComplex(double initialValue = 0)
-		{
-			value_Object = new VM<double>(initialValue);
-			Maximum = new VM<double>(double.MaxValue);
-			Minimum = new VM<double>(double.MinValue);
-			Growth = new Growth();
-		}
-
-		private VM<double> value_Object;
-
-		public event PropertyChangedEventHandler PropertyChanged;
-
-		public VM<double> Value_Object
-		{
-			get => value_Object;
-			set
-			{
-				if (value != value_Object)
-				{
-					value_Object = value;
-					PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Value_Object)));
-					PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Value_Numeric)));
-				}
-			}
-		}
-		public double Value_Numeric
-		{
-			get => Value_Object.ObjectData;
-			set
-			{
-				if (value != Value_Object.ObjectData)
-				{
-					this.Value_Object.ObjectData = value;
-					PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Value_Object)));
-					PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Value_Numeric)));
-				}
-			}
-		}
-		public VM<double> Maximum { get; set; }
-		public VM<double> Minimum { get; set; }
-		public Growth Growth { get; set; }
-
-		public bool IsSame(IViewModel viewModel)
-		{
-			throw new NotImplementedException();
-		}
-	}
-
-	public class Growth : IViewModel
+	public class Growth
 	{
 		public VMDictionary<VM<string>, VM<double>> Items { get; set; }
 			= new VMDictionary<VM<string>, VM<double>>();
@@ -142,11 +52,6 @@ namespace Atomization
 			}
 		}
 
-		public bool IsSame(IViewModel viewModel)
-		{
-			throw new NotImplementedException();
-		}
-
 		public int Sum
 		{
 			get
@@ -160,7 +65,7 @@ namespace Atomization
 			}
 		}
 	}
-	public class Cost : IViewModel
+	public class Cost
 	{
 		public Cost(
 			string name,
@@ -367,11 +272,6 @@ namespace Atomization
 		{
 			CollectionChanged?.Invoke(this, e);
 		}
-
-		public bool IsSame(IViewModel viewModel)
-		{
-			throw new NotImplementedException();
-		}
 	}
 
 	public class VMDictionary<K, V> : VMList<VMKVPair<K, V>>
@@ -476,91 +376,14 @@ namespace Atomization
 		}
 	}
 
-	public interface IViewModel : INotifyPropertyChanged
-	{
-		bool IsSame(IViewModel viewModel);
-	}
+	//public interface IViewModel : INotifyPropertyChanged
+	//{
+	//	bool IsSame(IViewModel viewModel);
+	//}
 
-	public interface IBuild : IViewModel
+	public interface IBuild
 	{
 		int BuildTime { get; set; }
 		Cost BuildCost { get; set; }
-	}
-
-	public abstract class ConstructableObject : IBuild
-	{
-		public event ConstructionCompleted ConstructionCompleted;
-
-		protected VM<int> buildTime;
-		public int BuildTime
-		{
-			get => buildTime.ObjectData;
-			set
-			{
-				if (value == 0)
-				{
-					ConstructionCompleted?.Invoke(this);
-					buildTime.ObjectData = -1;
-					return;
-				}
-				else if (buildTime.ObjectData == -1)
-				{
-					return;
-				}
-
-				if (value != buildTime.ObjectData)
-				{
-					buildTime.ObjectData = value;
-					PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(BuildTime)));
-				}
-			}
-		}
-
-		protected Cost buildCost;
-		public Cost BuildCost
-		{
-			get => buildCost;
-			set
-			{
-				if (value != buildCost)
-				{
-					buildCost = value;
-					buildCost.PropertyChanged += (sender, e) => 
-						PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(BuildCost)));
-					PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(BuildCost)));
-				}
-			}
-		}
-
-		protected Cost maintenance;
-		public Cost Maintenance
-		{
-			get => maintenance;
-			set
-			{
-				if (value != maintenance)
-				{
-					maintenance = value;
-					maintenance.PropertyChanged += (sender, e) =>
-						PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(maintenance)));
-					PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(maintenance)));
-				}
-			}
-		}
-
-		public bool IsMine { get; set; } = true;
-		public abstract string TypeName { get; }
-
-		public event PropertyChangedEventHandler PropertyChanged;
-
-		public virtual bool IsSame(IViewModel viewModel)
-		{
-			throw new NotImplementedException();
-		}
-
-		public void OnPropertyChanged(PropertyChangedEventArgs e)
-		{
-			PropertyChanged?.Invoke(this, e);
-		}
 	}
 }
