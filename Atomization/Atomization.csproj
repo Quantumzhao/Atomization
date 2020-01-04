@@ -91,7 +91,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Data Structures\ConstructableObject.cs" />
     <Compile Include="Data.cs" />
+    <Compile Include="Data Structures\GameObjectList.cs" />
     <Compile Include="UI\MoreInfoPanel.xaml.cs">
       <DependentUpon>MoreInfoPanel.xaml</DependentUpon>
     </Compile>
@@ -120,6 +122,7 @@
     <Compile Include="UI\Technology.xaml.cs">
       <DependentUpon>Technology.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Data Structures\ValueComplex.cs" />
     <Compile Include="Warhead\Warhead.cs" />
     <Page Include="UI\MoreInfoPanel.xaml">
       <SubType>Designer</SubType>
@@ -199,14 +202,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="image\Maneuver.png" />
-    <Resource Include="image\suite.png" />
-    <Resource Include="image\Platform.png" />
-    <Resource Include="image\Asset 7.png" />
-    <Resource Include="image\Warhead.png" />
-    <Resource Include="image\Defence.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\DataSources\" />
