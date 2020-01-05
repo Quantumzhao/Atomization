@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace Atomization
+namespace Atomization.DataStructures
 {
 	public class ValueComplex
 	{
@@ -29,8 +29,33 @@ namespace Atomization
 			}
 		}
 
-		public double Maximum { get; set; }
-		public double Minimum { get; set; }
-		public Growth Growth { get; set; }
+		private double _Maximum;
+		public double Maximum
+		{
+			get => _Maximum;
+			set
+			{
+				if (_Maximum != value)
+				{
+					_Maximum = value;
+					PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Maximum)));
+				}
+			}
+		}
+
+		private double _Minimum;
+		public double Minimum
+		{
+			get => _Minimum;
+			set
+			{
+				if (_Minimum != value)
+				{
+					_Minimum = value;
+					PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Minimum)));
+				}
+			}
+		}
+		public Growth Growth { get; private set; }
 	}
 }

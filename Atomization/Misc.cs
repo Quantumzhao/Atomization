@@ -5,12 +5,13 @@ using System.Collections.ObjectModel;
 using System.Windows;
 using System;
 using System.Linq;
+using Atomization.DataStructures;
 
 namespace Atomization
 {
-	public delegate void ConstructionCompletedHandler(ConstructableObject deployableObject);
+	public delegate void ConstructionCompletedHandler(ConstructableObject constructableObject);
 
-	public class Growth
+	public class Growth : INotifyPropertyChanged
 	{
 		public Dictionary<string, double> Items { get; set; } = new Dictionary<string, double>();
 
@@ -47,10 +48,14 @@ namespace Atomization
 			}
 		}
 	}
-	public class Cost
+
+	/// <summary>
+	///		It is only a data structure for <c>Event</c>. 
+	///		It should never be used alone
+	/// </summary>
+	public class Impact
 	{
-		public Cost(
-			string name,
+		public Impact(
 			Expression economy = null,
 			Expression hiEduPopu = null,
 			Expression army = null,
@@ -58,18 +63,12 @@ namespace Atomization
 			Expression food = null,
 			Expression rawMaterial = null,
 			Expression nuclearMaterial = null,
-			Expression stability = null
+			Expression stability = null,
+			Expression nationalism = null,
+			Expression consumerism = null,
+			Expression bureaucracy = null
 		)
 		{
-			Name = name;
-
-			// the number of properties
-			Values = new GameObjectList<Expression>();
-			for (int i = 0; i < 8; i++)
-			{
-				Values.Add(null);
-			}
-
 			Values[0] = economy;
 			Values[1] = hiEduPopu;
 			Values[2] = army;
@@ -78,8 +77,11 @@ namespace Atomization
 			Values[5] = rawMaterial;
 			Values[6] = nuclearMaterial;
 			Values[7] = stability;
+			Values[8] = nationalism;
+			Values[9] = consumerism;
+			Values[10] = bureaucracy;
 
-			for (int i = 0; i < 8; i++)
+			for (int i = 0; i < Nation.NUM_VALUES; i++)
 			{
 				if (Values[i] == null)
 				{
@@ -87,50 +89,22 @@ namespace Atomization
 				}
 			}
 		}
-		public Cost(
-			string name, 
-			double economy = 0,
-			double hiEduPopu = 0,
-			double army = 0,
-			double navy = 0,
-			double food = 0,
-			double rawMaterial = 0,
-			double nuclearMaterial = 0,
-			double stability = 0
-		) : this
-		(
-			name,
-			new Expression(economy),
-			new Expression(hiEduPopu),
-			new Expression(army),
-			new Expression(navy),
-			new Expression(food),
-			new Expression(rawMaterial),
-			new Expression(nuclearMaterial),
-			new Expression(stability)
-		) { }
 
-		public readonly GameObjectList<Expression> Values;
+		public readonly Expression[] Values = new Expression[Nation.NUM_VALUES];
 
 		public event PropertyChangedEventHandler PropertyChanged;
 
-		public string Name { get; set; }
-
 		public double Economy => Values[0].Value;
-
 		public double HiEduPopu => Values[1].Value;
-
 		public double Army => Values[2].Value;
-
 		public double Navy => Values[3].Value;
-
 		public double Food => Values[4].Value;
-
 		public double RawMaterial => Values[5].Value;
-
 		public double NuclearMaterial => Values[6].Value;
-
 		public double Stability => Values[7].Value;
+		public double Nationalism => Values[8].Value;
+		public double Consumerism => Values[9].Value;
+		public double Bureaucracy => Values[10].Value;
 	}
 
 	public class Expression : INotifyPropertyChanged
@@ -163,7 +137,9 @@ namespace Atomization
 			}
 		}
 
-		public double Value => Function(Parameter);
+		public double Value => _Function(Parameter);
+
+		public static implicit operator Expression(double value) => new Expression(value);
 	}
 
 	//public class VMList<V> : List<V>, INotifyCollectionChanged
@@ -204,9 +180,9 @@ namespace Atomization
 	//	//}
 	//}
 
-	public interface IBuild
+	public interface IBuildable
 	{
 		int BuildTime { get; set; }
-		Cost BuildCost { get; set; }
+		Impact DirectImpact { get; set; }
 	}
 }

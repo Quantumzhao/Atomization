@@ -1,8 +1,10 @@
 ﻿using System.ComponentModel;
+using Atomization;
+using Atomization.DataStructures;
 
-namespace Atomization
+namespace Atomization.DataStructures
 {
-	public abstract class ConstructableObject : IBuild
+	public abstract class ConstructableObject : IBuildable
 	{
 		public event ConstructionCompletedHandler ConstructionCompleted;
 
@@ -31,39 +33,39 @@ namespace Atomization
 			}
 		}
 
-		protected Cost buildCost;
-		public Cost BuildCost
+		protected Impact _DirectImpact;
+		public Impact DirectImpact
 		{
-			get => buildCost;
+			get => _DirectImpact;
 			set
 			{
-				if (value != buildCost)
+				if (value != _DirectImpact)
 				{
-					buildCost = value;
-					buildCost.PropertyChanged += (sender, e) =>
-						PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(BuildCost)));
-					PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(BuildCost)));
+					_DirectImpact = value;
+					_DirectImpact.PropertyChanged += (sender, e) =>
+						PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DirectImpact)));
+					PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DirectImpact)));
 				}
 			}
 		}
 
-		protected Cost maintenance;
-		public Cost Maintenance
+		protected Impact _LongTermImpact;
+		public Impact LongTermImpact
 		{
-			get => maintenance;
+			get => _LongTermImpact;
 			set
 			{
-				if (value != maintenance)
+				if (value != _LongTermImpact)
 				{
-					maintenance = value;
-					maintenance.PropertyChanged += (sender, e) =>
-						PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(maintenance)));
-					PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(maintenance)));
+					_LongTermImpact = value;
+					_LongTermImpact.PropertyChanged += (sender, e) =>
+						PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(_LongTermImpact)));
+					PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(_LongTermImpact)));
 				}
 			}
 		}
 
-		public bool IsMine { get; set; } = true;
+		//public bool IsMine { get; set; } = true;
 		public abstract string TypeName { get; }
 
 		public event PropertyChangedEventHandler PropertyChanged;

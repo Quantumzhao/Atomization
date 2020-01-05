@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Atomization.DataStructures;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 
@@ -15,7 +16,7 @@ namespace Atomization
 	public class Waters : Region
 	{
 		// The number of international waters in this game is set to be 5
-		public const int NumOfInternationalWaters = 5;
+		public const int NUM_INTL_WATERS = 5;
 		// Each sea belongs to a certain nation. 
 		// if the property is null, then it is international water
 		public Nation Affiliation { get; set; }
@@ -26,6 +27,7 @@ namespace Atomization
 	/// </summary>
 	public abstract class Nation : Region
 	{
+		public const int NUM_VALUES = 11;
 		public Nation()
 		{
 			// Initialize its territorial water, and name the water as well
@@ -40,11 +42,11 @@ namespace Atomization
 			{
 				if (e.Action == NotifyCollectionChangedAction.Add)
 				{
-					AddExpenditureAndRevenue(e.NewItems[0] as Cost);
+					AddExpenditureAndRevenue(e.NewItems[0] as Impact);
 				}
 				else if (e.Action == NotifyCollectionChangedAction.Remove)
 				{
-					RemoveExpenditureAndRevenue(e.OldItems[0] as Cost);
+					RemoveExpenditureAndRevenue(e.OldItems[0] as Impact);
 				}
 			};
 
@@ -61,12 +63,11 @@ namespace Atomization
 		// null stands for independence
 		public Superpower Affiliation { get; set; } = null;
 
-		public const int NumOfNonAdjacentNations = 5;
 		public Waters TerritorialWaters { get; }
 
 		#region Value Definitions
-		public ValueComplex[] Values = new ValueComplex[8];
-		public GameObjectList<Cost> ExpenditureAndRevenue = new GameObjectList<Cost>();
+		public ValueComplex[] Values = new ValueComplex[NUM_VALUES];
+		public ConstrainedList<Impact> ExpenditureAndRevenue = new ConstrainedList<Impact>();
 		public ValueComplex Economy
 		{
 			get => Values[0];
@@ -111,14 +112,34 @@ namespace Atomization
 			get => Values[7];
 			protected set => Values[7] = value;
 		}
+
+		#region Public Opinions
+		public ValueComplex Nationalism
+		{
+			get => Values[8];
+			protected set => Values[8] = value;
+		}
+
+		public ValueComplex Consumerism
+		{
+			get => Values[9];
+			protected set => Values[9] = value;
+		}
+		#endregion
+
+		public ValueComplex Bureaucracy
+		{
+			get => Values[10];
+			protected set => Values[10] = value;
+		}
 		#endregion
 
 		public ObservableCollection<ConstructableObject> ConstructionSequence { get; private set; } 
 			= new ObservableCollection<ConstructableObject>();
 
-		private void AddExpenditureAndRevenue(Cost cost)
+		private void AddExpenditureAndRevenue(Impact cost)
 		{
-			for (int i = 0; i < cost.Values.Count; i++)
+			for (int i = 0; i < cost.Values.Length; i++)
 			{
 				// if any of the values of cost is meaningful (i.e. with an actual number), do this
 				if (cost.Values[i].Value != 0)
@@ -127,9 +148,9 @@ namespace Atomization
 				}
 			}
 		}
-		private void RemoveExpenditureAndRevenue(Cost cost)
+		private void RemoveExpenditureAndRevenue(Impact cost)
 		{
-			for (int i = 0; i < cost.Values.Count; i++)
+			for (int i = 0; i < cost.Values.Length; i++)
 			{
 				// vice versa
 				if (cost.Values[i].Value != 0)
@@ -143,10 +164,14 @@ namespace Atomization
 				}
 			}
 		}
-
-		public void AddCostOfExecution(Cost cost)
+		private void ApplyEvent(Event newEvent)
 		{
-			for (int i = 0; i < cost.Values.Count; i++)
+
+		}
+
+		public void AddCostOfExecution(Impact cost)
+		{
+			for (int i = 0; i < cost.Values.Length; i++)
 			{
 				Values[i].CurrentValue += cost.Values[i].Value;
 			}
@@ -161,10 +186,12 @@ namespace Atomization
 	}
 	public class Superpower : Nation
 	{
-		public const int InitialNukeSilos = 10;
+		public const int INITIAL_NUKE_SILOS = 10;
+		public const int NUM_ADJACENT_NATIONS = 5;
+
 		public Superpower() : base()
 		{
-			for (int i = 0; i < NumOfAdjacentNations; i++)
+			for (int i = 0; i < NUM_ADJACENT_NATIONS; i++)
 			{
 				RegularNation nation = new RegularNation() { Name = Data.NationNames.Dequeue() };
 				Data.Regions.Add(nation);
@@ -174,11 +201,10 @@ namespace Atomization
 
 			Affiliation = this;
 		}
-		public const int NumOfAdjacentNations = 5;
 
-		public GameObjectList<Platform> NuclearPlatforms { get; set; } = new GameObjectList<Platform>();
+		public ConstrainedList<Platform> NuclearPlatforms { get; set; } = new ConstrainedList<Platform>();
 
-		public RegularNation[] Adjacency { get; set; } = new RegularNation[NumOfAdjacentNations];
+		public RegularNation[] Adjacency { get; set; } = new RegularNation[NUM_ADJACENT_NATIONS];
 
 		public List<RegularNation> SateliteNations { get; set; } = new List<RegularNation>();
 
@@ -196,47 +222,47 @@ namespace Atomization
 			superpower.NuclearMaterial = new ValueComplex(100);  // x10^3
 			superpower.Stability = new ValueComplex(75) { Maximum = 100 };
 
-			for (int i = 0; i < InitialNukeSilos; i++)
+			for (int i = 0; i < INITIAL_NUKE_SILOS; i++)
 			{
 				superpower.NuclearPlatforms.Add(new Silo(superpower));
 			}
 
 			superpower.ExpenditureAndRevenue.Add(
-				new Cost(
+				new Impact(
 					"Army Maintenance", 
 					new Expression(superpower.Army.CurrentValue, v => -0.001 * v)
 					)
 				);
 			superpower.ExpenditureAndRevenue.Add(
-				new Cost(
+				new Impact(
 					"Navy Maintenance", 
 					economy: new Expression(superpower.Navy.CurrentValue, v => -0.005 * v)
 					)
 				);
 			superpower.ExpenditureAndRevenue.Add(
-				new Cost(
+				new Impact(
 					"Domestic Development", 
 					new Expression(superpower.Economy.CurrentValue, v => -0.9 * v)
 				)
 			);
 			superpower.ExpenditureAndRevenue.Add(
-				new Cost("Government Revenue", economy: 20000));
+				new Impact("Government Revenue", economy: 20000));
 			superpower.ExpenditureAndRevenue.Add(
-				new Cost("Graduates", hiEduPopu: 1000));
+				new Impact("Graduates", hiEduPopu: 1000));
 			superpower.ExpenditureAndRevenue.Add(
-				new Cost("Domestic Production", food: 42000));
+				new Impact("Domestic Production", food: 42000));
 			superpower.ExpenditureAndRevenue.Add(
-				new Cost(
+				new Impact(
 					"Domestic Consumption", 
 					food: new Expression(superpower.HiEduPopu.CurrentValue, v => -2 * v)
 				)
 			);
 			superpower.ExpenditureAndRevenue.Add(
-				new Cost("Domestic Production", rawMaterial: 10200));
+				new Impact("Domestic Production", rawMaterial: 10200));
 			superpower.ExpenditureAndRevenue.Add(
-				new Cost("Industrial Consumption", rawMaterial: -10000));
+				new Impact("Industrial Consumption", rawMaterial: -10000));
 			superpower.ExpenditureAndRevenue.Add(
-				new Cost("Production", nuclearMaterial: 1));
+				new Impact("Production", nuclearMaterial: 1));
 
 			return superpower;
 		}

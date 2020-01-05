@@ -91,9 +91,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Data Structures\Event.cs" />
     <Compile Include="Data Structures\ConstructableObject.cs" />
     <Compile Include="Data.cs" />
-    <Compile Include="Data Structures\GameObjectList.cs" />
+    <Compile Include="Data Structures\ConstrainedList.cs" />
     <Compile Include="UI\MoreInfoPanel.xaml.cs">
       <DependentUpon>MoreInfoPanel.xaml</DependentUpon>
     </Compile>

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Specialized;
 using System.Collections.Generic;
 using System.ComponentModel;
+using Atomization.DataStructures;
 
 namespace Atomization
 {
@@ -8,39 +9,34 @@ namespace Atomization
 	{
 		protected Platform() : base()
 		{
-			IsMine = true;
-
-			if (IsMine)
+			NuclearWeapons.CollectionChanged +=
+			(sender, e) =>
 			{
-				NuclearWeapons.CollectionChanged +=
-				(sender, e) =>
+				if (e.Action == NotifyCollectionChangedAction.Add)
 				{
-					if (e.Action == NotifyCollectionChangedAction.Add)
-					{
-						Data.MyNuclearWeapons.Add(e.NewItems[0] as NuclearWeapon);
-					}
-					else if (e.Action == NotifyCollectionChangedAction.Remove)
-					{
-						Data.MyNuclearWeapons.Remove(e.OldItems[0] as NuclearWeapon);
-					}
-				};
+					Data.MyNuclearWeapons.Add(e.NewItems[0] as NuclearWeapon);
+				}
+				else if (e.Action == NotifyCollectionChangedAction.Remove)
+				{
+					Data.MyNuclearWeapons.Remove(e.OldItems[0] as NuclearWeapon);
+				}
+			};
 
-				ConstructionCompleted += item =>
+			ConstructionCompleted += item =>
+			{
+				if (DeployRegion is Nation)
 				{
-					if (DeployRegion is Nation)
-					{
-						(DeployRegion as Nation).Affiliation.ExpenditureAndRevenue.Add(item.Maintenance);
-					}
-					else
-					{
-						(DeployRegion as Waters).Affiliation.Affiliation.ExpenditureAndRevenue.Add(item.Maintenance);
-					}
-				};
-			}
+					(DeployRegion as Nation).Affiliation.ExpenditureAndRevenue.Add(item.LongTermImpact);
+				}
+				else
+				{
+					(DeployRegion as Waters).Affiliation.Affiliation.ExpenditureAndRevenue.Add(item.LongTermImpact);
+				}
+			};
 		}
 		public Region DeployRegion { get; set; }
 		public int AvailableLoad => NuclearWeapons.MaxCapacity - NuclearWeapons.Count;
-		public GameObjectList<NuclearWeapon> NuclearWeapons { get; set; } = new GameObjectList<NuclearWeapon>();
+		public ConstrainedList<NuclearWeapon> NuclearWeapons { get; set; } = new ConstrainedList<NuclearWeapon>();
 	}
 
 	public class Silo : Platform
@@ -53,13 +49,10 @@ namespace Atomization
 
 			NuclearWeapons.MaxCapacity = 1;
 
-			BuildCost = new Cost("Missile Silo Construction", economy: -40, rawMaterial: -60);
-			Maintenance = new Cost("Nuclear Arsenal Maintenance", economy: -2, rawMaterial: -5);
+			DirectImpact = new Impact("Missile Silo Construction", economy: -40, rawMaterial: -60);
+			LongTermImpact = new Impact("Nuclear Arsenal Maintenance", economy: -2, rawMaterial: -5);
 
-			if (IsMine)
-			{
-				(DeployRegion as Nation).Affiliation.AddCostOfExecution(BuildCost);
-			}
+			(DeployRegion as Nation).Affiliation.AddCostOfExecution(DirectImpact);
 		}
 
 		public override string TypeName => "Silo";
@@ -75,13 +68,10 @@ namespace Atomization
 
 			NuclearWeapons.MaxCapacity = 1;
 
-			BuildCost = new Cost("Strategic Bomber Construction", economy: -30, rawMaterial: -5);
-			Maintenance = new Cost("Nuclear Arsenal Maintenance", economy: -10, rawMaterial: -30);
+			DirectImpact = new Impact("Strategic Bomber Construction", economy: -30, rawMaterial: -5);
+			LongTermImpact = new Impact("Nuclear Arsenal Maintenance", economy: -10, rawMaterial: -30);
 
-			if (IsMine)
-			{
-				(DeployRegion as Nation).Affiliation.AddCostOfExecution(BuildCost);
-			}
+			(DeployRegion as Nation).Affiliation.AddCostOfExecution(DirectImpact);
 		}
 		public override string TypeName => "StrategicBomber";
 	}
@@ -96,13 +86,10 @@ namespace Atomization
 
 			NuclearWeapons.MaxCapacity = 1;
 
-			BuildCost = new Cost("Missile Launcher Construction", economy: -45, rawMaterial: -8);
-			Maintenance = new Cost("Nuclear Arsenal Maintenance", economy: -6, rawMaterial: -4);
+			DirectImpact = new Impact("Missile Launcher Construction", economy: -45, rawMaterial: -8);
+			LongTermImpact = new Impact("Nuclear Arsenal Maintenance", economy: -6, rawMaterial: -4);
 
-			if (IsMine)
-			{
-				(DeployRegion as Nation).Affiliation.AddCostOfExecution(BuildCost);
-			}
+			(DeployRegion as Nation).Affiliation.AddCostOfExecution(DirectImpact);
 		}
 		public override string TypeName => "MissileLauncher";
 	}
@@ -117,13 +104,10 @@ namespace Atomization
 
 			NuclearWeapons.MaxCapacity = 8;
 
-			BuildCost = new Cost("Nuclear Submarine Construction", economy: -100, rawMaterial: -200, nuclearMaterial: -1);
-			Maintenance = new Cost("Nuclear Arsenal Maintenance", economy: -15, rawMaterial: -10, nuclearMaterial: -0.05);
+			DirectImpact = new Impact("Nuclear Submarine Construction", economy: -100, rawMaterial: -200, nuclearMaterial: -1);
+			LongTermImpact = new Impact("Nuclear Arsenal Maintenance", economy: -15, rawMaterial: -10, nuclearMaterial: -0.05);
 
-			if (IsMine)
-			{
-				(DeployRegion as Nation).Affiliation.AddCostOfExecution(BuildCost);
-			}
+			(DeployRegion as Nation).Affiliation.AddCostOfExecution(DirectImpact);
 		}
 
 		public override string TypeName => "NuclearSubmarine";
