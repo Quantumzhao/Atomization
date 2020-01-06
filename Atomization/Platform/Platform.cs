@@ -49,10 +49,10 @@ namespace Atomization
 
 			NuclearWeapons.MaxCapacity = 1;
 
-			DirectImpact = new Impact("Missile Silo Construction", economy: -40, rawMaterial: -60);
-			LongTermImpact = new Impact("Nuclear Arsenal Maintenance", economy: -2, rawMaterial: -5);
+			//DirectImpact = new Effect("Missile Silo Construction", economy: -40, rawMaterial: -60);
+			//LongTermImpact = new Effect("Nuclear Arsenal Maintenance", economy: -2, rawMaterial: -5);
 
-			(DeployRegion as Nation).Affiliation.AddCostOfExecution(DirectImpact);
+			//(DeployRegion as Nation).Affiliation.AddCostOfExecution(DirectImpact);
 		}
 
 		public override string TypeName => "Silo";
@@ -68,10 +68,10 @@ namespace Atomization
 
 			NuclearWeapons.MaxCapacity = 1;
 
-			DirectImpact = new Impact("Strategic Bomber Construction", economy: -30, rawMaterial: -5);
-			LongTermImpact = new Impact("Nuclear Arsenal Maintenance", economy: -10, rawMaterial: -30);
+			//DirectImpact = new Effect("Strategic Bomber Construction", economy: -30, rawMaterial: -5);
+			//LongTermImpact = new Effect("Nuclear Arsenal Maintenance", economy: -10, rawMaterial: -30);
 
-			(DeployRegion as Nation).Affiliation.AddCostOfExecution(DirectImpact);
+			//(DeployRegion as Nation).Affiliation.AddCostOfExecution(DirectImpact);
 		}
 		public override string TypeName => "StrategicBomber";
 	}
@@ -86,10 +86,10 @@ namespace Atomization
 
 			NuclearWeapons.MaxCapacity = 1;
 
-			DirectImpact = new Impact("Missile Launcher Construction", economy: -45, rawMaterial: -8);
-			LongTermImpact = new Impact("Nuclear Arsenal Maintenance", economy: -6, rawMaterial: -4);
+			//DirectImpact = new Effect("Missile Launcher Construction", economy: -45, rawMaterial: -8);
+			//LongTermImpact = new Effect("Nuclear Arsenal Maintenance", economy: -6, rawMaterial: -4);
 
-			(DeployRegion as Nation).Affiliation.AddCostOfExecution(DirectImpact);
+			//(DeployRegion as Nation).Affiliation.AddCostOfExecution(DirectImpact);
 		}
 		public override string TypeName => "MissileLauncher";
 	}
@@ -104,10 +104,10 @@ namespace Atomization
 
 			NuclearWeapons.MaxCapacity = 8;
 
-			DirectImpact = new Impact("Nuclear Submarine Construction", economy: -100, rawMaterial: -200, nuclearMaterial: -1);
-			LongTermImpact = new Impact("Nuclear Arsenal Maintenance", economy: -15, rawMaterial: -10, nuclearMaterial: -0.05);
+			//DirectImpact = new Effect("Nuclear Submarine Construction", economy: -100, rawMaterial: -200, nuclearMaterial: -1);
+			//LongTermImpact = new Effect("Nuclear Arsenal Maintenance", economy: -15, rawMaterial: -10, nuclearMaterial: -0.05);
 
-			(DeployRegion as Nation).Affiliation.AddCostOfExecution(DirectImpact);
+			//(DeployRegion as Nation).Affiliation.AddCostOfExecution(DirectImpact);
 		}
 
 		public override string TypeName => "NuclearSubmarine";

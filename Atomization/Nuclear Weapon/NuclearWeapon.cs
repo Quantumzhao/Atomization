@@ -9,43 +9,43 @@ namespace Atomization
 		{
 		}
 
-		private string name;
+		private string _Name;
 		public string Name
 		{
-			get => name;
+			get => _Name;
 			set
 			{
-				if (value != name)
+				if (value != _Name)
 				{
-					name = value;
+					_Name = value;
 					OnPropertyChanged(new PropertyChangedEventArgs(nameof(Name)));
 				}
 			}
 		}
 
-		private Platform platform;
+		private Platform _Platform;
 		public Platform Platform
 		{
-			get => platform;
+			get => _Platform;
 			set
 			{
-				if (value != platform)
+				if (value != _Platform)
 				{
-					platform = value;
+					_Platform = value;
 					OnPropertyChanged(new PropertyChangedEventArgs(nameof(Platform)));
 				}
 			}
 		}
 
-		private Region target;
+		private Region _Target;
 		public Region Target
 		{
-			get => target;
+			get => _Target;
 			set
 			{
-				if (value != target)
+				if (value != _Target)
 				{
-					target = value;
+					_Target = value;
 					OnPropertyChanged(new PropertyChangedEventArgs(nameof(Target)));
 				}
 			}
@@ -63,9 +63,9 @@ namespace Atomization
 	{
 		public CruiseMissile() : base()
 		{
-			_BuildTime = 2;
-			_LongTermImpact = new Impact("Nuclear Arsenal Maintenance", economy: -4, rawMaterial: -0.1);
-			_DirectImpact = new Impact("Cruis Missile Construction", economy: -20, rawMaterial: -30);
+			//_BuildTime = 2;
+			//_LongTermImpact = new Effect("Nuclear Arsenal Maintenance", economy: -4, rawMaterial: -0.1);
+			//_DirectImpact = new Effect("Cruis Missile Construction", economy: -20, rawMaterial: -30);
 
 			Data.Me.ExpenditureAndRevenue.Add(LongTermImpact);
 		}
@@ -77,9 +77,9 @@ namespace Atomization
 	{
 		public MediumRangeMissile() : base()
 		{
-			_BuildTime = 4;
-			_LongTermImpact = new Impact("Nuclear Arsenal Maintenance", economy: -8, rawMaterial: -0.2);
-			DirectImpact = new Impact("Medium Range Missile Construction", economy: -40, rawMaterial: -70);
+			//_BuildTime = 4;
+			//_LongTermImpact = new Effect("Nuclear Arsenal Maintenance", economy: -8, rawMaterial: -0.2);
+			//DirectImpact = new Effect("Medium Range Missile Construction", economy: -40, rawMaterial: -70);
 
 			Data.Me.ExpenditureAndRevenue.Add(LongTermImpact);
 		}
@@ -90,9 +90,9 @@ namespace Atomization
 	{
 		public ICBM() : base()
 		{
-			_BuildTime = 6;
-			DirectImpact = new Impact("ICBM Construction", economy: -80, rawMaterial: -100);
-			LongTermImpact = new Impact("Nuclear Arsenal Maintenance", economy: -20, rawMaterial: -1);
+			//_BuildTime = 6;
+			//DirectImpact = new Effect("ICBM Construction", economy: -80, rawMaterial: -100);
+			//LongTermImpact = new Effect("Nuclear Arsenal Maintenance", economy: -20, rawMaterial: -1);
 
 			Data.Me.ExpenditureAndRevenue.Add(LongTermImpact);
 		}
@@ -103,9 +103,9 @@ namespace Atomization
 	{
 		public NuclearBomb() : base()
 		{
-			_BuildTime = 1;
-			DirectImpact = new Impact("Nuclear Bomb Construction", economy: -20, rawMaterial: -10);
-			LongTermImpact = new Impact("Nuclear Arsenal Maintenance", economy: -1, rawMaterial: -0.05);
+			//_BuildTime = 1;
+			//DirectImpact = new Effect("Nuclear Bomb Construction", economy: -20, rawMaterial: -10);
+			//LongTermImpact = new Effect("Nuclear Arsenal Maintenance", economy: -1, rawMaterial: -0.05);
 
 			Data.Me.ExpenditureAndRevenue.Add(LongTermImpact);
 		}

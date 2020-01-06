@@ -1,16 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Atomization.DataStructures;
 
-namespace Atomization.DataStructures
+namespace Atomization
 {
-	// The class for all events (aka acts)
-	public class Event : ConstructableObject
+	public class Event
 	{
-		public string Name { get; set; }
-
-		public override string TypeName => nameof(Event);
+		public IUniqueObject Source { get; private set; }
 	}
 }

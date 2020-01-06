@@ -9,7 +9,7 @@ using Atomization.DataStructures;
 
 namespace Atomization
 {
-	public delegate void ConstructionCompletedHandler(ConstructableObject constructableObject);
+	public delegate void StageFinishedHandler(Stage previous, Stage next, Task task);
 
 	public class Growth : INotifyPropertyChanged
 	{
@@ -53,9 +53,9 @@ namespace Atomization
 	///		It is only a data structure for <c>Event</c>. 
 	///		It should never be used alone
 	/// </summary>
-	public class Impact
+	public class Effect
 	{
-		public Impact(
+		public Effect(
 			Expression economy = null,
 			Expression hiEduPopu = null,
 			Expression army = null,
@@ -65,7 +65,7 @@ namespace Atomization
 			Expression nuclearMaterial = null,
 			Expression stability = null,
 			Expression nationalism = null,
-			Expression consumerism = null,
+			Expression satisfaction = null,
 			Expression bureaucracy = null
 		)
 		{
@@ -78,7 +78,7 @@ namespace Atomization
 			Values[6] = nuclearMaterial;
 			Values[7] = stability;
 			Values[8] = nationalism;
-			Values[9] = consumerism;
+			Values[9] = satisfaction;
 			Values[10] = bureaucracy;
 
 			for (int i = 0; i < Nation.NUM_VALUES; i++)
@@ -103,7 +103,7 @@ namespace Atomization
 		public double NuclearMaterial => Values[6].Value;
 		public double Stability => Values[7].Value;
 		public double Nationalism => Values[8].Value;
-		public double Consumerism => Values[9].Value;
+		public double Satifaction => Values[9].Value;
 		public double Bureaucracy => Values[10].Value;
 	}
 
@@ -179,10 +179,4 @@ namespace Atomization
 	//	//	CollectionChanged?.Invoke(this, e);
 	//	//}
 	//}
-
-	public interface IBuildable
-	{
-		int BuildTime { get; set; }
-		Impact DirectImpact { get; set; }
-	}
 }
