@@ -3,7 +3,7 @@ using System.ComponentModel;
 
 namespace Atomization
 {
-	public abstract class NuclearWeapon : ConstructableObject
+	public abstract class NuclearWeapon
 	{
 		protected NuclearWeapon()
 		{
@@ -18,7 +18,7 @@ namespace Atomization
 				if (value != _Name)
 				{
 					_Name = value;
-					OnPropertyChanged(new PropertyChangedEventArgs(nameof(Name)));
+					//OnPropertyChanged(new PropertyChangedEventArgs(nameof(Name)));
 				}
 			}
 		}
@@ -32,7 +32,7 @@ namespace Atomization
 				if (value != _Platform)
 				{
 					_Platform = value;
-					OnPropertyChanged(new PropertyChangedEventArgs(nameof(Platform)));
+					//OnPropertyChanged(new PropertyChangedEventArgs(nameof(Platform)));
 				}
 			}
 		}
@@ -46,7 +46,7 @@ namespace Atomization
 				if (value != _Target)
 				{
 					_Target = value;
-					OnPropertyChanged(new PropertyChangedEventArgs(nameof(Target)));
+					//OnPropertyChanged(new PropertyChangedEventArgs(nameof(Target)));
 				}
 			}
 		}
@@ -67,10 +67,10 @@ namespace Atomization
 			//_LongTermImpact = new Effect("Nuclear Arsenal Maintenance", economy: -4, rawMaterial: -0.1);
 			//_DirectImpact = new Effect("Cruis Missile Construction", economy: -20, rawMaterial: -30);
 
-			Data.Me.ExpenditureAndRevenue.Add(LongTermImpact);
+			//Data.Me.ExpenditureAndRevenue.Add(LongTermImpact);
 		}
 
-		public override string TypeName => "CruiseMissile";
+		//public override string TypeName => "CruiseMissile";
 	}
 
 	public class MediumRangeMissile : NuclearMissile
@@ -81,9 +81,9 @@ namespace Atomization
 			//_LongTermImpact = new Effect("Nuclear Arsenal Maintenance", economy: -8, rawMaterial: -0.2);
 			//DirectImpact = new Effect("Medium Range Missile Construction", economy: -40, rawMaterial: -70);
 
-			Data.Me.ExpenditureAndRevenue.Add(LongTermImpact);
+			//Data.Me.ExpenditureAndRevenue.Add(LongTermImpact);
 		}
-		public override string TypeName => "MediumRangeMissile";
+		//public override string TypeName => "MediumRangeMissile";
 	}
 
 	public class ICBM : NuclearMissile
@@ -94,9 +94,9 @@ namespace Atomization
 			//DirectImpact = new Effect("ICBM Construction", economy: -80, rawMaterial: -100);
 			//LongTermImpact = new Effect("Nuclear Arsenal Maintenance", economy: -20, rawMaterial: -1);
 
-			Data.Me.ExpenditureAndRevenue.Add(LongTermImpact);
+			//Data.Me.ExpenditureAndRevenue.Add(LongTermImpact);
 		}
-		public override string TypeName => "ICBM";
+		//public override string TypeName => "ICBM";
 	}
 
 	public class NuclearBomb : NuclearWeapon
@@ -107,9 +107,9 @@ namespace Atomization
 			//DirectImpact = new Effect("Nuclear Bomb Construction", economy: -20, rawMaterial: -10);
 			//LongTermImpact = new Effect("Nuclear Arsenal Maintenance", economy: -1, rawMaterial: -0.05);
 
-			Data.Me.ExpenditureAndRevenue.Add(LongTermImpact);
+			//Data.Me.ExpenditureAndRevenue.Add(LongTermImpact);
 		}
 
-		public override string TypeName => "NuclearBomb";
+		//public override string TypeName => "NuclearBomb";
 	}
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System;
 
 namespace Atomization
 {
@@ -49,7 +50,7 @@ namespace Atomization
 			get => Values[0];
 			protected set => Values[0] = value;
 		}
-		public ValueComplex HiEduPopu
+		public ValueComplex Population
 		{
 			get => Values[1];
 			protected set => Values[1] = value;
@@ -108,14 +109,11 @@ namespace Atomization
 			get => Values[10];
 			protected set => Values[10] = value;
 		}
+		public double AdjustedBureaucracyIndex => 0.1 * Math.Pow(1.2, Bureaucracy.CurrentValue);
 		#endregion
 
 		public TaskSequence TaskSequence { get; private set; } = new TaskSequence();
-
-		protected void CreateTask(Stage task)
-		{
-
-		}
+		public TechTreeNode TechTree { get; }
 
 		public void AddCostOfExecution(Effect cost)
 		{
@@ -123,6 +121,12 @@ namespace Atomization
 			{
 				Values[i].CurrentValue += cost.Values[i].Value;
 			}
+		}
+
+		public void UpdateValue(int nationIndex)
+		{
+			Task.Create(Census.Create(nationIndex));
+			throw new NotImplementedException();
 		}
 	}
 

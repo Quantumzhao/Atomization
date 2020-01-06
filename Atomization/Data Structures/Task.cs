@@ -10,7 +10,6 @@ namespace Atomization.DataStructures
 		public readonly List<Task> Tasks = new List<Task>();
 
 		public event NotifyCollectionChangedEventHandler CollectionChanged;
-
 	}
 
 	/* A procedure is a set of tasks. 
@@ -20,21 +19,24 @@ namespace Atomization.DataStructures
 	 * When a certain stage is finished, the next stage begins. */
 	public class Task : Queue<Stage>, IUniqueObject
 	{
-		private Task() { }
-		public static Task Create()
+		private Task() 
+		{
+			EventManager.StageProgressAdvenced += OnStageProgressAdvanced;
+		}
+		public static Task Create(Stage taskType)
 		{
 			throw new NotImplementedException();
 		}
 
-		public event StageFinishedHandler StageFinished;
-
 		public string Name { get; set; }
 		public string UID { get; set; }
 
-		public void RemoveCurrentStage()
+		public void OnStageProgressAdvanced(Stage sender, StageProgressAdvancedEventArgs e)
 		{
-			var stage = this.Dequeue();
-			StageFinished?.Invoke(stage, this.Peek(), this);
+			if (sender.Equals(this.Peek()) && e.IsStageFinished)
+			{
+				this.Dequeue();
+			}
 		}
 	}
 }

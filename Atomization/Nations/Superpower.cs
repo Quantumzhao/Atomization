@@ -34,13 +34,14 @@ namespace Atomization
 
 			superpower.Name = name;
 			superpower.Economy = new ValueComplex(20000 + 400);  // x10^9
-			superpower.HiEduPopu = new ValueComplex(20000);      // x10^6
+			superpower.Population = new ValueComplex(20000);      // x10^6
 			superpower.Army = new ValueComplex(50000);           // x10^3
 			superpower.Navy = new ValueComplex(5000);            // x10^3
 			superpower.Food = new ValueComplex(20000);           // x10^6
 			superpower.RawMaterial = new ValueComplex(4000);     // x10^3
 			superpower.NuclearMaterial = new ValueComplex(100);  // x10^3
 			superpower.Stability = new ValueComplex(75) { Maximum = 100 };
+			superpower.Bureaucracy = new ValueComplex(10);
 
 			for (int i = 0; i < INITIAL_NUKE_SILOS; i++)
 			{

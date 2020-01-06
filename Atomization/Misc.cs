@@ -85,7 +85,7 @@ namespace Atomization
 			{
 				if (Values[i] == null)
 				{
-					Values[i] = new Expression(0);
+					Values[i] = 0;
 				}
 			}
 		}
@@ -179,4 +179,13 @@ namespace Atomization
 	//	//	CollectionChanged?.Invoke(this, e);
 	//	//}
 	//}
+	public static class Misc
+	{
+		public static int Round(double value) => (int)(value + 0.5);
+	}
+
+	public interface IExecutable
+	{
+		void Execute();
+	}
 }

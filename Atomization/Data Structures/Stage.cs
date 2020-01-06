@@ -12,50 +12,30 @@ namespace Atomization.DataStructures
 	 * 2. Enactments and policies (make changes to values/in-game entities)
 	 * 3. Orders to manufacture (create new in-game entities and deploy) 
 	 * etc. */
-	public class Stage
+	public abstract class Stage
 	{
-		private Stage() { }
-		public static Stage Create(StageType type)
+		protected Stage() 
 		{
-			throw new NotImplementedException();
+			GameManager.TimeElapsed += AdvanceProgress;
 		}
+
+		//public static Stage Create(StageType type)
+		//{
+		//	throw new NotImplementedException();
+		//}
 
 		public event PropertyChangedEventHandler PropertyChanged;
 
 		public ConfidentialLevel ConfidentialLevel { get; set; }
-		public StageType StageType { get; set; }
-		public Task HostTask { get; private set; }
+		//public Task HostTask { get; private set; }
 
-		protected int _RemainingTime;
-		public int RemainingTime
-		{
-			get => _RemainingTime;
-			set
-			{
-				if (value == 0)
-				{
-					//ConstructionCompleted?.Invoke(this);
-					_RemainingTime = -1;
-					return;
-				}
-				else if (_RemainingTime == -1)
-				{
-					return;
-				}
-
-				if (value != _RemainingTime)
-				{
-					_RemainingTime = value;
-					PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(RemainingTime)));
-					if (value == 0)
-					{
-						HostTask.RemoveCurrentStage();
-					}
-				}
-			}
-		}
+		protected Expression _RequiredTime;
+		private int _TimeElapsed = 0;
 
 		protected Effect _LongTermEffect;
+		/// <summary>
+		///		Use its encapsulated field occasionally to avoid side effect
+		/// </summary>
 		public Effect LongTermEffect
 		{
 			get => _LongTermEffect;
@@ -72,6 +52,13 @@ namespace Atomization.DataStructures
 		protected void OnPropertyChanged(PropertyChangedEventArgs e)
 		{
 			PropertyChanged?.Invoke(this, e);
+		}
+
+		private void AdvanceProgress()
+		{
+			_TimeElapsed++;
+			EventManager.RaiseEvent(this, new StageProgressAdvancedEventArgs(
+				Misc.Round(_RequiredTime.Value - _TimeElapsed)));
 		}
 
 		//protected Impact _DirectImpact;
@@ -91,14 +78,97 @@ namespace Atomization.DataStructures
 		//}
 	}
 
-	public enum StageType
+	public class Census : Stage
 	{
-		Census,
-		Policy,
-		Purchase,
-		Manufacture,
-		Transportation,
-		Deployment
+		private Census() { }
+		public static Census Create(int nationIndex)
+		{
+			var census = new Census();
+			census.Init(nationIndex);
+			return census;
+		}
+
+		private void Init(int index)
+		{
+			// Wait for the implementation of tech tree system
+			switch (index)
+			{
+				// Population
+				case 1:
+					_LongTermEffect = new Effect(economy: new Expression(1, p => 1 + p * Data.Me.AdjustedBureaucracyIndex));
+					break;
+
+				// Stability
+				case 7:
+					_LongTermEffect = new Effect(economy: new Expression(1, p => p * Data.Me.AdjustedBureaucracyIndex));
+					break;
+
+				// Nationalism
+				case 8:
+					
+					break;
+
+				// Satisfaction
+				case 9:
+					break;
+
+				// Bureaucracy
+				case 10:
+					break;
+
+				default:
+					_RequiredTime = new Expression(1, p => p * Data.Me.AdjustedBureaucracyIndex);
+					break;
+			}
+		}
+	}
+
+	public class Policy : Stage
+	{
+		private Policy() { }
+		public static Policy Create()
+		{
+			throw new NotImplementedException();
+		}
+	}
+
+	public class Purchase : Stage
+	{
+		private Purchase() { }
+		public static Purchase Create()
+		{
+			throw new NotImplementedException();
+		}
+	}
+
+	public class Manufacture : Stage
+	{
+		private Manufacture() { }
+		public static Manufacture Create()
+		{
+			throw new NotImplementedException();
+		}
+	}
+	public class Transportation : Stage
+	{
+		private Transportation() { }
+		public static Transportation Create()
+		{
+			throw new NotImplementedException();
+		}
+	}
+	public class Deployment : Stage
+	{
+		private Deployment() { }
+		public static Deployment Create()
+		{
+			throw new NotImplementedException();
+		}
+	}
+
+	public class Preparation : Stage
+	{
+
 	}
 
 	public enum ConfidentialLevel
