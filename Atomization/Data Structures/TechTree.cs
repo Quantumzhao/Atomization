@@ -14,6 +14,7 @@ namespace Atomization.DataStructures
 		public bool IsEnabled { get; private set; }
 		public Effect Effect { get; private set; }
 		public List<TechTreeNode> ChildNodes { get; } = new List<TechTreeNode>();
+		public TechTreeNode ParentNode { get; set; }
 
 		private static TechTreeNode _Tree = null;
 		public static TechTreeNode Tree
@@ -30,7 +31,21 @@ namespace Atomization.DataStructures
 		}
 		private static TechTreeNode CreateTree()
 		{
-			throw new NotImplementedException();
+			TechTreeNode tree = new TechTreeNode();
+
+			TechTreeNode science = new TechTreeNode();
+			{
+
+			}
+			tree.ChildNodes.Add(science);
+
+			TechTreeNode domestic = new TechTreeNode();
+			{
+
+			}
+			tree.ChildNodes.Add(domestic);
+
+			return tree;
 		}
 	}
 }
