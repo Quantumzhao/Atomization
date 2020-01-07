@@ -29,21 +29,35 @@ namespace Atomization.DataStructures
 				return Tree;
 			}
 		}
+
+		// This part MUST be refactored and re-implemented using serialization in the future
 		private static TechTreeNode CreateTree()
 		{
 			TechTreeNode tree = new TechTreeNode();
 
-			TechTreeNode science = new TechTreeNode();
+			TechTreeNode technology = new TechTreeNode();
 			{
+				var aerialBomb = new TechTreeNode();
+				{
+
+				}
+				technology.ChildNodes.Add(aerialBomb);
+
 
 			}
-			tree.ChildNodes.Add(science);
+			tree.ChildNodes.Add(technology);
 
 			TechTreeNode domestic = new TechTreeNode();
 			{
 
 			}
 			tree.ChildNodes.Add(domestic);
+
+			TechTreeNode millitary = new TechTreeNode();
+			{
+
+			}
+			tree.ChildNodes.Add(millitary);
 
 			return tree;
 		}

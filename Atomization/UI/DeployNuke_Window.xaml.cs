@@ -26,14 +26,14 @@ namespace Atomization
 			Target.Items.Clear();
 			Target.ItemsSource = Data.Regions;
 
-			if ((selectedWeapon = (ParentPage.NukeList.SelectedItem as VM<NuclearWeapon>)?.ObjectData) != null)
-			{
-				isNewNuke = false;
-				CarrierType.IsEnabled = false;
-				WarheadType.IsEnabled = false;
-				Status.Foreground = Brushes.Red;
-				Status.Content = "Configuring an existing nuclear weapon";
-			}
+			//if ((selectedWeapon = (ParentPage.NukeList.SelectedItem as VM<NuclearWeapon>)?.ObjectData) != null)
+			//{
+			//	isNewNuke = false;
+			//	CarrierType.IsEnabled = false;
+			//	WarheadType.IsEnabled = false;
+			//	Status.Foreground = Brushes.Red;
+			//	Status.Content = "Configuring an existing nuclear weapon";
+			//}
 		}
 
 		private void DeployNuke_Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)

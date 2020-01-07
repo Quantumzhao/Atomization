@@ -5,9 +5,9 @@ using Atomization.DataStructures;
 
 namespace Atomization
 {
-	public abstract class Platform : ConstructableObject
+	public abstract class Platform
 	{
-		protected Platform() : base()
+		protected Platform()
 		{
 			NuclearWeapons.CollectionChanged +=
 			(sender, e) =>
@@ -22,17 +22,17 @@ namespace Atomization
 				}
 			};
 
-			ConstructionCompleted += item =>
-			{
-				if (DeployRegion is Nation)
-				{
-					(DeployRegion as Nation).Affiliation.ExpenditureAndRevenue.Add(item.LongTermImpact);
-				}
-				else
-				{
-					(DeployRegion as Waters).Affiliation.Affiliation.ExpenditureAndRevenue.Add(item.LongTermImpact);
-				}
-			};
+			//ConstructionCompleted += item =>
+			//{
+			//	if (DeployRegion is Nation)
+			//	{
+			//		(DeployRegion as Nation).Affiliation.ExpenditureAndRevenue.Add(item.LongTermImpact);
+			//	}
+			//	else
+			//	{
+			//		(DeployRegion as Waters).Affiliation.Affiliation.ExpenditureAndRevenue.Add(item.LongTermImpact);
+			//	}
+			//};
 		}
 		public Region DeployRegion { get; set; }
 		public int AvailableLoad => NuclearWeapons.MaxCapacity - NuclearWeapons.Count;
@@ -43,7 +43,7 @@ namespace Atomization
 	{
 		public Silo(Nation deployRegion) : base()
 		{
-			_BuildTime = 4;
+			//_BuildTime = 4;
 
 			DeployRegion = deployRegion;
 
@@ -54,15 +54,13 @@ namespace Atomization
 
 			//(DeployRegion as Nation).Affiliation.AddCostOfExecution(DirectImpact);
 		}
-
-		public override string TypeName => "Silo";
 	}
 
 	public class StrategicBomber : Platform
 	{
 		public StrategicBomber(Nation deployRegion) : base()
 		{
-			_BuildTime = 7;
+			//_BuildTime = 7;
 
 			DeployRegion = deployRegion;
 
@@ -73,14 +71,13 @@ namespace Atomization
 
 			//(DeployRegion as Nation).Affiliation.AddCostOfExecution(DirectImpact);
 		}
-		public override string TypeName => "StrategicBomber";
 	}
 
 	public class MissileLauncher : Platform
 	{
 		public MissileLauncher(Nation deployRegion) : base()
 		{
-			_BuildTime = 6;
+			//_BuildTime = 6;
 
 			DeployRegion = deployRegion;
 
@@ -91,14 +88,13 @@ namespace Atomization
 
 			//(DeployRegion as Nation).Affiliation.AddCostOfExecution(DirectImpact);
 		}
-		public override string TypeName => "MissileLauncher";
 	}
 
 	public class NuclearSubmarine : Platform
 	{
 		public NuclearSubmarine(Region deployRegion) : base()
 		{
-			_BuildTime = 12;
+			//_BuildTime = 12;
 
 			DeployRegion = deployRegion;
 
@@ -109,7 +105,5 @@ namespace Atomization
 
 			//(DeployRegion as Nation).Affiliation.AddCostOfExecution(DirectImpact);
 		}
-
-		public override string TypeName => "NuclearSubmarine";
 	}
 }

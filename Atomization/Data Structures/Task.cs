@@ -23,9 +23,21 @@ namespace Atomization.DataStructures
 		{
 			EventManager.StageProgressAdvenced += OnStageProgressAdvanced;
 		}
-		public static Task Create(Stage taskType)
+		public static Task Create(Stage finalStage)
 		{
-			throw new NotImplementedException();
+			Task task = new Task();
+			task.Enqueue(finalStage);
+
+			if (finalStage is Census census)
+			{
+
+			}
+			else if (finalStage is Policy policy)
+			{
+
+			}
+
+			return task;
 		}
 
 		public string Name { get; set; }

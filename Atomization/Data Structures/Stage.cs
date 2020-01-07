@@ -95,28 +95,20 @@ namespace Atomization.DataStructures
 			{
 				// Population
 				case 1:
-					_LongTermEffect = new Effect(economy: new Expression(1, p => 1 + p * Data.Me.AdjustedBureaucracyIndex));
-					break;
-
 				// Stability
 				case 7:
-					_LongTermEffect = new Effect(economy: new Expression(1, p => p * Data.Me.AdjustedBureaucracyIndex));
-					break;
-
 				// Nationalism
 				case 8:
-					
-					break;
-
 				// Satisfaction
 				case 9:
-					break;
-
 				// Bureaucracy
 				case 10:
+					_LongTermEffect = new Effect(economy: new Expression(1, p => 1 + p * Data.Me.AdjustedBureaucracyIndex));
+					_RequiredTime = new Expression(2, p => p * Data.Me.AdjustedBureaucracyIndex);
 					break;
 
 				default:
+					_LongTermEffect = new Effect();
 					_RequiredTime = new Expression(1, p => p * Data.Me.AdjustedBureaucracyIndex);
 					break;
 			}
@@ -168,7 +160,11 @@ namespace Atomization.DataStructures
 
 	public class Preparation : Stage
 	{
-
+		private Preparation() { }
+		public static Preparation Create()
+		{
+			throw new NotImplementedException();
+		}
 	}
 
 	public enum ConfidentialLevel

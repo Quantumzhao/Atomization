@@ -103,7 +103,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Data Structures\Effect.cs" />
     <Compile Include="Data Structures\Event.cs" />
+    <Compile Include="Data Structures\Expression.cs" />
+    <Compile Include="Data Structures\Growth.cs" />
     <Compile Include="Data Structures\Stage.cs" />
     <Compile Include="Data Structures\ConstructableObject.cs" />
     <Compile Include="Data Structures\Task.cs" />
@@ -119,7 +122,7 @@
     <Compile Include="UI\DeployNuke_Window.xaml.cs">
       <DependentUpon>DeployNuke_Window.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Misc.cs" />
+    <Compile Include="Data Structures\Misc.cs" />
     <Compile Include="Nations\Nation.cs" />
     <Compile Include="Nuclear Weapon\NuclearWeapon.cs" />
     <Compile Include="Platform\Platform.cs" />
