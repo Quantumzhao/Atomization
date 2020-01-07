@@ -28,9 +28,9 @@ namespace Atomization
 			#endregion
 
 			#region High Education Population Initialization
-			HiEduPopu.DataContext = Data.Me.HiEduPopu;
-			HiEduGrowth.ItemsSource = Data.Me.HiEduPopu.Growth.Items;
-			HiEduGrowth_Sum.DataContext = Data.Me.HiEduPopu.Growth;
+			HiEduPopu.DataContext = Data.Me.Population;
+			HiEduGrowth.ItemsSource = Data.Me.Population.Growth.Items;
+			HiEduGrowth_Sum.DataContext = Data.Me.Population.Growth;
 			#endregion
 
 			#region Army Initialization

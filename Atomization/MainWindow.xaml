@@ -416,7 +416,7 @@
 			<MenuItem 
 				Header="Nuclear" 
 				FontSize="15" 
-				FontFamily="Segoe UI Semilight" 
+				FontFamily="Segoe UI Bold"
 				Padding="6,0" 
 				Click="MenuItem_Click"/>
 			<MenuItem 

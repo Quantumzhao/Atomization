@@ -2,9 +2,9 @@
 using System.Collections.Specialized;
 using System.ComponentModel;
 
-namespace Atomization
+namespace Atomization.DataStructures
 {
-	public class GameObjectList<T> : List<T>, INotifyCollectionChanged, INotifyPropertyChanged
+	public class ConstrainedList<T> : List<T>, INotifyCollectionChanged, INotifyPropertyChanged
 	{
 		public int MaxCapacity { get; set; } = int.MaxValue;
 		public bool IsLimitedCapacity => MaxCapacity != int.MaxValue;
