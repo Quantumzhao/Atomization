@@ -1,5 +1,9 @@
 # Atomization
 
+> **Update:**
+> 
+> Since the domain model of this simulator is too complicated for me to implement any visualization, I will resume working on this after finishing the *UI Engine* project (and of course I will use that framework to implement the user interface). 
+
 ## Introduction
 
 This is a game in which players can play as roles in a political gamming. In this game (simulation), players are able to gain advantages through manipulating their nuclear weapons and enact corresponding domestic and diplomatic policies. 
