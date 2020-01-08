@@ -12,7 +12,7 @@ namespace Atomization.DataStructures
 	 * 2. Enactments and policies (make changes to values/in-game entities)
 	 * 3. Orders to manufacture (create new in-game entities and deploy) 
 	 * etc. */
-	public abstract class Stage
+	public abstract class Stage : IExecutable
 	{
 		protected Stage() 
 		{
@@ -61,6 +61,8 @@ namespace Atomization.DataStructures
 				Misc.Round(_RequiredTime.Value - _TimeElapsed)));
 		}
 
+		public abstract void Execute();
+
 		//protected Impact _DirectImpact;
 		//public Impact DirectImpact
 		//{
@@ -81,12 +83,14 @@ namespace Atomization.DataStructures
 	public class Census : Stage
 	{
 		private Census() { }
-		public static Census Create(int nationIndex)
+		public static Census Create(int nationalIndex)
 		{
 			var census = new Census();
-			census.Init(nationIndex);
+			census.Init(nationalIndex);
 			return census;
 		}
+
+		private Action _Execute;
 
 		private void Init(int index)
 		{
@@ -112,13 +116,24 @@ namespace Atomization.DataStructures
 					_RequiredTime = new Expression(1, p => p * Data.Me.AdjustedBureaucracyIndex);
 					break;
 			}
+
+			_Execute = () => UpdateMyIndices(index);
 		}
+
+		public override void Execute() => _Execute();
+
+		private void UpdateMyIndices(int valueIndex) => Data.Me.OutdatedNationalIndices[valueIndex].Update(Data.Me.NationalIndices[valueIndex]);
 	}
 
 	public class Policy : Stage
 	{
 		private Policy() { }
 		public static Policy Create()
+		{
+			throw new NotImplementedException();
+		}
+
+		public override void Execute()
 		{
 			throw new NotImplementedException();
 		}
@@ -131,6 +146,11 @@ namespace Atomization.DataStructures
 		{
 			throw new NotImplementedException();
 		}
+
+		public override void Execute()
+		{
+			throw new NotImplementedException();
+		}
 	}
 
 	public class Manufacture : Stage
@@ -140,7 +160,13 @@ namespace Atomization.DataStructures
 		{
 			throw new NotImplementedException();
 		}
+
+		public override void Execute()
+		{
+			throw new NotImplementedException();
+		}
 	}
+
 	public class Transportation : Stage
 	{
 		private Transportation() { }
@@ -148,7 +174,13 @@ namespace Atomization.DataStructures
 		{
 			throw new NotImplementedException();
 		}
+
+		public override void Execute()
+		{
+			throw new NotImplementedException();
+		}
 	}
+
 	public class Deployment : Stage
 	{
 		private Deployment() { }
@@ -156,12 +188,8 @@ namespace Atomization.DataStructures
 		{
 			throw new NotImplementedException();
 		}
-	}
 
-	public class Preparation : Stage
-	{
-		private Preparation() { }
-		public static Preparation Create()
+		public override void Execute()
 		{
 			throw new NotImplementedException();
 		}

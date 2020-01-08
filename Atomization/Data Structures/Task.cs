@@ -26,13 +26,28 @@ namespace Atomization.DataStructures
 		public static Task Create(Stage finalStage)
 		{
 			Task task = new Task();
-			task.Enqueue(finalStage);
 
 			if (finalStage is Census census)
 			{
-
+				task = CreateCensus(census);
 			}
 			else if (finalStage is Policy policy)
+			{
+
+			}
+			else if (finalStage is Purchase purchase)
+			{
+
+			}
+			else if (finalStage is Manufacture manufacture)
+			{
+
+			}
+			else if (finalStage is Transportation transportation)
+			{
+
+			}
+			else if (finalStage is Deployment deployment)
 			{
 
 			}
@@ -49,6 +64,13 @@ namespace Atomization.DataStructures
 			{
 				this.Dequeue();
 			}
+		}
+
+		private static Task CreateCensus(Census census)
+		{
+
+
+			throw new NotImplementedException();
 		}
 	}
 }

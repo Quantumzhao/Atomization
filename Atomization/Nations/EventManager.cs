@@ -14,6 +14,7 @@ namespace Atomization
 		}
 
 		public static event StageProgressAdvanceHandler StageProgressAdvenced;
+		public static event ValueUpdatedHandler ValueUpdated;
 	}
 
 	public static class GameManager

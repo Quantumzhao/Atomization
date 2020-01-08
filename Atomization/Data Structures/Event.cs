@@ -4,6 +4,8 @@ using System;
 namespace Atomization
 {
 	public delegate void StageProgressAdvanceHandler(Stage sender, StageProgressAdvancedEventArgs e);
+	public delegate void ValueUpdatedHandler(ValueComplex sender, ValueUpdatedEventArgs e);
+
 	public abstract class GameEventArgs : EventArgs
 	{
 
@@ -17,5 +19,10 @@ namespace Atomization
 		{
 			TimeRemaining = timeRemaining;
 		}
+	}
+
+	public class ValueUpdatedEventArgs : GameEventArgs
+	{
+		
 	}
 }

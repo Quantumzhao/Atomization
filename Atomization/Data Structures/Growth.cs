@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.ComponentModel;
 
 namespace Atomization.DataStructures
 {
 	public class Growth : INotifyPropertyChanged
 	{
-		public Dictionary<string, double> Items { get; set; } = new Dictionary<string, double>();
+		public Dictionary<string, double> Items { get; } = new Dictionary<string, double>();
 
 		public double this[string name] => Items[name];
 

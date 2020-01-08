@@ -42,75 +42,14 @@ namespace Atomization
 
 		public Waters TerritorialWaters { get; }
 
-		#region Value Definitions
-		public ValueComplex[] Values = new ValueComplex[NUM_VALUES];
+		public readonly ValueComplexNTuple NationalIndices = new ValueComplexNTuple();
+		public readonly ValueComplexNTuple OutdatedNationalIndices = new ValueComplexNTuple();
+
 		public ConstrainedList<Effect> ExpenditureAndRevenue = new ConstrainedList<Effect>();
-		public ValueComplex Economy
-		{
-			get => Values[0];
-			protected set => Values[0] = value;
-		}
-		public ValueComplex Population
-		{
-			get => Values[1];
-			protected set => Values[1] = value;
-		}
-		public ValueComplex Army
-		{
-			get => Values[2];
-			protected set => Values[2] = value;
-		}
-		public ValueComplex Navy
-		{
-			get => Values[3];
-			protected set => Values[3] = value;
-		}
+
 		public double Tactics { get; set; }
-		public ValueComplex Food
-		{
-			get => Values[4];
-			protected set => Values[4] = value;
-		}
 
-		public ValueComplex RawMaterial
-		{
-			get => Values[5];
-			protected set => Values[5] = value;
-		}
-
-		public ValueComplex NuclearMaterial
-		{
-			get => Values[6];
-			protected set => Values[6] = value;
-		}
-
-		public ValueComplex Stability
-		{
-			get => Values[7];
-			protected set => Values[7] = value;
-		}
-
-		#region Public Opinions
-		public ValueComplex Nationalism
-		{
-			get => Values[8];
-			protected set => Values[8] = value;
-		}
-
-		public ValueComplex Satisfaction
-		{
-			get => Values[9];
-			protected set => Values[9] = value;
-		}
-		#endregion
-
-		public ValueComplex Bureaucracy
-		{
-			get => Values[10];
-			protected set => Values[10] = value;
-		}
-		public double AdjustedBureaucracyIndex => 0.1 * Math.Pow(1.2, Bureaucracy.CurrentValue);
-		#endregion
+		public double AdjustedBureaucracyIndex => 0.1 * Math.Pow(1.2, NationalIndices.Bureaucracy.CurrentValue);
 
 		public TaskSequence TaskSequence { get; private set; } = new TaskSequence();
 		public TechTreeNode TechTree { get; }
@@ -119,13 +58,13 @@ namespace Atomization
 		{
 			for (int i = 0; i < cost.Values.Length; i++)
 			{
-				Values[i].CurrentValue += cost.Values[i].Value;
+				NationalIndices[i].CurrentValue += cost.Values[i].Value;
 			}
 		}
 
-		public void UpdateValue(int nationIndex)
+		public void UpdateValue(int nationalIndex)
 		{
-			Task.Create(Census.Create(nationIndex));
+			Task.Create(Census.Create(nationalIndex));
 			throw new NotImplementedException();
 		}
 	}
