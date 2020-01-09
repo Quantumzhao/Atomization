@@ -25,34 +25,31 @@ namespace Atomization.DataStructures
 		}
 		public static Task Create(Stage finalStage)
 		{
-			Task task = new Task();
-
-			if (finalStage is Census census)
+			if (finalStage is Census)
 			{
-				task = CreateCensus(census);
+				return CreateCensus(finalStage as Census);
 			}
-			else if (finalStage is Policy policy)
+			else if (finalStage is Policy)
 			{
 
 			}
-			else if (finalStage is Purchase purchase)
+			else if (finalStage is Purchase)
 			{
 
 			}
-			else if (finalStage is Manufacture manufacture)
+			else if (finalStage is Manufacture)
 			{
 
 			}
-			else if (finalStage is Transportation transportation)
+			else if (finalStage is Transportation)
 			{
 
 			}
-			else if (finalStage is Deployment deployment)
+			else if (finalStage is Deployment)
 			{
 
 			}
-
-			return task;
+			throw new NotImplementedException();
 		}
 
 		public string Name { get; set; }
@@ -62,12 +59,15 @@ namespace Atomization.DataStructures
 		{
 			if (sender.Equals(this.Peek()) && e.IsStageFinished)
 			{
+				sender.Execute();
 				this.Dequeue();
 			}
 		}
 
 		private static Task CreateCensus(Census census)
 		{
+			Task task = new Task();
+
 
 
 			throw new NotImplementedException();

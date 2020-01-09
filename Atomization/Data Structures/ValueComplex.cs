@@ -68,6 +68,7 @@ namespace Atomization.DataStructures
 			Minimum = actualValue.Minimum;
 			foreach (var pair in actualValue.Growth.Items)
 			{
+				Growth.AddTerm(pair.Key, pair.Value);
 				var dic = Growth.Items;
 				if (dic.ContainsKey(pair.Key))
 				{

@@ -19,15 +19,9 @@ namespace Atomization.DataStructures
 			GameManager.TimeElapsed += AdvanceProgress;
 		}
 
-		//public static Stage Create(StageType type)
-		//{
-		//	throw new NotImplementedException();
-		//}
-
 		public event PropertyChangedEventHandler PropertyChanged;
 
 		public ConfidentialLevel ConfidentialLevel { get; set; }
-		//public Task HostTask { get; private set; }
 
 		protected Expression _RequiredTime;
 		private int _TimeElapsed = 0;
