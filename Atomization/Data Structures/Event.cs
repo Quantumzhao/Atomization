@@ -5,6 +5,7 @@ namespace Atomization
 {
 	public delegate void StageProgressAdvanceHandler(Stage sender, StageProgressAdvancedEventArgs e);
 	public delegate void ValueUpdatedHandler(ValueComplex sender, ValueUpdatedEventArgs e);
+	public delegate void TaskCompletedHandler(Task sender, TaskCompletedEventArgs e);
 
 	public abstract class GameEventArgs : EventArgs
 	{
@@ -22,6 +23,11 @@ namespace Atomization
 	}
 
 	public class ValueUpdatedEventArgs : GameEventArgs
+	{
+		
+	}
+
+	public class TaskCompletedEventArgs : GameEventArgs
 	{
 		
 	}

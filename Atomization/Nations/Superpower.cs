@@ -30,9 +30,11 @@ namespace Atomization
 
 		public static Superpower InitializeMe(string name)
 		{
-			Superpower superpower = new Superpower();
+			Superpower superpower = new Superpower
+			{
+				Name = name
+			};
 
-			superpower.Name = name;
 			superpower.NationalIndices.Economy.CurrentValue = 20000 + 400;  // x10^9
 			superpower.NationalIndices.Population.CurrentValue = 20000;      // x10^6
 			superpower.NationalIndices.Army.CurrentValue = 50000;           // x10^3

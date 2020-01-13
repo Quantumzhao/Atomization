@@ -7,9 +7,19 @@ namespace Atomization.DataStructures
 	// This class is only for `TaskSequence` property of `Nation` class
 	public class TaskSequence : INotifyCollectionChanged
 	{
+		public TaskSequence()
+		{
+			EventManager.TaskCompleted += OnTaskCompleted;
+		}
+
 		public readonly List<Task> Tasks = new List<Task>();
 
 		public event NotifyCollectionChangedEventHandler CollectionChanged;
+
+		private void OnTaskCompleted(Task sender, TaskCompletedEventArgs e)
+		{
+			Tasks.Remove(sender);
+		}
 	}
 
 	/* A procedure is a set of tasks. 
@@ -17,17 +27,20 @@ namespace Atomization.DataStructures
 	 * involves purchasing, manufacture, transportation and finally deployment. 
 	 * Each stage itself requires time and resource. 
 	 * When a certain stage is finished, the next stage begins. */
-	public class Task : Queue<Stage>, IUniqueObject
+	public class Task : Queue<Stage>
 	{
-		private Task() 
+		private Task(string name) 
 		{
 			EventManager.StageProgressAdvenced += OnStageProgressAdvanced;
+
+			Name = name;
 		}
-		public static Task Create(Stage finalStage)
+
+		public static Task Create(Stage finalStage, string name)
 		{
 			if (finalStage is Census)
 			{
-				return CreateCensus(finalStage as Census);
+				return CreateCensus(finalStage as Census, name);
 			}
 			else if (finalStage is Policy)
 			{
@@ -53,24 +66,28 @@ namespace Atomization.DataStructures
 		}
 
 		public string Name { get; set; }
-		public string UID { get; set; }
 
-		public void OnStageProgressAdvanced(Stage sender, StageProgressAdvancedEventArgs e)
+		private static Task CreateCensus(Census census, string name)
+		{
+			Task task = new Task(name);
+
+			task.Enqueue(census);
+
+			return task;
+		}
+
+		private void OnStageProgressAdvanced(Stage sender, StageProgressAdvancedEventArgs e)
 		{
 			if (sender.Equals(this.Peek()) && e.IsStageFinished)
 			{
 				sender.Execute();
 				this.Dequeue();
+
+				if (this.Count == 0)
+				{
+					EventManager.RaiseEvent(this, new TaskCompletedEventArgs());
+				}
 			}
-		}
-
-		private static Task CreateCensus(Census census)
-		{
-			Task task = new Task();
-
-
-
-			throw new NotImplementedException();
 		}
 	}
 }

@@ -12,7 +12,7 @@ namespace Atomization.DataStructures
 	 * 2. Enactments and policies (make changes to values/in-game entities)
 	 * 3. Orders to manufacture (create new in-game entities and deploy) 
 	 * etc. */
-	public abstract class Stage : IExecutable
+	public abstract class Stage : IExecutable, INotifyPropertyChanged
 	{
 		protected Stage() 
 		{
@@ -116,21 +116,26 @@ namespace Atomization.DataStructures
 
 		public override void Execute() => _Execute();
 
-		private void UpdateMyIndices(int valueIndex) => Data.Me.OutdatedNationalIndices[valueIndex].Update(Data.Me.NationalIndices[valueIndex]);
+		private void UpdateMyIndices(int valueIndex) => 
+			Data.Me.OutdatedNationalIndices[valueIndex].Update(Data.Me.NationalIndices[valueIndex]);
 	}
 
 	public class Policy : Stage
 	{
+		private Action _Action;
+
 		private Policy() { }
-		public static Policy Create()
+		public static Policy Create(Action action, Effect longTermEffect, Expression requiredTime)
 		{
-			throw new NotImplementedException();
+			return new Policy
+			{
+				_LongTermEffect = longTermEffect,
+				_RequiredTime = requiredTime,
+				_Action = action
+			};
 		}
 
-		public override void Execute()
-		{
-			throw new NotImplementedException();
-		}
+		public override void Execute() => _Action();
 	}
 
 	public class Purchase : Stage

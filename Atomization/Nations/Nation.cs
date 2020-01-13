@@ -64,8 +64,7 @@ namespace Atomization
 
 		public void UpdateValue(int nationalIndex)
 		{
-			Task.Create(Census.Create(nationalIndex));
-			throw new NotImplementedException();
+			Task.Create(Census.Create(nationalIndex), "Generating statistics");
 		}
 	}
 
@@ -73,6 +72,7 @@ namespace Atomization
 	{
 		public RegularNation()
 		{
+			
 		}
 	}
 }
