@@ -8,9 +8,10 @@ namespace CLI
 {
 	class Program
 	{
-		private static LinkedList<Node> _Nodes = new LinkedList<Node>();
+		private static Dictionary<Node, int> _CachedNodes = new Dictionary<Node, int>();
+		private static int _Counter = 0;
 		
-		private static Node _CurrentNode => _Nodes.Last.Value;
+		private static Node _CurrentNode;
 
 		static void Main(string[] args)
 		{
@@ -24,50 +25,85 @@ namespace CLI
 		{
 			Queue<string> tokens = new Queue<string>(input.Split());
 
+			var opcode = tokens.Dequeue().ToUpper();
+
+			//if (opcode == "NEWX")
+			//{
+			//	Expression.Clear();
+
+			//	// print candidates
+			//	StringBuilder sb = new StringBuilder();
+			//	var properties = Dashboard.GetRootObjectNodes().ToArray();
+			//	for (int i = 0; i < properties.Length; i++)
+			//	{
+			//		sb.Append(string.Format("{0,20}", properties[i].Header));
+			//	}
+			//	Console.WriteLine(sb.ToString());
+			//	sb.Clear();
+			//	var methods = Dashboard.GetRootObjectNodes().ToArray();
+			//	for (int i = 0; i < methods.Length; i++)
+			//	{
+			//		sb.Append(string.Format("{0,20}", methods[i].Header));
+			//	}
+			//	Console.WriteLine(sb.ToString());
+			//}
+			//else if (opcode == "CXPN")
+			//{
+			//	var iter = Expression.First;
+			//	while (iter != null)
+			//	{
+			//		Console.Write(iter.Value.Header);
+			//		if (iter.Next != null)
+			//		{
+			//			Console.Write(" > ");
+			//		}
+			//	}
+			//	Console.WriteLine("\n");
+			//}
+
 			if (_CurrentNode is CollectionNode collectionNode)
 			{
 
 			}
 			else if (_CurrentNode is ObjectNode objectNode)
 			{
-				switch (tokens.Dequeue().ToUpper())
+				int propertyIndex;
+				switch (opcode)
 				{
 					case "ACSS":
-						var propertyIndex = tokens.Dequeue();
-						_Nodes.AddLast(objectNode.Properties[int.Parse(propertyIndex)]);
+						propertyIndex = int.Parse(tokens.Dequeue());
+						_CurrentNode = _CachedNodes.Single(p => p.Value == propertyIndex).Key;
+						//Expression.AddLast(property);
 						break;
 
 					case "ASGN":
+						propertyIndex = int.Parse(tokens.Dequeue());
+						var dstObjectNode = _CachedNodes.Single(p => p.Value == propertyIndex).Key;
+						objectNode.ObjectData = (dstObjectNode as ObjectNode).ObjectData;
 						break;
 
 					case "SHOW":
-						// read manifest
-						int tab = 20;
-						var table = new List<List<string>> { new List<string>(), new List<string>() };
-						table[0].Add("Properties: ");
-						table[1].Add("Methods: ");
-						foreach (var p in objectNode.Properties)
-						{
-							table[0].Add(p.Header);
-						}
-						foreach (var m in objectNode.Methods)
-						{
-							table[1].Add(m.Header);
-						}
-
-						// print
 						StringBuilder sb = new StringBuilder();
-						for (int i = 0; i < table[0].Count; i++)
+
+						sb.Append("Properties: ");
+						var properties = objectNode.Properties;
+						for (int i = 0; i < properties.Count; i++)
 						{
-							sb.Append(string.Format($"{{0,{tab}}}", table[0][i]));
+							AddToCachedNodes(properties[i]);
+							sb.Append(string.Format("{0,20}", _CachedNodes[properties[i]] + properties[i].Header));
 						}
 						Console.WriteLine(sb.ToString());
 						sb.Clear();
-						for (int i = 0; i < table[1].Count; i++)
+
+						sb.Append("Methods:    ");
+						var methods = objectNode.Methods;
+						for (int i = 0; i < methods.Count; i++)
 						{
-							sb.Append(string.Format($"{{0, {tab}}}", table[1][i]));
+							AddToCachedNodes(methods[i]);
+							sb.Append(string.Format("{0,20}", _CachedNodes[methods[i]] + methods[i].Header));
 						}
 						Console.WriteLine(sb.ToString());
+
 						break;
 
 					default:
@@ -81,6 +117,15 @@ namespace CLI
 			else
 			{
 				throw new NotImplementedException();
+			}
+		}
+
+		private static void AddToCachedNodes(Node node)
+		{
+			if (!_CachedNodes.ContainsKey(node))
+			{
+				_CachedNodes.Add(node, _Counter);
+				_Counter++;
 			}
 		}
 	}
