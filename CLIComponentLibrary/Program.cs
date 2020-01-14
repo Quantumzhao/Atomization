@@ -4,17 +4,18 @@ using System.Linq;
 using System.Text;
 using UIEngine;
 
-namespace CLI
+namespace CLITestSample
 {
 	class Program
 	{
-		private static Dictionary<Node, int> _CachedNodes = new Dictionary<Node, int>();
+		private static readonly Dictionary<Node, int> _CachedNodes = new Dictionary<Node, int>();
 		private static int _Counter = 0;
 		
 		private static Node _CurrentNode;
 
 		static void Main(string[] args)
 		{
+			ParseAndExecute("show");
 			while (true)
 			{
 				ParseAndExecute(Console.ReadLine());
@@ -24,46 +25,24 @@ namespace CLI
 		private static void ParseAndExecute(string input)
 		{
 			Queue<string> tokens = new Queue<string>(input.Split());
-
 			var opcode = tokens.Dequeue().ToUpper();
 
-			//if (opcode == "NEWX")
-			//{
-			//	Expression.Clear();
-
-			//	// print candidates
-			//	StringBuilder sb = new StringBuilder();
-			//	var properties = Dashboard.GetRootObjectNodes().ToArray();
-			//	for (int i = 0; i < properties.Length; i++)
-			//	{
-			//		sb.Append(string.Format("{0,20}", properties[i].Header));
-			//	}
-			//	Console.WriteLine(sb.ToString());
-			//	sb.Clear();
-			//	var methods = Dashboard.GetRootObjectNodes().ToArray();
-			//	for (int i = 0; i < methods.Length; i++)
-			//	{
-			//		sb.Append(string.Format("{0,20}", methods[i].Header));
-			//	}
-			//	Console.WriteLine(sb.ToString());
-			//}
-			//else if (opcode == "CXPN")
-			//{
-			//	var iter = Expression.First;
-			//	while (iter != null)
-			//	{
-			//		Console.Write(iter.Value.Header);
-			//		if (iter.Next != null)
-			//		{
-			//			Console.Write(" > ");
-			//		}
-			//	}
-			//	Console.WriteLine("\n");
-			//}
-
-			if (_CurrentNode is CollectionNode collectionNode)
+			if (opcode == "NAME")
 			{
+				Console.WriteLine($"{_CurrentNode.Header}\n");
+			}
+			else if (_CurrentNode == null)
+			{
+				switch (opcode)
+				{
+					case "SHOW":
+						PrintElements("Objects: ", Dashboard.GetRootObjectNodes().ToList());
+						PrintElements("Methods: ", Dashboard.GetRootMethodNodes().ToList());
+						break;
 
+					default:
+						return;
+				}
 			}
 			else if (_CurrentNode is ObjectNode objectNode)
 			{
@@ -72,61 +51,66 @@ namespace CLI
 				{
 					case "ACSS":
 						propertyIndex = int.Parse(tokens.Dequeue());
-						_CurrentNode = _CachedNodes.Single(p => p.Value == propertyIndex).Key;
-						//Expression.AddLast(property);
+						_CurrentNode = GetByID(propertyIndex);
 						break;
 
 					case "ASGN":
 						propertyIndex = int.Parse(tokens.Dequeue());
-						var dstObjectNode = _CachedNodes.Single(p => p.Value == propertyIndex).Key;
+						var dstObjectNode = GetByID(propertyIndex);
 						objectNode.ObjectData = (dstObjectNode as ObjectNode).ObjectData;
 						break;
 
 					case "SHOW":
-						StringBuilder sb = new StringBuilder();
-
-						sb.Append("Properties: ");
-						var properties = objectNode.Properties;
-						for (int i = 0; i < properties.Count; i++)
-						{
-							AddToCachedNodes(properties[i]);
-							sb.Append(string.Format("{0,20}", _CachedNodes[properties[i]] + properties[i].Header));
-						}
-						Console.WriteLine(sb.ToString());
-						sb.Clear();
-
-						sb.Append("Methods:    ");
-						var methods = objectNode.Methods;
-						for (int i = 0; i < methods.Count; i++)
-						{
-							AddToCachedNodes(methods[i]);
-							sb.Append(string.Format("{0,20}", _CachedNodes[methods[i]] + methods[i].Header));
-						}
-						Console.WriteLine(sb.ToString());
-
+						if (_CurrentNode is CollectionNode collectionNode)
+							Tabulate(collectionNode.Elements);
+						PrintElements("Properties: ", objectNode.Properties);
+						PrintElements("Methods: ", objectNode.Methods);
 						break;
 
 					default:
-						throw new InvalidOperationException("Invalid Opcode");
+						return;
 				}
 			}
 			else if (_CurrentNode is MethodNode methodNode)
 			{
 
 			}
-			else
-			{
-				throw new NotImplementedException();
-			}
+			else throw new NotImplementedException();
 		}
 
 		private static void AddToCachedNodes(Node node)
 		{
-			if (!_CachedNodes.ContainsKey(node))
+			if (_CachedNodes.ContainsKey(node)) return;
+
+			_CachedNodes.Add(node, _Counter);
+			_Counter++;
+		}
+
+		private static void Tabulate(List<List<ObjectNode>> table)
+		{
+			for (int i = 0; i < table.Count; i++)
 			{
-				_CachedNodes.Add(node, _Counter);
-				_Counter++;
+				for (int j = 0; j < table[i].Count; j++)
+				{
+					Console.Write(string.Format("{0,20}", table[i][j].Header));
+				}
+				Console.WriteLine();
 			}
+		}
+
+		private static Node GetByID(int id) => _CachedNodes.Single(p => p.Value == id).Key;
+
+		private static void PrintElements<T>(string caption, List<T> members) where T : Node
+		{
+			StringBuilder sb = new StringBuilder();
+			sb.Append(string.Format("{0,12}", caption));
+			for (int i = 0; i < members.Count; i++)
+			{
+				AddToCachedNodes(members[i]);
+				sb.Append(string.Format("{0,20}", _CachedNodes[members[i]] + members[i].Header));
+			}
+			Console.WriteLine(sb.ToString());
+			sb.Clear();
 		}
 	}
 }

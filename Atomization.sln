@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.28803.156
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Atomization", "Atomization\Atomization.csproj", "{014E6213-F13A-4969-8FAF-D91E82A37CC0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CLI", "CLIComponentLibrary\CLI.csproj", "{B27A4CD2-6467-4887-88E5-659B64C8815B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CLITestSample", "CLIComponentLibrary\CLITestSample.csproj", "{B27A4CD2-6467-4887-88E5-659B64C8815B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
