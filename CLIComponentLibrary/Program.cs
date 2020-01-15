@@ -22,17 +22,18 @@ namespace CLITestSample
 			}
 		}
 
-		/* NAME					: name of current objectnode
-		 * SHOW					: show members of current OBJECTNODE. If current is null, then show root members
-		 *						  If current is not an objectnode, nothing happens
-		 * SHOW #[No]			: show members of ID [No]
-		 * ACSS #[No]			: change current node to the one of ID [No]
-		 * ASGN #[No]			: assign the value of ID [No] to current objectnode
-		 * ASGN #[No1] #[No2]	: assign the value of ID [No2] to [No1]
-		 * ASGN #[No] {lit}		: assign a literal to ID [No]
-		 * ASGN {lit}			: assign a literal to current objectnode
-		 * PARA #[No1]
-		 * 
+		/* NAME							: name of current objectnode
+		 * SHOW							: show members of current OBJECTNODE. If current is null, then show root members
+		 * SHOW #[No]					: show members of ID [No]
+		 *								  If current is a methodnode, then show its members
+		 * ACSS #[No]					: change current node to the one of ID [No]
+		 * ASGN #[No]					: assign the value of ID [No] to current objectnode
+		 * ASGN #[No1] #[No2]			: assign the value of ID [No2] to [No1]
+		 * ASGN #[No] {lit}				: assign a literal to ID [No]
+		 * ASGN {lit}					: assign a literal to current objectnode
+		 * PARA #[No1] #[No2] #[No3]	: assign the value of [No3] to parameter [No2] of the method node of ID [No1]
+		 * PARA #[No1] #[No2] {lit}		: assign a literal to parameter [No2] of the method node of ID [No1]
+		 * EXEC #[No1]					: execute the method of [No1], and assign the result a new ID
 		 * e.g. 
 		 * ASGN #1 #2			ASGN #1				ASGN 0.0
 		 * ASGN #1 "Hello"		ASGN #1 1			ASGN #1 false
