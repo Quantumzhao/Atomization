@@ -31,10 +31,11 @@ namespace CLITestSample
 		 * ASGN #[No1] #[No2]	: assign the value of ID [No2] to [No1]
 		 * ASGN #[No] {lit}		: assign a literal to ID [No]
 		 * ASGN {lit}			: assign a literal to current objectnode
+		 * PARA #[No1]
 		 * 
 		 * e.g. 
-		 * ASGN [1] [2]			ASGN [1]			ASGN 0.0
-		 * ASGN [1] "Hello"		ASGN [1] 1			ASGN [1] false
+		 * ASGN #1 #2			ASGN #1				ASGN 0.0
+		 * ASGN #1 "Hello"		ASGN #1 1			ASGN #1 false
 		 */
 		private static void ParseAndExecute(string input)
 		{
@@ -47,11 +48,14 @@ namespace CLITestSample
 			}
 			else if (opcode == "SHOW")
 			{
+				// if `SHOW` is followed by one parameter
 				ObjectNode dstNode = _CurrentNode as ObjectNode;
 				if (tokens.TryDequeue(out string token))
 				{
+					// modify that node instead of current objectnode
 					dstNode = GetByID(ParseToID(token)) as ObjectNode;
 				}
+
 				if (dstNode != null)
 				{
 					if (dstNode is CollectionNode)
@@ -72,25 +76,38 @@ namespace CLITestSample
 			}
 			else if (opcode == "ACSS")
 			{
-				TryParse(tokens.Dequeue(), out object id);
-				_CurrentNode = GetByID((int)id);
+				_CurrentNode = GetByID(ParseToID(tokens.Dequeue()));
 			}
-			else if (opcode == "ASGN" && _CurrentNode is ObjectNode objectNode)
+			else if (opcode == "ASGN" && _CurrentNode is ObjectNode currentNode)
 			{
-				int id;
-				ObjectNode srcObjectNode;
-				if (tokens.Count == 2)
+				ObjectNode firstNode = currentNode;
+				// if the first parameter is an ID
+				if (TryParse(tokens.Dequeue(), out object firstValue))
 				{
-					srcObjectNode = GetByID(int.Parse(tokens.Dequeue())) as ObjectNode;
+					// convert the ID to an objectnode
+					firstNode = GetByID((int)firstValue) as ObjectNode;
+
+					// if there is a second parameter
+					if (tokens.TryDequeue(out string token))
+					{
+						// if it is an ID
+						if (TryParse(token, out object secondValue))
+						{
+							// At this stage, assume only objectnodes can be assigned to objectnodes
+							ObjectNode secondNode = GetByID((int)secondValue) as ObjectNode;
+							firstNode.ObjectData = secondNode.ObjectData;
+						}
+						else
+						{
+							firstNode.ObjectData = secondValue;
+						}
+					}
 				}
+				// it follows the `SHOW {lit}` syntax
 				else
 				{
-					srcObjectNode = objectNode;
+					firstNode.ObjectData = firstValue;
 				}
-
-				id = int.Parse(tokens.Dequeue());
-				var dstObjectNode = GetByID(id);
-				srcObjectNode.ObjectData = (dstObjectNode as ObjectNode).ObjectData;
 			}
 			else if (_CurrentNode is MethodNode methodNode)
 			{
@@ -116,7 +133,8 @@ namespace CLITestSample
 			{
 				for (int j = 0; j < table[i].Count; j++)
 				{
-					Console.Write(string.Format("{0,20}", table[i][j].Header));
+					AddToCachedNodes(table[i][j]);
+					Console.Write(string.Format("{0,20}", _CachedNodes[table[i][j]] + " " + table[i][j].Header));
 				}
 				Console.WriteLine();
 			}
@@ -131,7 +149,7 @@ namespace CLITestSample
 			for (int i = 0; i < members.Count; i++)
 			{
 				AddToCachedNodes(members[i]);
-				sb.Append(string.Format("{0,20}", _CachedNodes[members[i]] + members[i].Header));
+				sb.Append(string.Format("{0,20}", _CachedNodes[members[i]] + " " + members[i].Header));
 			}
 			Console.WriteLine(sb.ToString());
 		}
