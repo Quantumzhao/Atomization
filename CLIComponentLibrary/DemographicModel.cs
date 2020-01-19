@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Timers;
+using System.ComponentModel;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -91,13 +92,7 @@ namespace Demo
 
 		public void StartSimulation()
 		{
-			_Timer.Elapsed += (sender, e) =>
-			{
-				for (int i = 0; i < People.Count; i++)
-				{
-					People[i].Grow();
-				}
-			};
+			_Timer.Elapsed += (sender, e) => People.ForEach(p => p.Grow());
 			_Timer.Start();
 		}
 
@@ -108,7 +103,7 @@ namespace Demo
 		}
 	}
 
-	public class Person
+	public class Person : INotifyPropertyChanged
 	{
 		public Person(Gender gender, Person father, Person mother)
 		{
@@ -191,7 +186,7 @@ namespace Demo
 			set
 			{
 				_Spouse = value;
-				Dashboard.NotifyPropertyChanged(this, nameof(Spouse), value);
+				PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Spouse)));
 			}
 		}
 
@@ -203,7 +198,7 @@ namespace Demo
 			set
 			{
 				_Siblings = value;
-				Dashboard.NotifyPropertyChanged(this, nameof(Siblings), value);
+				PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Siblings)));
 			}
 		}
 
@@ -215,7 +210,7 @@ namespace Demo
 			private set
 			{
 				_Prob_Die = value;
-				Dashboard.NotifyPropertyChanged(this, nameof(Prob_Die), value);
+				PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Prob_Die)));
 			}
 		}
 
@@ -229,13 +224,12 @@ namespace Demo
 				if (value >= 0)
 				{
 					_Prob_Marry = value;
-					Dashboard.NotifyPropertyChanged(this, nameof(Prob_Marry), value);
 				}
 				else
 				{
 					_Prob_Marry = 0;
-					Dashboard.NotifyPropertyChanged(this, nameof(Prob_Marry), value);
 				}
+				PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Prob_Marry)));
 			}
 		}
 
@@ -248,13 +242,14 @@ namespace Demo
 			private set
 			{
 				_Prob_Reproduce = value;
-				Dashboard.NotifyPropertyChanged(this, nameof(Prob_Reproduce), value);
+				PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Prob_Reproduce)));
 			}
 		}
 
 		public static event Action<Person> Died;
 		public static event Action<Person> FindForSpouse;
 		public static event Action<Person, Person> Reproduce;
+		public event PropertyChangedEventHandler PropertyChanged;
 
 		public void Grow()
 		{

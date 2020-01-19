@@ -15,6 +15,8 @@ namespace CLITestSample
 
 		static void Main(string[] args)
 		{
+			Demo.DemographicModel.Init();
+			Dashboard.ImportEntryObjects(typeof(Demo.DemographicModel));
 			ParseAndExecute("show");
 			while (true)
 			{
@@ -25,7 +27,7 @@ namespace CLITestSample
 		/* NAME							: name of current objectnode
 		 * SHOW							: show members of current OBJECTNODE. If current is null, then show root members
 		 * SHOW #[No]					: show members of ID [No]
-		 *								  If current is a methodnode, then show its members
+		 *								  If current is a methodnode, then show its signature
 		 * ACSS #[No]					: change current node to the one of ID [No]
 		 * ASGN #[No]					: assign the value of ID [No] to current objectnode
 		 * ASGN #[No1] #[No2]			: assign the value of ID [No2] to [No1]
@@ -36,8 +38,8 @@ namespace CLITestSample
 		 * EXEC #[No1]					: execute the method of [No1], and assign the result a new ID
 		 * e.g. 
 		 * ASGN #1 #2			ASGN #1				ASGN 0.0
-		 * ASGN #1 "Hello"		ASGN #1 1			ASGN #1 false
-		 */
+		 * ASGN #1 "Hello"		ASGN #1 2			ASGN #1 false
+		 * PARA #1 #2 #3		PARA #1 #2 3		EXEC #1 */
 		private static void ParseAndExecute(string input)
 		{
 			Queue<string> tokens = new Queue<string>(input.Split());
@@ -49,30 +51,52 @@ namespace CLITestSample
 			}
 			else if (opcode == "SHOW")
 			{
-				// if `SHOW` is followed by one parameter
-				ObjectNode dstNode = _CurrentNode as ObjectNode;
-				if (tokens.TryDequeue(out string token))
+				if (_CurrentNode is ObjectNode || _CurrentNode == null)
 				{
-					// modify that node instead of current objectnode
-					dstNode = GetByID(ParseToID(token)) as ObjectNode;
-				}
-
-				if (dstNode != null)
-				{
-					if (dstNode is CollectionNode)
+					var dstNode = _CurrentNode as ObjectNode;
+					// if `SHOW` is followed by one parameter
+					if (tokens.TryDequeue(out string token))
 					{
-						Tabulate((dstNode as CollectionNode).Elements);
+						// modify that node instead of current objectnode
+						dstNode = GetByID(ParseToID(token)) as ObjectNode;
 					}
 
-					if (!dstNode.IsValueType)
+					if (dstNode != null)
+					{
+						if (dstNode is CollectionNode)
+						{
+							Tabulate((dstNode as CollectionNode).Elements);
+						}
+
+						if (!dstNode.IsValueType)
+						{
+							PrintElements("Objects: ", dstNode.Properties.ToList());
+							PrintElements("Methods: ", dstNode.Methods.ToList());
+						}
+						else
+						{
+							Console.WriteLine(dstNode.ObjectData + "\n");
+						}
+					}
+					else
 					{
 						PrintElements("Objects: ", Dashboard.GetRootObjectNodes().ToList());
 						PrintElements("Methods: ", Dashboard.GetRootMethodNodes().ToList());
 					}
-					else
+				}
+				else if (_CurrentNode is MethodNode methodNode)
+				{
+					Console.Write($"{methodNode.ReturnNode.Type.RestrictedType}{methodNode.Header}(");
+					for (int i = 0; i < methodNode.Signatures.Count; i++)
 					{
-						Console.WriteLine(dstNode.ObjectData);
+						var para = methodNode.Signatures[i];
+						Console.Write($"{para.Type.RestrictedType} {para.Header}");
+						if (i != methodNode.Signatures.Count - 1)
+						{
+							Console.Write(", ");
+						}
 					}
+					Console.WriteLine(")\n");
 				}
 			}
 			else if (opcode == "ACSS")
@@ -110,9 +134,17 @@ namespace CLITestSample
 					firstNode.ObjectData = firstValue;
 				}
 			}
-			else if (_CurrentNode is MethodNode methodNode)
+			else if (opcode == "EXEC")
 			{
-
+				var methodNode = GetByID(ParseToID(tokens.Dequeue())) as MethodNode;
+				var ret = methodNode.Invoke();
+				AddToCachedNodes(ret);
+				_CurrentNode = ret;
+				ParseAndExecute("show");
+			}
+			else if (opcode == "PARA")
+			{
+				
 			}
 			else throw new NotImplementedException();
 		}
@@ -135,7 +167,7 @@ namespace CLITestSample
 				for (int j = 0; j < table[i].Count; j++)
 				{
 					AddToCachedNodes(table[i][j]);
-					Console.Write(string.Format("{0,20}", _CachedNodes[table[i][j]] + " " + table[i][j].Header));
+					Console.Write(string.Format("{0,-20}", $"[{_CachedNodes[table[i][j]]}] {table[i][j].Header}"));
 				}
 				Console.WriteLine();
 			}
@@ -146,11 +178,11 @@ namespace CLITestSample
 		private static void PrintElements<T>(string caption, List<T> members) where T : Node
 		{
 			StringBuilder sb = new StringBuilder();
-			sb.Append(string.Format("{0,12}", caption));
+			sb.Append(string.Format("{0,-12}", caption));
 			for (int i = 0; i < members.Count; i++)
 			{
 				AddToCachedNodes(members[i]);
-				sb.Append(string.Format("{0,20}", _CachedNodes[members[i]] + " " + members[i].Header));
+				sb.Append(string.Format("{0,-20}", $"[{_CachedNodes[members[i]]}] {members[i].Header}"));
 			}
 			Console.WriteLine(sb.ToString());
 		}
