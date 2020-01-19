@@ -44,7 +44,7 @@ namespace Atomization.DataStructures
 			}
 			else if (finalStage is Policy)
 			{
-
+				
 			}
 			else if (finalStage is Purchase)
 			{
