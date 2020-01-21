@@ -64,7 +64,7 @@ namespace Atomization
 
 		public void UpdateValue(int nationalIndex)
 		{
-			Task.Create(Census.Create(nationalIndex), "Generating statistics");
+			Data.Me.TaskSequence.Add(Task.Create(Census.Create(nationalIndex), "Generating statistics"));
 		}
 	}
 

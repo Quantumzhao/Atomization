@@ -12,13 +12,18 @@ namespace Atomization.DataStructures
 			EventManager.TaskCompleted += OnTaskCompleted;
 		}
 
-		public readonly List<Task> Tasks = new List<Task>();
+		private readonly List<Task> _Tasks = new List<Task>();
 
 		public event NotifyCollectionChangedEventHandler CollectionChanged;
 
+		public void Add(Task newTask)
+		{
+			_Tasks.Add(newTask);
+		}
+
 		private void OnTaskCompleted(Task sender, TaskCompletedEventArgs e)
 		{
-			Tasks.Remove(sender);
+			_Tasks.Remove(sender);
 		}
 	}
 
