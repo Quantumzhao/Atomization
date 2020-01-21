@@ -51,10 +51,6 @@ namespace Atomization.DataStructures
 			{
 				
 			}
-			else if (finalStage is Purchase)
-			{
-
-			}
 			else if (finalStage is Manufacture)
 			{
 

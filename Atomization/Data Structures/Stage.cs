@@ -138,20 +138,6 @@ namespace Atomization.DataStructures
 		public override void Execute() => _Action();
 	}
 
-	public class Purchase : Stage
-	{
-		private Purchase() { }
-		public static Purchase Create()
-		{
-			throw new NotImplementedException();
-		}
-
-		public override void Execute()
-		{
-			throw new NotImplementedException();
-		}
-	}
-
 	public class Manufacture : Stage
 	{
 		private Manufacture() { }
@@ -183,7 +169,7 @@ namespace Atomization.DataStructures
 	public class Deployment : Stage
 	{
 		private Deployment() { }
-		public static Deployment Create()
+		public static Deployment Create(Platform.Types type)
 		{
 			throw new NotImplementedException();
 		}

@@ -37,6 +37,14 @@ namespace Atomization
 		public Region DeployRegion { get; set; }
 		public int AvailableLoad => NuclearWeapons.MaxCapacity - NuclearWeapons.Count;
 		public ConstrainedList<NuclearWeapon> NuclearWeapons { get; set; } = new ConstrainedList<NuclearWeapon>();
+
+		public enum Types
+		{
+			Silo,
+			StrategicBomber,
+			MissileLauncher,
+			NuclearSubmarine
+		}
 	}
 
 	public class Silo : Platform

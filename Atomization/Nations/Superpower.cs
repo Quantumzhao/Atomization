@@ -89,5 +89,63 @@ namespace Atomization
 
 			return superpower;
 		}
+
+		public static class Nuclear
+		{
+			public static void DeployNewNuclearStrikePlatform(Platform.Types type, Region region)
+			{
+				Data.Me.TaskSequence.Add(Task.Create(Deployment.Create(type), $"Deploying a new {type}"));
+			}
+
+
+			public static void DestroyNuke(NuclearWeapon nuclearWeapon)
+			{
+				throw new NotImplementedException();
+			}
+		}
+
+		public static class Operations
+		{
+			public static void InvadeAndStation(Nation target, double forcesFromMe, double forcesFromAlliance, 
+				bool doSupportaPuppet = false)
+			{
+
+			}
+
+			public static void Assinate(Nation target, PublicFigures figure)
+			{
+				throw new NotImplementedException();
+			}
+
+			public enum PublicFigures
+			{
+				
+			}
+		}
+
+		public static class Intelligence
+		{
+
+		}
+
+		public static class Defence
+		{
+
+		}
+
+		public static class Technology
+		{
+
+		}
+
+		public static class Domestic
+		{
+
+		}
+
+		public static class Diplomacy
+		{
+
+		}
 	}
 }

@@ -53,6 +53,7 @@ namespace Atomization
 
 		public TaskSequence TaskSequence { get; private set; } = new TaskSequence();
 		public TechTreeNode TechTree { get; }
+		public Dictionary<string, object> Reserve { get; } = new Dictionary<string, object>();
 
 		public void AddCostOfExecution(Effect cost)
 		{
