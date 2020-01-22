@@ -57,4 +57,9 @@ namespace Atomization.DataStructures
 	{
 		void Execute();
 	}
+
+	public interface IDeployable
+	{
+		Region DeployedRegion { get; set; }
+	}
 }

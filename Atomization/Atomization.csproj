@@ -107,6 +107,7 @@
     <Compile Include="Data Structures\Event.cs" />
     <Compile Include="Data Structures\Expression.cs" />
     <Compile Include="Data Structures\Growth.cs" />
+    <Compile Include="Data Structures\ManufactureOrder.cs" />
     <Compile Include="Data Structures\Stage.cs" />
     <Compile Include="Data Structures\ConstructableObject.cs" />
     <Compile Include="Data Structures\Task.cs" />

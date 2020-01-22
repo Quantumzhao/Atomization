@@ -169,14 +169,20 @@ namespace Atomization.DataStructures
 	public class Deployment : Stage
 	{
 		private Deployment() { }
-		public static Deployment Create(Platform.Types type)
+		public static Deployment Create(Region destination, IDeployable deployable)
 		{
+			Deployment deployment = new Deployment();
+			deployment.DeployableObject = deployable;
+			deployment._Execute = () => deployment.DeployableObject.DeployedRegion = destination;
 			throw new NotImplementedException();
 		}
 
+		private Action _Execute;
+		public IDeployable DeployableObject { get; private set; } = null;
+
 		public override void Execute()
 		{
-			throw new NotImplementedException();
+			_Execute();
 		}
 	}
 

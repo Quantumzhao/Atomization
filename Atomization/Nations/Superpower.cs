@@ -94,7 +94,8 @@ namespace Atomization
 		{
 			public static void DeployNewNuclearStrikePlatform(Platform.Types type, Region region)
 			{
-				Data.Me.TaskSequence.Add(Task.Create(Deployment.Create(type), $"Deploying a new {type}"));
+				Data.Me.TaskSequence.Add(Task.Create(Task.Types.MTD, $"Deploying a new {type}"));
+				throw new NotImplementedException();
 			}
 
 

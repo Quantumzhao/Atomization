@@ -45,7 +45,7 @@ namespace Atomization
 		public readonly ValueComplexNTuple NationalIndices = new ValueComplexNTuple();
 		public readonly ValueComplexNTuple OutdatedNationalIndices = new ValueComplexNTuple();
 
-		public ConstrainedList<Effect> ExpenditureAndRevenue = new ConstrainedList<Effect>();
+		//public ConstrainedList<Effect> ExpenditureAndRevenue = new ConstrainedList<Effect>();
 
 		public double Tactics { get; set; }
 
@@ -63,7 +63,7 @@ namespace Atomization
 			}
 		}
 
-		public void UpdateValue(int nationalIndex)
+		public void UpdateValue(ValueComplex nationalIndex)
 		{
 			Data.Me.TaskSequence.Add(Task.Create(Census.Create(nationalIndex), "Generating statistics"));
 		}

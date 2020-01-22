@@ -41,27 +41,28 @@ namespace Atomization.DataStructures
 			Name = name;
 		}
 
-		public static Task Create(Stage finalStage, string name)
+		public static Task Create(Types type, string name)
 		{
-			if (finalStage is Census)
+			switch (type)
 			{
-				return CreateCensus(finalStage as Census, name);
-			}
-			else if (finalStage is Policy)
-			{
-				
-			}
-			else if (finalStage is Manufacture)
-			{
-
-			}
-			else if (finalStage is Transportation)
-			{
-
-			}
-			else if (finalStage is Deployment)
-			{
-
+				case Types.Census:
+					return CreateCensus(Census.Create(-1), name);
+				case Types.Policy:
+					break;
+				case Types.Manufacture:
+					break;
+				case Types.Transportation:
+					break;
+				case Types.Deployment:
+					break;
+				case Types.MT:
+					break;
+				case Types.TD:
+					break;
+				case Types.MTD:
+					break;
+				default:
+					break;
 			}
 			throw new NotImplementedException();
 		}
@@ -89,6 +90,18 @@ namespace Atomization.DataStructures
 					EventManager.RaiseEvent(this, new TaskCompletedEventArgs());
 				}
 			}
+		}
+
+		public enum Types
+		{
+			Census = 1,
+			Policy = 2,
+			Manufacture = 4,
+			Transportation = 8,
+			Deployment = 16,
+			MT = 12,
+			TD = 24,
+			MTD = 28
 		}
 	}
 }

@@ -1,9 +1,10 @@
 ﻿using Atomization.DataStructures;
 using System.ComponentModel;
+using System;
 
 namespace Atomization
 {
-	public abstract class NuclearWeapon
+	public abstract class NuclearWeapon : IDeployable
 	{
 		protected NuclearWeapon()
 		{
@@ -53,6 +54,8 @@ namespace Atomization
 
 		public ConstrainedList<Warhead> Warheads { get; set; } = new ConstrainedList<Warhead>();
 		public string WarheadType => Warheads.Count != 1 ? "(Multiple Types)" : Warheads[0].WarheadType;
+
+		public Region DeployedRegion { get; set; }
 	}
 
 	public abstract class NuclearMissile : NuclearWeapon

@@ -17,7 +17,7 @@ namespace Atomization
 		public static ObservableCollection<NuclearWeapon> MyNuclearWeapons { get; set; }
 			= new ObservableCollection<NuclearWeapon>();
 
-		public static void Initiaze()
+		public static void Initialize()
 		{
 			#region Initializa names of regions
 			try
