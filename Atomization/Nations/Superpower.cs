@@ -45,10 +45,10 @@ namespace Atomization
 			superpower.NationalIndices.Stability.CurrentValue = 75;
 			superpower.NationalIndices.Bureaucracy.CurrentValue = 10;
 
-			for (int i = 0; i < INITIAL_NUKE_SILOS; i++)
-			{
-				superpower.NuclearPlatforms.Add(new Silo(superpower));
-			}
+			//for (int i = 0; i < INITIAL_NUKE_SILOS; i++)
+			//{
+			//	superpower.NuclearPlatforms.Add(new Silo(superpower));
+			//}
 
 			//superpower.ExpenditureAndRevenue.Add(
 			//	new Effect(
@@ -92,27 +92,59 @@ namespace Atomization
 
 		public static class Nuclear
 		{
-			public static void DeployNewNuclearStrikePlatform(Platform.Types type, Region region)
-			{
-				//Data.Me.TaskSequence.AddNewTask(Task.Types.MTD, $"Deploying a new {type}");
-				throw new NotImplementedException();
-			}
+			//public static void DeployNewNuclearStrikePlatform(Platform.Types type, Region region)
+			//{
+			//	Data.Me.TaskSequence.AddNewTask(Task.Types.MTD, $"Deploying a new {type}");
+			//	throw new NotImplementedException();
+			//}
 
+			public static void EnrollNukeStrikePlatfrom(Platform.Types type)
+			{
+				var manu = new Manufacture($"Sending a new {type} to reserve", () => MakePlatform(type));
+				Data.Me.TaskSequence.AddNewTask(manu);
+				EventManager.TaskProgressAdvenced += NukeStrikePlatformManufactureCompleted;				
+			}
+			private static Platform MakePlatform(Platform.Types type)
+			{
+				switch (type)
+				{
+					case Platform.Types.Silo:
+						return new Silo();
+					case Platform.Types.StrategicBomber:
+						return new StrategicBomber();
+					case Platform.Types.MissileLauncher:
+						return new MissileLauncher();
+					case Platform.Types.NuclearSubmarine:
+						return new NuclearSubmarine();
+					default:
+						throw new InvalidOperationException();
+				}
+			}
+			private static void NukeStrikePlatformManufactureCompleted(Task sender, TaskProgressAdvancedEventArgs e)
+			{
+				if (e.IsTaskFinished && 
+					sender is Manufacture manufacture &&
+					manufacture.FinalProduct is Platform platform)
+				{
+					Data.Me.Reserve.Add("Platform", platform);
+				}
+			}
 
 			public static void DestroyNuke(NuclearWeapon nuclearWeapon)
 			{
-				Data.Me.TaskSequence.AddNewTask(Task.Types.TD, $"Destroying {nuclearWeapon}", null);
+				Deployment destruction = new Deployment($"Destroying {nuclearWeapon}", null, nuclearWeapon);
+				Data.Me.TaskSequence.AddNewTask(destruction);
 
-				EventManager.TaskProgressAdvenced += RemoveNuke;
-				throw new NotImplementedException();
+				EventManager.TaskProgressAdvenced += (s, e) => RemoveNuke(s, e, nuclearWeapon);
 			}
-			private static void RemoveNuke(Task sender, TaskProgressAdvancedEventArgs e)
+			private static void RemoveNuke(Task sender, TaskProgressAdvancedEventArgs e, NuclearWeapon weapon)
 			{
-				if (sender is Deployment deployment && )
+				if (e.IsTaskFinished &&
+					sender is Deployment deployment && 
+					deployment.DeployableObject == weapon)
 				{
-
+					weapon.DestroyThis();
 				}
-				throw new NotImplementedException();
 			}
 		}
 

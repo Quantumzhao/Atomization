@@ -4,12 +4,19 @@ using System;
 
 namespace Atomization
 {
-	public abstract class NuclearWeapon : IDeployable
+	public abstract class NuclearWeapon : IDeployable, IDestroyable
 	{
 		protected NuclearWeapon()
 		{
+			SelfDestroyed += () => Warheads.ForEach(wh => wh.DestroyThis());
 		}
 
+		public event Action SelfDestroyed;
+
+		public ConstrainedList<Warhead> Warheads { get; } = new ConstrainedList<Warhead>();
+		public string WarheadType => Warheads.Count != 1 ? "(Multiple Types)" : Warheads[0].WarheadType;
+		public Region DeployedRegion { get; set; }
+		
 		private string _Name;
 		public string Name
 		{
@@ -52,10 +59,7 @@ namespace Atomization
 			}
 		}
 
-		public ConstrainedList<Warhead> Warheads { get; set; } = new ConstrainedList<Warhead>();
-		public string WarheadType => Warheads.Count != 1 ? "(Multiple Types)" : Warheads[0].WarheadType;
-
-		public Region DeployedRegion { get; set; }
+		public void DestroyThis() => SelfDestroyed?.Invoke();
 	}
 
 	public abstract class NuclearMissile : NuclearWeapon

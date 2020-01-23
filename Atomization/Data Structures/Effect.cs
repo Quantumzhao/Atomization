@@ -39,7 +39,7 @@ namespace Atomization.DataStructures
 			{
 				if (Values[i] == null)
 				{
-					Values[i] = 0;
+					Values[i] = (Expression)0;
 				}
 			}
 		}
@@ -59,5 +59,11 @@ namespace Atomization.DataStructures
 		public double Nationalism => Values[8].Value;
 		public double Satifaction => Values[9].Value;
 		public double Bureaucracy => Values[10].Value;
+
+		public Expression this[int index]
+		{
+			get => Values[index];
+			set => Values[index] = value;
+		}
 	}
 }

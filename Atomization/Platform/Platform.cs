@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using Atomization.DataStructures;
+using System;
 
 namespace Atomization
 {
-	public abstract class Platform
+	public abstract class Platform : IDestroyable
 	{
 		protected Platform()
 		{
@@ -21,6 +22,8 @@ namespace Atomization
 					Data.MyNuclearWeapons.Remove(e.OldItems[0] as NuclearWeapon);
 				}
 			};
+
+			SelfDestroyed += () => NuclearWeapons.ForEach(w => w.DestroyThis());
 
 			//ConstructionCompleted += item =>
 			//{
@@ -38,6 +41,13 @@ namespace Atomization
 		public int AvailableLoad => NuclearWeapons.MaxCapacity - NuclearWeapons.Count;
 		public ConstrainedList<NuclearWeapon> NuclearWeapons { get; set; } = new ConstrainedList<NuclearWeapon>();
 
+		public event Action SelfDestroyed;
+
+		public void DestroyThis()
+		{
+			SelfDestroyed?.Invoke();
+		}
+
 		public enum Types
 		{
 			Silo,
@@ -49,11 +59,11 @@ namespace Atomization
 
 	public class Silo : Platform
 	{
-		public Silo(Nation deployRegion) : base()
+		public Silo() : base()
 		{
 			//_BuildTime = 4;
 
-			DeployRegion = deployRegion;
+			//DeployRegion = deployRegion;
 
 			NuclearWeapons.MaxCapacity = 1;
 
@@ -66,11 +76,11 @@ namespace Atomization
 
 	public class StrategicBomber : Platform
 	{
-		public StrategicBomber(Nation deployRegion) : base()
+		public StrategicBomber() : base()
 		{
 			//_BuildTime = 7;
 
-			DeployRegion = deployRegion;
+			//DeployRegion = deployRegion;
 
 			NuclearWeapons.MaxCapacity = 1;
 
@@ -83,11 +93,11 @@ namespace Atomization
 
 	public class MissileLauncher : Platform
 	{
-		public MissileLauncher(Nation deployRegion) : base()
+		public MissileLauncher() : base()
 		{
 			//_BuildTime = 6;
 
-			DeployRegion = deployRegion;
+			//DeployRegion = deployRegion;
 
 			NuclearWeapons.MaxCapacity = 1;
 
@@ -100,11 +110,11 @@ namespace Atomization
 
 	public class NuclearSubmarine : Platform
 	{
-		public NuclearSubmarine(Region deployRegion) : base()
+		public NuclearSubmarine() : base()
 		{
 			//_BuildTime = 12;
 
-			DeployRegion = deployRegion;
+			//DeployRegion = deployRegion;
 
 			NuclearWeapons.MaxCapacity = 8;
 

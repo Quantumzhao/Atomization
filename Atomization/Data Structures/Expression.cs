@@ -35,7 +35,7 @@ namespace Atomization.DataStructures
 
 		public double Value => _Function(Parameter);
 
-		public static implicit operator Expression(double value) => new Expression(value);
+		public static explicit operator Expression(double value) => new Expression(value);
 
 		public void Add(Expression expression)
 		{

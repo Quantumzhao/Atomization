@@ -51,24 +51,22 @@ namespace Atomization
 
 		public double AdjustedBureaucracyIndex => 0.1 * Math.Pow(1.2, NationalIndices.Bureaucracy.CurrentValue);
 
-		public TaskSequence TaskSequence { get; private set; } = new TaskSequence();
+		public TaskSequence TaskSequence { get; } = new TaskSequence();
 		public TechTreeNode TechTree { get; }
 		public Dictionary<string, object> Reserve { get; } = new Dictionary<string, object>();
 
-		public void AddCostOfExecution(Effect cost)
-		{
-			for (int i = 0; i < cost.Values.Length; i++)
-			{
-				NationalIndices[i].CurrentValue += cost.Values[i].Value;
-			}
-		}
+		//public void AddCostOfExecution(Effect cost)
+		//{
+		//	for (int i = 0; i < cost.Values.Length; i++)
+		//	{
+		//		NationalIndices[i].CurrentValue += cost.Values[i].Value;
+		//	}
+		//}
 
 		public void UpdateValue(int nationalIndex)
 		{
-			Data.Me.TaskSequence.AddNewTask(
-				Task.Types.Census, "Generating statistics", 
-				census => Census.UpdateMyIndices(census as Census, nationalIndex)
-			);
+			Census census = new Census("Generating statistics", nationalIndex);
+			Data.Me.TaskSequence.AddNewTask(census);
 		}
 	}
 
