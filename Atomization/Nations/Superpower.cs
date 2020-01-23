@@ -94,13 +94,24 @@ namespace Atomization
 		{
 			public static void DeployNewNuclearStrikePlatform(Platform.Types type, Region region)
 			{
-				Data.Me.TaskSequence.Add(Task.Create(Task.Types.MTD, $"Deploying a new {type}"));
+				//Data.Me.TaskSequence.AddNewTask(Task.Types.MTD, $"Deploying a new {type}");
 				throw new NotImplementedException();
 			}
 
 
 			public static void DestroyNuke(NuclearWeapon nuclearWeapon)
 			{
+				Data.Me.TaskSequence.AddNewTask(Task.Types.TD, $"Destroying {nuclearWeapon}", null);
+
+				EventManager.TaskProgressAdvenced += RemoveNuke;
+				throw new NotImplementedException();
+			}
+			private static void RemoveNuke(Task sender, TaskProgressAdvancedEventArgs e)
+			{
+				if (sender is Deployment deployment && )
+				{
+
+				}
 				throw new NotImplementedException();
 			}
 		}

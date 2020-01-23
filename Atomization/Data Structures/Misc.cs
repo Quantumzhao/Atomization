@@ -9,7 +9,7 @@ using Atomization.DataStructures;
 
 namespace Atomization.DataStructures
 {
-	public delegate void StageFinishedHandler(Stage previous, Stage next, Task task);
+	public delegate void StageFinishedHandler(Task previous, Task next, Task task);
 
 	//public class VMList<V> : List<V>, INotifyCollectionChanged
 	//{

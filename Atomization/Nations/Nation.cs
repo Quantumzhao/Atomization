@@ -63,9 +63,12 @@ namespace Atomization
 			}
 		}
 
-		public void UpdateValue(ValueComplex nationalIndex)
+		public void UpdateValue(int nationalIndex)
 		{
-			Data.Me.TaskSequence.Add(Task.Create(Census.Create(nationalIndex), "Generating statistics"));
+			Data.Me.TaskSequence.AddNewTask(
+				Task.Types.Census, "Generating statistics", 
+				census => Census.UpdateMyIndices(census as Census, nationalIndex)
+			);
 		}
 	}
 

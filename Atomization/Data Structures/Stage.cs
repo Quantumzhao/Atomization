@@ -12,9 +12,9 @@ namespace Atomization.DataStructures
 	 * 2. Enactments and policies (make changes to values/in-game entities)
 	 * 3. Orders to manufacture (create new in-game entities and deploy) 
 	 * etc. */
-	public abstract class Stage : IExecutable, INotifyPropertyChanged
+	public abstract class Task : IExecutable, INotifyPropertyChanged
 	{
-		protected Stage() 
+		protected Task() 
 		{
 			GameManager.TimeElapsed += AdvanceProgress;
 		}
@@ -51,7 +51,7 @@ namespace Atomization.DataStructures
 		private void AdvanceProgress()
 		{
 			_TimeElapsed++;
-			EventManager.RaiseEvent(this, new StageProgressAdvancedEventArgs(
+			EventManager.RaiseEvent(this, new TaskProgressAdvancedEventArgs(
 				Misc.Round(_RequiredTime.Value - _TimeElapsed)));
 		}
 
@@ -72,24 +72,28 @@ namespace Atomization.DataStructures
 		//		}
 		//	}
 		//}
+		public enum Types
+		{
+			Census = 1,
+			Policy = 2,
+			Manufacture = 4,
+			Transportation = 8,
+			Deployment = 16,
+			MT = 12,
+			TD = 24,
+			MTD = 28
+		}
 	}
 
-	public class Census : Stage
+	public class Census : Task
 	{
-		private Census() { }
-		public static Census Create(int nationalIndex)
-		{
-			var census = new Census();
-			census.Init(nationalIndex);
-			return census;
-		}
+		public Action<Task> DoCensus;
 
-		private Action _Execute;
+		public override void Execute() => DoCensus(this);
 
-		private void Init(int index)
+		public static void UpdateMyIndices(Census me, int valueIndex)
 		{
-			// Wait for the implementation of tech tree system
-			switch (index)
+			switch (valueIndex)
 			{
 				// Population
 				case 1:
@@ -101,26 +105,21 @@ namespace Atomization.DataStructures
 				case 9:
 				// Bureaucracy
 				case 10:
-					_LongTermEffect = new Effect(economy: new Expression(1, p => 1 + p * Data.Me.AdjustedBureaucracyIndex));
-					_RequiredTime = new Expression(2, p => p * Data.Me.AdjustedBureaucracyIndex);
+					me._LongTermEffect = new Effect(economy: new Expression(1, p => 1 + p * Data.Me.AdjustedBureaucracyIndex));
+					me._RequiredTime = new Expression(2, p => p * Data.Me.AdjustedBureaucracyIndex);
 					break;
 
 				default:
-					_LongTermEffect = new Effect();
-					_RequiredTime = new Expression(1, p => p * Data.Me.AdjustedBureaucracyIndex);
+					me._LongTermEffect = new Effect();
+					me._RequiredTime = new Expression(1, p => p * Data.Me.AdjustedBureaucracyIndex);
 					break;
 			}
 
-			_Execute = () => UpdateMyIndices(index);
-		}
-
-		public override void Execute() => _Execute();
-
-		private void UpdateMyIndices(int valueIndex) => 
 			Data.Me.OutdatedNationalIndices[valueIndex].Update(Data.Me.NationalIndices[valueIndex]);
+		}
 	}
 
-	public class Policy : Stage
+	public class Policy : Task
 	{
 		private Action _Action;
 
@@ -138,7 +137,7 @@ namespace Atomization.DataStructures
 		public override void Execute() => _Action();
 	}
 
-	public class Manufacture : Stage
+	public class Manufacture : Task
 	{
 		private Manufacture() { }
 		public static Manufacture Create()
@@ -152,7 +151,7 @@ namespace Atomization.DataStructures
 		}
 	}
 
-	public class Transportation : Stage
+	public class Transportation : Task
 	{
 		private Transportation() { }
 		public static Transportation Create()
@@ -166,7 +165,7 @@ namespace Atomization.DataStructures
 		}
 	}
 
-	public class Deployment : Stage
+	public class Deployment : Task
 	{
 		private Deployment() { }
 		public static Deployment Create(Region destination, IDeployable deployable)

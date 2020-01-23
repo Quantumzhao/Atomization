@@ -5,23 +5,19 @@ namespace Atomization
 {
 	public static class EventManager
 	{
-		public static event StageProgressAdvanceHandler StageProgressAdvenced;
+		public static event TaskProgressAdvanceHandler TaskProgressAdvenced;
 		public static event ValueUpdatedHandler ValueUpdated;
-		public static event TaskCompletedHandler TaskCompleted;
+		//public static event TaskCompletedHandler TaskCompleted;
 
 		public static void RaiseEvent(object sender, GameEventArgs e)
 		{
-			if (e is StageProgressAdvancedEventArgs se)
+			if (e is TaskProgressAdvancedEventArgs se)
 			{
-				StageProgressAdvenced?.Invoke(sender as Stage, se);
+				TaskProgressAdvenced?.Invoke(sender as Task, se);
 			}
 			else if (e is ValueUpdatedEventArgs ve)
 			{
 				ValueUpdated?.Invoke(sender as ValueComplex, ve);
-			}
-			else if (e is TaskCompletedEventArgs)
-			{
-				
 			}
 		}
 	}

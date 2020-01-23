@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿/* Obsolete */
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System;
 
@@ -9,21 +10,56 @@ namespace Atomization.DataStructures
 	{
 		public TaskSequence()
 		{
-			EventManager.TaskCompleted += OnTaskCompleted;
+			EventManager.TaskProgressAdvenced += OnTaskCompleted;
 		}
 
 		private readonly List<Task> _Tasks = new List<Task>();
 
 		public event NotifyCollectionChangedEventHandler CollectionChanged;
 
-		public void Add(Task newTask)
+		public void AddNewTask(Task.Types task, string name, Action<Task> onExecute)
 		{
-			_Tasks.Add(newTask);
+			switch (task)
+			{
+				case Task.Types.Census:
+					var census = new Census();
+					census.DoCensus = onExecute;
+					_Tasks.Add(census);
+					break;
+
+				case Task.Types.Policy:
+					break;
+
+				case Task.Types.Manufacture:
+					break;
+
+				case Task.Types.Transportation:
+					break;
+
+				case Task.Types.Deployment:
+					break;
+
+				case Task.Types.MT:
+					break;
+
+				case Task.Types.TD:
+					break;
+
+				case Task.Types.MTD:
+					break;
+
+				default:
+					break;
+			}
+			//_Tasks.Add(newTask);
 		}
 
-		private void OnTaskCompleted(Task sender, TaskCompletedEventArgs e)
+		private void OnTaskCompleted(Task sender, TaskProgressAdvancedEventArgs e)
 		{
-			_Tasks.Remove(sender);
+			if (e.IsTaskFinished)
+			{
+				_Tasks.Remove(sender);
+			}
 		}
 	}
 
@@ -32,7 +68,7 @@ namespace Atomization.DataStructures
 	 * involves purchasing, manufacture, transportation and finally deployment. 
 	 * Each stage itself requires time and resource. 
 	 * When a certain stage is finished, the next stage begins. */
-	public class Task : Queue<Stage>
+	/* public class Task : Queue<Stage>
 	{
 		private Task(string name) 
 		{
@@ -41,7 +77,7 @@ namespace Atomization.DataStructures
 			Name = name;
 		}
 
-		public static Task Create(Types type, string name)
+		public static Task Create(Types type, Action onExecute, string name)
 		{
 			switch (type)
 			{
@@ -92,17 +128,6 @@ namespace Atomization.DataStructures
 			}
 		}
 
-		public enum Types
-		{
-			Census = 1,
-			Policy = 2,
-			Manufacture = 4,
-			Transportation = 8,
-			Deployment = 16,
-			MT = 12,
-			TD = 24,
-			MTD = 28
-		}
-	}
+	}*/
 }
  
