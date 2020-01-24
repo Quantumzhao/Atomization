@@ -73,6 +73,6 @@ namespace Atomization.DataStructures
 
 	public interface IBuildable : IDestroyable
 	{
-
+		Effect BuildCost_LongTerm { get; }
 	}
 }

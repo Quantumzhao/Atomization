@@ -2,7 +2,7 @@
 
 > **Update:**
 > 
-> Since the domain model of this simulator is too complicated for me to implement any visualization, I will resume working on this after finishing the *UI Engine* project (and of course I will use that framework to implement the user interface). 
+> The main architecture of *UI Engine* project is almost finished, and therefore I can continue writing this game. 
 
 ## Introduction
 
@@ -19,5 +19,15 @@ This game (simulator) is not adapted from any existed historical events. The dev
 ____
 ## Current Progress
 ![picture](Screenshot.jpg)
+
+Currently, I am rewriting the underlying architecture of this game, since the previous one is too clumsy and awkward. The version after this major refactor would be quite different from the old one, and therefore, the screenshot taken above would be completely **outdated** at that time. 
+
+# Todo
+
+- [ ] Re-write the in-game event system and the event propagation process
+- [ ] Implement a new task sequence. All commands given by the player will take effect after go through a task management sequence. 
+- [ ] More complicated deployment process
+- [ ] Re-write the whole UI using *UI Engine*. 
+
 ___
-**This game is still under developement, and tons of bugs exist. If you have any problems and ideas about the source code, it is welcomed to be posted in ISSUES**
+**This game is still under development, and tons of bugs exist. If you have any problems and ideas about the source code, it is welcomed to be posted in ISSUES**

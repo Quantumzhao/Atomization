@@ -25,5 +25,10 @@ namespace Atomization
 	public static class GameManager
 	{
 		public static event Action TimeElapsed;
+
+		public static void InitializeAll()
+		{
+			Platform.InitializeStaticMember();
+		}
 	}
 }

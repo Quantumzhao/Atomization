@@ -17,49 +17,10 @@ namespace Atomization.DataStructures
 
 		public event NotifyCollectionChangedEventHandler CollectionChanged;
 
-		public void AddNewTask(Task task) => _Tasks.Add(task);
-
-		//public void AddNewTask(Task.Types task, string name, Action<Task> onExecute)
-		//{
-		//	switch (task)
-		//	{
-		//		case Task.Types.Census:
-		//			var census = new Census(name);
-		//			census.DoCensus = onExecute;
-		//			_Tasks.Add(census);
-		//			break;
-
-		//		case Task.Types.Policy:
-		//			break;
-
-		//		case Task.Types.Manufacture:
-		//			var manu = new Manufacture(name);
-
-		//			break;
-
-		//		case Task.Types.Transportation:
-		//			break;
-
-		//		case Task.Types.Deployment:
-		//			break;
-
-		//		case Task.Types.MT:
-		//			break;
-
-		//		case Task.Types.TD:
-		//			var transportation = new Transportation(name);
-		//			EventManager.TaskProgressAdvenced += ContinueDeployment;
-		//			_Tasks.Add(transportation);
-		//			break;
-
-		//		case Task.Types.MTD:
-		//			break;
-
-		//		default:
-		//			break;
-		//	}
-		//	//_Tasks.Add(newTask);
-		//}
+		public void AddNewTask(Task task)
+		{
+			_Tasks.Add(task);
+		}
 
 		private void OnTaskCompleted(Task sender, TaskProgressAdvancedEventArgs e)
 		{
@@ -68,15 +29,6 @@ namespace Atomization.DataStructures
 				_Tasks.Remove(sender);
 			}
 		}
-
-		//private void ContinueDeployment(Task sender, TaskProgressAdvancedEventArgs e)
-		//{
-		//	if (e.IsTaskFinished &&
-		//		sender is Transportation transportation)
-		//	{
-		//		AddNewTask(Task.Types.Transportation, sender.Name, null);
-		//	}
-		//}
 	}
 }
  

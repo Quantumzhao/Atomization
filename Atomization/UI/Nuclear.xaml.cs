@@ -122,7 +122,7 @@ namespace Atomization
 			}
 
 			if (RegionOfDeployment.SelectedItem == null) return;
-			prefab.DeployRegion = RegionOfDeployment.SelectedItem as Region;
+			prefab.DeployedRegion = RegionOfDeployment.SelectedItem as Region;
 			Data.Me.NuclearPlatforms.Add(prefab);
 
 			MessageBox.Show(

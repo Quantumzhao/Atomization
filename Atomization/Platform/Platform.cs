@@ -24,24 +24,21 @@ namespace Atomization
 			};
 
 			SelfDestroyed += () => NuclearWeapons.ForEach(w => w.DestroyThis());
-
-			//ConstructionCompleted += item =>
-			//{
-			//	if (DeployRegion is Nation)
-			//	{
-			//		(DeployRegion as Nation).Affiliation.ExpenditureAndRevenue.Add(item.LongTermImpact);
-			//	}
-			//	else
-			//	{
-			//		(DeployRegion as Waters).Affiliation.Affiliation.ExpenditureAndRevenue.Add(item.LongTermImpact);
-			//	}
-			//};
 		}
-		public Region DeployRegion { get; set; }
+
+		public Region DeployedRegion { get; set; }
 		public int AvailableLoad => NuclearWeapons.MaxCapacity - NuclearWeapons.Count;
 		public ConstrainedList<NuclearWeapon> NuclearWeapons { get; set; } = new ConstrainedList<NuclearWeapon>();
 
 		public event Action SelfDestroyed;
+
+		public static void InitializeStaticMember()
+		{
+			Silo.InitializeStaticMember();
+			StrategicBomber.InitializeStaticMember();
+			MissileLauncher.InitializeStaticMember();
+			NuclearSubmarine.InitializeStaticMember();
+		}
 
 		public void DestroyThis()
 		{
@@ -59,69 +56,84 @@ namespace Atomization
 
 	public class Silo : Platform
 	{
+
 		public Silo() : base()
 		{
-			//_BuildTime = 4;
-
-			//DeployRegion = deployRegion;
-
 			NuclearWeapons.MaxCapacity = 1;
-
-			//DirectImpact = new Effect("Missile Silo Construction", economy: -40, rawMaterial: -60);
 			//LongTermImpact = new Effect("Nuclear Arsenal Maintenance", economy: -2, rawMaterial: -5);
+		}
 
-			//(DeployRegion as Nation).Affiliation.AddCostOfExecution(DirectImpact);
+		public static Effect LongTermEffect_M { get; set; }
+		public static Effect ShortTermEffect_M { get; set; }
+		public static Expression RequiredTime_M { get; set; }
+
+		public static new void InitializeStaticMember()
+		{
+			RequiredTime_M = (Expression)4;
+			LongTermEffect_M = new Effect(economy: (Expression)(-2), rawMaterial: (Expression)(-5));
+			ShortTermEffect_M = new Effect(economy: (Expression)(-40), rawMaterial: (Expression)(-60));
 		}
 	}
 
 	public class StrategicBomber : Platform
 	{
+		public static Effect LongTermEffect_M { get; set; }
+		public static Effect ShortTermEffect_M { get; set; }
+		public static Expression RequiredTime_M { get; set; }
+
 		public StrategicBomber() : base()
 		{
-			//_BuildTime = 7;
-
-			//DeployRegion = deployRegion;
-
 			NuclearWeapons.MaxCapacity = 1;
-
-			//DirectImpact = new Effect("Strategic Bomber Construction", economy: -30, rawMaterial: -5);
 			//LongTermImpact = new Effect("Nuclear Arsenal Maintenance", economy: -10, rawMaterial: -30);
+		}
 
-			//(DeployRegion as Nation).Affiliation.AddCostOfExecution(DirectImpact);
+		public static new void InitializeStaticMember()
+		{
+			RequiredTime_M = (Expression)7;
+			ShortTermEffect_M = new Effect(economy: (Expression)(-30), rawMaterial: (Expression)(-5));
+			LongTermEffect_M = new Effect(economy: (Expression)(-10), rawMaterial: (Expression)(-30));
 		}
 	}
 
 	public class MissileLauncher : Platform
 	{
+		public static Effect LongTermEffect_M { get; set; }
+		public static Effect ShortTermEffect_M { get; set; }
+		public static Expression RequiredTime_M { get; set; }
+
 		public MissileLauncher() : base()
 		{
-			//_BuildTime = 6;
-
-			//DeployRegion = deployRegion;
-
 			NuclearWeapons.MaxCapacity = 1;
-
-			//DirectImpact = new Effect("Missile Launcher Construction", economy: -45, rawMaterial: -8);
 			//LongTermImpact = new Effect("Nuclear Arsenal Maintenance", economy: -6, rawMaterial: -4);
+		}
 
-			//(DeployRegion as Nation).Affiliation.AddCostOfExecution(DirectImpact);
+		public static new void InitializeStaticMember()
+		{
+			RequiredTime_M = (Expression)6;
+			ShortTermEffect_M = new Effect(economy: (Expression)(-45), rawMaterial: (Expression)(-8));
+			LongTermEffect_M = new Effect(economy: (Expression)(-6), rawMaterial: (Expression)(-4));
 		}
 	}
 
 	public class NuclearSubmarine : Platform
 	{
+		public static Effect LongTermEffect_M { get; set; }
+		public static Effect ShortTermEffect_M { get; set; }
+		public static Expression RequiredTime_M { get; set; }
+
 		public NuclearSubmarine() : base()
 		{
-			//_BuildTime = 12;
-
-			//DeployRegion = deployRegion;
-
 			NuclearWeapons.MaxCapacity = 8;
-
-			//DirectImpact = new Effect("Nuclear Submarine Construction", economy: -100, rawMaterial: -200, nuclearMaterial: -1);
 			//LongTermImpact = new Effect("Nuclear Arsenal Maintenance", economy: -15, rawMaterial: -10, nuclearMaterial: -0.05);
+		}
 
-			//(DeployRegion as Nation).Affiliation.AddCostOfExecution(DirectImpact);
+		public static new void InitializeStaticMember()
+		{
+			RequiredTime_M = (Expression)12;
+			ShortTermEffect_M = new Effect(economy: (Expression)(-100), rawMaterial: (Expression)(-200), 
+				nuclearMaterial: (Expression)(-1));
+			LongTermEffect_M = new Effect(economy: (Expression)(-15), rawMaterial: (Expression)(-10), 
+				nuclearMaterial: (Expression)(-0.05));
 		}
 	}
 }

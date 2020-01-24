@@ -14,14 +14,16 @@ namespace Atomization.DataStructures
 	 * etc. */
 	public abstract class Task : IExecutable, INotifyPropertyChanged
 	{
-		protected Task(string name) 
+		protected Task(string name, Effect longTermEffect, Effect shortTermEffect, Expression requiredTime) 
 		{
 			GameManager.TimeElapsed += AdvanceProgress;
 			Name = name;
+			LongTermEffect = longTermEffect;
+			_ShortTermEffect = shortTermEffect;
+			_RequiredTime = requiredTime;
 		}
 
 		public event PropertyChangedEventHandler PropertyChanged;
-
 		public ConfidentialLevel ConfidentialLevel { get; set; }
 		public string Name { get; set; }
 
@@ -65,50 +67,23 @@ namespace Atomization.DataStructures
 				Misc.Round(_RequiredTime.Value - _TimeElapsed)));
 		}
 
-		private	void ImposeLongTermEffect()
+		private void ImposeLongTermEffect()
 		{
 			for (int i = 0; i < ValueComplexNTuple.NUM_VALUES; i++)
 			{
-				Data.Me.NationalIndices[i].Growth.AddTerm(Name, _LongTermEffect[i]);
+				Data.Me.NationalIndices[i].Growth.AddTerm(Name, LongTermEffect[i]);
 			}
-		}
-
-
-		//protected Impact _DirectImpact;
-		//public Impact DirectImpact
-		//{
-		//	get => _DirectImpact;
-		//	set
-		//	{
-		//		if (value != _DirectImpact)
-		//		{
-		//			_DirectImpact = value;
-		//			_DirectImpact.PropertyChanged += (sender, e) =>
-		//				PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DirectImpact)));
-		//			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DirectImpact)));
-		//		}
-		//	}
-		//}
-		public enum Types
-		{
-			Census = 1,
-			Policy = 2,
-			Manufacture = 4,
-			Transportation = 8,
-			Deployment = 16,
-			MT = 12,
-			TD = 24,
-			MTD = 28
 		}
 	}
 
 	public class Census : Task
 	{
-		public Census(string name, int valueIndex) : base(name) 
+		public Census(string name, int valueIndex) : base(name, null, null, null) 
 		{
 			_Index = valueIndex;
 			_ShortTermEffect = new Effect();
 			Init();
+			ImposeShortTermEffect();
 		}
 
 		private int _Index;
@@ -128,12 +103,12 @@ namespace Atomization.DataStructures
 				case 9:
 				// Bureaucracy
 				case 10:
-					_LongTermEffect = new Effect(economy: new Expression(1, p => 1 + p * Data.Me.AdjustedBureaucracyIndex));
+					LongTermEffect = new Effect(economy: new Expression(1, p => 1 + p * Data.Me.AdjustedBureaucracyIndex));
 					_RequiredTime = new Expression(2, p => p * Data.Me.AdjustedBureaucracyIndex);
 					break;
 
 				default:
-					_LongTermEffect = new Effect();
+					LongTermEffect = new Effect();
 					_RequiredTime = new Expression(1, p => p * Data.Me.AdjustedBureaucracyIndex);
 					break;
 			}
@@ -143,13 +118,22 @@ namespace Atomization.DataStructures
 		{
 			Data.Me.OutdatedNationalIndices[_Index].Update(Data.Me.NationalIndices[_Index]);
 		}
+
+		private void ImposeShortTermEffect()
+		{
+			for (int i = 0; i < ValueComplexNTuple.NUM_VALUES; i++)
+			{
+				Data.Me.NationalIndices[i].CurrentValue -= _ShortTermEffect[i].Value;
+			}
+		}
 	}
 
 	public class Policy : Task
 	{
 		private Action _Action;
 
-		public Policy(string name) : base(name) { }
+		public Policy(string name, Effect longTermEffect, Effect shortTermEffect, Expression requiredTime) : 
+			base(name, longTermEffect, shortTermEffect, requiredTime) { }
 		//public static Policy Create(Action action, Effect longTermEffect, Expression requiredTime)
 		//{
 		//	return new Policy
@@ -168,9 +152,12 @@ namespace Atomization.DataStructures
 		// Any object that is manufactured will not be automatically added to anywhere. 
 		// Its destination should always be explicitly stated. 
 		// e.g. send it to reserve
-		public Manufacture(string name, Func<IDestroyable> instruction) : base(name) 
+		public Manufacture(string name, Func<IDestroyable> instruction, Effect longTermEffect, Effect shortTermEffect, 
+			Expression requiredTime) : base(name, longTermEffect, shortTermEffect, requiredTime) 
 		{
 			_Instruction = instruction;
+			LongTermEffect = longTermEffect;
+			_ShortTermEffect = shortTermEffect;
 		}
 
 		private Func<IDestroyable> _Instruction;
@@ -185,7 +172,8 @@ namespace Atomization.DataStructures
 
 	public class Transportation : Task
 	{
-		public Transportation(string name) : base(name) { }
+		public Transportation(string name, Effect longTermEffect, Effect shortTermEffect, Expression requiredTime) : 
+			base(name, longTermEffect, shortTermEffect, requiredTime) { }
 		public Region From { get; set; }
 		public Region Next { get; set; }
 		public Region To { get; set; }
@@ -198,7 +186,8 @@ namespace Atomization.DataStructures
 
 	public class Deployment : Task
 	{
-		public Deployment(string name, Region destination, IDeployable deployable) : base(name) 
+		public Deployment(string name, Region destination, IDeployable deployable, Effect longTermEffect, 
+			Effect shortTermEffect, Expression requiredTime) : base(name, longTermEffect, shortTermEffect, requiredTime) 
 		{
 			DeployableObject = deployable;
 			Destination = destination;
