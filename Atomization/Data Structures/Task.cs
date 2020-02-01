@@ -187,10 +187,12 @@ namespace Atomization.DataStructures
 	public class Deployment : Task
 	{
 		public Deployment(string name, Region destination, IDeployable deployable, Effect longTermEffect, 
-			Effect shortTermEffect, Expression requiredTime) : base(name, longTermEffect, shortTermEffect, requiredTime) 
+			Effect shortTermEffect, Expression requiredTime) : 
+			base(name, longTermEffect, shortTermEffect, requiredTime) 
 		{
 			DeployableObject = deployable;
 			Destination = destination;
+			_Execute = () => 
 			throw new NotImplementedException();
 		}
 

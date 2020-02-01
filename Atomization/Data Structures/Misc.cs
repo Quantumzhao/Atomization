@@ -58,11 +58,9 @@ namespace Atomization.DataStructures
 		void Execute();
 	}
 
-	public interface IDeployable
+	public interface IDeployable : IDestroyable
 	{
 		Region DeployedRegion { get; set; }
-
-		event Action SelfDestroyed;
 	}
 
 	public interface IDestroyable 

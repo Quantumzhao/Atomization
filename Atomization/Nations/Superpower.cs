@@ -141,7 +141,7 @@ namespace Atomization
 				}
 			}
 
-			public static void DestroyNuke(NuclearWeapon nuclearWeapon)
+			public static void DisposeNuke(NuclearWeapon nuclearWeapon)
 			{
 				// Further investigation is needed
 				Deployment destruction = new Deployment($"Destroying {nuclearWeapon}", null, nuclearWeapon, null, null, null);
