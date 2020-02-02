@@ -13,7 +13,6 @@ namespace Atomization.DataStructures
 		public event PropertyChangedEventHandler PropertyChanged;
 
 		public bool Contains(string name) => Items.ContainsKey(name);
-		public bool Contains(double value) => Items.ContainsValue(value);
 
 		public void AddTerm(string name, Expression expression)
 		{
