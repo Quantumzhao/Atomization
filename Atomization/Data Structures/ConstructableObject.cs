@@ -76,9 +76,4 @@ namespace Atomization.DataStructures
 	//	}
 	//}
 
-	public interface IUniqueObject
-	{
-		string Name { get; }
-		string UID { get; }
-	}
 }

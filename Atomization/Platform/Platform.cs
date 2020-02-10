@@ -6,10 +6,12 @@ using System;
 
 namespace Atomization
 {
-	public abstract class Platform : IDestroyable
+	public abstract class Platform : IDestroyable, IUniqueObject
 	{
 		protected Platform()
 		{
+			UID = GameManager.GenerateUID();
+
 			NuclearWeapons.CollectionChanged +=
 			(sender, e) =>
 			{
@@ -29,6 +31,7 @@ namespace Atomization
 		public Region DeployedRegion { get; set; }
 		public int AvailableLoad => NuclearWeapons.MaxCapacity - NuclearWeapons.Count;
 		public ConstrainedList<NuclearWeapon> NuclearWeapons { get; set; } = new ConstrainedList<NuclearWeapon>();
+		public string UID { get; }
 
 		public event Action SelfDestroyed;
 
@@ -59,27 +62,32 @@ namespace Atomization
 
 		public Silo() : base()
 		{
-			NuclearWeapons.MaxCapacity = 1;
+			// don't delete this ↓
 			//LongTermImpact = new Effect("Nuclear Arsenal Maintenance", economy: -2, rawMaterial: -5);
+			NuclearWeapons.MaxCapacity = 1;
 		}
 
-		public static Effect LongTermEffect_M { get; set; }
-		public static Effect ShortTermEffect_M { get; set; }
-		public static Expression RequiredTime_M { get; set; }
+		public static CostOfStage Manufacture { get; private set; }
+		public static CostOfStage Transportation { get; private set; }
+		public static CostOfStage Deployment { get; private set; }
+		public static CostOfStage Maintenance { get; private set; }
 
 		public static new void InitializeStaticMember()
 		{
-			RequiredTime_M = (Expression)4;
-			LongTermEffect_M = new Effect(economy: (Expression)(-2), rawMaterial: (Expression)(-5));
-			ShortTermEffect_M = new Effect(economy: (Expression)(-40), rawMaterial: (Expression)(-60));
+			Manufacture = new CostOfStage(
+				requiredTime: (Expression)4,
+				longTermEffect: new Effect(economy: (Expression)(-2), rawMaterial: (Expression)(-5)),
+				shortTermEffect: new Effect(economy: (Expression)(-40), rawMaterial: (Expression)(-60))
+			);
 		}
 	}
 
 	public class StrategicBomber : Platform
 	{
-		public static Effect LongTermEffect_M { get; set; }
-		public static Effect ShortTermEffect_M { get; set; }
-		public static Expression RequiredTime_M { get; set; }
+		public static CostOfStage Manufacture { get; private set; }
+		public static CostOfStage Transportation { get; private set; }
+		public static CostOfStage Deployment { get; private set; }
+		public static CostOfStage Maintenance { get; private set; }
 
 		public StrategicBomber() : base()
 		{
@@ -89,17 +97,20 @@ namespace Atomization
 
 		public static new void InitializeStaticMember()
 		{
-			RequiredTime_M = (Expression)7;
-			ShortTermEffect_M = new Effect(economy: (Expression)(-30), rawMaterial: (Expression)(-5));
-			LongTermEffect_M = new Effect(economy: (Expression)(-10), rawMaterial: (Expression)(-30));
+			Manufacture = new CostOfStage(
+				requiredTime: (Expression)7,
+				shortTermEffect: new Effect(economy: (Expression)(-30), rawMaterial: (Expression)(-5)),
+				longTermEffect: new Effect(economy: (Expression)(-10), rawMaterial: (Expression)(-30))
+			);
 		}
 	}
 
 	public class MissileLauncher : Platform
 	{
-		public static Effect LongTermEffect_M { get; set; }
-		public static Effect ShortTermEffect_M { get; set; }
-		public static Expression RequiredTime_M { get; set; }
+		public static CostOfStage Manufacture { get; private set; }
+		public static CostOfStage Transportation { get; private set; }
+		public static CostOfStage Deployment { get; private set; }
+		public static CostOfStage Maintenance { get; private set; }
 
 		public MissileLauncher() : base()
 		{
@@ -109,17 +120,20 @@ namespace Atomization
 
 		public static new void InitializeStaticMember()
 		{
-			RequiredTime_M = (Expression)6;
-			ShortTermEffect_M = new Effect(economy: (Expression)(-45), rawMaterial: (Expression)(-8));
-			LongTermEffect_M = new Effect(economy: (Expression)(-6), rawMaterial: (Expression)(-4));
+			Manufacture = new CostOfStage(
+				requiredTime: (Expression)6,
+				shortTermEffect: new Effect(economy: (Expression)(-45), rawMaterial: (Expression)(-8)),
+				longTermEffect: new Effect(economy: (Expression)(-6), rawMaterial: (Expression)(-4))
+			);
 		}
 	}
 
 	public class NuclearSubmarine : Platform
 	{
-		public static Effect LongTermEffect_M { get; set; }
-		public static Effect ShortTermEffect_M { get; set; }
-		public static Expression RequiredTime_M { get; set; }
+		public static CostOfStage Manufacture { get; private set; }
+		public static CostOfStage Transportation { get; private set; }
+		public static CostOfStage Deployment { get; private set; }
+		public static CostOfStage Maintenance { get; private set; }
 
 		public NuclearSubmarine() : base()
 		{
@@ -129,11 +143,13 @@ namespace Atomization
 
 		public static new void InitializeStaticMember()
 		{
-			RequiredTime_M = (Expression)12;
-			ShortTermEffect_M = new Effect(economy: (Expression)(-100), rawMaterial: (Expression)(-200), 
-				nuclearMaterial: (Expression)(-1));
-			LongTermEffect_M = new Effect(economy: (Expression)(-15), rawMaterial: (Expression)(-10), 
-				nuclearMaterial: (Expression)(-0.05));
+			Manufacture = new CostOfStage(
+				requiredTime: (Expression)12,
+				shortTermEffect: new Effect(economy: (Expression)(-100), rawMaterial: (Expression)(-200),
+					nuclearMaterial: (Expression)(-1)),
+				longTermEffect: new Effect(economy: (Expression)(-15), rawMaterial: (Expression)(-10),
+					nuclearMaterial: (Expression)(-0.05))
+			);
 		}
 	}
 }

@@ -37,6 +37,8 @@ namespace Atomization
 			Data.Regions.Add(TerritorialWaters);
 		}
 
+		protected readonly Dictionary<string, IUniqueObject> _Reserve = new Dictionary<string, IUniqueObject>();
+
 		// null stands for independence
 		public Superpower Affiliation { get; set; } = null;
 
@@ -52,8 +54,8 @@ namespace Atomization
 		public double AdjustedBureaucracyIndex => 0.1 * Math.Pow(1.2, NationalIndices.Bureaucracy.CurrentValue);
 
 		public TaskSequence TaskSequence { get; } = new TaskSequence();
+
 		public TechTreeNode TechTree { get; }
-		public Dictionary<string, object> Reserve { get; } = new Dictionary<string, object>();
 
 		//public void AddCostOfExecution(Effect cost)
 		//{

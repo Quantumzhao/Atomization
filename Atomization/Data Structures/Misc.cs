@@ -48,6 +48,21 @@ namespace Atomization.DataStructures
 	//	//	CollectionChanged?.Invoke(this, e);
 	//	//}
 	//}
+
+	public class CostOfStage
+	{
+		public CostOfStage(Effect longTermEffect, Effect shortTermEffect, Expression requiredTime)
+		{
+			LongTermEffect = longTermEffect;
+			ShortTermEffect = shortTermEffect;
+			RequiredTime = requiredTime;
+		}
+
+		public Effect LongTermEffect { get; }
+		public Effect ShortTermEffect { get; }
+		public Expression RequiredTime { get; }
+	}
+
 	public static class Misc
 	{
 		public static int Round(double value) => (int)(value + 0.5);
@@ -72,5 +87,10 @@ namespace Atomization.DataStructures
 	public interface IBuildable : IDestroyable
 	{
 		Effect BuildCost_LongTerm { get; }
+	}
+
+	public interface IUniqueObject
+	{
+		string UID { get; }
 	}
 }

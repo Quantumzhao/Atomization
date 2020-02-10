@@ -30,5 +30,8 @@ namespace Atomization
 		{
 			Platform.InitializeStaticMember();
 		}
+
+		private static UInt64 _Counter = 0;
+		public static string GenerateUID() => _Counter++.ToString("X");
 	}
 }

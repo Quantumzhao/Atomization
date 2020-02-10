@@ -102,19 +102,19 @@ namespace Atomization
 			switch ((NewPlatform.SelectedItem as ComboBoxItem)?.Content.ToString())
 			{
 				case "Silo":
-					prefab = new Silo(Data.Me);
+					prefab = new Silo();
 					break;
 
 				case "Strategic Bomber":
-					prefab = new StrategicBomber(Data.Me);
+					prefab = new StrategicBomber();
 					break;
 
 				case "Missile Launcher":
-					prefab = new MissileLauncher(Data.Me);
+					prefab = new MissileLauncher();
 					break;
 
 				case "Nuclear Submarine":
-					prefab = new NuclearSubmarine(Data.Me);
+					prefab = new NuclearSubmarine();
 					break;
 
 				default:

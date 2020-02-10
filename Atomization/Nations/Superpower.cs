@@ -76,6 +76,15 @@ namespace Atomization
 			return superpower;
 		}
 
+		public void SendToReserve(IUniqueObject uniqueObject)
+		{
+			_Reserve.Add(uniqueObject.UID, uniqueObject);
+		}
+		public T GetFromReserve<T>(string uid) where T : IUniqueObject
+		{
+			return (T)_Reserve[uid];
+		}
+
 		public static class Nuclear
 		{
 			//public static void DeployNewNuclearStrikePlatform(Platform.Types type, Region region)
@@ -88,38 +97,28 @@ namespace Atomization
 			{
 				Manufacture manufacture;
 				string name = $"Sending a new {type} to reserve";
-				Effect longTermEffect;
-				Effect shortTermEffect;
-				Expression requiredTime;
+				CostOfStage cost;
 				Func<Platform> instruction;
 
 				switch (type)
 				{
 					case Platform.Types.Silo:
-						longTermEffect = Silo.LongTermEffect_M;
-						shortTermEffect = Silo.ShortTermEffect_M;
-						requiredTime = Silo.RequiredTime_M;
+						cost = Silo.Manufacture;
 						instruction = () => new Silo();
 						break;
 
 					case Platform.Types.StrategicBomber:
-						longTermEffect = StrategicBomber.LongTermEffect_M;
-						shortTermEffect = StrategicBomber.ShortTermEffect_M;
-						requiredTime = StrategicBomber.RequiredTime_M;
+						cost = StrategicBomber.Manufacture;
 						instruction = () => new StrategicBomber();
 						break;
 
 					case Platform.Types.MissileLauncher:
-						longTermEffect = MissileLauncher.LongTermEffect_M;
-						shortTermEffect = MissileLauncher.ShortTermEffect_M;
-						requiredTime = MissileLauncher.RequiredTime_M;
+						cost = MissileLauncher.Manufacture;
 						instruction = () => new MissileLauncher();
 						break;
 
 					case Platform.Types.NuclearSubmarine:
-						longTermEffect = NuclearSubmarine.LongTermEffect_M;
-						shortTermEffect = NuclearSubmarine.ShortTermEffect_M;
-						requiredTime = NuclearSubmarine.RequiredTime_M;
+						cost = NuclearSubmarine.Manufacture;
 						instruction = () => new NuclearSubmarine();
 						break;
 
@@ -127,7 +126,7 @@ namespace Atomization
 						throw new NotImplementedException();
 				}
 
-				manufacture = new Manufacture(name, instruction, longTermEffect, shortTermEffect, requiredTime);
+				manufacture = new Manufacture(name, instruction, cost);
 				Data.Me.TaskSequence.AddNewTask(manufacture);
 				EventManager.TaskProgressAdvenced += NukeStrikePlatformManufactureCompleted;				
 			}
@@ -137,14 +136,14 @@ namespace Atomization
 					sender is Manufacture manufacture &&
 					manufacture.FinalProduct is Platform platform)
 				{
-					Data.Me.Reserve.Add("Platform", platform);
+					Data.Me.SendToReserve(platform);
 				}
 			}
 
 			public static void DisposeNuke(NuclearWeapon nuclearWeapon)
 			{
 				// Further investigation is needed
-				Deployment destruction = new Deployment($"Destroying {nuclearWeapon}", null, nuclearWeapon, null, null, null);
+				Deployment destruction = new Deployment($"Destroying {nuclearWeapon}", null, nuclearWeapon, null);
 				Data.Me.TaskSequence.AddNewTask(destruction);
 
 				EventManager.TaskProgressAdvenced += (s, e) => RemoveNuke(s, e, nuclearWeapon);
