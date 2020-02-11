@@ -21,10 +21,10 @@ namespace Atomization
 			ParentPage = parentPage;
 
 			Closing += DeployNuke_Window_Closing;
-			SelectionList.ItemsSource = Data.Me.NuclearPlatforms;
+			SelectionList.ItemsSource = ResourceManager.Me.NuclearPlatforms;
 
 			Target.Items.Clear();
-			Target.ItemsSource = Data.Regions;
+			Target.ItemsSource = ResourceManager.Regions;
 
 			//if ((selectedWeapon = (ParentPage.NukeList.SelectedItem as VM<NuclearWeapon>)?.ObjectData) != null)
 			//{
@@ -185,7 +185,7 @@ namespace Atomization
 				);
 				if (result == MessageBoxResult.OK)
 				{
-					Data.Me.NuclearPlatforms.Remove(SelectionList.SelectedItem as Platform);
+					ResourceManager.Me.NuclearPlatforms.Remove(SelectionList.SelectedItem as Platform);
 				}
 			}
 			else

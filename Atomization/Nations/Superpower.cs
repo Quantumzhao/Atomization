@@ -13,8 +13,8 @@ namespace Atomization
 		{
 			for (int i = 0; i < NUM_ADJACENT_NATIONS; i++)
 			{
-				RegularNation nation = new RegularNation() { Name = Data.NationNames.Dequeue() };
-				Data.Regions.Add(nation);
+				RegularNation nation = new RegularNation() { Name = ResourceManager.NationNames.Dequeue() };
+				ResourceManager.Regions.Add(nation);
 				// initialize the no. of adj nations
 				Adjacency[i] = nation;
 			}
@@ -49,7 +49,7 @@ namespace Atomization
 			{
 				for (int i = 0; i < ValueComplexNTuple.NUM_VALUES; i++)
 				{
-					Data.Me.NationalIndices[i].Growth.AddTerm(effectName, effect[i]);
+					ResourceManager.Me.NationalIndices[i].Growth.AddTerm(effectName, effect[i]);
 				}
 			};
 
@@ -127,7 +127,7 @@ namespace Atomization
 				}
 
 				manufacture = new Manufacture(name, instruction, cost);
-				Data.Me.TaskSequence.AddNewTask(manufacture);
+				ResourceManager.Me.TaskSequence.AddNewTask(manufacture);
 				EventManager.TaskProgressAdvenced += NukeStrikePlatformManufactureCompleted;				
 			}
 			private static void NukeStrikePlatformManufactureCompleted(Task sender, TaskProgressAdvancedEventArgs e)
@@ -136,15 +136,16 @@ namespace Atomization
 					sender is Manufacture manufacture &&
 					manufacture.FinalProduct is Platform platform)
 				{
-					Data.Me.SendToReserve(platform);
+					ResourceManager.Me.SendToReserve(platform);
 				}
 			}
 
 			public static void DisposeNuke(NuclearWeapon nuclearWeapon)
 			{
 				// Further investigation is needed
-				Deployment destruction = new Deployment($"Destroying {nuclearWeapon}", null, nuclearWeapon, null);
-				Data.Me.TaskSequence.AddNewTask(destruction);
+				Deployment destruction = new Deployment($"Destroying {nuclearWeapon}", null, nuclearWeapon, 
+					ResourceManager.Misc.NukeDisposal);
+				ResourceManager.Me.TaskSequence.AddNewTask(destruction);
 
 				EventManager.TaskProgressAdvenced += (s, e) => RemoveNuke(s, e, nuclearWeapon);
 			}

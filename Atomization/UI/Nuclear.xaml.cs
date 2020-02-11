@@ -18,7 +18,7 @@ namespace Atomization
 		{
 			InitializeComponent();
 
-			NukeList.ItemsSource = Data.MyNuclearWeapons;
+			NukeList.ItemsSource = ResourceManager.MyNuclearWeapons;
 		}
 
 		private void Button_DeployNuke_Click(object sender, RoutedEventArgs e)
@@ -81,13 +81,13 @@ namespace Atomization
 					Deploy_ToolTip.Items.Add(new TextBlock() { Text = "Building Silo Takes 7 turns" });
 
 				setLandBase:
-					RegionOfDeployment.ItemsSource = new List<Nation>(Data.Me.SateliteNations) { Data.Me };
+					RegionOfDeployment.ItemsSource = new List<Nation>(ResourceManager.Me.SateliteNations) { ResourceManager.Me };
 					break;
 
 				case "Nuclear Submarine":
 					Deploy_ToolTip.Items.Add(new TextBlock() { Text = "Building Silo Takes 12 turns" });
 
-					RegionOfDeployment.ItemsSource = new List<Region>(Data.Regions.Where(r => r is Waters));
+					RegionOfDeployment.ItemsSource = new List<Region>(ResourceManager.Regions.Where(r => r is Waters));
 					break;
 
 				default:
@@ -123,7 +123,7 @@ namespace Atomization
 
 			if (RegionOfDeployment.SelectedItem == null) return;
 			prefab.DeployedRegion = RegionOfDeployment.SelectedItem as Region;
-			Data.Me.NuclearPlatforms.Add(prefab);
+			ResourceManager.Me.NuclearPlatforms.Add(prefab);
 
 			MessageBox.Show(
 				"New nuclear strike platform deployed successfully",

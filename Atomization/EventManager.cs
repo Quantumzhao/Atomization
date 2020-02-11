@@ -21,17 +21,4 @@ namespace Atomization
 			}
 		}
 	}
-
-	public static class GameManager
-	{
-		public static event Action TimeElapsed;
-
-		public static void InitializeAll()
-		{
-			Platform.InitializeStaticMember();
-		}
-
-		private static UInt64 _Counter = 0;
-		public static string GenerateUID() => _Counter++.ToString("X");
-	}
 }

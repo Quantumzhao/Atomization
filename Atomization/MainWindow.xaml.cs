@@ -17,7 +17,7 @@ namespace Atomization
 			current = MainMenu.Items[0] as MenuItem;
 			#endregion
 
-			Data.Initialize();
+			ResourceManager.Initialize();
 
 			DataContext = this;
 

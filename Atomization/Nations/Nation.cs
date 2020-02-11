@@ -32,9 +32,9 @@ namespace Atomization
 		public Nation()
 		{
 			// Initialize its territorial water, and name the water as well
-			TerritorialWaters = new Waters() { Name = Data.WatersNames.Dequeue() };
+			TerritorialWaters = new Waters() { Name = ResourceManager.WatersNames.Dequeue() };
 			TerritorialWaters.Affiliation = this;
-			Data.Regions.Add(TerritorialWaters);
+			ResourceManager.Regions.Add(TerritorialWaters);
 		}
 
 		protected readonly Dictionary<string, IUniqueObject> _Reserve = new Dictionary<string, IUniqueObject>();
@@ -68,7 +68,7 @@ namespace Atomization
 		public void UpdateValue(int nationalIndex)
 		{
 			Census census = new Census("Generating statistics", nationalIndex);
-			Data.Me.TaskSequence.AddNewTask(census);
+			ResourceManager.Me.TaskSequence.AddNewTask(census);
 		}
 	}
 

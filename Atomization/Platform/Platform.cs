@@ -17,11 +17,11 @@ namespace Atomization
 			{
 				if (e.Action == NotifyCollectionChangedAction.Add)
 				{
-					Data.MyNuclearWeapons.Add(e.NewItems[0] as NuclearWeapon);
+					ResourceManager.MyNuclearWeapons.Add(e.NewItems[0] as NuclearWeapon);
 				}
 				else if (e.Action == NotifyCollectionChangedAction.Remove)
 				{
-					Data.MyNuclearWeapons.Remove(e.OldItems[0] as NuclearWeapon);
+					ResourceManager.MyNuclearWeapons.Remove(e.OldItems[0] as NuclearWeapon);
 				}
 			};
 

@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.IO;
+using Atomization.DataStructures;
 
 namespace Atomization
 {
-	public static class Data
+	public static class ResourceManager
 	{
 		public static List<Region> Regions = new List<Region>();
 		public static Queue<string> WatersNames { get; private set; }
@@ -46,6 +47,20 @@ namespace Atomization
 
 			Regions.Add(Me = Superpower.InitializeMe("C"));
 			Regions.Add(new Superpower() { Name = "A" });
+		}
+
+		public static class Misc
+		{
+			public static void Initialize()
+			{
+				NukeDisposal = new CostOfStage(
+					longTermEffect: new Effect(),
+					shortTermEffect: new Effect(),
+					requiredTime: (Expression)0					
+				);
+			}
+
+			public static CostOfStage NukeDisposal { get; private set; }
 		}
 	}
 }

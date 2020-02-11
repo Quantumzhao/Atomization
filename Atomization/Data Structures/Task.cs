@@ -51,7 +51,7 @@ namespace Atomization.DataStructures
 		{
 			for (int i = 0; i < ValueComplexNTuple.NUM_VALUES; i++)
 			{
-				Data.Me.NationalIndices[i].Growth.AddTerm(Name, Cost.LongTermEffect[i]);
+				ResourceManager.Me.NationalIndices[i].Growth.AddTerm(Name, Cost.LongTermEffect[i]);
 			}
 		}
 	}
@@ -84,13 +84,13 @@ namespace Atomization.DataStructures
 				case 9:
 				// Bureaucracy
 				case 10:
-					longTermEffect = new Effect(economy: new Expression(1, p => 1 + p * Data.Me.AdjustedBureaucracyIndex));
-					requiredTime = new Expression(2, p => p * Data.Me.AdjustedBureaucracyIndex);
+					longTermEffect = new Effect(economy: new Expression(1, p => 1 + p * ResourceManager.Me.AdjustedBureaucracyIndex));
+					requiredTime = new Expression(2, p => p * ResourceManager.Me.AdjustedBureaucracyIndex);
 					break;
 
 				default:
 					longTermEffect = new Effect();
-					requiredTime = new Expression(1, p => p * Data.Me.AdjustedBureaucracyIndex);
+					requiredTime = new Expression(1, p => p * ResourceManager.Me.AdjustedBureaucracyIndex);
 					break;
 			}
 			Cost = new CostOfStage(
@@ -102,14 +102,14 @@ namespace Atomization.DataStructures
 
 		public override void Execute()
 		{
-			Data.Me.OutdatedNationalIndices[_Index].Update(Data.Me.NationalIndices[_Index]);
+			ResourceManager.Me.OutdatedNationalIndices[_Index].Update(ResourceManager.Me.NationalIndices[_Index]);
 		}
 
 		private void ImposeShortTermEffect()
 		{
 			for (int i = 0; i < ValueComplexNTuple.NUM_VALUES; i++)
 			{
-				Data.Me.NationalIndices[i].CurrentValue -= Cost.ShortTermEffect[i].Value;
+				ResourceManager.Me.NationalIndices[i].CurrentValue -= Cost.ShortTermEffect[i].Value;
 			}
 		}
 	}

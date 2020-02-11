@@ -11,7 +11,7 @@ namespace Atomization
 	public partial class Operations : Page
 	{
 		public ObservableCollection<Region> waters =>
-			new ObservableCollection<Region>(Data.Regions.Where(r => r is Waters));
+			new ObservableCollection<Region>(ResourceManager.Regions.Where(r => r is Waters));
 
 		public Operations()
 		{
@@ -19,7 +19,7 @@ namespace Atomization
 
 			SelectionList.ItemsSource = waters;
 
-			Target.ItemsSource = Data.Regions;
+			Target.ItemsSource = ResourceManager.Regions;
 
 			//Maneuver_NumNukes.ItemsSource = new ObservableCollection<VM<NuclearWeapon>>(
 			//	Data.MyNuclearWeapons.Where(w => !(w.ObjectData.Platform is Silo))
