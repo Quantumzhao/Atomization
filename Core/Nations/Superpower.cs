@@ -23,6 +23,7 @@ namespace LCGuidebook.Core
 
 			Affiliation = this;
 
+			new Command("", new Action<Platform.Types>( platform => EnrollNukeStrikePlatfrom(platform)));
 		}
 
 		public ConstrainedList<Platform> NuclearPlatforms { get; set; } = new ConstrainedList<Platform>();

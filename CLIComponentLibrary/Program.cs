@@ -138,7 +138,7 @@ namespace CLITestSample
 			{
 				var methodNode = GetByID(ParseToID(tokens.Dequeue())) as MethodNode;
 				var ret = methodNode.Invoke();
-				AddToCachedNodes(ret);
+				TryAddToCachedNodes(ret);
 				_CurrentNode = ret;
 				ParseAndExecute("show");
 			}
@@ -149,7 +149,7 @@ namespace CLITestSample
 			else throw new NotImplementedException();
 		}
 
-		private static void AddToCachedNodes(Node node)
+		private static void TryAddToCachedNodes(Node node)
 		{
 			if (_CachedNodes.ContainsKey(node))
 			{
@@ -166,7 +166,7 @@ namespace CLITestSample
 			{
 				for (int j = 0; j < table[i].Count; j++)
 				{
-					AddToCachedNodes(table[i][j]);
+					TryAddToCachedNodes(table[i][j]);
 					Console.Write(string.Format("{0,-20}", $"[{_CachedNodes[table[i][j]]}] {table[i][j].Header}"));
 				}
 				Console.WriteLine();
@@ -181,7 +181,7 @@ namespace CLITestSample
 			sb.Append(string.Format("{0,-12}", caption));
 			for (int i = 0; i < members.Count; i++)
 			{
-				AddToCachedNodes(members[i]);
+				TryAddToCachedNodes(members[i]);
 				sb.Append(string.Format("{0,-20}", $"[{_CachedNodes[members[i]]}] {members[i].Header}"));
 			}
 			Console.WriteLine(sb.ToString());

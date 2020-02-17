@@ -7,7 +7,6 @@ using LCGuidebook;
 using LCGuidebook.Core;
 using LCGuidebook.Core.DataStructures;
 
-
 namespace LCGuidebook.Core.DataStructures
 {
 	// TODO: Move all nested static methods into dynamically generated groups
