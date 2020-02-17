@@ -103,6 +103,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Data Structures\CommandGroup.cs" />
     <Compile Include="Data Structures\Effect.cs" />
     <Compile Include="Data Structures\Event.cs" />
     <Compile Include="Data Structures\Expression.cs" />
@@ -118,49 +119,49 @@
     <Compile Include="EventManager.cs" />
     <Compile Include="GameManager.cs" />
     <Compile Include="Nations\Superpower.cs" />
-    <Compile Include="UI\MoreInfoPanel.xaml.cs">
+    <Compile Include="[Obsolete] UI\MoreInfoPanel.xaml.cs">
       <DependentUpon>MoreInfoPanel.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI\DeployNuke_Window.xaml.cs">
+    <Compile Include="[Obsolete] UI\DeployNuke_Window.xaml.cs">
       <DependentUpon>DeployNuke_Window.xaml</DependentUpon>
     </Compile>
     <Compile Include="Data Structures\Misc.cs" />
     <Compile Include="Nations\Nation.cs" />
     <Compile Include="Nuclear Weapon\NuclearWeapon.cs" />
     <Compile Include="Platform\Platform.cs" />
-    <Compile Include="UI\Defence.xaml.cs">
+    <Compile Include="[Obsolete] UI\Defence.xaml.cs">
       <DependentUpon>Defence.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI\Domestic.xaml.cs">
+    <Compile Include="[Obsolete] UI\Domestic.xaml.cs">
       <DependentUpon>Domestic.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI\Intelligence.xaml.cs">
+    <Compile Include="[Obsolete] UI\Intelligence.xaml.cs">
       <DependentUpon>Intelligence.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI\Diplomacy.xaml.cs">
+    <Compile Include="[Obsolete] UI\Diplomacy.xaml.cs">
       <DependentUpon>Diplomacy.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI\Nuclear.xaml.cs">
+    <Compile Include="[Obsolete] UI\Nuclear.xaml.cs">
       <DependentUpon>Nuclear.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI\Technology.xaml.cs">
+    <Compile Include="[Obsolete] UI\Technology.xaml.cs">
       <DependentUpon>Technology.xaml</DependentUpon>
     </Compile>
     <Compile Include="Data Structures\ValueComplex.cs" />
     <Compile Include="Warhead\Warhead.cs" />
-    <Page Include="UI\MoreInfoPanel.xaml">
+    <Page Include="[Obsolete] UI\MoreInfoPanel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UI\DeployNuke_Window.xaml">
+    <Page Include="[Obsolete] UI\DeployNuke_Window.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UI\Defence.xaml">
+    <Page Include="[Obsolete] UI\Defence.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UI\Domestic.xaml">
+    <Page Include="[Obsolete] UI\Domestic.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -176,29 +177,29 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="UI\Intelligence.xaml">
+    <Page Include="[Obsolete] UI\Intelligence.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UI\Diplomacy.xaml">
+    <Page Include="[Obsolete] UI\Diplomacy.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UI\Nuclear.xaml">
+    <Page Include="[Obsolete] UI\Nuclear.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UI\Operations.xaml">
+    <Page Include="[Obsolete] UI\Operations.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UI\Technology.xaml">
+    <Page Include="[Obsolete] UI\Technology.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="UI\Operations.xaml.cs">
+    <Compile Include="[Obsolete] UI\Operations.xaml.cs">
       <DependentUpon>Operations.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -225,6 +226,7 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <None Include="test.csx" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -254,6 +256,12 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Data\Data.csproj">
+      <Project>{e6f0f2a3-67b3-4492-92b3-34183427c21a}</Project>
+      <Name>Data</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
