@@ -16,7 +16,21 @@ namespace Atomization
 		public ConstrainedList<Warhead> Warheads { get; } = new ConstrainedList<Warhead>();
 		public string WarheadType => Warheads.Count != 1 ? "(Multiple Types)" : Warheads[0].WarheadType;
 		public Region DeployedRegion { get; set; }
-		
+		public bool IsActivated
+		{
+			get => _IsActivated;
+			set
+			{
+				if (value && !_Platform.IsActivated)
+				{
+					throw new InvalidOperationException(Misc.BAD_ACTIVATION_SEQUENCE);
+				}
+				else
+				{
+					_IsActivated = value;
+				}
+			}
+		}
 		private string _Name;
 		public string Name
 		{
@@ -46,6 +60,8 @@ namespace Atomization
 		}
 
 		private Region _Target;
+		private bool _IsActivated = false;
+
 		public Region Target
 		{
 			get => _Target;

@@ -6,8 +6,10 @@ using System;
 
 namespace Atomization
 {
-	public abstract class Platform : IDestroyable, IUniqueObject
+	public abstract class Platform : IUniqueObject, IDeployable
 	{
+		private bool _IsActivated = false;
+
 		protected Platform()
 		{
 			UID = GameManager.GenerateUID();
@@ -28,12 +30,22 @@ namespace Atomization
 			SelfDestroyed += () => NuclearWeapons.ForEach(w => w.DestroyThis());
 		}
 
+		public event Action SelfDestroyed;
 		public Region DeployedRegion { get; set; }
 		public int AvailableLoad => NuclearWeapons.MaxCapacity - NuclearWeapons.Count;
 		public ConstrainedList<NuclearWeapon> NuclearWeapons { get; set; } = new ConstrainedList<NuclearWeapon>();
 		public string UID { get; }
-
-		public event Action SelfDestroyed;
+		public bool IsActivated
+		{
+			get => _IsActivated;
+			set
+			{
+				if (!value && !NuclearWeapons.TrueForAll(nw => !nw.IsActivated))
+				{
+					throw new InvalidOperationException(Misc.BAD_ACTIVATION_SEQUENCE);
+				}
+			}
+		}
 
 		public static void InitializeStaticMember()
 		{

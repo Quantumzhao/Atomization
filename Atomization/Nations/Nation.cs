@@ -39,13 +39,12 @@ namespace Atomization
 
 		protected readonly Dictionary<string, IUniqueObject> _Reserve = new Dictionary<string, IUniqueObject>();
 
+		public readonly ValueComplexNTuple NationalIndices = new ValueComplexNTuple();
+		public readonly ValueComplexNTuple OutdatedNationalIndices = new ValueComplexNTuple();
 		// null stands for independence
 		public Superpower Affiliation { get; set; } = null;
 
 		public Waters TerritorialWaters { get; }
-
-		public readonly ValueComplexNTuple NationalIndices = new ValueComplexNTuple();
-		public readonly ValueComplexNTuple OutdatedNationalIndices = new ValueComplexNTuple();
 
 		//public ConstrainedList<Effect> ExpenditureAndRevenue = new ConstrainedList<Effect>();
 
@@ -55,7 +54,16 @@ namespace Atomization
 
 		public TaskSequence TaskSequence { get; } = new TaskSequence();
 
+		// considering replace this data structure with command group later
+		[Obsolete]
 		public TechTreeNode TechTree { get; }
+
+		public CommandGroup Operations { get; }
+		public CommandGroup Intelligence { get; }
+		public CommandGroup Defence { get; }
+		public CommandGroup Technology { get; }
+		public CommandGroup Domestic { get; }
+		public CommandGroup Diplomacy { get; }
 
 		//public void AddCostOfExecution(Effect cost)
 		//{

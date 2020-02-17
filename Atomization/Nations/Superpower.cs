@@ -20,6 +20,7 @@ namespace Atomization
 			}
 
 			Affiliation = this;
+
 		}
 
 		public ConstrainedList<Platform> NuclearPlatforms { get; set; } = new ConstrainedList<Platform>();
@@ -27,6 +28,8 @@ namespace Atomization
 		public RegularNation[] Adjacency { get; set; } = new RegularNation[NUM_ADJACENT_NATIONS];
 
 		public List<RegularNation> SateliteNations { get; set; } = new List<RegularNation>();
+
+		public CommandGroup Nuclear { get; }
 
 		public static Superpower InitializeMe(string name)
 		{
@@ -85,123 +88,88 @@ namespace Atomization
 			return (T)_Reserve[uid];
 		}
 
-		public static class Nuclear
+		#region Temp holder for static commands
+		//public static void DeployNewNuclearStrikePlatform(Platform.Types type, Region region)
+		//{
+		//	Data.Me.TaskSequence.AddNewTask(Task.Types.MTD, $"Deploying a new {type}");
+		//	throw new NotImplementedException();
+		//}
+
+		private static void EnrollNukeStrikePlatfrom(Platform.Types type)
 		{
-			//public static void DeployNewNuclearStrikePlatform(Platform.Types type, Region region)
-			//{
-			//	Data.Me.TaskSequence.AddNewTask(Task.Types.MTD, $"Deploying a new {type}");
-			//	throw new NotImplementedException();
-			//}
+			Manufacture manufacture;
+			string name = $"Sending a new {type} to reserve";
+			CostOfStage cost;
+			Func<Platform> instruction;
 
-			public static void EnrollNukeStrikePlatfrom(Platform.Types type)
+			switch (type)
 			{
-				Manufacture manufacture;
-				string name = $"Sending a new {type} to reserve";
-				CostOfStage cost;
-				Func<Platform> instruction;
+				case Platform.Types.Silo:
+					cost = Silo.Manufacture;
+					instruction = () => new Silo();
+					break;
 
-				switch (type)
-				{
-					case Platform.Types.Silo:
-						cost = Silo.Manufacture;
-						instruction = () => new Silo();
-						break;
+				case Platform.Types.StrategicBomber:
+					cost = StrategicBomber.Manufacture;
+					instruction = () => new StrategicBomber();
+					break;
 
-					case Platform.Types.StrategicBomber:
-						cost = StrategicBomber.Manufacture;
-						instruction = () => new StrategicBomber();
-						break;
+				case Platform.Types.MissileLauncher:
+					cost = MissileLauncher.Manufacture;
+					instruction = () => new MissileLauncher();
+					break;
 
-					case Platform.Types.MissileLauncher:
-						cost = MissileLauncher.Manufacture;
-						instruction = () => new MissileLauncher();
-						break;
+				case Platform.Types.NuclearSubmarine:
+					cost = NuclearSubmarine.Manufacture;
+					instruction = () => new NuclearSubmarine();
+					break;
 
-					case Platform.Types.NuclearSubmarine:
-						cost = NuclearSubmarine.Manufacture;
-						instruction = () => new NuclearSubmarine();
-						break;
-
-					default:
-						throw new NotImplementedException();
-				}
-
-				manufacture = new Manufacture(name, instruction, cost);
-				ResourceManager.Me.TaskSequence.AddNewTask(manufacture);
-				EventManager.TaskProgressAdvenced += NukeStrikePlatformManufactureCompleted;				
-			}
-			private static void NukeStrikePlatformManufactureCompleted(Task sender, TaskProgressAdvancedEventArgs e)
-			{
-				if (e.IsTaskFinished && 
-					sender is Manufacture manufacture &&
-					manufacture.FinalProduct is Platform platform)
-				{
-					ResourceManager.Me.SendToReserve(platform);
-				}
+				default:
+					throw new NotImplementedException();
 			}
 
-			public static void DisposeNuke(NuclearWeapon nuclearWeapon)
+			manufacture = new Manufacture(name, instruction, cost);
+			ResourceManager.Me.TaskSequence.AddNewTask(manufacture);
+			EventManager.TaskProgressAdvenced += NukeStrikePlatformManufactureCompleted;
+		}
+		private static void NukeStrikePlatformManufactureCompleted(Task sender, TaskProgressAdvancedEventArgs e)
+		{
+			if (e.IsTaskFinished &&
+				sender is Manufacture manufacture &&
+				manufacture.FinalProduct is Platform platform)
 			{
-				// Further investigation is needed
-				Deployment destruction = new Deployment($"Destroying {nuclearWeapon}", null, nuclearWeapon, 
-					ResourceManager.Misc.NukeDisposal);
-				ResourceManager.Me.TaskSequence.AddNewTask(destruction);
-
-				EventManager.TaskProgressAdvenced += (s, e) => RemoveNuke(s, e, nuclearWeapon);
-			}
-			private static void RemoveNuke(Task sender, TaskProgressAdvancedEventArgs e, NuclearWeapon weapon)
-			{
-				if (e.IsTaskFinished &&
-					sender is Deployment deployment && 
-					deployment.DeployableObject == weapon)
-				{
-					weapon.DestroyThis();
-				}
+				ResourceManager.Me.SendToReserve(platform);
 			}
 		}
 
-		public static class Operations
+		private static void DisposeNuke(NuclearWeapon nuclearWeapon)
 		{
-			public static void InvadeAndStation(Nation target, double forcesFromMe, double forcesFromAlliance, 
-				bool doSupportaPuppet = false)
-			{
+			Deployment destruction = new Deployment($"Destroying {nuclearWeapon}", null, nuclearWeapon,
+				ResourceManager.Misc.NukeDisposal);
+			ResourceManager.Me.TaskSequence.AddNewTask(destruction);
 
-			}
-
-			public static void Assinate(Nation target, PublicFigures figure)
+			EventManager.TaskProgressAdvenced += (s, e) => RemoveNuke(s, e, nuclearWeapon);
+		}
+		private static void RemoveNuke(Task sender, TaskProgressAdvancedEventArgs e, NuclearWeapon weapon)
+		{
+			if (e.IsTaskFinished &&
+				sender is Deployment deployment &&
+				deployment.DeployableObject == weapon)
 			{
-				throw new NotImplementedException();
-			}
-
-			public enum PublicFigures
-			{
-				
+				weapon.DestroyThis();
 			}
 		}
 
-		public static class Intelligence
+		private static void InvadeAndStation(Nation target, double forcesFromMe, double forcesFromAlliance,
+			bool doSupportaPuppet = false) { }
+
+		public static void Assinate(Nation target, PublicFigures figure) { }
+		#endregion
+
+		public enum PublicFigures
 		{
 
 		}
 
-		public static class Defence
-		{
-
-		}
-
-		public static class Technology
-		{
-
-		}
-
-		public static class Domestic
-		{
-
-		}
-
-		public static class Diplomacy
-		{
-
-		}
 	}
 }

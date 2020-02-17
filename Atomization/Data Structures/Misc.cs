@@ -65,6 +65,8 @@ namespace Atomization.DataStructures
 
 	public static class Misc
 	{
+		public const string BAD_ACTIVATION_SEQUENCE = "Must be activated after all dependencies";
+
 		public static int Round(double value) => (int)(value + 0.5);
 	}
 
@@ -75,6 +77,7 @@ namespace Atomization.DataStructures
 
 	public interface IDeployable : IDestroyable
 	{
+		bool IsActivated { get; set; }
 		Region DeployedRegion { get; set; }
 	}
 

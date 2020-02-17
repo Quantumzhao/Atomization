@@ -22,7 +22,6 @@ namespace Atomization.DataStructures
 		}
 
 		public event PropertyChangedEventHandler PropertyChanged;
-		public ConfidentialLevel ConfidentialLevel { get; set; }
 		public string Name { get; set; }
 
 		private int _TimeElapsed = 0;
@@ -30,7 +29,8 @@ namespace Atomization.DataStructures
 		public CostOfStage Cost { get; protected set; }
 
 		/// <summary>
-		///		Execute the task only if it is finally finished
+		///		Execute the task only if it is finally finished. 
+		///		It is called in <see cref="AdvanceProgress"/>
 		/// </summary>
 		public abstract void Execute();
 
@@ -43,8 +43,12 @@ namespace Atomization.DataStructures
 		{
 			_TimeElapsed++;
 			ImposeLongTermEffect();
-			EventManager.RaiseEvent(this, new TaskProgressAdvancedEventArgs(
-				Misc.Round(Cost.RequiredTime.Value - _TimeElapsed)));
+			var timeRemaining = Misc.Round(Cost.RequiredTime.Value - _TimeElapsed);
+			if (timeRemaining == 0)
+			{
+				Execute();
+			}
+			EventManager.RaiseEvent(this, new TaskProgressAdvancedEventArgs(timeRemaining));
 		}
 
 		private void ImposeLongTermEffect()
@@ -66,7 +70,6 @@ namespace Atomization.DataStructures
 		}
 
 		private int _Index;
-		public Action<Task> DoCensus;
 
 		private void Init()
 		{
@@ -180,40 +183,15 @@ namespace Atomization.DataStructures
 			DeployableObject = deployable;
 			Destination = destination;
 			Cost = cost;
-			_Execute = () => 
-			throw new NotImplementedException();
 		}
 
-		private Action _Execute;
 		public IDeployable DeployableObject { get; private set; } = null;
 		public Region Destination { get; }
 
 		public override void Execute()
 		{
+			DeployableObject.IsActivated = true;
 			DeployableObject.DeployedRegion = Destination;
 		}
-	}
-
-	public enum ConfidentialLevel
-	{
-		/// <summary>
-		///		Remain mostly unaware even within the central government
-		/// </summary>
-		TopSecret = 0,
-
-		/// <summary>
-		///		Opaque to the public
-		/// </summary>
-		Secret = 1,
-
-		/// <summary>
-		///		Not intentionally informing other nations
-		/// </summary>
-		Domestic = 2,
-
-		/// <summary>
-		///		Actively advertising
-		/// </summary>
-		Global = 3
 	}
 }
