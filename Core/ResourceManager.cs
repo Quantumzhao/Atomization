@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.IO;
-using Atomization.DataStructures;
+using LCGuidebook.Core.DataStructures;
 
-namespace Atomization
+namespace LCGuidebook.Core
 {
 	public static class ResourceManager
 	{

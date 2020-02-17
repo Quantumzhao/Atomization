@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace Atomization
+namespace Core
 {
 	/// <summary>
 	/// Interaction logic for App.xaml

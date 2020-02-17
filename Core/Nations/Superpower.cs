@@ -1,8 +1,10 @@
-﻿using Atomization.DataStructures;
+﻿using LCGuidebook;
+using LCGuidebook.Core;
+using LCGuidebook.Core.DataStructures;
 using System.Collections.Generic;
 using System;
 
-namespace Atomization
+namespace LCGuidebook.Core
 {
 	public class Superpower : Nation
 	{

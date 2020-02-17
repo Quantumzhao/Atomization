@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Atomization
+namespace LCGuidebook.Core.DataStructures
 {
-    class test
-    {
-    }
+	public class Order
+	{
+
+	}
 }

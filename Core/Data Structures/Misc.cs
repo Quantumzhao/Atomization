@@ -5,9 +5,11 @@ using System.Collections.ObjectModel;
 using System.Windows;
 using System;
 using System.Linq;
-using Atomization.DataStructures;
+using LCGuidebook;
+using LCGuidebook.Core;
+using LCGuidebook.Core.DataStructures;
 
-namespace Atomization.DataStructures
+namespace LCGuidebook.Core.DataStructures
 {
 	public delegate void StageFinishedHandler(Task previous, Task next, Task task);
 

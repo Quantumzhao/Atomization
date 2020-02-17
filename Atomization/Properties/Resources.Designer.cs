@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Atomization.Properties {
+namespace Core.Properties {
     using System;
     
     

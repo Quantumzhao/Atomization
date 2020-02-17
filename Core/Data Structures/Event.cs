@@ -1,7 +1,9 @@
-﻿using Atomization.DataStructures;
-using System;
+﻿using System;
+using LCGuidebook;
+using LCGuidebook.Core;
+using LCGuidebook.Core.DataStructures;
 
-namespace Atomization
+namespace LCGuidebook.Core
 {
 	public delegate void TaskProgressAdvanceHandler(Task sender, TaskProgressAdvancedEventArgs e);
 	public delegate void ValueUpdatedHandler(ValueComplex sender, ValueUpdatedEventArgs e);

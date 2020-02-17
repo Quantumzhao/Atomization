@@ -1,10 +1,12 @@
-﻿using Atomization.DataStructures;
+﻿using LCGuidebook;
+using LCGuidebook.Core;
+using LCGuidebook.Core.DataStructures;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System;
 
-namespace Atomization
+namespace LCGuidebook.Core
 {
 	public abstract class Region
 	{

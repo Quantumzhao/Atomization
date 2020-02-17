@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Linq;
 
-namespace Atomization.DataStructures
+namespace LCGuidebook.Core.DataStructures
 {
 	public class ValueComplex
 	{

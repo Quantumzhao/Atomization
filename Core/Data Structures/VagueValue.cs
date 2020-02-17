@@ -4,8 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MathNet.Numerics.Distributions;
+using LCGuidebook;
+using LCGuidebook.Core;
+using LCGuidebook.Core.DataStructures;
 
-namespace Atomization.DataStructures
+
+namespace LCGuidebook.Core.DataStructures
 {
 	public class VagueValue
 	{

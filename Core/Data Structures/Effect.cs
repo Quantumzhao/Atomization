@@ -4,8 +4,10 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using LCGuidebook;
+using LCGuidebook.Core;
 
-namespace Atomization.DataStructures
+namespace LCGuidebook.Core.DataStructures
 {
 	public class Effect
 	{

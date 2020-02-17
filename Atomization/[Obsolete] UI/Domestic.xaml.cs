@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 
-namespace Atomization
+namespace Core
 {
 	/// <summary>
 	/// Interaction logic for Domestic.xaml

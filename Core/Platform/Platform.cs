@@ -1,10 +1,12 @@
 ﻿using System.Collections.Specialized;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Atomization.DataStructures;
+using LCGuidebook;
+using LCGuidebook.Core;
+using LCGuidebook.Core.DataStructures;
 using System;
 
-namespace Atomization
+namespace LCGuidebook.Core
 {
 	public abstract class Platform : IUniqueObject, IDeployable
 	{

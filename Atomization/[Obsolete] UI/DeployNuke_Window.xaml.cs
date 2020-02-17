@@ -2,7 +2,7 @@
 using System.Windows.Controls;
 using System.Windows.Media;
 
-namespace Atomization
+namespace Core
 {
 	/// <summary>
 	/// Interaction logic for DeployNuke_Window.xaml

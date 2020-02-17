@@ -2,7 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 
-namespace Atomization
+namespace Core
 {
 	/// <summary>
 	/// Interaction logic for MainWindow.xaml

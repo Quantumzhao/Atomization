@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System;
+using LCGuidebook;
+using LCGuidebook.Core;
+using LCGuidebook.Core.DataStructures;
 
-namespace Atomization.DataStructures
+namespace LCGuidebook.Core.DataStructures
 {
 	// This class is only for `TaskSequence` property of `Nation` class
 	public class TaskSequence : INotifyCollectionChanged

@@ -1,7 +1,9 @@
-﻿using Atomization.DataStructures;
+﻿using LCGuidebook;
+using LCGuidebook.Core;
+using LCGuidebook.Core.DataStructures;
 using System;
 
-namespace Atomization
+namespace LCGuidebook.Core
 {
 	public abstract class Warhead : IDestroyable
 	{

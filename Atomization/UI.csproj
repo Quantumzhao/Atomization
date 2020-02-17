@@ -103,32 +103,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Data Structures\CommandGroup.cs" />
-    <Compile Include="Data Structures\Effect.cs" />
-    <Compile Include="Data Structures\Event.cs" />
-    <Compile Include="Data Structures\Expression.cs" />
-    <Compile Include="Data Structures\Growth.cs" />
-    <Compile Include="Data Structures\ManufactureOrder.cs" />
-    <Compile Include="Data Structures\Task.cs" />
-    <Compile Include="Data Structures\ConstructableObject.cs" />
-    <Compile Include="Data Structures\TaskSequence.cs" />
-    <Compile Include="Data Structures\TechTree.cs" />
-    <Compile Include="Data Structures\VagueValue.cs" />
-    <Compile Include="ResourceManager.cs" />
-    <Compile Include="Data Structures\ConstrainedList.cs" />
-    <Compile Include="EventManager.cs" />
-    <Compile Include="GameManager.cs" />
-    <Compile Include="Nations\Superpower.cs" />
     <Compile Include="[Obsolete] UI\MoreInfoPanel.xaml.cs">
       <DependentUpon>MoreInfoPanel.xaml</DependentUpon>
     </Compile>
     <Compile Include="[Obsolete] UI\DeployNuke_Window.xaml.cs">
       <DependentUpon>DeployNuke_Window.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Data Structures\Misc.cs" />
-    <Compile Include="Nations\Nation.cs" />
-    <Compile Include="Nuclear Weapon\NuclearWeapon.cs" />
-    <Compile Include="Platform\Platform.cs" />
     <Compile Include="[Obsolete] UI\Defence.xaml.cs">
       <DependentUpon>Defence.xaml</DependentUpon>
     </Compile>
@@ -147,8 +127,6 @@
     <Compile Include="[Obsolete] UI\Technology.xaml.cs">
       <DependentUpon>Technology.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Data Structures\ValueComplex.cs" />
-    <Compile Include="Warhead\Warhead.cs" />
     <Page Include="[Obsolete] UI\MoreInfoPanel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -226,7 +204,6 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <None Include="test.csx" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -236,14 +213,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="FormatFactoryicon [256x256].ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Nations\Nation Names.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Nations\Waters Names.txt" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.6">
@@ -256,12 +225,6 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Data\Data.csproj">
-      <Project>{e6f0f2a3-67b3-4492-92b3-34183427c21a}</Project>
-      <Name>Data</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

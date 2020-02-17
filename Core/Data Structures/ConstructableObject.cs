@@ -1,8 +1,12 @@
 ﻿using System.ComponentModel;
-using Atomization;
-using Atomization.DataStructures;
+using LCGuidebook;
+using LCGuidebook.Core;
+using LCGuidebook.Core.DataStructures;
+using LCGuidebook;
+using LCGuidebook.Core;
+using LCGuidebook.Core.DataStructures;
 
-namespace Atomization.DataStructures
+namespace LCGuidebook.Core.DataStructures
 {
 	//public abstract class ConstructableObject
 	//{

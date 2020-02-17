@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Text;
 using System.Windows;
 
-namespace Atomization
+namespace Core
 {
 	/// <summary>
 	/// Interaction logic for MoreInfoPanel.xaml
