@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<CommandGroup name="Test">
+  <Command name="TestCommand" description="description">
+    <Parameter displayName="count" type="int"/>
+    <Body reference="test.csx"/>
+  </Command>
+</CommandGroup>

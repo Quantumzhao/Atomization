@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.28803.156
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Atomization", "Atomization\Atomization.csproj", "{014E6213-F13A-4969-8FAF-D91E82A37CC0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Atomization\Core.csproj", "{014E6213-F13A-4969-8FAF-D91E82A37CC0}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CLITestSample", "CLIComponentLibrary\CLITestSample.csproj", "{B27A4CD2-6467-4887-88E5-659B64C8815B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data", "Data\Data.csproj", "{E6F0F2A3-67B3-4492-92B3-34183427C21A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{B27A4CD2-6467-4887-88E5-659B64C8815B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B27A4CD2-6467-4887-88E5-659B64C8815B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B27A4CD2-6467-4887-88E5-659B64C8815B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E6F0F2A3-67B3-4492-92B3-34183427C21A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E6F0F2A3-67B3-4492-92B3-34183427C21A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E6F0F2A3-67B3-4492-92B3-34183427C21A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E6F0F2A3-67B3-4492-92B3-34183427C21A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
