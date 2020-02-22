@@ -20,4 +20,8 @@
     <Resource Include="Nations\Waters Names.txt" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="config\" />
+  </ItemGroup>
+
 </Project>

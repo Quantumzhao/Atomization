@@ -11,6 +11,7 @@ namespace LCGuidebook.Core
 
 	public abstract class GameEventArgs : EventArgs
 	{
+		public string Message { get; set; }
 		public ConfidentialLevel ConfidentialLevel { get; set; } = ConfidentialLevel.Domestic;
 	}
 

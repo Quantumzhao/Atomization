@@ -151,7 +151,6 @@ namespace LCGuidebook.Core.DataStructures
 			: base(name, cost) 
 		{
 			_Instruction = instruction;
-			_Instruction = instruction;
 		}
 
 		private readonly Func<IDestroyable> _Instruction;

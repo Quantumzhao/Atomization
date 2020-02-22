@@ -86,7 +86,10 @@ namespace LCGuidebook.Core.DataStructures
 	{
 		public ValueComplexNTuple()
 		{
-			Array.ForEach(_Values, vc => vc = new ValueComplex());
+			for (int i = 0; i < NUM_VALUES; i++)
+			{
+				_Values[i] = new ValueComplex();
+			}
 		}
 
 		public const int NUM_VALUES = 11;

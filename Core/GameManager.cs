@@ -11,8 +11,9 @@ namespace LCGuidebook.Core
 
 		public static void InitializeAll()
 		{
-			Platform.InitializeStaticMember();
+			ResourceManager.Initialize();
 			ResourceManager.Misc.Initialize();
+			Platform.InitializeStaticMember();
 		}
 
 		private static ulong _Counter = 0;

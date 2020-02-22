@@ -55,7 +55,7 @@ namespace LCGuidebook.Core
 			{
 				for (int i = 0; i < ValueComplexNTuple.NUM_VALUES; i++)
 				{
-					ResourceManager.Me.NationalIndices[i].Growth.AddTerm(effectName, effect[i]);
+					superpower.NationalIndices[i].Growth.AddTerm(effectName, effect[i]);
 				}
 			};
 
@@ -98,7 +98,8 @@ namespace LCGuidebook.Core
 		//	throw new NotImplementedException();
 		//}
 
-		private static void EnrollNukeStrikePlatfrom(Platform.Types type)
+		// set public temporarily for unit tests
+		public static void EnrollNukeStrikePlatfrom(Platform.Types type)
 		{
 			Manufacture manufacture;
 			string name = $"Sending a new {type} to reserve";

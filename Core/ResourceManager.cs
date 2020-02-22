@@ -23,7 +23,7 @@ namespace LCGuidebook.Core
 			#region Initializa names of regions
 			try
 			{
-				WatersNames = new Queue<string>(File.ReadAllLines("..\\..\\Nations\\Waters Names.txt"));
+				WatersNames = new Queue<string>(File.ReadAllLines("..\\..\\..\\..\\Core\\Nations\\Waters Names.txt"));
 			}
 			catch (Exception)
 			{
@@ -34,7 +34,7 @@ namespace LCGuidebook.Core
 			}
 			try
 			{
-				NationNames = new Queue<string>(File.ReadAllLines("..\\..\\Nations\\Nation Names.txt"));
+				NationNames = new Queue<string>(File.ReadAllLines("..\\..\\..\\..\\Core\\Nations\\Nation Names.txt"));
 			}
 			catch (Exception)
 			{
