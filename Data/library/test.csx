@@ -2,4 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-Console.WriteLine("Hello world")
+public void Test()
+{
+	Console.WriteLine("Hello world");
+}

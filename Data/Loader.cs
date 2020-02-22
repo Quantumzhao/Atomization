@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Data.Manager
+namespace LCGuidebook.Data.Manager
 {
-	class Loader
+	public class Loader
 	{
 	}
 }
