@@ -18,5 +18,7 @@ namespace LCGuidebook.Core
 
 		private static ulong _Counter = 0;
 		public static string GenerateUID() => _Counter++.ToString("X");
+
+		public static void TimeElapse() => TimeElapsed?.Invoke();
 	}
 }

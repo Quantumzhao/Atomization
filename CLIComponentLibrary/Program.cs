@@ -17,6 +17,7 @@ namespace CLITestSample
 		{
 			Demo.DemographicModel.Init();
 			Dashboard.ImportEntryObjects(typeof(Demo.DemographicModel));
+			Console.WriteLine(Dashboard.Test());
 			ParseAndExecute("show");
 			while (true)
 			{

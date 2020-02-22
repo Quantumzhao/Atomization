@@ -20,7 +20,7 @@ namespace LCGuidebook.Core
 
 		public static void Initialize()
 		{
-			#region Initializa names of regions
+			#region Initialize names of regions
 			try
 			{
 				WatersNames = new Queue<string>(File.ReadAllLines("..\\..\\..\\..\\Core\\Nations\\Waters Names.txt"));
