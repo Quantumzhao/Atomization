@@ -9,10 +9,8 @@ namespace LCGuidebook.Core
 	{
 		public static event Action TimeElapsed;
 
-		public static void InitializeAll()
+		public static void InitializeEntityAttributes()
 		{
-			ResourceManager.Initialize();
-			ResourceManager.Misc.Initialize();
 			Platform.InitializeStaticMember();
 		}
 

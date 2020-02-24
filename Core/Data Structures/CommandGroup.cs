@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using LCGuidebook;
 using LCGuidebook.Core;
 using LCGuidebook.Core.DataStructures;
+using Microsoft.CodeAnalysis.CSharp.Scripting;
+using Microsoft.CodeAnalysis.Scripting;
 
 namespace LCGuidebook.Core.DataStructures
 {
@@ -13,13 +15,14 @@ namespace LCGuidebook.Core.DataStructures
 	// This class is set up for future xml serialization
 	public class CommandGroup : IUniqueObject
 	{
-		public CommandGroup(string name, params Command[] commands)
+		public CommandGroup(string name, string description = "")
 		{
 			Name = name;
-			Commands = commands.ToList();
+			Description = description;
 		}
 
 		public string Name { get; set; }
+		public string Description { get; set; }
 		public string UID { get; } = GameManager.GenerateUID();
 
 		public readonly List<Command> Commands;
@@ -39,29 +42,34 @@ namespace LCGuidebook.Core.DataStructures
 
 	public class Command : IUniqueObject
 	{
-		public Command(string name, Delegate body)
+		public Command(string name, string description = "")
 		{
 			Name = name;
-			Body = body;
+			Description = description;
 		}
 
 		public string Name { get; set; }
+		public string Description { get; set; }
 		public string UID { get; } = GameManager.GenerateUID();
 
 		public List<Parameter> Signature { get; } = new List<Parameter>();
-		public Delegate Body { get; }
+		public Delegate Body { get; set; }
 
 		public void Execute() => Body.DynamicInvoke(Signature.ToArray());
 
 		public class Parameter
 		{
-			public Parameter(string typeName)
+			public Parameter(string typeName, string name, string description = "")
 			{
+				Name = name;
+				Description = description;
 				ObjectType = Type.GetType(typeName);
 			}
 
 			public readonly Type ObjectType;
-			public object ObjectData { get; set; }
+			public string Description { get; set; }
+			public string Name { get; set; }
+			public object ObjectData { get; set; } = null;
 		}
 	}
 }

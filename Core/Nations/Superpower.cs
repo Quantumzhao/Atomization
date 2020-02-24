@@ -23,7 +23,8 @@ namespace LCGuidebook.Core
 
 			Affiliation = this;
 
-			new Command("", new Action<Platform.Types>( platform => EnrollNukeStrikePlatfrom(platform)));
+			var cmd = new Command("", "");
+			cmd.Body = new Action<Platform.Types>(platform => EnrollNukeStrikePlatfrom(platform));
 		}
 
 		public ConstrainedList<Platform> NuclearPlatforms { get; set; } = new ConstrainedList<Platform>();
@@ -41,7 +42,7 @@ namespace LCGuidebook.Core
 				Name = name
 			};
 
-			superpower.NationalIndices.Economy.CurrentValue = 20000 + 400;  // x10^9
+			/*superpower.NationalIndices.Economy.CurrentValue = 20000 + 400;  // x10^9
 			superpower.NationalIndices.Population.CurrentValue = 20000;      // x10^6
 			superpower.NationalIndices.Army.CurrentValue = 50000;           // x10^3
 			superpower.NationalIndices.Navy.CurrentValue = 5000;            // x10^3
@@ -49,7 +50,7 @@ namespace LCGuidebook.Core
 			superpower.NationalIndices.RawMaterial.CurrentValue = 4000;     // x10^3
 			superpower.NationalIndices.NuclearMaterial.CurrentValue = 100;  // x10^3
 			superpower.NationalIndices.Stability.CurrentValue = 75;
-			superpower.NationalIndices.Bureaucracy.CurrentValue = 10;
+			superpower.NationalIndices.Bureaucracy.CurrentValue = 10;*/
 
 			Action<string, Effect> imposeEffect = (effectName, effect) =>
 			{

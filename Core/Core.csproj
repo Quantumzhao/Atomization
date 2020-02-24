@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <PackageReference Include="MathNet.Numerics" Version="4.9.0" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Scripting" Version="3.4.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -18,10 +19,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Nations\Waters Names.txt" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="config\" />
   </ItemGroup>
 
 </Project>

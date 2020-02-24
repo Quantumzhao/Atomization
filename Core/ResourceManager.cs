@@ -23,7 +23,7 @@ namespace LCGuidebook.Core
 			#region Initialize names of regions
 			try
 			{
-				WatersNames = new Queue<string>(File.ReadAllLines("..\\..\\..\\..\\Core\\Nations\\Waters Names.txt"));
+				WatersNames = new Queue<string>(File.ReadAllLines($"{Misc.SolutionPath}\\Core\\Nations\\Waters Names.txt"));
 			}
 			catch (Exception)
 			{
@@ -34,7 +34,7 @@ namespace LCGuidebook.Core
 			}
 			try
 			{
-				NationNames = new Queue<string>(File.ReadAllLines("..\\..\\..\\..\\Core\\Nations\\Nation Names.txt"));
+				NationNames = new Queue<string>(File.ReadAllLines($"{Misc.SolutionPath}\\Core\\Nations\\Nation Names.txt"));
 			}
 			catch (Exception)
 			{
@@ -46,7 +46,9 @@ namespace LCGuidebook.Core
 			#endregion
 
 			Regions.Add(Me = Superpower.InitializeMe("C"));
-			Regions.Add(new Superpower() { Name = "A" });
+			//Regions.Add(new Superpower() { Name = "A" });
+
+			Misc.Initialize();
 		}
 
 		public static class Misc
@@ -61,6 +63,7 @@ namespace LCGuidebook.Core
 			}
 
 			public static CostOfStage NukeDisposal { get; private set; }
+			public static string SolutionPath { get; set; }
 		}
 	}
 }
