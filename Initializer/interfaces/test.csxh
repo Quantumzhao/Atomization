@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<CommandGroup 
+  xmlns="http://www.microsoft.com"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.microsoft.com schema/command_group.xsd" 
+  name="Test" description="description" >
+  <Command name="TestCommand" description="description">
+    <Parameter displayName="count" type="int" description="description"/>
+    <!-- The root directory for scripts is library -->
+    <Body src="test.csx" title="Test"/>
+  </Command>
+</CommandGroup>

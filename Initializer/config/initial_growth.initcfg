@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<initialConfiguration
+  xmlns="http://www.microsoft.com"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.microsoft.com schema/initial_growth.xsd">
+  <growth name="Army Maintenance">
+    <target name="economy" index="0">
+      <expression parameterIndex="2">
+        v => -0.001 * v
+      </expression>
+    </target>
+  </growth>
+</initialConfiguration>

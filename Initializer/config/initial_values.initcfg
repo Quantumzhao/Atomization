@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<initConfiguration
+  xmlns="http://www.microsoft.com"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.microsoft.com schema/initial_values.xsd">
+  <!--x10^9-->
+  <nationalIndex name="Economy" index="0"> 20400 </nationalIndex>
+  <!--x10^6-->
+  <nationalIndex name="Population" index="1"> 20000 </nationalIndex>
+  <!--x10^3-->
+  <nationalIndex name="Army" index="2"> 50000 </nationalIndex>
+  <!--x10^3-->
+  <nationalIndex name="Navy" index="3"> 5000 </nationalIndex>
+  <!--x10^6-->
+  <nationalIndex name="Food" index="4"> 20000 </nationalIndex>
+  <!--x10^3-->
+  <nationalIndex name="RawMaterial" index="5"> 4000 </nationalIndex>
+  <!--x10^3-->
+  <nationalIndex name="NuclearMaterial" index="6"> 100 </nationalIndex>
+  <nationalIndex name="Stability" index="7"> 75 </nationalIndex>
+  <nationalIndex name="Bureaucracy" index="8"> 10 </nationalIndex>
+  <nationalIndex name="Satisfaction" index="9"> 100 </nationalIndex>
+  <nationalIndex name="Nationalism" index="10"> 20 </nationalIndex>
+</initConfiguration>
