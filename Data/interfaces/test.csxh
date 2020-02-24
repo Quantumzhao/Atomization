@@ -1,7 +1,0 @@
-﻿<CommandGroup path="Operation.Tests" name="Test">
-  <Command name="TestCommand" description="description">
-    <Parameter displayName="count" type="int" discription="description"/>
-    <!-- The root directory for scripts is library -->
-    <Body src="test.csx" title="Test"/>
-  </Command>
-</CommandGroup>
