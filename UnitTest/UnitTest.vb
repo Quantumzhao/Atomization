@@ -2,7 +2,7 @@ Imports NUnit.Framework
 Imports LCGuidebook
 Imports LCGuidebook.Core
 Imports LCGuidebook.Core.DataStructures
-
+Imports LCGuidebook.Initialization.Manager
 
 Namespace LCGuidebook.UnitTest
 
@@ -10,7 +10,8 @@ Namespace LCGuidebook.UnitTest
 
         <SetUp>
         Public Sub Setup()
-            GameManager.InitializeAll()
+            ResourceManager.Misc.SolutionPath = $"{System.IO.Directory.GetCurrentDirectory()}\..\..\..\.."
+            InitializationManager.InitializeAll()
         End Sub
 
         <Test>
