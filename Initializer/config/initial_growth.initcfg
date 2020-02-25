@@ -1,12 +1,74 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <initialConfiguration
-  xmlns="http://www.microsoft.com"
+  xmlns="https://www.w3schools.com"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://www.microsoft.com schema/initial_growth.xsd">
+  xsi:schemaLocation="https://www.w3schools.com/xml schema/initial_growth.xsd"
+  xmlns:lcg="https://www.w3schools.com">
   <growth name="Army Maintenance">
-    <target name="economy" index="0">
+    <target lcg:mainIndexTitle="Economy" index="0">
       <expression parameterIndex="2">
         v => -0.001 * v
+      </expression>
+    </target>
+  </growth>
+  <growth name="Navy Maintenance">
+    <target lcg:mainIndexTitle="Economy" index="0">
+      <expression parameterIndex="3">
+        v => -0.005 * v
+      </expression>
+    </target>
+  </growth>
+  <growth name="Domestic Development">
+    <target lcg:mainIndexTitle="Economy" index="0">
+      <expression parameterIndex="0">
+        v => -0.9 * v
+      </expression>
+    </target>
+  </growth>
+  <growth name="Government Revenue">
+    <target lcg:mainIndexTitle="Economy" index="0">
+      <expression>
+        20000
+      </expression>
+    </target>
+  </growth>
+  <growth name="Graduates">
+    <target lcg:mainIndexTitle="Population" index="1">
+      <expression>
+        1000
+      </expression>
+    </target>
+  </growth>
+  <growth name="Domestic Production">
+    <target lcg:mainIndexTitle="RawMaterial" index="5">
+      <expression>
+        10200
+      </expression>
+    </target>
+    <target lcg:mainIndexTitle="Food" index="4">
+      <expression>
+        42000
+      </expression>
+    </target>
+  </growth>
+  <growth name="Domestic Consumption">
+    <target lcg:mainIndexTitle="Food" index="4">
+      <expression parameterIndex="1">
+        v => -2 * v
+      </expression>
+    </target>
+  </growth>
+  <growth name="Industrial Consumption">
+    <target lcg:mainIndexTitle="RawMaterial" index="5">
+      <expression>
+        -10000
+      </expression>
+    </target>
+  </growth>
+  <growth name="Nuclear Industry Production">
+    <target lcg:mainIndexTitle="NuclearMaterial" index="6">
+      <expression>
+        1
       </expression>
     </target>
   </growth>

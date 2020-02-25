@@ -1,14 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:element name="initConfiguration">
+<xs:schema 
+  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  targetNamespace="https://www.w3schools.com"
+  xmlns="https://www.w3schools.com"
+  elementFormDefault="qualified">
+  <xs:include id="MainIndexEnumDef" schemaLocation="main_index_enum_def.xsd" />
+  <xs:element name="initialConfiguration">
     <xs:complexType>
       <xs:sequence>
         <xs:element maxOccurs="11" name="nationalIndex">
           <xs:complexType>
             <xs:simpleContent>
               <xs:extension base="xs:integer">
-                <xs:attribute name="name" type="xs:string" use="required" />
-                <xs:attribute name="index" type="xs:integer" use="required" />
+                <xs:attribute ref="mainIndexTitle"/>
               </xs:extension>
             </xs:simpleContent>
           </xs:complexType>

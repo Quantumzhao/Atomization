@@ -1,5 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:schema 
+  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  targetNamespace="https://www.w3schools.com"
+  xmlns="https://www.w3schools.com"
+  elementFormDefault="qualified">
+  <xs:include id="MainIndexEnumDef" schemaLocation="main_index_enum_def.xsd" />
   <xs:element name="initialConfiguration">
     <xs:complexType>
       <xs:sequence>
@@ -13,13 +18,13 @@
                       <xs:complexType>
                         <xs:simpleContent>
                           <xs:extension base="xs:string">
-                            <xs:attribute name="parameterIndex" type="xs:integer" use="required" />
+                            <xs:attribute name="parameterIndex" type="xs:integer" />
                           </xs:extension>
                         </xs:simpleContent>
                       </xs:complexType>
                     </xs:element>
                   </xs:sequence>
-                  <xs:attribute name="name" type="xs:string" />
+                  <xs:attribute ref="mainIndexTitle" />
                   <xs:attribute name="index" type="xs:integer" use="required" />
                 </xs:complexType>
               </xs:element>

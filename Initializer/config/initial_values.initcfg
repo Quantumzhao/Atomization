@@ -1,24 +1,25 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<initConfiguration
-  xmlns="http://www.microsoft.com"
+<initialConfiguration
+  xmlns="https://www.w3schools.com"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://www.microsoft.com schema/initial_values.xsd">
+  xsi:schemaLocation="https://www.w3schools.com/xml schema/initial_values.xsd"
+  xmlns:lcg="https://www.w3schools.com">
   <!--x10^9-->
-  <nationalIndex name="Economy" index="0"> 20400 </nationalIndex>
+  <nationalIndex lcg:mainIndexTitle="Economy"> 20400 </nationalIndex>
   <!--x10^6-->
-  <nationalIndex name="Population" index="1"> 20000 </nationalIndex>
+  <nationalIndex lcg:mainIndexTitle="Population"> 20000 </nationalIndex>
   <!--x10^3-->
-  <nationalIndex name="Army" index="2"> 50000 </nationalIndex>
+  <nationalIndex lcg:mainIndexTitle="Army"> 50000 </nationalIndex>
   <!--x10^3-->
-  <nationalIndex name="Navy" index="3"> 5000 </nationalIndex>
+  <nationalIndex lcg:mainIndexTitle="Navy"> 5000 </nationalIndex>
   <!--x10^6-->
-  <nationalIndex name="Food" index="4"> 20000 </nationalIndex>
+  <nationalIndex lcg:mainIndexTitle="Food"> 20000 </nationalIndex>
   <!--x10^3-->
-  <nationalIndex name="RawMaterial" index="5"> 4000 </nationalIndex>
+  <nationalIndex lcg:mainIndexTitle="RawMaterial"> 4000 </nationalIndex>
   <!--x10^3-->
-  <nationalIndex name="NuclearMaterial" index="6"> 100 </nationalIndex>
-  <nationalIndex name="Stability" index="7"> 75 </nationalIndex>
-  <nationalIndex name="Bureaucracy" index="8"> 10 </nationalIndex>
-  <nationalIndex name="Satisfaction" index="9"> 100 </nationalIndex>
-  <nationalIndex name="Nationalism" index="10"> 20 </nationalIndex>
-</initConfiguration>
+  <nationalIndex lcg:mainIndexTitle="NuclearMaterial"> 100 </nationalIndex>
+  <nationalIndex lcg:mainIndexTitle="Stability"> 75 </nationalIndex>
+  <nationalIndex lcg:mainIndexTitle="Bureaucracy"> 10 </nationalIndex>
+  <nationalIndex lcg:mainIndexTitle="Satisfaction"> 100 </nationalIndex>
+  <nationalIndex lcg:mainIndexTitle="Nationalism"> 20 </nationalIndex>
+</initialConfiguration>
