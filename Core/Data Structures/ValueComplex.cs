@@ -96,69 +96,22 @@ namespace LCGuidebook.Core.DataStructures
 
 		private readonly ValueComplex[] _Values = new ValueComplex[NUM_VALUES];
 
-		public ValueComplex Economy
-		{
-			get => _Values[0];
-			protected set => _Values[0] = value;
-		}
-		public ValueComplex Population
-		{
-			get => _Values[1];
-			protected set => _Values[1] = value;
-		}
-		public ValueComplex Army
-		{
-			get => _Values[2];
-			protected set => _Values[2] = value;
-		}
-		public ValueComplex Navy
-		{
-			get => _Values[3];
-			protected set => _Values[3] = value;
-		}
+		public ValueComplex this[MainIndexType type] => _Values[(int)type];
+		public ValueComplex this[int type] => _Values[type];
+	}
 
-		public ValueComplex Food
-		{
-			get => _Values[4];
-			protected set => _Values[4] = value;
-		}
-
-		public ValueComplex RawMaterial
-		{
-			get => _Values[5];
-			protected set => _Values[5] = value;
-		}
-
-		public ValueComplex NuclearMaterial
-		{
-			get => _Values[6];
-			protected set => _Values[6] = value;
-		}
-
-		public ValueComplex Stability
-		{
-			get => _Values[7];
-			protected set => _Values[7] = value;
-		}
-
-		public ValueComplex Nationalism
-		{
-			get => _Values[8];
-			protected set => _Values[8] = value;
-		}
-
-		public ValueComplex Satisfaction
-		{
-			get => _Values[9];
-			protected set => _Values[9] = value;
-		}
-
-		public ValueComplex Bureaucracy
-		{
-			get => _Values[10];
-			protected set => _Values[10] = value;
-		}
-
-		public ValueComplex this[int index] => _Values[index];
+	public enum MainIndexType
+	{
+		Economy = 0,
+		Population = 1,
+		Army = 2,
+		Navy = 3,
+		Food = 4,
+		RawMaterial = 5,
+		NuclearMaterial = 6,
+		Stability = 7,
+		Nationalism = 8,
+		Satisfaction = 9,
+		Bureaucracy = 10
 	}
 }

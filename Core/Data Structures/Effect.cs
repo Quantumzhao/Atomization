@@ -25,47 +25,39 @@ namespace LCGuidebook.Core.DataStructures
 			Expression bureaucracy = null
 		)
 		{
-			Values[0] = economy;
-			Values[1] = hiEduPopu;
-			Values[2] = army;
-			Values[3] = navy;
-			Values[4] = food;
-			Values[5] = rawMaterial;
-			Values[6] = nuclearMaterial;
-			Values[7] = stability;
-			Values[8] = nationalism;
-			Values[9] = satisfaction;
-			Values[10] = bureaucracy;
+			_Values[0] = economy;
+			_Values[1] = hiEduPopu;
+			_Values[2] = army;
+			_Values[3] = navy;
+			_Values[4] = food;
+			_Values[5] = rawMaterial;
+			_Values[6] = nuclearMaterial;
+			_Values[7] = stability;
+			_Values[8] = nationalism;
+			_Values[9] = satisfaction;
+			_Values[10] = bureaucracy;
 
 			for (int i = 0; i < Nation.NUM_VALUES; i++)
 			{
-				if (Values[i] == null)
+				if (_Values[i] == null)
 				{
-					Values[i] = (Expression)0;
+					_Values[i] = (Expression)0;
 				}
 			}
 		}
 
-		public readonly Expression[] Values = new Expression[Nation.NUM_VALUES];
-
 		public event PropertyChangedEventHandler PropertyChanged;
+		private readonly Expression[] _Values = new Expression[Nation.NUM_VALUES];
 
-		public double Economy => Values[0].Value;
-		public double HiEduPopu => Values[1].Value;
-		public double Army => Values[2].Value;
-		public double Navy => Values[3].Value;
-		public double Food => Values[4].Value;
-		public double RawMaterial => Values[5].Value;
-		public double NuclearMaterial => Values[6].Value;
-		public double Stability => Values[7].Value;
-		public double Nationalism => Values[8].Value;
-		public double Satifaction => Values[9].Value;
-		public double Bureaucracy => Values[10].Value;
-
+		public Expression this[MainIndexType index]
+		{
+			get => _Values[(int)index];
+			set => _Values[(int)index] = value;
+		}
 		public Expression this[int index]
 		{
-			get => Values[index];
-			set => Values[index] = value;
+			get => _Values[index];
+			set => _Values[index] = value;
 		}
 	}
 }
