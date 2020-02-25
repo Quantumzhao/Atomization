@@ -3,6 +3,7 @@ Imports LCGuidebook
 Imports LCGuidebook.Core
 Imports LCGuidebook.Core.DataStructures
 Imports LCGuidebook.Initialization.Manager
+Imports System.IO
 
 Namespace LCGuidebook.UnitTest
 
@@ -10,7 +11,7 @@ Namespace LCGuidebook.UnitTest
 
         <SetUp>
         Public Sub Setup()
-            ResourceManager.Misc.SolutionPath = $"{System.IO.Directory.GetCurrentDirectory()}\..\..\..\.."
+            ResourceManager.Misc.SolutionPath = $"{Directory.GetCurrentDirectory()}/../../../.."
             InitializationManager.InitializeAll()
         End Sub
 

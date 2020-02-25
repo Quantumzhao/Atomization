@@ -52,7 +52,7 @@ namespace LCGuidebook.Core
 
 		public double Tactics { get; set; }
 
-		public double AdjustedBureaucracyIndex => 0.1 * Math.Pow(1.2, NationalIndices.Bureaucracy.CurrentValue);
+		public double AdjustedBureaucracyIndex => 0.1 * Math.Pow(1.2, NationalIndices[MainIndexType.Bureaucracy].CurrentValue);
 
 		public TaskSequence TaskSequence { get; } = new TaskSequence();
 

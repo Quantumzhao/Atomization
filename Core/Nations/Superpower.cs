@@ -42,43 +42,64 @@ namespace LCGuidebook.Core
 				Name = name
 			};
 
-			/*superpower.NationalIndices.Economy.CurrentValue = 20000 + 400;  // x10^9
-			superpower.NationalIndices.Population.CurrentValue = 20000;      // x10^6
-			superpower.NationalIndices.Army.CurrentValue = 50000;           // x10^3
-			superpower.NationalIndices.Navy.CurrentValue = 5000;            // x10^3
-			superpower.NationalIndices.Food.CurrentValue = 20000;           // x10^6
-			superpower.NationalIndices.RawMaterial.CurrentValue = 4000;     // x10^3
-			superpower.NationalIndices.NuclearMaterial.CurrentValue = 100;  // x10^3
-			superpower.NationalIndices.Stability.CurrentValue = 75;
-			superpower.NationalIndices.Bureaucracy.CurrentValue = 10;*/
+			for (int i = 0; i < INITIAL_NUKE_SILOS; i++)
+			{
+				superpower.NuclearPlatforms.Add(new Silo());
+			}
 
-			Action<string, Effect> imposeEffect = (effectName, effect) =>
+			/*Action<string, Effect> imposeEffect = (effectName, effect) =>
 			{
 				for (int i = 0; i < ValueComplexNTuple.NUM_VALUES; i++)
 				{
 					superpower.NationalIndices[i].Growth.AddTerm(effectName, effect[i]);
 				}
 			};
-
-			for (int i = 0; i < INITIAL_NUKE_SILOS; i++)
-			{
-				superpower.NuclearPlatforms.Add(new Silo());
-			}
-
+			
 			imposeEffect("Army Maintenance",
-				new Effect(new Expression(superpower.NationalIndices.Army.CurrentValue, v => -0.001 * v)));
+				new Effect(
+					new Expression(
+						superpower.NationalIndices.Army.CurrentValue, 
+						v => -0.001 * v)));
 			imposeEffect("Navy Maintenance",
-				new Effect(economy: new Expression(superpower.NationalIndices.Navy.CurrentValue, v => -0.005 * v)));
+				new Effect(
+					economy: new Expression(
+						superpower.NationalIndices.Navy.CurrentValue, 
+						v => -0.005 * v)));
 			imposeEffect("Domestic Development", 
-				new Effect(new Expression(superpower.NationalIndices.Economy.CurrentValue, v => -0.9 * v)));
-			imposeEffect("Government Revenue", new Effect(economy: (Expression)20000));
-			imposeEffect("Graduates", new Effect(hiEduPopu: (Expression)1000));
-			imposeEffect("Domestic Production", new Effect(food: (Expression)42000));
+				new Effect(
+					new Expression(
+						superpower.NationalIndices.Economy.CurrentValue, 
+						v => -0.9 * v)));
+			imposeEffect("Government Revenue", 
+				new Effect(
+					economy: 
+						(Expression)20000));
+			imposeEffect("Graduates", 
+				new Effect(
+					hiEduPopu: 
+						(Expression)1000));
+			imposeEffect("Domestic Production", 
+				new Effect(
+					food: 
+						(Expression)42000));
 			imposeEffect("Domestic Consumption", 
-				new Effect(food: new Expression(superpower.NationalIndices.Population.CurrentValue, v => -2 * v)));
-			imposeEffect("Domestic Production", new Effect(rawMaterial: (Expression)10200));
-			imposeEffect("Industrial Consumption", new Effect(rawMaterial: (Expression)(-10000)));
-			imposeEffect("Production", new Effect(nuclearMaterial: (Expression)1));
+				new Effect(
+					food: 
+						new Expression(
+							superpower.NationalIndices.Population.CurrentValue, 
+							v => -2 * v)));
+			imposeEffect("Domestic Production", 
+				new Effect(
+					rawMaterial: 
+						(Expression)10200));
+			imposeEffect("Industrial Consumption", 
+				new Effect(
+					rawMaterial: 
+						(Expression)(-10000)));
+			imposeEffect("Production", 
+				new Effect(
+					nuclearMaterial: 
+						(Expression)1));*/
 
 			return superpower;
 		}
