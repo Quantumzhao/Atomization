@@ -5,68 +5,68 @@
   xsi:schemaLocation="https://www.w3schools.com/xml schema/initial_growth.xsd"
   xmlns:lcg="https://www.w3schools.com">
   <growth name="Army Maintenance">
-    <target lcg:mainIndexTitle="Economy" index="0">
+    <target lcg:mainIndexTitle="Economy">
       <expression parameterIndex="2">
         v => -0.001 * v
       </expression>
     </target>
   </growth>
   <growth name="Navy Maintenance">
-    <target lcg:mainIndexTitle="Economy" index="0">
+    <target lcg:mainIndexTitle="Economy">
       <expression parameterIndex="3">
         v => -0.005 * v
       </expression>
     </target>
   </growth>
   <growth name="Domestic Development">
-    <target lcg:mainIndexTitle="Economy" index="0">
+    <target lcg:mainIndexTitle="Economy">
       <expression parameterIndex="0">
         v => -0.9 * v
       </expression>
     </target>
   </growth>
   <growth name="Government Revenue">
-    <target lcg:mainIndexTitle="Economy" index="0">
+    <target lcg:mainIndexTitle="Economy">
       <expression>
         20000
       </expression>
     </target>
   </growth>
   <growth name="Graduates">
-    <target lcg:mainIndexTitle="Population" index="1">
+    <target lcg:mainIndexTitle="Population">
       <expression>
         1000
       </expression>
     </target>
   </growth>
   <growth name="Domestic Production">
-    <target lcg:mainIndexTitle="RawMaterial" index="5">
+    <target lcg:mainIndexTitle="RawMaterial">
       <expression>
         10200
       </expression>
     </target>
-    <target lcg:mainIndexTitle="Food" index="4">
+    <target lcg:mainIndexTitle="Food">
       <expression>
         42000
       </expression>
     </target>
   </growth>
   <growth name="Domestic Consumption">
-    <target lcg:mainIndexTitle="Food" index="4">
+    <target lcg:mainIndexTitle="Food">
       <expression parameterIndex="1">
         v => -2 * v
       </expression>
     </target>
   </growth>
   <growth name="Industrial Consumption">
-    <target lcg:mainIndexTitle="RawMaterial" index="5">
+    <target lcg:mainIndexTitle="RawMaterial">
       <expression>
         -10000
       </expression>
     </target>
   </growth>
   <growth name="Nuclear Industry Production">
-    <target lcg:mainIndexTitle="NuclearMaterial" index="6">
+    <target lcg:mainIndexTitle="NuclearMaterial">
       <expression>
         1
       </expression>

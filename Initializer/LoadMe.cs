@@ -15,8 +15,10 @@ namespace LCGuidebook.Initialization.Manager
 		private const string _BAD_LANBDA_EXCEPTION = "Invalid lambda expression";
 		public static void InitializeMe()
 		{
+			ResourceManager.Regions.Add(ResourceManager.Me = new Superpower() {Name = "C" });
 			InitializeValues("initial_values.initcfg");
 			InitializeGrowth("initial_growth.initcfg");
+			AdditionalInitializations();
 		}
 
 		private static void InitializeValues(string fileName)
@@ -27,7 +29,7 @@ namespace LCGuidebook.Initialization.Manager
 			{
 				if (node.NodeType != XmlNodeType.Comment)
 				{
-					var index = ToMainIndexType(node.Attributes["mainIndexTitle"].Value);
+					var index = ToMainIndexType(node.Attributes["lcg:mainIndexTitle"].Value);
 					var value = int.Parse(node.InnerText);
 					ResourceManager.Me.NationalIndices[index].CurrentValue = value;
 				}
@@ -46,16 +48,21 @@ namespace LCGuidebook.Initialization.Manager
 
 				foreach (XmlNode target in growth.ChildNodes)
 				{
-					var idx = int.Parse(target.Attributes["index"].Value);
+					var idx = ToMainIndexType(target.Attributes["lcg:mainIndexTitle"].Value);
 					var expression = BuildExpression(target.FirstChild);
 					ResourceManager.Me.NationalIndices[idx].Growth.AddTerm(name, expression);
 				}				
 			}
 		}
+
+		private static void AdditionalInitializations()
+		{
+
+		}
 		private static Expression BuildExpression(XmlNode node)
 		{
 			double currentValue;
-			var mainIndexTitle = node.Attributes["mainIndexTitle"];
+			var mainIndexTitle = node.Attributes["parameterIndex"];
 			var expBodyLit = node.InnerText;
 
 			if (mainIndexTitle != null)

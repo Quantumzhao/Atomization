@@ -45,9 +45,6 @@ namespace LCGuidebook.Core
 			}
 			#endregion
 
-			Regions.Add(Me = Superpower.InitializeMe("C"));
-			//Regions.Add(new Superpower() { Name = "A" });
-
 			Misc.Initialize();
 		}
 

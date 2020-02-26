@@ -25,7 +25,6 @@
                     </xs:element>
                   </xs:sequence>
                   <xs:attribute ref="mainIndexTitle" />
-                  <xs:attribute name="index" type="xs:integer" use="required" />
                 </xs:complexType>
               </xs:element>
             </xs:sequence>
