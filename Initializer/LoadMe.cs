@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Text;
 using System.Xml;
@@ -12,7 +13,8 @@ namespace LCGuidebook.Initialization.Manager
 {
 	public static partial class Loader
 	{
-		private const string _BAD_LANBDA_EXCEPTION = "Invalid lambda expression";
+		private const string _BAD_LAMBDA_EXCEPTION = "Invalid lambda expression";
+		private const string _BAD_INIT_SEQ = "There's a dismatch between declared init order and enumeration order";
 		public static void InitializeMe()
 		{
 			ResourceManager.Regions.Add(ResourceManager.Me = new Superpower() {Name = "C" });
@@ -57,7 +59,21 @@ namespace LCGuidebook.Initialization.Manager
 
 		private static void AdditionalInitializations()
 		{
+			int counter = 0;
+			var doc = LoadXmlRootElements($"{ResourceManager.Misc.SolutionPath}/Initializer/config/additional_initializations.initcfg");
+			foreach (XmlNode proc in doc)
+			{
+				if (proc.NodeType == XmlNodeType.Comment) continue;
+				if (int.Parse(proc.Attributes["order"].Value) != counter)
+				{
+					throw new ArgumentException(_BAD_INIT_SEQ);
+				}
 
+				var procedureName = proc.InnerText;
+				var code = File.ReadAllText($"{ResourceManager.Misc.SolutionPath}/Initializer/library/setup/additional_initializations.csx");
+				var script = CSharpScript.Create($"{code}{procedureName}()");
+				script.RunAsync();
+			}
 		}
 		private static Expression BuildExpression(XmlNode node)
 		{
@@ -83,7 +99,7 @@ namespace LCGuidebook.Initialization.Manager
 			}
 			else
 			{
-				throw new FormatException(_BAD_LANBDA_EXCEPTION);
+				throw new FormatException(_BAD_LAMBDA_EXCEPTION);
 			}
 		}
 		private static MainIndexType ToMainIndexType(string literal)
