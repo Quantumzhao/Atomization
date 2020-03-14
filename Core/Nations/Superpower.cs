@@ -57,45 +57,50 @@ namespace LCGuidebook.Core
 			Manufacture manufacture;
 			string name = $"Sending a new {type} to reserve";
 			CostOfStage cost;
-			Func<Platform> instruction;
+			Func<Platform> onCompleteAction;
 
 			switch (type)
 			{
 				case Platform.Types.Silo:
 					cost = Silo.Manufacture;
-					instruction = () => new Silo();
+					onCompleteAction = () => new Silo();
 					break;
 
 				case Platform.Types.StrategicBomber:
 					cost = StrategicBomber.Manufacture;
-					instruction = () => new StrategicBomber();
+					onCompleteAction = () => new StrategicBomber();
 					break;
 
 				case Platform.Types.MissileLauncher:
 					cost = MissileLauncher.Manufacture;
-					instruction = () => new MissileLauncher();
+					onCompleteAction = () => new MissileLauncher();
 					break;
 
 				case Platform.Types.NuclearSubmarine:
 					cost = NuclearSubmarine.Manufacture;
-					instruction = () => new NuclearSubmarine();
+					onCompleteAction = () => new NuclearSubmarine();
 					break;
 
 				default:
 					throw new NotImplementedException();
 			}
 
-			manufacture = new Manufacture(name, instruction, cost);
+			manufacture = new Manufacture(name, onCompleteAction, cost)
+			{
+				ConfidentialLevel = ConfidentialLevel.Domestic,
+				Influence = Influence.Positive
+			};
 			ResourceManager.Me.TaskSequence.AddNewTask(manufacture);
 			EventManager.TaskProgressAdvenced += NukeStrikePlatformManufactureCompleted;
-		}
-		private static void NukeStrikePlatformManufactureCompleted(Task sender, TaskProgressAdvancedEventArgs e)
-		{
-			if (e.IsTaskFinished &&
-				sender is Manufacture manufacture &&
-				manufacture.FinalProduct is Platform platform)
+
+			static void NukeStrikePlatformManufactureCompleted(Task sender, TaskProgressAdvancedEventArgs e)
 			{
-				ResourceManager.Me.SendToReserve(platform);
+				if (e.IsTaskFinished &&
+					sender is Manufacture manufacture &&
+					manufacture.FinalProduct is Platform platform)
+				{
+					ResourceManager.Me.SendToReserve(platform);
+				}
 			}
 		}
 
@@ -127,6 +132,5 @@ namespace LCGuidebook.Core
 		{
 
 		}
-
 	}
 }

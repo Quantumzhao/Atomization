@@ -15,6 +15,7 @@ namespace LCGuidebook.Core
 		{
 			if (e is TaskProgressAdvancedEventArgs se)
 			{
+				se.TaskInfo = sender as Task;
 				TaskProgressAdvenced?.Invoke(sender as Task, se);
 			}
 			else if (e is ValueUpdatedEventArgs ve)

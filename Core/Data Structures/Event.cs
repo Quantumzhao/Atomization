@@ -11,8 +11,10 @@ namespace LCGuidebook.Core
 
 	public abstract class GameEventArgs : EventArgs
 	{
-		public string Message { get; set; }
+		public string Message { get; set; } = string.Empty;
 		public ConfidentialLevel ConfidentialLevel { get; set; } = ConfidentialLevel.Domestic;
+		public object Source { get; set; } = null;
+		public Influence Influence { get; set; } = Influence.Undefined;
 	}
 
 	public class TaskProgressAdvancedEventArgs : GameEventArgs
@@ -24,7 +26,9 @@ namespace LCGuidebook.Core
 		}
 
 		public readonly int TimeRemaining;
+
 		public bool IsTaskFinished => TimeRemaining <= 0;
+		public Task TaskInfo { get; set; }
 	}
 
 	public class ValueUpdatedEventArgs : GameEventArgs
@@ -53,5 +57,12 @@ namespace LCGuidebook.Core
 		///		Actively advertising
 		/// </summary>
 		Global = 3
+	}
+
+	public enum Influence
+	{
+		Positive, 
+		Negative, 
+		Undefined
 	}
 }

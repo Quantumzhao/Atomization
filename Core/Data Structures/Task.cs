@@ -25,9 +25,13 @@ namespace LCGuidebook.Core.DataStructures
 		}
 
 		public event PropertyChangedEventHandler PropertyChanged;
-		public string Name { get; set; }
-
 		private int _TimeElapsed = 0;
+
+		public Influence Influence { get; set; }
+
+		public ConfidentialLevel ConfidentialLevel { get; set; }
+
+		public string Name { get; set; }
 
 		public CostOfStage Cost { get; protected set; }
 
@@ -51,7 +55,15 @@ namespace LCGuidebook.Core.DataStructures
 			{
 				Execute();
 			}
-			EventManager.RaiseEvent(this, new TaskProgressAdvancedEventArgs(timeRemaining));
+			EventManager.RaiseEvent(this, 
+				new TaskProgressAdvancedEventArgs(timeRemaining)
+				{
+					Message = Name,
+					Source = this, 
+					Influence = this.Influence,
+					ConfidentialLevel = this.ConfidentialLevel
+				}
+			);
 		}
 
 		private void ImposeLongTermEffect()
@@ -147,19 +159,19 @@ namespace LCGuidebook.Core.DataStructures
 		// Any object that is manufactured will not be automatically added to anywhere. 
 		// Its destination should always be explicitly stated. 
 		// e.g. send it to reserve
-		public Manufacture(string name, Func<IDestroyable> instruction, CostOfStage cost)
+		public Manufacture(string name, Func<IDestroyable> onCompleteAction, CostOfStage cost)
 			: base(name, cost) 
 		{
-			_Instruction = instruction;
+			_OnCompleteAction = onCompleteAction;
 		}
 
-		private readonly Func<IDestroyable> _Instruction;
+		private readonly Func<IDestroyable> _OnCompleteAction;
 
 		public IDestroyable FinalProduct { get; private set; } = null;
 
 		public override void Execute()
 		{
-			FinalProduct = _Instruction();
+			FinalProduct = _OnCompleteAction();			
 		}
 	}
 
