@@ -18,14 +18,13 @@ This game (simulator) is not adapted from any existed historical events. The dev
 
 ____
 ## Current Progress
-![picture](Screenshot.jpg)
 
-Currently, I am rewriting the underlying architecture of this game, since the previous one is too clumsy and awkward. The version after this major refactor would be quite different from the old one, and therefore, the screenshot taken above would be completely **outdated** at that time. 
+Currently, I am rewriting the underlying architecture of this game, since the previous one is too clumsy and awkward. The version after this major refactor would be quite different from the old one. 
 
 # Todo
 
-- [ ] Re-write the in-game event system and the event propagation process
-- [ ] Implement a new task sequence. All commands given by the player will take effect after go through a task management sequence. 
+- [x] Re-write the in-game event system and the event propagation process
+- [x] Implement a new task sequence. All commands given by the player will take effect after go through a task management sequence. 
 - [ ] More complicated deployment process
 - [ ] Re-write the whole UI using *UI Engine*. 
 
