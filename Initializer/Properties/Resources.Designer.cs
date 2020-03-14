@@ -59,5 +59,65 @@ namespace Initializer.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] additional_initializations_csx {
+            get {
+                object obj = ResourceManager.GetObject("additional_initializations.csx", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] additional_initializations_initcfg {
+            get {
+                object obj = ResourceManager.GetObject("additional_initializations.initcfg", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] initial_growth_initcfg {
+            get {
+                object obj = ResourceManager.GetObject("initial_growth.initcfg", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] initial_values_initcfg {
+            get {
+                object obj = ResourceManager.GetObject("initial_values.initcfg", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] test_csx {
+            get {
+                object obj = ResourceManager.GetObject("test.csx", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] test_csxh {
+            get {
+                object obj = ResourceManager.GetObject("test.csxh", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
     }
 }

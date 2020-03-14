@@ -2,7 +2,7 @@ Imports NUnit.Framework
 Imports LCGuidebook
 Imports LCGuidebook.Core
 Imports LCGuidebook.Core.DataStructures
-Imports LCGuidebook.Initialization.Manager
+Imports LCGuidebook.Initializer.Manager
 Imports System.IO
 
 Namespace LCGuidebook.UnitTest
