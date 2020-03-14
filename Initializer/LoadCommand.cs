@@ -8,7 +8,7 @@ using LCGuidebook.Core;
 using Microsoft.CodeAnalysis.CSharp.Scripting;
 using Microsoft.CodeAnalysis.Scripting;
 
-namespace LCGuidebook.Initialization.Manager
+namespace LCGuidebook.Initializer.Manager
 {
 	public static partial class Loader
 	{
@@ -71,13 +71,13 @@ namespace LCGuidebook.Initialization.Manager
 			throw new NotImplementedException();
 		}
 
-		public static List<CommandGroup> GetAllCommandGroups()
+		public static List<CommandGroup> GetAllCommandGroups(XmlNodeList doc)
 		{
 			List<CommandGroup> TopLevelGroups = new List<CommandGroup>();
 
 			//string currentDir = Directory.GetCurrentDirectory();
 
-			foreach (XmlNode node in LoadXmlRootElements($"{ResourceManager.Misc.SolutionPath}\\Initializer\\interfaces\\test.csxh"))
+			foreach (XmlNode node in doc)
 			{
 				TopLevelGroups.Add(BuildCommandGroup(node));
 			}

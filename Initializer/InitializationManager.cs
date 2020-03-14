@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using LCGuidebook.Core;
 
-namespace LCGuidebook.Initialization.Manager
+namespace LCGuidebook.Initializer.Manager
 {
 	public static class InitializationManager
 	{
