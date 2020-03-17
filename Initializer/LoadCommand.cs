@@ -12,13 +12,6 @@ namespace LCGuidebook.Initializer.Manager
 {
 	public static partial class Loader
 	{
-		private static XmlNodeList LoadXmlRootElements(string url)
-		{
-			XmlDocument doc = new XmlDocument();
-			doc.Load(url);
-			return doc.DocumentElement.ChildNodes;
-		}
-
 		public static CommandGroup BuildCommandGroup(XmlNode node)
 		{
 			var name = node.Attributes["name"].Value;
@@ -38,14 +31,14 @@ namespace LCGuidebook.Initializer.Manager
 						break;
 
 					default:
-						throw new InvalidOperationException($"Not a valid name. Name is {cmdComplex.Name}");
+						throw new InvalidOperationException($"{cmdComplex.Name} is bot a valid xml name");
 				}
 			}
 
 			return group;
 		}
 
-		public static Command BuildCommand(XmlNode node)
+		private static Command BuildCommand(XmlNode node)
 		{
 			var name = node.Attributes["name"].Value;
 			var description = node.Attributes["description"]?.Value;
