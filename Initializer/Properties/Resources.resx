@@ -117,23 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="additional_initializations.csx" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\library\setup\additional_initializations.csx;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="additional_initializations.initcfg" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\config\additional_initializations.initcfg;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="initial_growth.initcfg" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\config\initial_growth.initcfg;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="initial_values.initcfg" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\config\initial_values.initcfg;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="test.csx" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\library\commands\test.csx;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="test.csxh" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\interfaces\commands\test.csxh;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="InitializerRootPath" xml:space="preserve">
+    <value>C:\Users\yisha\source\repos\Atomization\Initializer</value>
   </data>
 </root>

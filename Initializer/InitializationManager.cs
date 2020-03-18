@@ -13,6 +13,7 @@ namespace LCGuidebook.Initializer.Manager
 			GameManager.InitializeEntityAttributes();
 
 			Loader.InitializeMe();
+			ResourceManager.Me.MainCommandGroups = Loader.GetAllCommandGroups();
 		}
 	}
 }
