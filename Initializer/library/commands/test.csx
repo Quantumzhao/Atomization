@@ -1,1 +1,0 @@
-﻿System.IO.Directory.GetCurrentDirectory()
