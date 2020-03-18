@@ -25,7 +25,7 @@ namespace LCGuidebook.Core.DataStructures
 		public string Description { get; set; }
 		public string UID { get; } = GameManager.GenerateUID();
 
-		public readonly List<Command> Commands;
+		public readonly List<Command> Commands = new List<Command>();
 
 		public readonly List<CommandGroup> SubGroups = new List<CommandGroup>();
 
@@ -48,14 +48,22 @@ namespace LCGuidebook.Core.DataStructures
 			Description = description;
 		}
 
-		public string Name { get; set; }
-		public string Description { get; set; }
+		public Parameter[] Signature { get; set; }
+
 		public string UID { get; } = GameManager.GenerateUID();
 
-		public List<Parameter> Signature { get; } = new List<Parameter>();
+		public string Name { get; set; }
+		public string Description { get; set; }
 		public Delegate Body { get; set; }
+		public void AssignArgument(object value, int index)
+		{
+			Signature[index].ObjectData = value;
+		}
 
-		public void Execute() => Body.DynamicInvoke(Signature.ToArray());
+		public void Execute()
+		{
+			Body.DynamicInvoke(new object[] { Signature.Select(p => p.ObjectData).ToArray() });
+		}
 
 		public class Parameter
 		{

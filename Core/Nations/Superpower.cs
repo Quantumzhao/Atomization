@@ -27,13 +27,13 @@ namespace LCGuidebook.Core
 			cmd.Body = new Action<Platform.Types>(platform => EnrollNukeStrikePlatfrom(platform));
 		}
 
+		public List<CommandGroup> MainCommandGroups { get; set; }
+
 		public ConstrainedList<Platform> NuclearPlatforms { get; set; } = new ConstrainedList<Platform>();
 
 		public RegularNation[] Adjacency { get; set; } = new RegularNation[NUM_ADJACENT_NATIONS];
 
 		public List<RegularNation> SateliteNations { get; set; } = new List<RegularNation>();
-
-		public CommandGroup Nuclear { get; }
 
 		public void SendToReserve(IUniqueObject uniqueObject)
 		{
@@ -52,6 +52,7 @@ namespace LCGuidebook.Core
 		//}
 
 		// set public temporarily for unit tests
+		[Obsolete("Aha, I no longer need it!")]
 		public static void EnrollNukeStrikePlatfrom(Platform.Types type)
 		{
 			Manufacture manufacture;
