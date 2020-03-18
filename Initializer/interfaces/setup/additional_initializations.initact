@@ -2,7 +2,7 @@
 <initSequence
   xmlns="https://www.w3schools.com"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="https://www.w3schools.com/xml schema/add_init_setup.xsd">
+  xsi:schemaLocation="https://www.w3schools.com/xml ../schema/add_init_setup.xsd">
   <procedure order="0" file="additional_initializations">
     InitNukeArsenal
   </procedure>

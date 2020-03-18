@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<HeaderConfiguration
+  xmlns="https://www.w3schools.com"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="https://www.w3schools.com/xml ../schema/command_group.xsd">
+  <CommandGroup name="Nuclear" description="description">
+    <Command name="Enroll new nuclear strike platform" description="description">
+      <Parameter displayName="Platform type" type="LCGuidebook.Core.Platform+Types" description="description"/>
+      <!-- The root directory for scripts is library -->
+      <Body src="EnrollNukeStrikePlatform.csx" title="EnrollNukeStrikePlatform"/>
+    </Command>
+  </CommandGroup>
+</HeaderConfiguration>
