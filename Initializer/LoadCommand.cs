@@ -7,6 +7,7 @@ using LCGuidebook.Core.DataStructures;
 using LCGuidebook.Core;
 using Microsoft.CodeAnalysis.CSharp.Scripting;
 using Microsoft.CodeAnalysis.Scripting;
+using Initializer.Properties;
 
 namespace LCGuidebook.Initializer.Manager
 {
@@ -31,7 +32,7 @@ namespace LCGuidebook.Initializer.Manager
 						break;
 
 					default:
-						throw new InvalidOperationException($"{cmdComplex.Name} is bot a valid xml name");
+						throw new InvalidOperationException($"\"{cmdComplex.Name}\" is bot a valid xml name");
 				}
 			}
 
@@ -42,47 +43,65 @@ namespace LCGuidebook.Initializer.Manager
 		{
 			var name = node.Attributes["name"].Value;
 			var description = node.Attributes["description"]?.Value;
+			var signature = new List<Command.Parameter>();
 			Command command = new Command(name, description);
+			Func<Delegate> buildBody = null;
 
 			foreach (XmlNode part in node.ChildNodes)
 			{
 				switch (part.Name)
 				{
 					case "Body":
-						command.Body = BuildBody(part);
+						buildBody = () => BuildBody(part, command.Signature);
 						break;
 
 					case "Parameter":
-						command.Signature.Add(BuildParameter(part));
+						signature.Add(BuildParameter(part));
 						break;
 
 					default:
 						break;
 				}
 			}
+			command.Signature = signature.ToArray();
+			command.Body = buildBody();
 
-			throw new NotImplementedException();
+			return command;
 		}
 
-		public static List<CommandGroup> GetAllCommandGroups(XmlNodeList doc)
+		public static List<CommandGroup> GetAllCommandGroups()
 		{
-			List<CommandGroup> TopLevelGroups = new List<CommandGroup>();
+			var TopLevelGroups = new List<CommandGroup>();
 
-			//string currentDir = Directory.GetCurrentDirectory();
-
-			foreach (XmlNode node in doc)
+			foreach (var path in Directory.GetFiles(GeneratePath("interfaces", "commands")))
 			{
-				TopLevelGroups.Add(BuildCommandGroup(node));
+				foreach (XmlNode node in ToXmlDoc(path))
+				{
+					TopLevelGroups.Add(BuildCommandGroup(node));
+				}
 			}
-
 			return TopLevelGroups;
 		}
 
-		private static Script<object> BuildScript(string src, string title, params Command.Parameter[] parameters)
-		{			
-			//Script<object> script = CSharpScript.Create($"#load {_DEFINITION_DIRECTORY}\\{src}  ",);
+		private static Script BuildScript(string path, string title, Command.Parameter[] parameters)
+		{
+			var srcCode = ToCSCode(path);
+			var paramsLiteral = new StringBuilder();
+			for (int i = 0; i < parameters.Length; i++)
+			{
+				// code gen part
+				// result is like "(LCGuidebook.Core.Datastructure.Platform.Type)lcgGlobalVar[0], ..."
+				paramsLiteral.Append($"({parameters[i].ObjectType.ToString().Replace('+', '.')}){nameof(Global.LcgGlobalVars)}[{i}]");
+				if (i != parameters.Length - 1)
+				{
+					paramsLiteral.Append(", ");
+				}
+			}
 
-			throw new NotImplementedException();
+			Script script = CSharpScript.Create($"{srcCode}\n{title}({paramsLiteral})", 
+				ScriptOptions.Default.WithReferences(typeof(Superpower).Assembly), typeof(Global));
+
+			return script;
 		}
 
 		private static Command.Parameter BuildParameter(XmlNode node)
@@ -94,12 +113,15 @@ namespace LCGuidebook.Initializer.Manager
 			return new Command.Parameter(type, name, description);
 		}
 
-		private	static Delegate BuildBody(XmlNode node)
+		private	static Delegate BuildBody(XmlNode node, Command.Parameter[] parameters)
 		{
-			var src = node.Attributes["src"].Value;
+			var src = GeneratePath("library", "commands", node.Attributes["src"].Value);
 			var title = node.Attributes["title"].Value;
 
-			throw new NotImplementedException();
+			var script = BuildScript(src, title, parameters);
+
+			Action<object[]> callBack = args => script.RunAsync(new Global(args));
+			return callBack;
 		}
 	}
 }
