@@ -3,6 +3,7 @@ using LCGuidebook.Core;
 using LCGuidebook.Core.DataStructures;
 using System.Collections.Generic;
 using System;
+using UIEngine;
 
 namespace LCGuidebook.Core
 {
@@ -22,11 +23,9 @@ namespace LCGuidebook.Core
 			}
 
 			Affiliation = this;
-
-			var cmd = new Command("", "");
-			cmd.Body = new Action<Platform.Types>(platform => EnrollNukeStrikePlatfrom(platform));
 		}
 
+		[Visible(nameof(MainCommandGroups))]
 		public List<CommandGroup> MainCommandGroups { get; set; }
 
 		public ConstrainedList<Platform> NuclearPlatforms { get; set; } = new ConstrainedList<Platform>();

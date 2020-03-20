@@ -8,12 +8,13 @@ using LCGuidebook.Core;
 using LCGuidebook.Core.DataStructures;
 using Microsoft.CodeAnalysis.CSharp.Scripting;
 using Microsoft.CodeAnalysis.Scripting;
+using UIEngine;
 
 namespace LCGuidebook.Core.DataStructures
 {
 	// TODO: Move all nested static methods into dynamically generated groups
 	// This class is set up for future xml serialization
-	public class CommandGroup : IUniqueObject
+	public class CommandGroup : IUniqueObject, IVisible
 	{
 		public CommandGroup(string name, string description = "")
 		{
@@ -24,8 +25,10 @@ namespace LCGuidebook.Core.DataStructures
 		public string Name { get; set; }
 		public string Description { get; set; }
 		public string UID { get; } = GameManager.GenerateUID();
+		public string Header => Name;
 
-		public readonly List<Command> Commands = new List<Command>();
+		[Visible(nameof(Commands))]
+		public List<Command> Commands { get; } = new List<Command>();
 
 		public readonly List<CommandGroup> SubGroups = new List<CommandGroup>();
 
@@ -40,7 +43,7 @@ namespace LCGuidebook.Core.DataStructures
 		}
 	}
 
-	public class Command : IUniqueObject
+	public class Command : IUniqueObject, IVisible
 	{
 		public Command(string name, string description = "")
 		{
@@ -55,6 +58,8 @@ namespace LCGuidebook.Core.DataStructures
 		public string Name { get; set; }
 		public string Description { get; set; }
 		public Delegate Body { get; set; }
+		public string Header => Name;
+
 		public void AssignArgument(object value, int index)
 		{
 			Signature[index].ObjectData = value;

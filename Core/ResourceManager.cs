@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.IO;
 using LCGuidebook.Core.DataStructures;
+using UIEngine;
 
 namespace LCGuidebook.Core
 {
@@ -13,7 +14,8 @@ namespace LCGuidebook.Core
 		public static Queue<string> WatersNames { get; private set; }
 		public static Queue<string> NationNames { get; private set; }
 
-		public static Superpower Me;
+		[Visible(nameof(Me))]
+		public static Superpower Me { get; set; }
 
 		public static ObservableCollection<NuclearWeapon> MyNuclearWeapons { get; set; }
 			= new ObservableCollection<NuclearWeapon>();
