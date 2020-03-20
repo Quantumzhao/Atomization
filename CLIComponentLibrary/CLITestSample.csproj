@@ -6,11 +6,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="UIEngine" Version="0.1.2" />
+    <PackageReference Include="UIEngine" Version="0.2.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Core\Core.csproj" />
+    <ProjectReference Include="..\Initializer\Initializer.csproj" />
   </ItemGroup>
 
 </Project>

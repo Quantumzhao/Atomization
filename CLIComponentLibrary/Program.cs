@@ -1,23 +1,35 @@
-﻿using System;
+﻿#define LCG_UI
+
+using Demo;
+using LCGuidebook.Initializer.Manager;
+using LCGuidebook.Core;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using UIEngine;
 
-namespace CLITestSample
+namespace CLITestProject
 {
 	class Program
 	{
 		private static readonly Dictionary<Node, int> _CachedNodes = new Dictionary<Node, int>();
 		private static int _Counter = 0;
-		
+
 		private static Node _CurrentNode;
 
 		static void Main(string[] args)
 		{
-			Demo.DemographicModel.Init();
-			Dashboard.ImportEntryObjects(typeof(Demo.DemographicModel));
-			Console.WriteLine(Dashboard.Test());
+#if !LCG_UI
+			DemographicModel.Init();
+			Dashboard.ImportEntryObjects(typeof(DemographicModel));
+#else
+			ResourceManager.Misc.SolutionPath = $"{Directory.GetCurrentDirectory()}/../../../..";
+			InitializationManager.InitializeAll();
+			Dashboard.ImportEntryObjects(typeof(ResourceManager));
+#endif
 			ParseAndExecute("show");
 			while (true)
 			{
@@ -66,7 +78,7 @@ namespace CLITestSample
 					{
 						if (dstNode is CollectionNode)
 						{
-							Tabulate((dstNode as CollectionNode).Elements);
+							Tabulate((dstNode as CollectionNode).Collection);
 						}
 
 						if (!dstNode.IsValueType)
@@ -145,7 +157,7 @@ namespace CLITestSample
 			}
 			else if (opcode == "PARA")
 			{
-				
+
 			}
 			else throw new NotImplementedException();
 		}
@@ -161,15 +173,12 @@ namespace CLITestSample
 			_Counter++;
 		}
 
-		private static void Tabulate(List<List<ObjectNode>> table)
+		private static void Tabulate(ObservableCollection<ObjectNode> table)
 		{
 			for (int i = 0; i < table.Count; i++)
 			{
-				for (int j = 0; j < table[i].Count; j++)
-				{
-					TryAddToCachedNodes(table[i][j]);
-					Console.Write(string.Format("{0,-20}", $"[{_CachedNodes[table[i][j]]}] {table[i][j].Header}"));
-				}
+				TryAddToCachedNodes(table[i]);
+				Console.Write(string.Format("{0,-20}", $"[{_CachedNodes[table[i]]}] {table[i].Header}"));
 				Console.WriteLine();
 			}
 		}
