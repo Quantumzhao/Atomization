@@ -20,6 +20,9 @@ namespace LCGuidebook.Core
 		public static ObservableCollection<NuclearWeapon> MyNuclearWeapons { get; set; }
 			= new ObservableCollection<NuclearWeapon>();
 
+		private static readonly Dictionary<string, Dictionary<TypesOfCostOfStage, CostOfStage>> CostTable 
+			= new Dictionary<string, Dictionary<TypesOfCostOfStage, CostOfStage>>();
+
 		public static void Initialize()
 		{
 			#region Initialize names of regions
@@ -48,6 +51,17 @@ namespace LCGuidebook.Core
 			#endregion
 
 			Misc.Initialize();
+		}
+
+		public static void RegisterCost(Type type, CostOfStage manufacture, CostOfStage deployment, 
+			CostOfStage transportation, CostOfStage maintenance)
+		{
+			var costs = new Dictionary<TypesOfCostOfStage, CostOfStage>();
+			costs.Add(TypesOfCostOfStage.Manufacture, manufacture);
+			costs.Add(TypesOfCostOfStage.Deployment, deployment);
+			costs.Add(TypesOfCostOfStage.Transportation, transportation);
+			costs.Add(TypesOfCostOfStage.Maintenance, maintenance);
+			CostTable.Add(type.ToString(), costs);
 		}
 
 		public static class Misc

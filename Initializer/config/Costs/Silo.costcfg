@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<definition
+  xmlns="https://www.w3schools.com"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="https://www.w3schools.com/xml ../schema/costs.xsd"
+  xmlns:lcg="https://www.w3schools.com">
+  <cost title="manufacture">
+    <effect duration="long">
+      <growth name="Army Maintenance">
+        <target lcg:mainIndexTitle="Economy">
+          <expression parameterIndex="2">
+            v => -0.001 * v
+          </expression>
+        </target>
+      </growth>
+    </effect>
+    <effect duration="short">
+      <growth name="Army Maintenance">
+        <target lcg:mainIndexTitle="Economy">
+          <expression parameterIndex="2">
+            v => -0.001 * v
+          </expression>
+        </target>
+      </growth>
+    </effect>
+    <requiredTime>
+      <expression parameterIndex="0">
+        v => -0.9 * v
+      </expression>
+    </requiredTime>
+  </cost>
+  <cost title="deployment">
+
+  </cost>
+  <cost title="transportation">
+
+  </cost>
+  <cost title="maintenance">
+
+  </cost>
+</definition>
