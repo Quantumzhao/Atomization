@@ -60,7 +60,7 @@ namespace CLITestProject
 
 			if (opcode == "NAME")
 			{
-				Console.WriteLine($"{_CurrentNode.Header}\n");
+				Console.WriteLine($"{_CurrentNode?.Header}\n");
 			}
 			else if (opcode == "SHOW")
 			{
@@ -153,7 +153,7 @@ namespace CLITestProject
 				var ret = methodNode.Invoke();
 				TryAddToCachedNodes(ret);
 				_CurrentNode = ret;
-				ParseAndExecute("show");
+				ParseAndExecute("SHOW");
 			}
 			else if (opcode == "PARA")
 			{
