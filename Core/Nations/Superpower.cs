@@ -104,7 +104,7 @@ namespace LCGuidebook.Core
 			}
 		}
 
-		private static void DisposeNuke(NuclearWeapon nuclearWeapon)
+		private static void DestroyNuke(NuclearWeapon nuclearWeapon)
 		{
 			Deployment destruction = new Deployment($"Destroying {nuclearWeapon}", null, nuclearWeapon,
 				ResourceManager.Misc.NukeDisposal);
@@ -112,7 +112,7 @@ namespace LCGuidebook.Core
 
 			EventManager.TaskProgressAdvenced += (s, e) => RemoveNuke(s, e, nuclearWeapon);
 		}
-		private static void RemoveNuke(Task sender, TaskProgressAdvancedEventArgs e, NuclearWeapon weapon)
+		static void RemoveNuke(Task sender, TaskProgressAdvancedEventArgs e, NuclearWeapon weapon)
 		{
 			if (e.IsTaskFinished &&
 				sender is Deployment deployment &&

@@ -65,6 +65,14 @@ namespace LCGuidebook.Core.DataStructures
 		public Expression RequiredTime { get; }
 	}
 
+	public enum TypesOfCostOfStage
+	{
+		Manufacture,
+		Transportation,
+		Deployment,
+		Maintenance
+	}
+
 	public static class Misc
 	{
 		public const string BAD_ACTIVATION_SEQUENCE = "Must be activated after all dependencies";
