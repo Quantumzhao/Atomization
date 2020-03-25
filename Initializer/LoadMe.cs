@@ -70,34 +70,6 @@ namespace LCGuidebook.Initializer.Manager
 						ResourceManager.Me.NationalIndices[idx].Growth.AddTerm(name, expression);
 					}
 				}
-
-				static Expression BuildExpression(XmlNode node)
-				{
-					double currentValue;
-					var mainIndexTitle = node.Attributes["parameterIndex"];
-					var expBodyLit = node.InnerText;
-
-					if (mainIndexTitle != null)
-					{
-						var index = ToMainIndexType(mainIndexTitle.Value);
-						currentValue = ResourceManager.Me.NationalIndices[index].CurrentValue;
-					}
-					else
-					{
-						return new Expression(int.Parse(expBodyLit));
-					}
-
-					if (Regex.IsMatch(expBodyLit, "=>"))
-					{
-						var option = ScriptOptions.Default.AddReferences(typeof(ValueComplex).Assembly);
-						Func<double, double> expBody = CSharpScript.EvaluateAsync<Func<double, double>>(expBodyLit, option).Result;
-						return new Expression(currentValue, expBody);
-					}
-					else
-					{
-						throw new FormatException(_BAD_LAMBDA_EXCEPTION);
-					}
-				}
 			}
 		}
 
@@ -143,6 +115,37 @@ namespace LCGuidebook.Initializer.Manager
 				stringBuilder.Append($"/{relativePath[i]}");
 			}
 			return stringBuilder.ToString();
+		}
+
+		private static Expression BuildExpression(XmlNode node)
+		{
+			double constant = double.Parse(node.Attributes["constant"].InnerText.Trim());
+			var expBodyLit = node.InnerText;
+
+			if (expBodyLit.Trim() == string.Empty)
+			{
+				return new Expression(constant);
+			}
+
+			if (Regex.IsMatch(expBodyLit, "=>"))
+			{
+				var results = Regex.Matches(expBodyLit, @"[A-Z][a-z]+");
+				var expBodyLitCpy = 
+					$"using LCGuidebook.Core; using LCGuidebook.Core.DataStructures; {expBodyLit.Trim()}";
+				foreach (Match result in results)
+				{
+					expBodyLitCpy = expBodyLitCpy.Replace(result.Value, 
+						$"ResourceManager.Me.NationalIndices[MainIndexType.{result.Value}].CurrentValue");
+				}
+				var option = ScriptOptions.Default.AddReferences(typeof(ValueComplex).Assembly);
+				Func<double, double> expBody = CSharpScript.EvaluateAsync<Func<double, double>>
+					(expBodyLitCpy, option).Result;
+				return new Expression(constant, expBody);
+			}
+			else
+			{
+				throw new FormatException(_BAD_LAMBDA_EXCEPTION);
+			}
 		}
 	}
 }

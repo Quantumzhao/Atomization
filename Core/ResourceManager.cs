@@ -28,7 +28,8 @@ namespace LCGuidebook.Core
 			#region Initialize names of regions
 			try
 			{
-				WatersNames = new Queue<string>(File.ReadAllLines($"{Misc.SolutionPath}/Core/Nations/Waters Names.txt"));
+				WatersNames = new Queue<string>(File.ReadAllLines(
+					$"{Misc.SolutionPath}/Core/Nations/Waters Names.txt"));
 			}
 			catch (Exception)
 			{
@@ -39,7 +40,8 @@ namespace LCGuidebook.Core
 			}
 			try
 			{
-				NationNames = new Queue<string>(File.ReadAllLines($"{Misc.SolutionPath}/Core/Nations/Nation Names.txt"));
+				NationNames = new Queue<string>(File.ReadAllLines(
+					$"{Misc.SolutionPath}/Core/Nations/Nation Names.txt"));
 			}
 			catch (Exception)
 			{
@@ -53,15 +55,24 @@ namespace LCGuidebook.Core
 			Misc.Initialize();
 		}
 
-		public static void RegisterCost(Type type, CostOfStage manufacture, CostOfStage deployment, 
-			CostOfStage transportation, CostOfStage maintenance)
+		public static void RegisterCost(string typeOfGameObject, TypesOfCostOfStage costType, 
+			CostOfStage cost)
 		{
-			var costs = new Dictionary<TypesOfCostOfStage, CostOfStage>();
-			costs.Add(TypesOfCostOfStage.Manufacture, manufacture);
-			costs.Add(TypesOfCostOfStage.Deployment, deployment);
-			costs.Add(TypesOfCostOfStage.Transportation, transportation);
-			costs.Add(TypesOfCostOfStage.Maintenance, maintenance);
-			CostTable.Add(type.ToString(), costs);
+			Dictionary<TypesOfCostOfStage, CostOfStage> costs;
+			if (CostTable.ContainsKey(typeOfGameObject.ToString()))
+			{
+				costs = CostTable[typeOfGameObject];
+			}
+			else
+			{
+				costs = new Dictionary<TypesOfCostOfStage, CostOfStage>();
+				CostTable.Add(typeOfGameObject.ToString(), costs);
+			}
+
+			if (!costs.ContainsKey(costType))
+			{
+				costs.Add(costType, cost);
+			}
 		}
 
 		public static class Misc
