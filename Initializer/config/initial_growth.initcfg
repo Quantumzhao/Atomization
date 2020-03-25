@@ -6,70 +6,58 @@
   xmlns:lcg="https://www.w3schools.com">
   <growth name="Army Maintenance">
     <target lcg:mainIndexTitle="Economy">
-      <expression parameterIndex="2">
-        v => -0.001 * v
+      <expression constant="-0.001">
+        constant => Army * constant
       </expression>
     </target>
   </growth>
   <growth name="Navy Maintenance">
     <target lcg:mainIndexTitle="Economy">
-      <expression parameterIndex="3">
-        v => -0.005 * v
+      <expression constant="-0.005">
+        constant => Navy * constant
       </expression>
     </target>
   </growth>
   <growth name="Domestic Development">
     <target lcg:mainIndexTitle="Economy">
-      <expression parameterIndex="0">
-        v => -0.9 * v
+      <expression constant="-0.005">
+        constant => Economy * constant
       </expression>
     </target>
   </growth>
   <growth name="Government Revenue">
     <target lcg:mainIndexTitle="Economy">
-      <expression>
-        20000
-      </expression>
+      <expression constant="20000" />
     </target>
   </growth>
   <growth name="Graduates">
     <target lcg:mainIndexTitle="Population">
-      <expression>
-        1000
-      </expression>
+      <expression constant="1000" />
     </target>
   </growth>
   <growth name="Domestic Production">
     <target lcg:mainIndexTitle="RawMaterial">
-      <expression>
-        10200
-      </expression>
+      <expression constant="10200" />
     </target>
     <target lcg:mainIndexTitle="Food">
-      <expression>
-        42000
-      </expression>
+      <expression constant="42000" />
     </target>
   </growth>
   <growth name="Domestic Consumption">
     <target lcg:mainIndexTitle="Food">
-      <expression parameterIndex="1">
-        v => -2 * v
+      <expression constant="-2">
+        constant => Population * constant
       </expression>
     </target>
   </growth>
   <growth name="Industrial Consumption">
     <target lcg:mainIndexTitle="RawMaterial">
-      <expression>
-        -10000
-      </expression>
+      <expression constant="-10000" />
     </target>
   </growth>
   <growth name="Nuclear Industry Production">
     <target lcg:mainIndexTitle="NuclearMaterial">
-      <expression>
-        1
-      </expression>
+      <expression constant="1" />
     </target>
   </growth>
 </initialConfiguration>
