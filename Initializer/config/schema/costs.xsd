@@ -15,7 +15,7 @@
               <xs:element name="cost" maxOccurs="unbounded" minOccurs="0">
                 <xs:complexType mixed="true">
                   <xs:sequence minOccurs="0">
-                    <xs:element name="effect" maxOccurs="unbounded">
+                    <xs:element name="effect" minOccurs="1" maxOccurs="unbounded">
                       <xs:complexType>
                         <xs:sequence>
                           <xs:element ref="growth" minOccurs="1" maxOccurs="1"/>
@@ -30,7 +30,7 @@
                         </xs:attribute>
                       </xs:complexType>
                     </xs:element>
-                    <xs:element name="requiredTime">
+                    <xs:element name="requiredTime" minOccurs="0" maxOccurs="1">
                       <xs:complexType>
                         <xs:sequence>
                           <xs:element ref="expression" />

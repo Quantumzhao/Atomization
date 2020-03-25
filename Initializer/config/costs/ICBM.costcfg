@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<definition
+  xmlns="https://www.w3schools.com"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="https://www.w3schools.com/xml ../schema/costs.xsd"
+  xmlns:lcg="https://www.w3schools.com">
+  <entity name="ICBM">
+    <cost title="Manufacture">
+      <effect duration="long">
+        <growth name="ICBM Construction">
+          <target lcg:mainIndexTitle="Economy">
+            <expression constant="-13" />
+          </target>
+          <target lcg:mainIndexTitle="RawMaterial">
+            <expression constant="-16" />
+          </target>
+        </growth>
+      </effect>
+      <requiredTime>
+        <expression constant="6" />
+      </requiredTime>
+    </cost>
+    <cost title="Maintenance">
+      <effect duration="long">
+        <growth name="Nuclear Arsenal Maintenance">
+          <target lcg:mainIndexTitle="Economy">
+            <expression constant="-20" />
+          </target>
+          <target lcg:mainIndexTitle="RawMaterial">
+            <expression constant="-1" />
+          </target>
+        </growth>
+      </effect>
+    </cost>
+  </entity>
+</definition>
