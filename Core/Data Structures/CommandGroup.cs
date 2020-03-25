@@ -12,8 +12,6 @@ using UIEngine;
 
 namespace LCGuidebook.Core.DataStructures
 {
-	// TODO: Move all nested static methods into dynamically generated groups
-	// This class is set up for future xml serialization
 	public class CommandGroup : IUniqueObject, IVisible
 	{
 		public CommandGroup(string name, string description = "")

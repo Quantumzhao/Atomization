@@ -10,11 +10,6 @@ namespace LCGuidebook.Core
 	{
 		public static event Action TimeElapsed;
 
-		//public static void InitializeEntityAttributes()
-		//{
-		//	Platform.InitializeStaticMember();
-		//}
-
 		private static ulong _Counter = 0;
 		public static string GenerateUID() => _Counter++.ToString("X");
 

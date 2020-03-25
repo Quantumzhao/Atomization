@@ -48,8 +48,6 @@ namespace LCGuidebook.Core
 
 		public Waters TerritorialWaters { get; }
 
-		//public ConstrainedList<Effect> ExpenditureAndRevenue = new ConstrainedList<Effect>();
-
 		public double Tactics { get; set; }
 
 		public double AdjustedBureaucracyIndex => 0.1 * Math.Pow(1.2, NationalIndices[MainIndexType.Bureaucracy].CurrentValue);
@@ -66,14 +64,6 @@ namespace LCGuidebook.Core
 		public CommandGroup Technology { get; }
 		public CommandGroup Domestic { get; }
 		public CommandGroup Diplomacy { get; }
-
-		//public void AddCostOfExecution(Effect cost)
-		//{
-		//	for (int i = 0; i < cost.Values.Length; i++)
-		//	{
-		//		NationalIndices[i].CurrentValue += cost.Values[i].Value;
-		//	}
-		//}
 
 		public void UpdateValue(int nationalIndex)
 		{

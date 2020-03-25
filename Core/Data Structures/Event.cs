@@ -7,7 +7,6 @@ namespace LCGuidebook.Core
 {
 	public delegate void TaskProgressAdvanceHandler(Task sender, TaskProgressAdvancedEventArgs e);
 	public delegate void ValueUpdatedHandler(ValueComplex sender, ValueUpdatedEventArgs e);
-	//public delegate void TaskCompletedHandler(Task sender, TaskCompletedEventArgs e);
 
 	public abstract class GameEventArgs : EventArgs
 	{

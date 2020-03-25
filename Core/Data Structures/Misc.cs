@@ -13,44 +13,6 @@ namespace LCGuidebook.Core.DataStructures
 {
 	public delegate void StageFinishedHandler(Task previous, Task next, Task task);
 
-	//public class VMList<V> : List<V>, INotifyCollectionChanged
-	//{
-	//	public event PropertyChangedEventHandler PropertyChanged;
-	//	public event NotifyCollectionChangedEventHandler CollectionChanged;
-
-	//	public new void Add(V newValue)
-	//	{
-	//		base.Add(newValue);
-	//		CollectionChanged?.Invoke(this, 
-	//			new NotifyCollectionChangedEventArgs(
-	//				NotifyCollectionChangedAction.Add, newValue
-	//			)
-	//		);
-	//	}
-
-	//	public new bool Remove(V oldValue)
-	//	{
-	//		if (base.Remove(oldValue))
-	//		{
-	//			CollectionChanged?.Invoke(this,
-	//				new NotifyCollectionChangedEventArgs(
-	//					NotifyCollectionChangedAction.Remove, oldValue
-	//				)
-	//			);
-	//			return true;
-	//		}
-	//		else
-	//		{
-	//			return false;
-	//		}
-	//	}
-
-	//	//public void OnCollectionChanged(NotifyCollectionChangedEventArgs e)
-	//	//{
-	//	//	CollectionChanged?.Invoke(this, e);
-	//	//}
-	//}
-
 	public class CostOfStage
 	{
 		public CostOfStage(Effect longTermEffect, Effect shortTermEffect, Expression requiredTime)

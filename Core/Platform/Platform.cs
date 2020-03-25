@@ -49,14 +49,6 @@ namespace LCGuidebook.Core
 			}
 		}
 
-		//public static void InitializeStaticMember()
-		//{
-		//	Silo.InitializeStaticMember();
-		//	StrategicBomber.InitializeStaticMember();
-		//	MissileLauncher.InitializeStaticMember();
-		//	NuclearSubmarine.InitializeStaticMember();
-		//}
-
 		public void DestroyThis()
 		{
 			SelfDestroyed?.Invoke();
@@ -81,11 +73,6 @@ namespace LCGuidebook.Core
 			NuclearWeapons.MaxCapacity = 1;
 		}
 
-		//public static CostOfStage Manufacture { get; private set; }
-		//public static CostOfStage Transportation { get; private set; }
-		//public static CostOfStage Deployment { get; private set; }
-		//public static CostOfStage Maintenance { get; private set; }
-
 		//public static new void InitializeStaticMember()
 		//{
 		//	Manufacture = new CostOfStage(
@@ -98,11 +85,6 @@ namespace LCGuidebook.Core
 
 	public class StrategicBomber : Platform
 	{
-		//public static CostOfStage Manufacture { get; private set; }
-		//public static CostOfStage Transportation { get; private set; }
-		//public static CostOfStage Deployment { get; private set; }
-		//public static CostOfStage Maintenance { get; private set; }
-
 		public StrategicBomber() : base()
 		{
 			NuclearWeapons.MaxCapacity = 1;
@@ -121,11 +103,6 @@ namespace LCGuidebook.Core
 
 	public class MissileLauncher : Platform
 	{
-		//public static CostOfStage Manufacture { get; private set; }
-		//public static CostOfStage Transportation { get; private set; }
-		//public static CostOfStage Deployment { get; private set; }
-		//public static CostOfStage Maintenance { get; private set; }
-
 		public MissileLauncher() : base()
 		{
 			NuclearWeapons.MaxCapacity = 1;
@@ -144,11 +121,6 @@ namespace LCGuidebook.Core
 
 	public class NuclearSubmarine : Platform
 	{
-		//public static CostOfStage Manufacture { get; private set; }
-		//public static CostOfStage Transportation { get; private set; }
-		//public static CostOfStage Deployment { get; private set; }
-		//public static CostOfStage Maintenance { get; private set; }
-
 		public NuclearSubmarine() : base()
 		{
 			NuclearWeapons.MaxCapacity = 8;

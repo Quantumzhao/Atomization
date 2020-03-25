@@ -10,7 +10,7 @@ using LCGuidebook.Core.DataStructures;
 
 namespace LCGuidebook.Core.DataStructures
 {
-	/* Stage is a general category of any action made by the gov't. It can be: 
+	/* Stage is a general category of any action made by the government. It can be: 
 	 * 1. Investigation and census (get info from sources (in-game entities))
 	 * 2. Enactments and policies (make changes to values/in-game entities)
 	 * 3. Orders to manufacture (create new in-game entities and deploy) 
@@ -141,15 +141,6 @@ namespace LCGuidebook.Core.DataStructures
 		{
 			_Action = action;
 		}
-		//public static Policy Create(Action action, Effect longTermEffect, Expression requiredTime)
-		//{
-		//	return new Policy
-		//	{
-		//		_LongTermEffect = longTermEffect,
-		//		_RequiredTime = requiredTime,
-		//		_Action = action
-		//	};
-		//}
 
 		public override void Execute() => _Action();
 	}

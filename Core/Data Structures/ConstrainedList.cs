@@ -47,10 +47,5 @@ namespace LCGuidebook.Core.DataStructures
 				return false;
 			}
 		}
-
-		//public void OnCollectionChanged(NotifyCollectionChangedEventArgs e)
-		//{
-		//	CollectionChanged?.Invoke(this, e);
-		//}
 	}
 }
