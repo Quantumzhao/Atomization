@@ -56,28 +56,24 @@ namespace LCGuidebook.Core
 		{
 			Manufacture manufacture;
 			string name = $"Sending a new {type} to reserve";
-			CostOfStage cost;
+			CostOfStage cost = ResourceManager.GetCostOf(type.ToString(), TypesOfCostOfStage.Manufacture);
 			Func<Platform> onCompleteAction;
 
 			switch (type)
 			{
 				case Platform.Types.Silo:
-					cost = Silo.Manufacture;
 					onCompleteAction = () => new Silo();
 					break;
 
 				case Platform.Types.StrategicBomber:
-					cost = StrategicBomber.Manufacture;
 					onCompleteAction = () => new StrategicBomber();
 					break;
 
 				case Platform.Types.MissileLauncher:
-					cost = MissileLauncher.Manufacture;
 					onCompleteAction = () => new MissileLauncher();
 					break;
 
 				case Platform.Types.NuclearSubmarine:
-					cost = NuclearSubmarine.Manufacture;
 					onCompleteAction = () => new NuclearSubmarine();
 					break;
 
