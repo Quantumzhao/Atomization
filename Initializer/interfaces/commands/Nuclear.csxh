@@ -9,5 +9,9 @@
       <!-- The root directory for scripts is library -->
       <Body src="EnrollNukeStrikePlatform.csx" title="EnrollNukeStrikePlatform"/>
     </Command>
+    <Command name="Destroy nuclear weapon" description="description">
+      <Parameter displayName="Nuclear weapon" type="LCGuidebook.Core.NuclearWeapon" description="description"/>
+      <Body src="DestroyNuke.csx" title="DestroyNuke"/>
+    </Command>
   </CommandGroup>
 </HeaderConfiguration>

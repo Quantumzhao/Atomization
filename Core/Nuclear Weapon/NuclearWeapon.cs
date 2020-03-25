@@ -16,7 +16,6 @@ namespace LCGuidebook.Core
 		public event Action SelfDestroyed;
 
 		public ConstrainedList<Warhead> Warheads { get; } = new ConstrainedList<Warhead>();
-		public string WarheadType => Warheads.Count != 1 ? "(Multiple Types)" : Warheads[0].WarheadType;
 		public Region DeployedRegion { get; set; }
 		public bool IsActivated
 		{
@@ -78,6 +77,13 @@ namespace LCGuidebook.Core
 		}
 
 		public void DestroyThis() => SelfDestroyed?.Invoke();
+	}
+
+	public enum CarrierType
+	{
+		IRBM, 
+		ICBM, 
+		AerialBomb
 	}
 
 	public abstract class NuclearMissile : NuclearWeapon

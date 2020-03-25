@@ -50,7 +50,7 @@ namespace LCGuidebook.Core
 		//	throw new NotImplementedException();
 		//}
 
-		private static void DestroyNuke(NuclearWeapon nuclearWeapon)
+		public static void DestroyNuke(NuclearWeapon nuclearWeapon)
 		{
 			Deployment destruction = new Deployment($"Destroying {nuclearWeapon}", null, nuclearWeapon,
 				ResourceManager.Misc.NukeDisposal);
@@ -65,6 +65,24 @@ namespace LCGuidebook.Core
 				deployment.DeployableObject == weapon)
 			{
 				weapon.DestroyThis();
+			}
+		}
+
+		public static void DeployNewNuclearWeapon(Platform.Types platformType, 
+			Warhead.Types warheadType, CarrierType carrierType, Region target)
+		{
+			Manufacture manufacture;
+
+			switch (warheadType)
+			{
+				case Warhead.Types.AtomicBomb:
+					break;
+				case Warhead.Types.HydrogenBomb:
+					break;
+				case Warhead.Types.DirtyBomb:
+					break;
+				default:
+					break;
 			}
 		}
 

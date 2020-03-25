@@ -7,11 +7,16 @@ namespace LCGuidebook.Core
 {
 	public abstract class Warhead : IDestroyable
 	{
-		public virtual string WarheadType { get; } = "Warh";
-
 		public event Action SelfDestroyed;
 
 		public void DestroyThis() => SelfDestroyed?.Invoke();
+
+		public enum Types
+		{
+			AtomicBomb, 
+			HydrogenBomb, 
+			DirtyBomb
+		}
 	}
 	public class Atomic : Warhead
 	{

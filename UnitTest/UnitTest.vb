@@ -21,7 +21,6 @@ Namespace LCGuidebook.UnitTest
             Dim original = ResourceManager.Me.NuclearPlatforms.Count
             ResourceManager.Me.MainCommandGroups(0).Commands(0).AssignArgument(Platform.Types.Silo, 0)
             ResourceManager.Me.MainCommandGroups(0).Commands(0).Execute()
-            REM Superpower.EnrollNukeStrikePlatfrom(Platform.Types.Silo)
             Dim res = ResourceManager.Me.NuclearPlatforms.Count
             Assert.IsTrue(original = res)
 
