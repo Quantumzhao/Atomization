@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema
+  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  targetNamespace="https://www.w3schools.com"
+  xmlns="https://www.w3schools.com"
+  elementFormDefault="qualified"
+  id="ExpressionDef">
+  <xs:include id="MainIndexEnumDef" schemaLocation="main_index_enum_def.xsd" />
+  <xs:element name="expression">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="xs:string">
+          <xs:attribute name="constant" type="xs:double" use="required" />
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
