@@ -8,9 +8,9 @@ namespace LCGuidebook.Core.DataStructures
 {
 	public class Expression : INotifyPropertyChanged
 	{
-		public Expression(double para, Func<double, double> function)
+		public Expression(double constant, Func<double, double> function)
 		{
-			Parameter = para;
+			Constant = constant;
 			this._Function = function;
 		}
 		public Expression(double value)
@@ -18,7 +18,7 @@ namespace LCGuidebook.Core.DataStructures
 			_Function = p => value;
 		}
 
-		public double Parameter { get; set; }
+		public double Constant { get; set; }
 
 		public event PropertyChangedEventHandler PropertyChanged;
 
@@ -36,7 +36,7 @@ namespace LCGuidebook.Core.DataStructures
 			}
 		}
 
-		public double Value => _Function(Parameter);
+		public double Value => _Function(Constant);
 
 		public static explicit operator Expression(double value) => new Expression(value);
 
