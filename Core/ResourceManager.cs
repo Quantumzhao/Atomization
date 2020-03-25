@@ -74,6 +74,10 @@ namespace LCGuidebook.Core
 				costs.Add(costType, cost);
 			}
 		}
+		public static CostOfStage GetCostOf(string entityName, TypesOfCostOfStage type)
+		{
+			return CostTable[entityName][type];
+		}
 
 		public static class Misc
 		{

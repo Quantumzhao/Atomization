@@ -49,7 +49,7 @@ namespace LCGuidebook.Initializer.Manager
 						break;
 
 					case "requiredTime":
-						requiredTime = BuildExpression(child);
+						requiredTime = BuildExpression(child.FirstChild);
 						break;
 
 					default:
@@ -62,7 +62,7 @@ namespace LCGuidebook.Initializer.Manager
 		private static Effect BuildEffect(XmlNode node)
 		{
 			Effect effect = new Effect();
-			foreach (XmlNode target in node.ChildNodes)
+			foreach (XmlNode target in node.FirstChild.ChildNodes)
 			{
 				MainIndexType type = ToMainIndexType(target.Attributes["lcg:mainIndexTitle"]
 					.InnerText.Trim());
