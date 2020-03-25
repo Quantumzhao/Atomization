@@ -4,7 +4,7 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="https://www.w3schools.com/xml ../schema/costs.xsd"
   xmlns:lcg="https://www.w3schools.com">
-  <entity name="Silo">
+  <entity name="NuclearSubmarine">
     <cost title="Manufacture">
       <effect duration="long">
         <growth name="Silo Manufacture">
@@ -14,20 +14,26 @@
           <target lcg:mainIndexTitle="RawMaterial">
             <expression constant="-5" />
           </target>
+          <target lcg:mainIndexTitle="NuclearMaterial">
+            <expression constant="-0.05" />
+          </target>
         </growth>
       </effect>
       <effect duration="short">
         <growth name="Silo Manufacture">
           <target lcg:mainIndexTitle="Economy">
-            <expression constant="-40" />
+            <expression constant="-100" />
           </target>
           <target lcg:mainIndexTitle="RawMaterial">
-            <expression constant="-60" />
+            <expression constant="-200" />
+          </target>
+          <target lcg:mainIndexTitle="NuclearMaterial">
+            <expression constant="-1" />
           </target>
         </growth>
       </effect>
       <requiredTime>
-        <expression constant="4" />
+        <expression constant="12" />
       </requiredTime>
     </cost>
   </entity>

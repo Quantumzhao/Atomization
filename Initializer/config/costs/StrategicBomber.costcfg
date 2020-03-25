@@ -4,30 +4,30 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="https://www.w3schools.com/xml ../schema/costs.xsd"
   xmlns:lcg="https://www.w3schools.com">
-  <entity name="Silo">
+  <entity name="StrategicBomber">
     <cost title="Manufacture">
       <effect duration="long">
         <growth name="Silo Manufacture">
           <target lcg:mainIndexTitle="Economy">
-            <expression constant="-2" />
+            <expression constant="-10" />
           </target>
           <target lcg:mainIndexTitle="RawMaterial">
-            <expression constant="-5" />
+            <expression constant="-30" />
           </target>
         </growth>
       </effect>
       <effect duration="short">
         <growth name="Silo Manufacture">
           <target lcg:mainIndexTitle="Economy">
-            <expression constant="-40" />
+            <expression constant="-30" />
           </target>
           <target lcg:mainIndexTitle="RawMaterial">
-            <expression constant="-60" />
+            <expression constant="-5" />
           </target>
         </growth>
       </effect>
       <requiredTime>
-        <expression constant="4" />
+        <expression constant="7" />
       </requiredTime>
     </cost>
   </entity>
