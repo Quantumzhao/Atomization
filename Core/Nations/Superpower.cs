@@ -82,7 +82,7 @@ namespace LCGuidebook.Core
 				case Warhead.Types.DirtyBomb:
 					break;
 				default:
-					break;
+					throw new ArgumentException();
 			}
 		}
 
