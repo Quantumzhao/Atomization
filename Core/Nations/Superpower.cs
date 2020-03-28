@@ -86,10 +86,6 @@ namespace LCGuidebook.Core
 			}
 		}
 
-		private static void InvadeAndStation(Nation target, double forcesFromMe, double forcesFromAlliance,
-			bool doSupportaPuppet = false) { }
-
-		public static void Assinate(Nation target, PublicFigures figure) { }
 		#endregion
 
 		public enum PublicFigures
