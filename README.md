@@ -19,14 +19,14 @@ This game (simulator) is not adapted from any existed historical events. The dev
 ____
 ## Current Progress
 
-Currently, I am rewriting the underlying architecture of this game, since the previous one is too clumsy and awkward. The version after this major refactor would be quite different from the old one. 
+Currently, I am rewriting the underlying architecture of this game, since the previous one is too clumsy and awkward. The game content after this major refactor would be quite different from the old one. 
 
 # Todo
 
 - [x] Re-write the in-game event system and the event propagation process
 - [x] Implement a new task sequence. All commands given by the player will take effect after go through a task management sequence. 
-- [ ] More complicated deployment process
-- [ ] Re-write the whole UI using *UI Engine*. 
+- [ ] Convert the game object architecture from inheritance oriented to component oriented. 
+- [ ] Modularize the main indices, i.e., each index will become an independent game object, in order to simulate the intricacies between enterprises-governments and/or government departments. 
 
 ___
 **This game is still under development, and tons of bugs exist. If you have any problems and ideas about the source code, it is welcomed to be posted in ISSUES**
