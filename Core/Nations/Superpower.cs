@@ -4,6 +4,7 @@ using LCGuidebook.Core.DataStructures;
 using System.Collections.Generic;
 using System;
 using UIEngine;
+using System.Reflection.PortableExecutable;
 
 namespace LCGuidebook.Core
 {
@@ -68,12 +69,71 @@ namespace LCGuidebook.Core
 			}
 		}
 
-		public static void DeployNewNuclearWeapon(Platform.Types platformType, 
-			Warhead.Types warheadType, CarrierType carrierType, Region target)
-		{
-			Manufacture manufacture;
+		//public static void DeployNewNuclearWeapon(Platform.Types platformType, 
+		//	Warhead.Types warheadType, CarrierType carrierType, Region target)
+		//{
+		//	Manufacture manufacture;
+		//	string name = $"Sending a new {warheadType} to reserve";
+		//	CostOfStage cost = ResourceManager.GetCostOf(warheadType.ToString(), TypesOfCostOfStage.Manufacture);
+		//	Func<Platform> onCompleteAction;
 
-			switch (warheadType)
+		//	switch (warheadType)
+		//	{
+		//		case Warhead.Types.AtomicBomb:
+					
+		//			break;
+		//		case Warhead.Types.HydrogenBomb:
+		//			break;
+		//		case Warhead.Types.DirtyBomb:
+		//			break;
+		//		default:
+		//			throw new ArgumentException();
+		//	}
+
+		//	manufacture = new Manufacture(name, onCompleteAction, cost)
+		//	{
+		//		ConfidentialLevel = ConfidentialLevel.Domestic,
+		//		Influence = Influence.Positive
+		//	};
+		//	ResourceManager.Me.TaskSequence.AddNewTask(manufacture);
+		//	EventManager.TaskProgressAdvenced += NukeStrikePlatformManufactureCompleted;
+
+		//}
+		//static void NukeStrikePlatformManufactureCompleted(Task sender, TaskProgressAdvancedEventArgs e)
+		//{
+		//	if (e.IsTaskFinished &&
+		//		sender is Manufacture manufacture &&
+		//		manufacture.FinalProduct is Platform platform)
+		//	{
+		//		ResourceManager.Me.SendToReserve(platform);
+		//	}
+		//}
+		// This is a simplified process of manufacture of nuclear arsenal, 
+		// with all the details being intentionally ignored
+		static void EnrollNewNuclearStrikeForce(CarrierType range, Warhead.Types tonnage, Platform.Types concealment)
+		{
+			Manufacture overall;
+			Manufacture carrier;
+			CostOfStage carrierCost(string enumName) 
+				=> ResourceManager.GetCostOf(enumName, TypesOfCostOfStage.Manufacture);
+			string name(string enumName) => $"Sending a new {enumName} to reserve";
+			Manufacture Instantiate(Func<IDestroyable> product, string enumName) 
+				=> new Manufacture(name(enumName), product, carrierCost(enumName));
+
+			switch (range)
+			{
+				case CarrierType.IRBM:
+					//carrier = new Manufacture(name, , carrierCost);
+					break;
+				case CarrierType.ICBM:
+					break;
+				case CarrierType.AerialBomb:
+					break;
+				default:
+					throw new InvalidOperationException();
+			}
+
+			switch (tonnage)
 			{
 				case Warhead.Types.AtomicBomb:
 					break;
@@ -82,10 +142,29 @@ namespace LCGuidebook.Core
 				case Warhead.Types.DirtyBomb:
 					break;
 				default:
-					throw new ArgumentException();
+					throw new InvalidOperationException();
 			}
-		}
 
+			switch (concealment)
+			{
+				case Platform.Types.Silo:
+					break;
+				case Platform.Types.StrategicBomber:
+					break;
+				case Platform.Types.MissileLauncher:
+					break;
+				case Platform.Types.NuclearSubmarine:
+					break;
+				default:
+					throw new InvalidOperationException();
+			}
+
+			throw new NotImplementedException();
+		}
+		static void OnCompleted(Task sender, TaskProgressAdvancedEventArgs e)
+		{
+
+		}
 		#endregion
 
 		public enum PublicFigures
