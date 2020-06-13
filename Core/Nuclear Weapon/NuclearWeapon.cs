@@ -3,10 +3,12 @@ using LCGuidebook.Core;
 using LCGuidebook.Core.DataStructures;
 using System.ComponentModel;
 using System;
+using System.Xml;
+using Action = System.Action;
 
 namespace LCGuidebook.Core
 {
-	public abstract class NuclearWeapon : IDeployable, IDestroyable
+	public abstract class NuclearWeapon : IDeployable
 	{
 		protected NuclearWeapon()
 		{
@@ -75,6 +77,8 @@ namespace LCGuidebook.Core
 				}
 			}
 		}
+
+		public string UID { get; } = GameManager.GenerateUID();
 
 		public void DestroyThis() => SelfDestroyed?.Invoke();
 	}

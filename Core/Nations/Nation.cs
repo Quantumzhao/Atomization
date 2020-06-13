@@ -58,12 +58,12 @@ namespace LCGuidebook.Core
 		[Obsolete]
 		public TechTreeNode TechTree { get; }
 
-		public CommandGroup Operations { get; }
-		public CommandGroup Intelligence { get; }
-		public CommandGroup Defence { get; }
-		public CommandGroup Technology { get; }
-		public CommandGroup Domestic { get; }
-		public CommandGroup Diplomacy { get; }
+		public ActionGroup Operations { get; }
+		public ActionGroup Intelligence { get; }
+		public ActionGroup Defence { get; }
+		public ActionGroup Technology { get; }
+		public ActionGroup Domestic { get; }
+		public ActionGroup Diplomacy { get; }
 
 		public void UpdateValue(int nationalIndex)
 		{

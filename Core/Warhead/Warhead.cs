@@ -7,6 +7,8 @@ namespace LCGuidebook.Core
 {
 	public abstract class Warhead : IDestroyable
 	{
+		public string UID { get; } = GameManager.GenerateUID();
+
 		public event Action SelfDestroyed;
 
 		public void DestroyThis() => SelfDestroyed?.Invoke();

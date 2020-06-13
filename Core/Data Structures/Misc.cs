@@ -53,16 +53,16 @@ namespace LCGuidebook.Core.DataStructures
 		Region DeployedRegion { get; set; }
 	}
 
-	public interface IDestroyable 
+	public interface IDestroyable  : IUniqueObject
 	{
 		event Action SelfDestroyed;
 		void DestroyThis();
 	}
 
-	public interface IBuildable : IDestroyable
-	{
-		Effect BuildCost_LongTerm { get; }
-	}
+	//public interface IBuildable : IDestroyable
+	//{
+	//	Effect BuildCost_LongTerm { get; }
+	//}
 
 	public interface IUniqueObject
 	{

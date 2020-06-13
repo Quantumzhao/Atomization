@@ -8,14 +8,12 @@ using System;
 
 namespace LCGuidebook.Core
 {
-	public abstract class Platform : IUniqueObject, IDeployable
+	public abstract class Platform : IDeployable
 	{
 		private bool _IsActivated = false;
 
 		protected Platform()
 		{
-			UID = GameManager.GenerateUID();
-
 			NuclearWeapons.CollectionChanged +=
 			(sender, e) =>
 			{
@@ -36,7 +34,7 @@ namespace LCGuidebook.Core
 		public Region DeployedRegion { get; set; }
 		public int AvailableLoad => NuclearWeapons.MaxCapacity - NuclearWeapons.Count;
 		public ConstrainedList<NuclearWeapon> NuclearWeapons { get; set; } = new ConstrainedList<NuclearWeapon>();
-		public string UID { get; }
+		public string UID { get; } = GameManager.GenerateUID();
 		public bool IsActivated
 		{
 			get => _IsActivated;
