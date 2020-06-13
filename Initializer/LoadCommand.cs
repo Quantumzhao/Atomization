@@ -13,11 +13,11 @@ namespace LCGuidebook.Initializer.Manager
 {
 	public static partial class Loader
 	{
-		public static CommandGroup BuildCommandGroup(XmlNode node)
+		public static ActionGroup BuildCommandGroup(XmlNode node)
 		{
 			var name = node.Attributes["name"].Value;
 			var description = node.Attributes["decription"]?.Value;
-			CommandGroup group = new CommandGroup(name, description);
+			ActionGroup group = new ActionGroup(name, description);
 
 			foreach (XmlNode cmdComplex in node.ChildNodes)
 			{
@@ -28,7 +28,7 @@ namespace LCGuidebook.Initializer.Manager
 						break;
 
 					case "Command":
-						group.AddCommand(BuildCommand(cmdComplex));
+						group.AddAction(BuildCommand(cmdComplex));
 						break;
 
 					default:
@@ -39,12 +39,12 @@ namespace LCGuidebook.Initializer.Manager
 			return group;
 		}
 
-		private static Command BuildCommand(XmlNode node)
+		private static Execution BuildCommand(XmlNode node)
 		{
 			var name = node.Attributes["name"].Value;
 			var description = node.Attributes["description"]?.Value;
-			var signature = new List<Command.Parameter>();
-			Command command = new Command(name, description);
+			var signature = new List<Execution.Parameter>();
+			Execution command = new Execution(name, description);
 			Func<Delegate> buildBody = null;
 
 			foreach (XmlNode part in node.ChildNodes)
@@ -69,9 +69,9 @@ namespace LCGuidebook.Initializer.Manager
 			return command;
 		}
 
-		public static List<CommandGroup> GetAllCommandGroups()
+		public static List<ActionGroup> GetAllCommandGroups()
 		{
-			var TopLevelGroups = new List<CommandGroup>();
+			var TopLevelGroups = new List<ActionGroup>();
 
 			foreach (var path in Directory.GetFiles(GeneratePath("interfaces", "commands")))
 			{
@@ -83,7 +83,7 @@ namespace LCGuidebook.Initializer.Manager
 			return TopLevelGroups;
 		}
 
-		private static Script BuildScript(string path, string title, Command.Parameter[] parameters)
+		private static Script BuildScript(string path, string title, Execution.Parameter[] parameters)
 		{
 			var srcCode = ToCSCode(path);
 			var paramsLiteral = new StringBuilder();
@@ -100,20 +100,19 @@ namespace LCGuidebook.Initializer.Manager
 
 			Script script = CSharpScript.Create($"{srcCode}\n{title}({paramsLiteral})", 
 				ScriptOptions.Default.WithReferences(typeof(Superpower).Assembly), typeof(Global));
-
 			return script;
 		}
 
-		private static Command.Parameter BuildParameter(XmlNode node)
+		private static Execution.Parameter BuildParameter(XmlNode node)
 		{
 			var name = node.Attributes["displayName"].Value;
 			var type = node.Attributes["type"].Value;
 			var description = node.Attributes["description"]?.Value;
 
-			return new Command.Parameter(type, name, description);
+			return new Execution.Parameter(type, name, description);
 		}
 
-		private	static Delegate BuildBody(XmlNode node, Command.Parameter[] parameters)
+		private	static Delegate BuildBody(XmlNode node, Execution.Parameter[] parameters)
 		{
 			var src = GeneratePath("library", "commands", node.Attributes["src"].Value);
 			var title = node.Attributes["title"].Value;

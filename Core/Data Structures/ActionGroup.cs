@@ -12,9 +12,9 @@ using UIEngine;
 
 namespace LCGuidebook.Core.DataStructures
 {
-	public class CommandGroup : IUniqueObject, IVisible
+	public class ActionGroup : IUniqueObject, IVisible
 	{
-		public CommandGroup(string name, string description = "")
+		public ActionGroup(string name, string description = "")
 		{
 			Name = name;
 			Description = description;
@@ -26,24 +26,40 @@ namespace LCGuidebook.Core.DataStructures
 		public string Header => Name;
 
 		[Visible(nameof(Commands))]
-		public List<Command> Commands { get; } = new List<Command>();
+		public List<AbstractAction> Commands { get; } = new List<AbstractAction>();
+		[Visible(nameof(SubGroups))]
+		public List<ActionGroup> SubGroups { get; } = new List<ActionGroup>();
 
-		public readonly List<CommandGroup> SubGroups = new List<CommandGroup>();
-
-		public void AddCommand(Command command)
+		public void AddAction(Execution command)
 		{
 			Commands.Add(command);
 		}
 
-		public void AddSubGroup(CommandGroup group)
+		public void AddSubGroup(ActionGroup group)
 		{
 			SubGroups.Add(group);
 		}
 	}
 
-	public class Command : IUniqueObject, IVisible
+	public abstract class AbstractAction : IUniqueObject, IVisible
 	{
-		public Command(string name, string description = "")
+		public string Name { get; set; }
+
+		public string Description { get; set; }
+
+		public string Header { get; set; }
+
+		public string UID { get; } = GameManager.GenerateUID();
+	}
+
+	public class Bulletinboard : AbstractAction
+	{
+		public object Data { get; set; }
+	}
+
+	public class Execution : AbstractAction
+	{
+		public Execution(string name, string description = "")
 		{
 			Name = name;
 			Description = description;
@@ -51,12 +67,7 @@ namespace LCGuidebook.Core.DataStructures
 
 		public Parameter[] Signature { get; set; }
 
-		public string UID { get; } = GameManager.GenerateUID();
-
-		public string Name { get; set; }
-		public string Description { get; set; }
 		public Delegate Body { get; set; }
-		public string Header => Name;
 
 		public void AssignArgument(object value, int index)
 		{
