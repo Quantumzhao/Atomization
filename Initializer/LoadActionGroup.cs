@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Xml;
+using UIEngine;
 
 namespace LCGuidebook.Initializer.Manager
 {
@@ -16,7 +17,12 @@ namespace LCGuidebook.Initializer.Manager
 		{
 			var name = node.Attributes["name"].Value;
 			var description = node.Attributes["decription"]?.Value;
+			var path = GeneratePath("library", "commands", node.Attributes["src"].Value);
+			var srcCode = ToCSCode(path);
 			ActionGroup group = new ActionGroup(name, description);
+
+			group.Script = CSharpScript.Create(srcCode,
+				ScriptOptions.Default.WithReferences(typeof(Superpower).Assembly), typeof(Global));
 
 			foreach (XmlNode cmdComplex in node.ChildNodes)
 			{
@@ -31,6 +37,7 @@ namespace LCGuidebook.Initializer.Manager
 						break;
 
 					case "Bulletinboard":
+						group.AddAction(BuildBulletinboard(cmdComplex));
 						break;
 
 					default:
@@ -69,6 +76,20 @@ namespace LCGuidebook.Initializer.Manager
 			command.Body = buildBody();
 
 			return command;
+		}
+
+		private static Bulletinboard BuildBulletinboard(XmlNode node)
+		{
+			var name = node.Attributes["name"].Value;
+			var isReadOnly = bool.Parse(node.Attributes["isReadOnly"].Value);
+			Bulletinboard bulletinboard = new Bulletinboard();
+			if (isReadOnly)
+			{
+				// intended to mark it readonly, will do it later
+				bulletinboard.AppendVisibleAttribute(new VisibleAttribute(name));
+			}
+
+			return bulletinboard;
 		}
 
 		public static List<ActionGroup> GetAllActionGroups()

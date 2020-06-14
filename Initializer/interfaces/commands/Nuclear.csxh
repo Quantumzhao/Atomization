@@ -3,7 +3,7 @@
   xmlns="https://www.w3schools.com"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="https://www.w3schools.com/xml ../schema/action_group.xsd">
-  <ActionGroup name="Nuclear" description="description">
+  <ActionGroup name="Nuclear" description="description" src="Nuclear.csx">
     <Execution name="Enroll new nuclear strike platform" description="description">
       <Parameter displayName="Platform type" type="LCGuidebook.Core.Platform+Types" description="description"/>
       <!-- The root directory for scripts is library -->
@@ -13,5 +13,14 @@
       <Parameter displayName="Nuclear weapon" type="LCGuidebook.Core.NuclearWeapon" description="description"/>
       <Body src="DestroyNuke.csx" title="DestroyNuke"/>
     </Execution>
+    <ActionGroup name="Enroll new nuclear strike force" description="description" src="EnrollNukeStrikePlatform.csx">
+      <Execution name="Execute">
+        <Body title="Execute"/>
+      </Execution>
+      <Bulletinboard name="Range" isReadOnly="false"/>
+      <Bulletinboard name="Power" isReadOnly="false"/>
+      <Bulletinboard name="Concealment" isReadOnly="false"/>
+      <Bulletinboard name="Cost" isReadOnly="true"/>
+    </ActionGroup>
   </ActionGroup>
 </HeaderConfiguration>

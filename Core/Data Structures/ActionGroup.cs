@@ -23,16 +23,16 @@ namespace LCGuidebook.Core.DataStructures
 		public string Description { get; set; }
 		public string UID { get; } = GameManager.GenerateUID();
 		public string Header => Name;
-		public ScriptState ScriptState { get; set; }
+		public Script Script { get; set; }
 
 		[Visible(nameof(Actions))]
 		public List<AbstractAction> Actions { get; } = new List<AbstractAction>();
 		[Visible(nameof(SubGroups))]
 		public List<ActionGroup> SubGroups { get; } = new List<ActionGroup>();
 
-		public void AddAction(Execution command)
+		public void AddAction(AbstractAction action)
 		{
-			Actions.Add(command);
+			Actions.Add(action);
 		}
 
 		public void AddSubGroup(ActionGroup group)
