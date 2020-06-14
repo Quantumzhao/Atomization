@@ -6,6 +6,7 @@ using LCGuidebook;
 using LCGuidebook.Core;
 using LCGuidebook.Core.DataStructures;
 using Microsoft.CodeAnalysis.CSharp.Scripting;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Scripting;
 using UIEngine;
 
@@ -43,6 +44,11 @@ namespace LCGuidebook.Core.DataStructures
 
 	public abstract class AbstractAction : IUniqueObject, IVisible
 	{
+		public AbstractAction(ActionGroup parent)
+		{
+			Group = parent;
+		}
+
 		public string Name { get; set; }
 
 		public string Description { get; set; }
@@ -50,48 +56,60 @@ namespace LCGuidebook.Core.DataStructures
 		public string Header { get; set; }
 
 		public string UID { get; } = GameManager.GenerateUID();
+
+		public ActionGroup Group { get; private set; }
 	}
 
-	public class Bulletinboard : AbstractAction
+	public class Field : AbstractAction
 	{
-		public object ShadowObject { get; set; }
+		public Field(ActionGroup parent) : base(parent) { }
+		public static object TempRightValue { get; private set; }
+
+		public object GetObject()
+		{
+			return Group.Script.ContinueWith($"{Name}\n").RunAsync().Result.ReturnValue;
+		}
+
+		public void SetObject(object rightValue)
+		{
+			TempRightValue = rightValue;
+			Group.Script.ContinueWith(
+				$"Set({Name}, LCGuidebook.Core.DataStructures.Bulletinboard.{nameof(TempRightValue)})\n")
+				.RunAsync().Wait();
+			TempRightValue = null;
+		}
 	}
 
 	public class Execution : AbstractAction
 	{
-		public Execution(string name, string description = "")
+		public Execution(ActionGroup parent, string name, string bindedMethodName, string description = "")
+			: base(parent)
 		{
 			Name = name;
 			Description = description;
+			BindedMethodName = bindedMethodName;
 		}
 
-		public Parameter[] Signature { get; set; }
-
-		public Delegate Body { get; set; }
-
-		public void AssignArgument(object value, int index)
-		{
-			Signature[index].ObjectData = value;
-		}
+		public string BindedMethodName { get; set; }
 
 		public void Execute()
 		{
-			Body.DynamicInvoke(new object[] { Signature.Select(p => p.ObjectData).ToArray() });
+			Group.Script.ContinueWith($"{Name}()\n;");
 		}
 
-		public class Parameter
-		{
-			public Parameter(string typeName, string name, string description = "")
-			{
-				Name = name;
-				Description = description;
-				ObjectType = Type.GetType(typeName);
-			}
+		//public class Parameter
+		//{
+		//	public Parameter(string typeName, string name, string description = "")
+		//	{
+		//		Name = name;
+		//		Description = description;
+		//		ObjectType = Type.GetType(typeName);
+		//	}
 
-			public readonly Type ObjectType;
-			public string Description { get; set; }
-			public string Name { get; set; }
-			public object ObjectData { get; set; } = null;
-		}
+		//	public readonly Type ObjectType;
+		//	public string Description { get; set; }
+		//	public string Name { get; set; }
+		//	public object ObjectData { get; set; } = null;
+		//}
 	}
 }

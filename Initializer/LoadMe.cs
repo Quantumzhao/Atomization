@@ -98,6 +98,8 @@ namespace LCGuidebook.Initializer.Manager
 						builder.Append(line);
 					}
 				}
+				builder.Append("\n");
+
 				return builder.ToString();
 			}
 		}

@@ -19,8 +19,8 @@ Namespace LCGuidebook.UnitTest
         Public Sub TestBasicOperation()
 
             Dim original = ResourceManager.Me.NuclearPlatforms.Count
-            ResourceManager.Me.MainCommandGroups(0).Actions(0).AssignArgument(Platform.Types.Silo, 0)
-            ResourceManager.Me.MainCommandGroups(0).Actions(0).Execute()
+            CType(ResourceManager.Me.MainCommandGroups(0).Actions(0), Execution).AssignArgument(Platform.Types.Silo, 0)
+            CType(ResourceManager.Me.MainCommandGroups(0).Actions(0), Execution).Execute()
             Dim res = ResourceManager.Me.NuclearPlatforms.Count
             Assert.IsTrue(original = res)
 

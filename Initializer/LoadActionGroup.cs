@@ -33,11 +33,11 @@ namespace LCGuidebook.Initializer.Manager
 						break;
 
 					case "Execution":
-						group.AddAction(BuildExecution(cmdComplex));
+						group.AddAction(BuildExecution(cmdComplex, group));
 						break;
 
 					case "Bulletinboard":
-						group.AddAction(BuildBulletinboard(cmdComplex));
+						group.AddAction(BuildBulletinboard(cmdComplex, group));
 						break;
 
 					default:
@@ -48,41 +48,42 @@ namespace LCGuidebook.Initializer.Manager
 			return group;
 		}
 
-		private static Execution BuildExecution(XmlNode node)
+		private static Execution BuildExecution(XmlNode node, ActionGroup parent)
 		{
 			var name = node.Attributes["name"].Value;
 			var description = node.Attributes["description"]?.Value;
-			var signature = new List<Execution.Parameter>();
-			Execution command = new Execution(name, description);
-			Func<Delegate> buildBody = null;
+			var method = node.Attributes["method"].Value;
+			//var signature = new List<Execution.Parameter>();
+			Execution execution = new Execution(parent, name, method, description);
+			//Func<Delegate> buildBody = null;
 
-			foreach (XmlNode part in node.ChildNodes)
-			{
-				switch (part.Name)
-				{
-					case "Body":
-						buildBody = () => BuildBody(part, command.Signature);
-						break;
+			//foreach (XmlNode part in node.ChildNodes)
+			//{
+			//	switch (part.Name)
+			//	{
+			//		case "Body":
+			//			buildBody = () => BuildBody(part, execution.Signature);
+			//			break;
 
-					case "Parameter":
-						signature.Add(BuildParameter(part));
-						break;
+			//		case "Parameter":
+			//			signature.Add(BuildParameter(part));
+			//			break;
 
-					default:
-						break;
-				}
-			}
-			command.Signature = signature.ToArray();
-			command.Body = buildBody();
+			//		default:
+			//			break;
+			//	}
+			//}
+			//execution.Signature = signature.ToArray();
+			//execution.Body = buildBody();
 
-			return command;
+			return execution;
 		}
 
-		private static Bulletinboard BuildBulletinboard(XmlNode node)
+		private static Field BuildBulletinboard(XmlNode node, ActionGroup parent)
 		{
 			var name = node.Attributes["name"].Value;
 			var isReadOnly = bool.Parse(node.Attributes["isReadOnly"].Value);
-			Bulletinboard bulletinboard = new Bulletinboard();
+			Field bulletinboard = new Field(parent);
 			if (isReadOnly)
 			{
 				// intended to mark it readonly, will do it later
@@ -96,7 +97,7 @@ namespace LCGuidebook.Initializer.Manager
 		{
 			var TopLevelGroups = new List<ActionGroup>();
 
-			foreach (var path in Directory.GetFiles(GeneratePath("interfaces", "commands")))
+			foreach (var path in Directory.GetFiles(GeneratePath("interfaces", "action_group")))
 			{
 				foreach (XmlNode node in ToXmlDoc(path))
 				{
@@ -106,44 +107,44 @@ namespace LCGuidebook.Initializer.Manager
 			return TopLevelGroups;
 		}
 
-		private static Script BuildScript(string path, string title, Execution.Parameter[] parameters)
-		{
-			var srcCode = ToCSCode(path);
-			var paramsLiteral = new StringBuilder();
-			for (int i = 0; i < parameters.Length; i++)
-			{
-				// code gen part
-				// result is like "(LCGuidebook.Core.Datastructure.Platform.Type)lcgGlobalVar[0], ..."
-				paramsLiteral.Append($"({parameters[i].ObjectType.ToString().Replace('+', '.')}){nameof(Global.LcgGlobalVars)}[{i}]");
-				if (i != parameters.Length - 1)
-				{
-					paramsLiteral.Append(", ");
-				}
-			}
+		//private static Script BuildScript(string path, string title, Execution.Parameter[] parameters)
+		//{
+		//	var srcCode = ToCSCode(path);
+		//	var paramsLiteral = new StringBuilder();
+		//	for (int i = 0; i < parameters.Length; i++)
+		//	{
+		//		// code gen part
+		//		// result is like "(LCGuidebook.Core.Datastructure.Platform.Type)lcgGlobalVar[0], ..."
+		//		paramsLiteral.Append($"({parameters[i].ObjectType.ToString().Replace('+', '.')}){nameof(Global.LcgGlobalVars)}[{i}]");
+		//		if (i != parameters.Length - 1)
+		//		{
+		//			paramsLiteral.Append(", ");
+		//		}
+		//	}
 
-			Script script = CSharpScript.Create($"{srcCode}\n{title}({paramsLiteral})", 
-				ScriptOptions.Default.WithReferences(typeof(Superpower).Assembly), typeof(Global));
-			return script;
-		}
+		//	Script script = CSharpScript.Create($"{srcCode}\n{title}({paramsLiteral})", 
+		//		ScriptOptions.Default.WithReferences(typeof(Superpower).Assembly), typeof(Global));
+		//	return script;
+		//}
 
-		private static Execution.Parameter BuildParameter(XmlNode node)
-		{
-			var name = node.Attributes["displayName"].Value;
-			var type = node.Attributes["type"].Value;
-			var description = node.Attributes["description"]?.Value;
+		//private static Execution.Parameter BuildParameter(XmlNode node)
+		//{
+		//	var name = node.Attributes["displayName"].Value;
+		//	var type = node.Attributes["type"].Value;
+		//	var description = node.Attributes["description"]?.Value;
 
-			return new Execution.Parameter(type, name, description);
-		}
+		//	return new Execution.Parameter(type, name, description);
+		//}
 
-		private	static Delegate BuildBody(XmlNode node, Execution.Parameter[] parameters)
-		{
-			var src = GeneratePath("library", "commands", node.Attributes["src"].Value);
-			var title = node.Attributes["title"].Value;
+		//private	static Delegate BuildBody(XmlNode node, Execution.Parameter[] parameters)
+		//{
+		//	var src = GeneratePath("library", "commands", node.Attributes["src"].Value);
+		//	var title = node.Attributes["title"].Value;
 
-			var script = BuildScript(src, title, parameters);
+		//	var script = BuildScript(src, title, parameters);
 
-			Action<object[]> callBack = args => script.RunAsync(new Global(args));
-			return callBack;
-		}
+		//	Action<object[]> callBack = args => script.RunAsync(new Global(args));
+		//	return callBack;
+		//}
 	}
 }
