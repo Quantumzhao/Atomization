@@ -5,8 +5,8 @@
   xmlns="https://www.w3schools.com"
   elementFormDefault="qualified"
   id="GrowthDef">
-  <xs:include id="MainIndexEnumDef" schemaLocation="main_index_enum_def.xsd" />
-  <xs:include id="ExpressionDef" schemaLocation="expression_def.xsd" />
+  <xs:include schemaLocation="main_index_enum_def.xsd" />
+  <xs:include schemaLocation="expression_def.xsd" />
   <xs:element name="growth">
     <xs:complexType>
       <xs:sequence>
