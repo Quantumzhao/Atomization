@@ -119,7 +119,7 @@ namespace LCGuidebook.Initializer.Manager
 
 		private static Expression BuildExpression(XmlNode node)
 		{
-			double constant = double.Parse(node.Attributes["constant"].InnerText.Trim());
+			double constant = double.Parse(node.Attributes["coefficient"].InnerText.Trim());
 			var expBodyLit = node.InnerText;
 
 			if (expBodyLit.Trim() == string.Empty)

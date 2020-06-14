@@ -1,19 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Xml;
-using System.IO;
+﻿using LCGuidebook.Core;
 using LCGuidebook.Core.DataStructures;
-using LCGuidebook.Core;
 using Microsoft.CodeAnalysis.CSharp.Scripting;
 using Microsoft.CodeAnalysis.Scripting;
-using Initializer.Properties;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Text;
+using System.Xml;
 
 namespace LCGuidebook.Initializer.Manager
 {
 	public static partial class Loader
 	{
-		public static ActionGroup BuildCommandGroup(XmlNode node)
+		public static ActionGroup BuildActionGroup(XmlNode node)
 		{
 			var name = node.Attributes["name"].Value;
 			var description = node.Attributes["decription"]?.Value;
@@ -23,12 +22,15 @@ namespace LCGuidebook.Initializer.Manager
 			{
 				switch (cmdComplex.Name)
 				{
-					case "CommandGroup":
-						group.AddSubGroup(BuildCommandGroup(cmdComplex));
+					case "ActionGroup":
+						group.AddSubGroup(BuildActionGroup(cmdComplex));
 						break;
 
-					case "Command":
-						group.AddAction(BuildCommand(cmdComplex));
+					case "Execution":
+						group.AddAction(BuildExecution(cmdComplex));
+						break;
+
+					case "Bulletinboard":
 						break;
 
 					default:
@@ -39,7 +41,7 @@ namespace LCGuidebook.Initializer.Manager
 			return group;
 		}
 
-		private static Execution BuildCommand(XmlNode node)
+		private static Execution BuildExecution(XmlNode node)
 		{
 			var name = node.Attributes["name"].Value;
 			var description = node.Attributes["description"]?.Value;
@@ -69,7 +71,7 @@ namespace LCGuidebook.Initializer.Manager
 			return command;
 		}
 
-		public static List<ActionGroup> GetAllCommandGroups()
+		public static List<ActionGroup> GetAllActionGroups()
 		{
 			var TopLevelGroups = new List<ActionGroup>();
 
@@ -77,7 +79,7 @@ namespace LCGuidebook.Initializer.Manager
 			{
 				foreach (XmlNode node in ToXmlDoc(path))
 				{
-					TopLevelGroups.Add(BuildCommandGroup(node));
+					TopLevelGroups.Add(BuildActionGroup(node));
 				}
 			}
 			return TopLevelGroups;

@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using LCGuidebook.Core;
 using LCGuidebook.Core.DataStructures;
 
-void EnrollNukeStrikePlatform(Platform.Types type)
+string[] EnrollNukeStrikePlatform(Platform.Types type)
 {
 	Manufacture manufacture;
 	string name = $"Sending a new {type} to reserve";
@@ -44,6 +44,8 @@ void EnrollNukeStrikePlatform(Platform.Types type)
 	};
 	ResourceManager.Me.TaskSequence.AddNewTask(manufacture);
 	EventManager.TaskProgressAdvenced += NukeStrikePlatformManufactureCompleted;
+
+	return new string[0];
 }
 
 void NukeStrikePlatformManufactureCompleted(Task sender, TaskProgressAdvancedEventArgs e)
@@ -55,3 +57,5 @@ void NukeStrikePlatformManufactureCompleted(Task sender, TaskProgressAdvancedEve
 		ResourceManager.Me.SendToReserve(platform);
 	}
 }
+
+string[] Set(string propertyName, object value) => new string[0];

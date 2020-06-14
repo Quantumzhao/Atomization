@@ -7,13 +7,15 @@ using System.Collections.Generic;
 using LCGuidebook.Core;
 using LCGuidebook.Core.DataStructures;
 
-void DestroyNuke(NuclearWeapon nuclearWeapon)
+string[] DestroyNuke(NuclearWeapon nuclearWeapon)
 {
 	Deployment destruction = new Deployment($"Destroying {nuclearWeapon}", null, nuclearWeapon,
 		ResourceManager.Misc.NukeDisposal);
 	ResourceManager.Me.TaskSequence.AddNewTask(destruction);
 
 	EventManager.TaskProgressAdvenced += (s, e) => RemoveNuke(s, e, nuclearWeapon);
+
+	return new string[0];
 }
 
 void RemoveNuke(Task sender, TaskProgressAdvancedEventArgs e, NuclearWeapon weapon)
@@ -25,3 +27,5 @@ void RemoveNuke(Task sender, TaskProgressAdvancedEventArgs e, NuclearWeapon weap
 		weapon.DestroyThis();
 	}
 }
+
+string[] Set(string propertyName, object value) => new string[0];

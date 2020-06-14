@@ -14,7 +14,7 @@ namespace LCGuidebook.Initializer.Manager
 			//GameManager.InitializeEntityAttributes();
 
 			Loader.InitializeMe();
-			ResourceManager.Me.MainCommandGroups = Loader.GetAllCommandGroups();
+			ResourceManager.Me.MainCommandGroups = Loader.GetAllActionGroups();
 		}
 	}
 }

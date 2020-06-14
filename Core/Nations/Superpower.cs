@@ -51,24 +51,6 @@ namespace LCGuidebook.Core
 		//	throw new NotImplementedException();
 		//}
 
-		public static void DestroyNuke(NuclearWeapon nuclearWeapon)
-		{
-			Deployment destruction = new Deployment($"Destroying {nuclearWeapon}", null, nuclearWeapon,
-				ResourceManager.Misc.NukeDisposal);
-			ResourceManager.Me.TaskSequence.AddNewTask(destruction);
-
-			EventManager.TaskProgressAdvenced += (s, e) => RemoveNuke(s, e, nuclearWeapon);
-		}
-		static void RemoveNuke(Task sender, TaskProgressAdvancedEventArgs e, NuclearWeapon weapon)
-		{
-			if (e.IsTaskFinished &&
-				sender is Deployment deployment &&
-				deployment.DeployableObject == weapon)
-			{
-				weapon.DestroyThis();
-			}
-		}
-
 		//public static void DeployNewNuclearWeapon(Platform.Types platformType, 
 		//	Warhead.Types warheadType, CarrierType carrierType, Region target)
 		//{
@@ -111,7 +93,7 @@ namespace LCGuidebook.Core
 
 		// This is a simplified process of manufacture of nuclear arsenal, 
 		// with all the details being intentionally ignored
-		static void EnrollNewNuclearStrikeForce(CarrierType range, Warhead.Types power, Platform.Types concealment)
+		static void EnrollNewNuclearStrikeForce()
 		{
 			Manufacture overall;
 			Manufacture carrier;
@@ -122,7 +104,7 @@ namespace LCGuidebook.Core
 				=> new Manufacture(name(enumName), product, carrierCost(enumName));
 
 			Func<NuclearWeapon> carrierManufactureDef;
-			switch (range)
+			switch (Range)
 			{
 				case CarrierType.IRBM:
 					carrierManufactureDef = () => new IRBM();
@@ -139,11 +121,11 @@ namespace LCGuidebook.Core
 				default:
 					throw new InvalidOperationException();
 			}
-			ResourceManager.Me.TaskSequence.AddNewTask(Instantiate(carrierManufactureDef, range.ToString()));
+			ResourceManager.Me.TaskSequence.AddNewTask(Instantiate(carrierManufactureDef, Range.ToString()));
 			EventManager.TaskProgressAdvenced += OnCarrierCompleted;
 
 			Func<Warhead> warheadManufactureDef;
-			switch (power)
+			switch (Power)
 			{
 				case Warhead.Types.AtomicBomb:
 					warheadManufactureDef = () => new Atomic();
@@ -160,11 +142,11 @@ namespace LCGuidebook.Core
 				default:
 					throw new InvalidOperationException();
 			}
-			ResourceManager.Me.TaskSequence.AddNewTask(Instantiate(warheadManufactureDef, range.ToString()));
+			ResourceManager.Me.TaskSequence.AddNewTask(Instantiate(warheadManufactureDef, Range.ToString()));
 			EventManager.TaskProgressAdvenced += OnWarheadCompleted;
 
 			Func<Platform> platformManufactureDef;
-			switch (concealment)
+			switch (Concealment)
 			{
 				case Platform.Types.Silo:
 					platformManufactureDef = () => new Silo();
@@ -185,7 +167,7 @@ namespace LCGuidebook.Core
 				default:
 					throw new InvalidOperationException();
 			}
-			ResourceManager.Me.TaskSequence.AddNewTask(Instantiate(platformManufactureDef, range.ToString()));
+			ResourceManager.Me.TaskSequence.AddNewTask(Instantiate(platformManufactureDef, Range.ToString()));
 			EventManager.TaskProgressAdvenced += OnPlatformCompleted;
 
 			throw new NotImplementedException();
@@ -218,9 +200,43 @@ namespace LCGuidebook.Core
 			}
 		}
 
-		static void PopularizeEducation()
-		{
+		static string NO_SUCH_PROPERTY(string name) => $"The property \"{name}\" does not exist in the script";
 
+		static public CostOfStage CurrentCost { get; private set; } = new CostOfStage(new Effect(), new Effect(), (Expression)0);
+
+		static public CarrierType Range { get; private set; }
+
+		static public Warhead.Types Power { get; private set; }
+
+		static public Platform.Types Concealment { get; private set; }
+
+		static void UpdateCost()
+		{
+			throw new NotImplementedException();
+		}
+
+		static public string[] Set(string propertyName, object value)
+		{
+			switch (propertyName)
+			{
+				case nameof(Range):
+					Range = (CarrierType)value;
+					break;
+
+				case nameof(Power):
+					Power = (Warhead.Types)value;
+					break;
+
+				case nameof(Concealment):
+					Concealment = (Platform.Types)value;
+					break;
+
+				default:
+					throw new MemberAccessException(NO_SUCH_PROPERTY(propertyName));
+			}
+
+			UpdateCost();
+			return new string[] { nameof(CurrentCost) };
 		}
 		#endregion
 
