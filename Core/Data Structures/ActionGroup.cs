@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using LCGuidebook;
 using LCGuidebook.Core;
 using LCGuidebook.Core.DataStructures;
@@ -24,15 +23,16 @@ namespace LCGuidebook.Core.DataStructures
 		public string Description { get; set; }
 		public string UID { get; } = GameManager.GenerateUID();
 		public string Header => Name;
+		public ScriptState ScriptState { get; set; }
 
-		[Visible(nameof(Commands))]
-		public List<AbstractAction> Commands { get; } = new List<AbstractAction>();
+		[Visible(nameof(Actions))]
+		public List<AbstractAction> Actions { get; } = new List<AbstractAction>();
 		[Visible(nameof(SubGroups))]
 		public List<ActionGroup> SubGroups { get; } = new List<ActionGroup>();
 
 		public void AddAction(Execution command)
 		{
-			Commands.Add(command);
+			Actions.Add(command);
 		}
 
 		public void AddSubGroup(ActionGroup group)
@@ -54,7 +54,7 @@ namespace LCGuidebook.Core.DataStructures
 
 	public class Bulletinboard : AbstractAction
 	{
-		public object Data { get; set; }
+		public object ShadowObject { get; set; }
 	}
 
 	public class Execution : AbstractAction

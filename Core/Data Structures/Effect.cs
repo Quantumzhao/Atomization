@@ -22,7 +22,8 @@ namespace LCGuidebook.Core.DataStructures
 			Expression stability = null,
 			Expression nationalism = null,
 			Expression satisfaction = null,
-			Expression bureaucracy = null
+			Expression bureaucracy = null, 
+			bool isReadOnly = false
 		)
 		{
 			_Values[0] = economy;
@@ -44,20 +45,52 @@ namespace LCGuidebook.Core.DataStructures
 					_Values[i] = (Expression)0;
 				}
 			}
-		}
 
+			IsReadOnly = isReadOnly;
+		}
+		public readonly bool IsReadOnly;
 		public event PropertyChangedEventHandler PropertyChanged;
 		private readonly Expression[] _Values = new Expression[Nation.NUM_VALUES];
 
 		public Expression this[MainIndexType index]
 		{
 			get => _Values[(int)index];
-			set => _Values[(int)index] = value;
+			set
+			{
+				if (!IsReadOnly)
+				{
+					_Values[(int)index] = value;
+				}
+				else
+				{
+					throw new InvalidOperationException();
+				}
+			}
 		}
 		public Expression this[int index]
 		{
 			get => _Values[index];
-			set => _Values[index] = value;
+			set
+			{
+				if (!IsReadOnly)
+				{
+					_Values[index] = value;
+				}
+				else
+				{
+					throw new InvalidOperationException();
+				}
+			}
+		}
+
+		public static Effect operator +(Effect effect1, Effect effect2)
+		{
+			var newEffect = new Effect(isReadOnly:true);
+			for (int i = 0; i < Nation.NUM_VALUES; i++)
+			{
+				newEffect[i] = effect1[i] + effect2[i];
+			}
+			return newEffect;
 		}
 	}
 }

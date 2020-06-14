@@ -6,10 +6,10 @@
   <xs:element name="HeaderConfiguration">
     <xs:complexType>
       <xs:sequence>
-        <xs:element name="CommandGroup">
+        <xs:element name="ActionGroup">
           <xs:complexType>
             <xs:sequence>
-              <xs:element name="Command" minOccurs="1" maxOccurs="unbounded">
+              <xs:element name="Execution" minOccurs="1" maxOccurs="unbounded">
                 <xs:complexType>
                   <xs:sequence>
                     <xs:element name="Parameter" minOccurs="0" maxOccurs="unbounded">
@@ -30,7 +30,7 @@
                   <xs:attribute name="description" type="xs:string" />
                 </xs:complexType>
               </xs:element>
-              <xs:element name="CommandGroup" minOccurs="0" maxOccurs="unbounded"></xs:element>
+              <xs:element name="ActionGroup" minOccurs="0" maxOccurs="unbounded"></xs:element>
             </xs:sequence>
             <xs:attribute name="name" type="xs:string" use="required" />
             <xs:attribute name="description" type="xs:string" />

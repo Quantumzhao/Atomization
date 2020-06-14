@@ -6,58 +6,58 @@
   xmlns:lcg="https://www.w3schools.com">
   <growth name="Army Maintenance">
     <target lcg:mainIndexTitle="Economy">
-      <expression constant="-0.001">
+      <expression coefficient="-0.001">
         constant => Army * constant
       </expression>
     </target>
   </growth>
   <growth name="Navy Maintenance">
     <target lcg:mainIndexTitle="Economy">
-      <expression constant="-0.005">
+      <expression coefficient="-0.005">
         constant => Navy * constant
       </expression>
     </target>
   </growth>
   <growth name="Domestic Development">
     <target lcg:mainIndexTitle="Economy">
-      <expression constant="-0.005">
+      <expression coefficient="-0.005">
         constant => Economy * constant
       </expression>
     </target>
   </growth>
   <growth name="Government Revenue">
     <target lcg:mainIndexTitle="Economy">
-      <expression constant="20000" />
+      <expression coefficient="20000" />
     </target>
   </growth>
   <growth name="Graduates">
     <target lcg:mainIndexTitle="Population">
-      <expression constant="1000" />
+      <expression coefficient="1000" />
     </target>
   </growth>
   <growth name="Domestic Production">
     <target lcg:mainIndexTitle="RawMaterial">
-      <expression constant="10200" />
+      <expression coefficient="10200" />
     </target>
     <target lcg:mainIndexTitle="Food">
-      <expression constant="42000" />
+      <expression coefficient="42000" />
     </target>
   </growth>
   <growth name="Domestic Consumption">
     <target lcg:mainIndexTitle="Food">
-      <expression constant="-2">
+      <expression coefficient="-2">
         constant => Population * constant
       </expression>
     </target>
   </growth>
   <growth name="Industrial Consumption">
     <target lcg:mainIndexTitle="RawMaterial">
-      <expression constant="-10000" />
+      <expression coefficient="-10000" />
     </target>
   </growth>
   <growth name="Nuclear Industry Production">
     <target lcg:mainIndexTitle="NuclearMaterial">
-      <expression constant="1" />
+      <expression coefficient="1" />
     </target>
   </growth>
 </initialConfiguration>

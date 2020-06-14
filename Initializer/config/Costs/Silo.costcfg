@@ -9,25 +9,25 @@
       <effect duration="long">
         <growth name="Silo Manufacture">
           <target lcg:mainIndexTitle="Economy">
-            <expression constant="-2" />
+            <expression coefficient="-2" />
           </target>
           <target lcg:mainIndexTitle="RawMaterial">
-            <expression constant="-5" />
+            <expression coefficient="-5" />
           </target>
         </growth>
       </effect>
       <effect duration="short">
         <growth name="Silo Manufacture">
           <target lcg:mainIndexTitle="Economy">
-            <expression constant="-40" />
+            <expression coefficient="-40" />
           </target>
           <target lcg:mainIndexTitle="RawMaterial">
-            <expression constant="-60" />
+            <expression coefficient="-60" />
           </target>
         </growth>
       </effect>
       <requiredTime>
-        <expression constant="4" />
+        <expression coefficient="4" />
       </requiredTime>
     </cost>
   </entity>

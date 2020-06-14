@@ -8,6 +8,7 @@ using System.Linq;
 using LCGuidebook;
 using LCGuidebook.Core;
 using LCGuidebook.Core.DataStructures;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace LCGuidebook.Core.DataStructures
 {
@@ -25,6 +26,15 @@ namespace LCGuidebook.Core.DataStructures
 		public Effect LongTermEffect { get; }
 		public Effect ShortTermEffect { get; }
 		public Expression RequiredTime { get; }
+
+		public static CostOfStage operator +(CostOfStage cost1, CostOfStage cost2)
+		{
+			return new CostOfStage(
+				cost1.LongTermEffect + cost2.LongTermEffect, 
+				cost1.ShortTermEffect + cost2.ShortTermEffect, 
+				cost1.RequiredTime + cost2.RequiredTime
+			);
+		}
 	}
 
 	public enum TypesOfCostOfStage

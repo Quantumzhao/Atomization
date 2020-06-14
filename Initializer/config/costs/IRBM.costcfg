@@ -9,25 +9,25 @@
       <effect duration="long">
         <growth name="IRBM Construction">
           <target lcg:mainIndexTitle="Economy">
-            <expression constant="-10" />
+            <expression coefficient="-10" />
           </target>
           <target lcg:mainIndexTitle="RawMaterial">
-            <expression constant="-18" />
+            <expression coefficient="-18" />
           </target>
         </growth>
       </effect>
       <requiredTime>
-        <expression constant="4" />
+        <expression coefficient="4" />
       </requiredTime>
     </cost>
     <cost title="Maintenance">
       <effect duration="long">
         <growth name="Nuclear Arsenal Maintenance">
           <target lcg:mainIndexTitle="Economy">
-            <expression constant="-8" />
+            <expression coefficient="-8" />
           </target>
           <target lcg:mainIndexTitle="RawMaterial">
-            <expression constant="-0.2" />
+            <expression coefficient="-0.2" />
           </target>
         </growth>
       </effect>
