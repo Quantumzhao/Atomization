@@ -5,8 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="interfaces\commands\test.csxh" />
-    <None Remove="library\commands\test.csx" />
+    <None Remove="interfaces\action_group\test.csxh" />
+    <None Remove="library\action_group\test.csx" />
   </ItemGroup>
 
   <ItemGroup>

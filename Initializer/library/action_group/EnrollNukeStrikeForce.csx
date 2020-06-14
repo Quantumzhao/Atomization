@@ -22,7 +22,7 @@ void UpdateCost()
 	throw new NotImplementedException();
 }
 
-public string[] Execute()
+public string[] Enroll()
 {
 
 	return new string[0];
