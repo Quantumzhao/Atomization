@@ -95,8 +95,6 @@ namespace LCGuidebook.Core
 		// with all the details being intentionally ignored
 		static void EnrollNewNuclearStrikeForce()
 		{
-			Manufacture overall;
-			Manufacture carrier;
 			CostOfStage carrierCost(string enumName) 
 				=> ResourceManager.GetCostOf(enumName, TypesOfCostOfStage.Manufacture);
 			string name(string enumName) => $"Sending a new {enumName} to reserve";
@@ -121,7 +119,9 @@ namespace LCGuidebook.Core
 				default:
 					throw new InvalidOperationException();
 			}
-			ResourceManager.Me.TaskSequence.AddNewTask(Instantiate(carrierManufactureDef, Range.ToString()));
+			var carrierManufacture = Instantiate(carrierManufactureDef, Range.ToString());
+			var carrierManufactureUid = carrierManufacture.UID;
+			ResourceManager.Me.TaskSequence.AddNewTask(carrierManufacture);
 			EventManager.TaskProgressAdvenced += OnCarrierCompleted;
 
 			Func<Warhead> warheadManufactureDef;
@@ -142,7 +142,9 @@ namespace LCGuidebook.Core
 				default:
 					throw new InvalidOperationException();
 			}
-			ResourceManager.Me.TaskSequence.AddNewTask(Instantiate(warheadManufactureDef, Range.ToString()));
+			var warheadManufacture = Instantiate(warheadManufactureDef, Range.ToString());
+			var warheadManufactureUid = warheadManufacture.UID;
+			ResourceManager.Me.TaskSequence.AddNewTask(warheadManufacture);
 			EventManager.TaskProgressAdvenced += OnWarheadCompleted;
 
 			Func<Platform> platformManufactureDef;
@@ -167,8 +169,43 @@ namespace LCGuidebook.Core
 				default:
 					throw new InvalidOperationException();
 			}
-			ResourceManager.Me.TaskSequence.AddNewTask(Instantiate(platformManufactureDef, Range.ToString()));
+			var platformManufacture = Instantiate(platformManufactureDef, Range.ToString());
+			var platformManufactureUid = platformManufacture.UID;
+			ResourceManager.Me.TaskSequence.AddNewTask(platformManufacture);
 			EventManager.TaskProgressAdvenced += OnPlatformCompleted;
+
+			Manufacture finalProductManufacture = null;
+			Func<Platform> Assemble = () =>
+			{
+				Platform finalProduct = null;
+				NuclearWeapon nuclearWeapon = null;
+				Warhead warhead = null;
+				foreach (Manufacture task in finalProductManufacture.Dependence)
+				{
+					if (task.UID == platformManufactureUid)
+					{
+						finalProduct = task.FinalProduct as Platform;
+					}
+					else if (task.UID == warheadManufactureUid)
+					{
+						warhead = task.FinalProduct as Warhead;
+					}
+					else if (task.UID == carrierManufactureUid)
+					{
+						nuclearWeapon = task.FinalProduct as NuclearWeapon;
+					}
+					else throw new InvalidOperationException();
+				}
+				// Just for testing, will change
+				nuclearWeapon.Platform = finalProduct;
+				nuclearWeapon.Warheads.Add(warhead);
+				finalProduct.NuclearWeapons.Add(nuclearWeapon);
+				return finalProduct;
+			};
+
+			finalProductManufacture = new Manufacture("Final Product", Assemble, 
+				new CostOfStage(new Effect(), new Effect(), (Expression)0));
+			EventManager.TaskProgressAdvenced += OnFinalProductCompleted;
 
 			throw new NotImplementedException();
 		}
@@ -199,10 +236,21 @@ namespace LCGuidebook.Core
 				ResourceManager.Me.SendToReserve(platform);
 			}
 		}
+		static void OnFinalProductCompleted(Task sender, TaskProgressAdvancedEventArgs e)
+		{
+			if (e.IsTaskFinished &&
+				sender is Manufacture manufacture &&
+				manufacture.FinalProduct is Platform platform)
+			{
+				ResourceManager.Me.SendToReserve(platform);
+			}
+		}
 
-		static string NO_SUCH_PROPERTY(string name) => $"The property \"{name}\" does not exist in the script";
+		static string NO_SUCH_PROPERTY(string name) 
+			=> $"The property \"{name}\" does not exist in the script";
 
-		static public CostOfStage CurrentCost { get; private set; } = new CostOfStage(new Effect(), new Effect(), (Expression)0);
+		static public CostOfStage CurrentCost { get; private set; } 
+			= new CostOfStage(new Effect(), new Effect(), (Expression)0);
 
 		static public CarrierType Range { get; private set; }
 
