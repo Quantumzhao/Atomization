@@ -15,7 +15,7 @@ namespace LCGuidebook.Core.DataStructures
 	 * 2. Enactments and policies (make changes to values/in-game entities)
 	 * 3. Orders to manufacture (create new in-game entities and deploy) 
 	 * etc. */
-	public abstract class Task : IExecutable, INotifyPropertyChanged
+	public abstract class Task : IExecutable, INotifyPropertyChanged, IUniqueObject
 	{
 		protected Task(string name, CostOfStage cost) 
 		{
@@ -27,13 +27,18 @@ namespace LCGuidebook.Core.DataStructures
 		public event PropertyChangedEventHandler PropertyChanged;
 		private int _TimeElapsed = 0;
 
-		public Influence Influence { get; set; }
+		public List<Task> Dependence { get; } = new List<Task>();
+		public List<Task> Dependent { get; } = new List<Task>();
+
+		public Impact Impact { get; set; }
 
 		public ConfidentialLevel ConfidentialLevel { get; set; }
 
 		public string Name { get; set; }
 
 		public CostOfStage Cost { get; protected set; }
+
+		public string UID { get; } = GameManager.GenerateUID();
 
 		/// <summary>
 		///		Execute the task only if it is finally finished. 
@@ -60,7 +65,7 @@ namespace LCGuidebook.Core.DataStructures
 				{
 					Message = Name,
 					Source = this, 
-					Influence = this.Influence,
+					Influence = this.Impact,
 					ConfidentialLevel = this.ConfidentialLevel
 				}
 			);

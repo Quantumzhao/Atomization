@@ -13,7 +13,7 @@ namespace LCGuidebook.Core
 		public string Message { get; set; } = string.Empty;
 		public ConfidentialLevel ConfidentialLevel { get; set; } = ConfidentialLevel.Domestic;
 		public object Source { get; set; } = null;
-		public Influence Influence { get; set; } = Influence.Undefined;
+		public Impact Influence { get; set; } = Impact.Undefined;
 	}
 
 	public class TaskProgressAdvancedEventArgs : GameEventArgs
@@ -58,7 +58,7 @@ namespace LCGuidebook.Core
 		Global = 3
 	}
 
-	public enum Influence
+	public enum Impact
 	{
 		Positive, 
 		Negative, 
