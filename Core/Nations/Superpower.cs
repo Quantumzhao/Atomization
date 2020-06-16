@@ -260,7 +260,10 @@ namespace LCGuidebook.Core
 
 		static void UpdateCost()
 		{
-			throw new NotImplementedException();
+			CurrentCost 
+				= ResourceManager.GetCostOf(Range.ToString(), TypesOfCostOfStage.Manufacture)
+				+ ResourceManager.GetCostOf(Power.ToString(), TypesOfCostOfStage.Manufacture)
+				+ ResourceManager.GetCostOf(Concealment.ToString(), TypesOfCostOfStage.Manufacture);
 		}
 
 		static public string[] Set(string propertyName, object value)
