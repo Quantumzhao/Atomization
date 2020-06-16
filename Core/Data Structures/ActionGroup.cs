@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using LCGuidebook;
@@ -12,7 +13,7 @@ using UIEngine;
 
 namespace LCGuidebook.Core.DataStructures
 {
-	public class ActionGroup : IUniqueObject, IVisible
+	public class ActionGroup : IUniqueObject, IVisible, INotifyPropertyChanged
 	{
 		public ActionGroup(string name, string description = "")
 		{
@@ -31,6 +32,8 @@ namespace LCGuidebook.Core.DataStructures
 		[Visible(nameof(SubGroups))]
 		public List<ActionGroup> SubGroups { get; } = new List<ActionGroup>();
 
+		public event PropertyChangedEventHandler PropertyChanged;
+
 		public void AddAction(AbstractAction action)
 		{
 			Actions.Add(action);
@@ -39,6 +42,14 @@ namespace LCGuidebook.Core.DataStructures
 		public void AddSubGroup(ActionGroup group)
 		{
 			SubGroups.Add(group);
+		}
+
+		internal void RefreshFields(string[] names)
+		{
+			foreach (var propertyName in names)
+			{
+				(Actions.Single(a => a.Name == propertyName) as Field).InvokePropertyChanged();
+			}
 		}
 	}
 
@@ -60,24 +71,30 @@ namespace LCGuidebook.Core.DataStructures
 		public ActionGroup Group { get; private set; }
 	}
 
-	public class Field : AbstractAction
+	public class Field : AbstractAction, INotifyPropertyChanged
 	{
 		public Field(ActionGroup parent) : base(parent) { }
 		public static object TempRightValue { get; private set; }
 
-		public object GetObject()
+		public event PropertyChangedEventHandler PropertyChanged;
+
+		private object _Value;
+		public object Value
 		{
-			return Group.Script.ContinueWith($"{Name}\n").RunAsync().Result.ReturnValue;
+			get => Group.Script.ContinueWith($"{Name}\n").RunAsync().Result.ReturnValue;
+			set
+			{
+				TempRightValue = value;
+				string[] changedProperties = Group.Script.ContinueWith(
+					$"Set({Name}, LCGuidebook.Core.DataStructures.Bulletinboard.{nameof(TempRightValue)})\n")
+					.RunAsync().Result.ReturnValue as string[];
+				Group.RefreshFields(changedProperties);
+				TempRightValue = null;
+			}
 		}
 
-		public void SetObject(object rightValue)
-		{
-			TempRightValue = rightValue;
-			Group.Script.ContinueWith(
-				$"Set({Name}, LCGuidebook.Core.DataStructures.Bulletinboard.{nameof(TempRightValue)})\n")
-				.RunAsync().Wait();
-			TempRightValue = null;
-		}
+		public void InvokePropertyChanged() 
+			=> PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Value)));
 	}
 
 	public class Execution : AbstractAction
