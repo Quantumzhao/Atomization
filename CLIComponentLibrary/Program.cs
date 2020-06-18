@@ -30,10 +30,23 @@ namespace CLITestProject
 			InitializationManager.InitializeAll();
 			Dashboard.ImportEntryObjects(typeof(ResourceManager));
 #endif
-			ParseAndExecute("show");
+			Program world = new Program();
+			world.execute("show");
 			while (true)
 			{
-				ParseAndExecute(Console.ReadLine());
+				var me = Console.ReadLine();
+				/* Switch on the power line
+				 * Remember to put on 
+				 * PROTECTION
+				 * Lay down your pieces
+				 * And let's begin
+				 * OBJECT CREATION 
+				 * Fill in my data parameters
+				 * INITIALIZATION
+				 * Set up our new world
+				 * And let's begin the
+				 * SIMULATION */
+				world.execute (me) ;
 			}
 		}
 
@@ -53,7 +66,7 @@ namespace CLITestProject
 		 * ASGN #1 #2			ASGN #1				ASGN 0.0
 		 * ASGN #1 "Hello"		ASGN #1 2			ASGN #1 false
 		 * PARA #1 #2 #3		PARA #1 #2 3		EXEC #1 */
-		private static void ParseAndExecute(string input)
+		private void execute(string input)
 		{
 			Queue<string> tokens = new Queue<string>(input.Split());
 			var opcode = tokens.Dequeue().ToUpper();
@@ -153,7 +166,7 @@ namespace CLITestProject
 				var ret = methodNode.Invoke();
 				TryAddToCachedNodes(ret);
 				_CurrentNode = ret;
-				ParseAndExecute("SHOW");
+				execute("SHOW");
 			}
 			else if (opcode == "PARA")
 			{
