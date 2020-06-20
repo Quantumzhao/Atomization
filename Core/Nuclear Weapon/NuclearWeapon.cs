@@ -4,7 +4,6 @@ using LCGuidebook.Core.DataStructures;
 using System.ComponentModel;
 using System;
 using System.Xml;
-using Action = System.Action;
 
 namespace LCGuidebook.Core
 {

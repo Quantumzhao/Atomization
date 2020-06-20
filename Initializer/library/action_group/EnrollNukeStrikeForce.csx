@@ -1,4 +1,4 @@
-﻿#r "../../../Core/bin/debug/netcoreapp3.1/Core.dll"
+﻿/* #r "../../../Core/bin/debug/netcoreapp3.1/Core.dll"
 #r "System.Runtime.dll"
 #r "System.Collections.dll"
 
@@ -9,9 +9,9 @@ using LCGuidebook.Core.DataStructures;
 
 string NO_SUCH_PROPERTY(string name) => $"The property \"{name}\" does not exist in the script";
 
-public CostOfStage CurrentCost { get; private set; } = new CostOfStage(new Effect(), new Effect(), (Expression)0);
+public CostOfStage Cost { get; private set; } = new CostOfStage(new Effect(), new Effect(), (Expression)0);
 
-public CarrierType CarrierType { get; private set; }
+public CarrierType Range { get; private set; }
 
 public Warhead.Types Power { get; private set; }
 
@@ -33,7 +33,7 @@ public string[] Set(string propertyName, object value)
 	switch (propertyName)
 	{
 		case nameof(CarrierType):
-			CarrierType = (CarrierType)value;
+			Range = (CarrierType)value;
 			break;
 
 		case nameof(Power):
@@ -49,5 +49,5 @@ public string[] Set(string propertyName, object value)
 	}
 
 	UpdateCost();
-	return new string[] { nameof(CurrentCost) };
-}
+	return new string[] { nameof(Cost) }; }*/
+throw new System.NotImplementedException("This part is in Superpower.cs");

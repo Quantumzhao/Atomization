@@ -17,7 +17,7 @@ namespace LCGuidebook.Initializer.Manager
 		{
 			var name = node.Attributes["name"].Value;
 			var description = node.Attributes["decription"]?.Value;
-			var path = GeneratePath("library", "commands", node.Attributes["src"].Value);
+			var path = GeneratePath("library", "action_group", node.Attributes["src"].Value);
 			var srcCode = ToCSCode(path);
 			ActionGroup group = new ActionGroup(name, description);
 
@@ -36,8 +36,8 @@ namespace LCGuidebook.Initializer.Manager
 						group.AddAction(BuildExecution(cmdComplex, group));
 						break;
 
-					case "Bulletinboard":
-						group.AddAction(BuildBulletinboard(cmdComplex, group));
+					case "Field":
+						group.AddAction(BuildField(cmdComplex, group));
 						break;
 
 					default:
@@ -79,15 +79,14 @@ namespace LCGuidebook.Initializer.Manager
 			return execution;
 		}
 
-		private static Field BuildBulletinboard(XmlNode node, ActionGroup parent)
+		private static Field BuildField(XmlNode node, ActionGroup parent)
 		{
 			var name = node.Attributes["name"].Value;
 			var isReadOnly = bool.Parse(node.Attributes["isReadOnly"].Value);
 			Field bulletinboard = new Field(parent);
 			if (isReadOnly)
 			{
-				// intended to mark it readonly, will do it later
-				bulletinboard.AppendVisibleAttribute(new VisibleAttribute(name));
+				bulletinboard.AppendVisibleAttribute(new VisibleAttribute(name) { IsControlEnabled = false });
 			}
 
 			return bulletinboard;

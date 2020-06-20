@@ -62,7 +62,7 @@ namespace LCGuidebook.Core
 		//	switch (warheadType)
 		//	{
 		//		case Warhead.Types.AtomicBomb:
-					
+
 		//			break;
 		//		case Warhead.Types.HydrogenBomb:
 		//			break;
@@ -91,6 +91,7 @@ namespace LCGuidebook.Core
 		//	}
 		//}
 
+		#region EnrollNewNuclearStrikeForce
 		// This is a simplified process of manufacture of nuclear arsenal, 
 		// with all the details being intentionally ignored
 		static void EnrollNewNuclearStrikeForce()
@@ -289,6 +290,14 @@ namespace LCGuidebook.Core
 			UpdateCost();
 			return new string[] { nameof(CurrentCost) };
 		}
+		#endregion
+
+		#region DeployNewInstallation
+		void DeployNewInstallation()
+		{
+
+		}
+		#endregion
 		#endregion
 
 		public enum PublicFigures
