@@ -15,7 +15,7 @@ namespace LCGuidebook.Core
 		public double SuccessfulInterceptionRate 
 		{ 
 			get => _SuccessfulInterceptionRate;
-			set => value.Clamp();
+			set => _SuccessfulInterceptionRate = value.Clamp();
 		}
 
 		public event Action SelfDestroyed;

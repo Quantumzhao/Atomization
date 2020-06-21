@@ -100,12 +100,14 @@ namespace LCGuidebook.Initializer.Manager
 			{
 				var from = valueOf(node.Attributes["from"].InnerText);
 				var to = valueOf(node.Attributes["to"].InnerText);
-				var weight = double.Parse(node.Attributes["weight"].InnerText);
+				var w = node.Attributes["weight"];
+				var weight = w switch { null => 0, _ => double.Parse(w.InnerText) };
 
 				switch (node.Name)
 				{
 					case "edge":
-						BuildEdge(from, to, weight);
+						// assume weight is 1 for now
+						BuildEdge(from, to, 1);
 						break;
 
 					case "inclination":

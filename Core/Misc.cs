@@ -80,5 +80,42 @@ namespace LCGuidebook.Core
 			}
 			return path;
 		}
+
+		/// <summary>
+		///		Assume <paramref name="from"/> is the same as <paramref name="cargo"/>'s current location
+		/// </summary>
+		public static List<(Transportation, Action<Transportation>)> CreateTransportationRoute(Region from, Region to, IDeployable cargo)
+		{
+			var retList = new List<(Transportation, Action<Transportation>)>();
+			var route = ShortestPath(from, to);
+
+			Transportation prev = null;
+			var iter = route.First;
+			while (iter.Next != null)
+			{
+				Transportation transportation;
+				Action<Transportation> action;
+
+				transportation = new Transportation($"Transferring {cargo} to a new destination {to}", cargo, iter.Next.Value,
+					ResourceManager.GetCostOf(nameof(Installation), TypesOfCostOfStage.Transportation));
+				action = tr => EventManager.TaskProgressAdvenced += OnTransportationArrived;
+
+				void OnTransportationArrived(Task sender, TaskProgressAdvancedEventArgs e)
+				{
+					if (e.IsTaskFinished &&
+						sender is Transportation transportation &&
+						transportation.Cargo.UID == e.RelatedGameObjectUid)
+					{
+						
+					}
+				}
+
+				retList.Add((transportation, action));
+
+				iter = iter.Next;
+			}
+			throw new NotImplementedException();
+
+		}
 	}
 }

@@ -15,7 +15,7 @@ namespace LCGuidebook.Core
 			Name = name;
 		}
 		public string Name { get; set; }
-		public List<Region> Neighbors { get; internal set; }
+		public List<Region> Neighbors { get; } = new List<Region>();
 	}
 
 	/// <summary>
