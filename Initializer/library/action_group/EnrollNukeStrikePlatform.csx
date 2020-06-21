@@ -40,7 +40,7 @@ string[] EnrollNukeStrikePlatform(Platform.Types type)
 	manufacture = new Manufacture(name, onCompleteAction, cost)
 	{
 		ConfidentialLevel = ConfidentialLevel.Domestic,
-		Influence = Influence.Positive
+		//Influence = Influence.Positive
 	};
 	ResourceManager.Me.TaskSequence.AddNewTask(manufacture);
 	EventManager.TaskProgressAdvenced += NukeStrikePlatformManufactureCompleted;
