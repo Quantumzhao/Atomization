@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<definition
+  xmlns="https://www.w3schools.com"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="https://www.w3schools.com/xml ../schema/GameBoard.xsd"
+  xmlns:lcg="https://www.w3schools.com">
+  <declaration>
+    <vertex identifier="A" name="America" type="superpower"/>
+    <vertex identifier="B" name="Britain" type="superpower"/>
+    <vertex identifier="C" name="China" type="superpower"/>
+    <vertex identifier="D" name="Deutschland" type="nation"/>
+    <vertex identifier="E" name="Espana" type="nation"/>
+    <vertex identifier="F" name="France" type="nation"/>
+    <vertex identifier="G" name="Greenland Sea" type="water"/>
+    <vertex identifier="H" name="Halmahera Sea" type="water"/>
+    <vertex identifier="I" name="Irish Sea" type="water"/>
+  </declaration>
+  <relation>
+    <edge from="A" to="B"/>
+    <edge from="B" to="C"/>
+    <edge from="C" to="A"/>
+    <edge from="D" to="E"/>
+    <edge from="E" to="F"/>
+    <edge from="F" to="D"/>
+    <edge from="G" to="H"/>
+    <edge from="H" to="I"/>
+    <edge from="I" to="G"/>
+    <edge from="A" to="D"/>
+    <edge from="B" to="E"/>
+    <edge from="C" to="F"/>
+    <edge from="D" to="G"/>
+    <edge from="E" to="H"/>
+    <edge from="F" to="I"/>
+  </relation>
+</definition>

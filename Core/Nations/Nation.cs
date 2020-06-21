@@ -11,6 +11,7 @@ namespace LCGuidebook.Core
 	public abstract class Region
 	{
 		public string Name { get; set; }
+		public List<Region> Neighbors { get; internal set; }
 	}
 
 	/// <summary>
