@@ -21,6 +21,22 @@ namespace LCGuidebook.Core
 
 		public static int Round(double value) => (int)(value + 0.5);
 
+		public static double Clamp(this double value)
+		{
+			if (value < 0)
+			{
+				return 0;
+			}
+			else if (value > 1)
+			{
+				return 1;
+			}
+			else
+			{
+				return value;
+			}
+		}
+
 		public static LinkedList<Region> ShortestPath(Region start, Region end)
 		{
 			// Assume all weight between nodes are 1 for now
