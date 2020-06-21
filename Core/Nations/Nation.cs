@@ -10,6 +10,10 @@ namespace LCGuidebook.Core
 {
 	public abstract class Region
 	{
+		public Region(string name)
+		{
+			Name = name;
+		}
 		public string Name { get; set; }
 		public List<Region> Neighbors { get; internal set; }
 	}
@@ -19,11 +23,12 @@ namespace LCGuidebook.Core
 	/// </summary>
 	public class Waters : Region
 	{
+		public Waters(string name) : base(name) { }
 		// The number of international waters in this game is set to be 5
 		public const int NUM_INTL_WATERS = 5;
 		// Each sea belongs to a certain nation. 
 		// if the property is null, then it is international water
-		public Nation Affiliation { get; set; }
+		public Nation Sovereign { get; set; }
 	}
 
 	/// <summary>
@@ -32,12 +37,14 @@ namespace LCGuidebook.Core
 	public abstract class Nation : Region
 	{
 		public const int NUM_VALUES = 11;
-		public Nation()
+		public Nation(string name) : base(name)
 		{
-			// Initialize its territorial water, and name the water as well
-			TerritorialWaters = new Waters() { Name = ResourceManager.WatersNames.Dequeue() };
-			TerritorialWaters.Affiliation = this;
-			ResourceManager.Regions.Add(TerritorialWaters);
+			Inclination = new DynamicDictionary<Nation, double>(valueRestriction: d => d <= 1 && d >= -1);
+
+			//// Initialize its territorial water, and name the water as well
+			//TerritorialSea = new Waters() { Name = ResourceManager.WatersNames.Dequeue() };
+			//TerritorialSea.Sovereign = this;
+			//ResourceManager.Regions.Add(TerritorialSea);
 		}
 
 		protected readonly Dictionary<string, IUniqueObject> _Reserve = new Dictionary<string, IUniqueObject>();
@@ -45,9 +52,9 @@ namespace LCGuidebook.Core
 		public readonly ValueComplexNTuple NationalIndices = new ValueComplexNTuple();
 		public readonly ValueComplexNTuple OutdatedNationalIndices = new ValueComplexNTuple();
 		// null stands for independence
-		public Superpower Affiliation { get; set; } = null;
+		public DynamicDictionary<Nation, double> Inclination { get; }
 
-		public Waters TerritorialWaters { get; }
+		public List<Waters> TerritorialSea { get; } = new List<Waters>();
 
 		public double Tactics { get; set; }
 
@@ -75,7 +82,7 @@ namespace LCGuidebook.Core
 
 	public class RegularNation : Nation
 	{
-		public RegularNation()
+		public RegularNation(string name) : base(name)
 		{
 			
 		}

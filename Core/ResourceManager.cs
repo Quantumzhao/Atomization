@@ -11,8 +11,8 @@ namespace LCGuidebook.Core
 	public static class ResourceManager
 	{
 		public static List<Region> Regions = new List<Region>();
-		public static Queue<string> WatersNames { get; private set; }
-		public static Queue<string> NationNames { get; private set; }
+		//public static Queue<string> WatersNames { get; private set; }
+		//public static Queue<string> NationNames { get; private set; }
 
 		[Visible(nameof(Me))]
 		public static Superpower Me { get; set; }
@@ -23,37 +23,37 @@ namespace LCGuidebook.Core
 		private static readonly Dictionary<string, Dictionary<TypesOfCostOfStage, CostOfStage>> CostTable 
 			= new Dictionary<string, Dictionary<TypesOfCostOfStage, CostOfStage>>();
 
-		public static void Initialize()
-		{
-			#region Initialize names of regions
-			try
-			{
-				WatersNames = new Queue<string>(File.ReadAllLines(
-					$"{Misc.SolutionPath}/Core/Nations/Waters Names.txt"));
-			}
-			catch (Exception)
-			{
-				for (int i = 0; i < 25; i++)
-				{
-					WatersNames.Enqueue("[Error]");
-				}
-			}
-			try
-			{
-				NationNames = new Queue<string>(File.ReadAllLines(
-					$"{Misc.SolutionPath}/Core/Nations/Nation Names.txt"));
-			}
-			catch (Exception)
-			{
-				for (int i = 0; i < 20; i++)
-				{
-					NationNames.Enqueue("[Error]");
-				}
-			}
-			#endregion
+		//public static void Initialize()
+		//{
+		//	#region Initialize names of regions
+		//	try
+		//	{
+		//		WatersNames = new Queue<string>(File.ReadAllLines(
+		//			$"{Misc.SolutionPath}/Core/Nations/Waters Names.txt"));
+		//	}
+		//	catch (Exception)
+		//	{
+		//		for (int i = 0; i < 25; i++)
+		//		{
+		//			WatersNames.Enqueue("[Error]");
+		//		}
+		//	}
+		//	try
+		//	{
+		//		NationNames = new Queue<string>(File.ReadAllLines(
+		//			$"{Misc.SolutionPath}/Core/Nations/Nation Names.txt"));
+		//	}
+		//	catch (Exception)
+		//	{
+		//		for (int i = 0; i < 20; i++)
+		//		{
+		//			NationNames.Enqueue("[Error]");
+		//		}
+		//	}
+		//	#endregion
 
-			Misc.Initialize();
-		}
+		//	Misc.Initialize();
+		//}
 
 		public static void RegisterCost(string typeOfGameObject, TypesOfCostOfStage costType, 
 			CostOfStage cost)

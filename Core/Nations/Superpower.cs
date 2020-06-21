@@ -11,20 +11,20 @@ namespace LCGuidebook.Core
 {
 	public class Superpower : Nation
 	{
-		public const int INITIAL_NUKE_SILOS = 10;
-		public const int NUM_ADJACENT_NATIONS = 5;
+		//public const int INITIAL_NUKE_SILOS = 10;
+		//public const int NUM_ADJACENT_NATIONS = 5;
 
-		public Superpower() : base()
+		public Superpower(string name) : base(name)
 		{
-			for (int i = 0; i < NUM_ADJACENT_NATIONS; i++)
-			{
-				RegularNation nation = new RegularNation() { Name = ResourceManager.NationNames.Dequeue() };
-				ResourceManager.Regions.Add(nation);
-				// initialize the no. of adj nations
-				Adjacency[i] = nation;
-			}
+			//for (int i = 0; i < NUM_ADJACENT_NATIONS; i++)
+			//{
+			//	RegularNation nation = new RegularNation() { Name = ResourceManager.NationNames.Dequeue() };
+			//	ResourceManager.Regions.Add(nation);
+			//	// initialize the no. of adj nations
+			//	Adjacency[i] = nation;
+			//}
 
-			Affiliation = this;
+			//Inclination = this;
 		}
 
 		[Visible(nameof(MainCommandGroups))]
@@ -32,9 +32,9 @@ namespace LCGuidebook.Core
 
 		public ConstrainedList<Platform> NuclearPlatforms { get; set; } = new ConstrainedList<Platform>();
 
-		public RegularNation[] Adjacency { get; set; } = new RegularNation[NUM_ADJACENT_NATIONS];
+		//public RegularNation[] Adjacency { get; set; } = new RegularNation[NUM_ADJACENT_NATIONS];
 
-		public List<RegularNation> SateliteNations { get; set; } = new List<RegularNation>();
+		//public List<RegularNation> SateliteNations { get; set; } = new List<RegularNation>();
 
 		public void SendToReserve(IUniqueObject uniqueObject)
 		{
