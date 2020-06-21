@@ -9,6 +9,7 @@ using LCGuidebook.Core.DataStructures;
 using LCGuidebook.Core;
 using System.Text.RegularExpressions;
 using Initializer.Properties;
+using System.Dynamic;
 
 namespace LCGuidebook.Initializer.Manager
 {
@@ -20,13 +21,12 @@ namespace LCGuidebook.Initializer.Manager
 		private const string _BAD_GRAPH = "There must be exactly 1 declaration section and 1 relation section ";
 		public static void InitializeMe()
 		{
-			ResourceManager.Regions.Add(ResourceManager.Me = new Superpower() {Name = "C" });
+			//ResourceManager.Regions.Add(ResourceManager.Me = new Superpower() {Name = "C" });
+			SetMe();
 			InitializeValues(ToXmlDoc(GeneratePath("config", "initial_values.initcfg")));
 			InitializeGrowth(ToXmlDoc(GeneratePath("config", "initial_growth.initcfg")));
-			InitializeMap(ToXmlDoc(GeneratePath("config", "map", "GameBoard.lcgmap")));
 			AdditionalInitializations(ToXmlDoc(GeneratePath(
 				"interfaces", "setup", "additional_initializations.initact")));
-
 		}
 
 		private static void InitializeValues(XmlNodeList doc)
@@ -76,6 +76,12 @@ namespace LCGuidebook.Initializer.Manager
 					ResourceManager.Me.NationalIndices[idx].Growth.AddTerm(name, expression);
 				}
 			}
+		}
+
+		private static void SetMe()
+		{
+			// placeholder, will change in the future
+			ResourceManager.Me = ResourceManager.Regions.Find(r => r.Name == "China") as Superpower;
 		}
 	}
 }

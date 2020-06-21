@@ -9,9 +9,9 @@ namespace LCGuidebook.Initializer.Manager
 	{
 		public static void InitializeAll()
 		{
-			ResourceManager.Initialize();
+			Loader.InitializeMap();
+			//ResourceManager.Initialize();
 			Loader.InitializeCosts();
-			//GameManager.InitializeEntityAttributes();
 
 			Loader.InitializeMe();
 			ResourceManager.Me.MainCommandGroups = Loader.GetAllActionGroups();

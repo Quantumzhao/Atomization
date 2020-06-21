@@ -8,17 +8,28 @@ using Microsoft.CodeAnalysis.Scripting;
 using LCGuidebook.Core.DataStructures;
 using LCGuidebook.Core;
 using Initializer.Properties;
+using System.Linq;
+using System.Runtime.InteropServices;
 
 namespace LCGuidebook.Initializer.Manager
 {
 	public static partial class Loader
 	{
 		private const string _BAD_REGION_TYPE = "No such type of region";
+		private const string _BAD_RELATION = "Only \"edge\" and \"inclination\" is valid";
+		private const string _BAD_SECTION = "Only \"declaration\" and \"relation\" is valid";
+		private const string _BAD_INCL_DESC = "Either \"from\" or \"to\" is not a nation";
+		private const string _BAD_SVRN_DESC = "Either \"from\" or \"to\" is not a valid type";
+
+		public static void InitializeMap()
+		{
+			InitializeMap(ToXmlDoc(GeneratePath("config", "map", "GameBoard.lcgmap")));
+		}
 		private static void InitializeMap(XmlNodeList doc)
 		{
 			if (doc.Count != 2)
 			{
-				throw new InvalidOperationException(_BAD_GRAPH);
+				throw new InvalidDataException(_BAD_GRAPH);
 			}
 
 			XmlNodeList declaration = null;
@@ -36,11 +47,11 @@ namespace LCGuidebook.Initializer.Manager
 						break;
 
 					default:
-						throw new InvalidOperationException();
+						throw new InvalidDataException(_BAD_SECTION);
 				}
 			}
 
-			var graph = BuildEdges(BuildVertices(declaration), relation);
+			ResourceManager.Regions = BuildRelations(BuildVertices(declaration), relation);
 		}
 
 		private static List<(string, Region)> BuildVertices(XmlNodeList doc)
@@ -61,63 +72,93 @@ namespace LCGuidebook.Initializer.Manager
 				switch (type.InnerText)
 				{
 					case "superpower":
-						regions.Add((identifier, new Superpower() { Name = name }));
+						regions.Add((identifier, new Superpower(name)));
 						break;
 
 					case "nation":
-						regions.Add((identifier, new RegularNation() { Name = name }));
+						regions.Add((identifier, new RegularNation(name)));
 						break;
 
 					case "water":
-						regions.Add((identifier, new Waters() { Name = name }));
+						regions.Add((identifier, new Waters(name)));
 						break;
 
 					default:
-						throw new InvalidOperationException(_BAD_REGION_TYPE);
+						throw new InvalidDataException(_BAD_REGION_TYPE);
 				}
 			}
 
 			return regions;
 		}
 
-		private static (List<Superpower>, List<Nation>, List<Waters>) BuildEdges
-			(List<(string, Region)> list, XmlNodeList doc)
+		private static List<Region> BuildRelations(List<(string, Region)> list, XmlNodeList doc)
 		{
 			Region valueOf(string id) => list.Find(r => r.Item1 == id).Item2;
 
-			var superpowers = new List<Superpower>();
-			var nations = new List<Nation>();
-			var waters = new List<Waters>();
 
-			foreach (XmlNode edge in doc)
+			foreach (XmlNode node in doc)
 			{
-				var from = valueOf(edge.Attributes["from"].InnerText);
-				var to = valueOf(edge.Attributes["to"].InnerText);
+				var from = valueOf(node.Attributes["from"].InnerText);
+				var to = valueOf(node.Attributes["to"].InnerText);
+				var weight = double.Parse(node.Attributes["weight"].InnerText);
 
-				if (!from.Neighbors.Contains(to))
+				switch (node.Name)
 				{
-					from.Neighbors.Add(to);
-				}
-				if (!to.Neighbors.Contains(from))
-				{
-					to.Neighbors.Add(from);
-				}
+					case "edge":
+						BuildEdge(from, to, weight);
+						break;
 
-				if (from is Superpower superpower)
-				{
-					superpowers.Add(superpower);
-				}
-				else if (from is RegularNation nation)
-				{
-					nations.Add(nation);
-				}
-				else
-				{
-					waters.Add(from as Waters);
+					case "inclination":
+						if (from is Nation nFrom && to is Nation nTo)
+						{
+							BuildInclination(nFrom, nTo, weight);
+						}
+						else
+						{
+							throw new InvalidDataException(_BAD_INCL_DESC);
+						}
+						break;
+
+					case "sovereign":
+						if (from is Nation obj && to is Waters sbj)
+						{
+							BuildSovereign(obj, sbj);
+						}
+						else
+						{
+							throw new InvalidDataException(_BAD_SVRN_DESC);
+						}
+						break;
+
+					default:
+						throw new InvalidDataException(_BAD_RELATION);
 				}
 			}
 
-			return (superpowers, nations, waters);
+			return list.Select(t => t.Item2).ToList();
+		}
+
+		private static void BuildEdge(Region from, Region to, double weight)
+		{
+			if (!from.Neighbors.Contains(to))
+			{
+				from.Neighbors.Add(to);
+			}
+			if (!to.Neighbors.Contains(from))
+			{
+				to.Neighbors.Add(from);
+			}
+		}
+
+		private static void BuildInclination(Nation from, Nation to, double weight)
+		{
+			from.Inclination.Add(to, weight);
+		}
+
+		private static void BuildSovereign(Nation from, Waters to)
+		{
+			from.TerritorialSea.Add(to);
+			to.Sovereign = from;
 		}
 	}
 }
