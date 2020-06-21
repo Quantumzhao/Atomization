@@ -173,15 +173,23 @@ namespace LCGuidebook.Core.DataStructures
 
 	public class Transportation : Task
 	{
-		public Transportation(string name, CostOfStage cost) : 
-			base(name, cost) { }
-		public Region From { get; set; }
-		public Region Next { get; set; }
-		public Region To { get; set; }
+		public Transportation(string name, IDeployable deployable, Region nextStop, 
+			CostOfStage cost) : base(name, cost) 
+		{
+			Name = name;
+			Cargo = deployable;
+			Cost = cost;
+			NextStop = nextStop;
+		}
+		public IDeployable Cargo { get; private set; }
+		public Region NextStop { get; set; }
 
 		public override void Execute()
 		{
-			throw new NotImplementedException();
+			if (NextStop != null)
+			{
+				Cargo.DeployedRegion = NextStop;
+			}
 		}
 	}
 

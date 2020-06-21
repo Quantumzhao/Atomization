@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System;
 using UIEngine;
 using System.Reflection.PortableExecutable;
+using System.Runtime.InteropServices;
 
 namespace LCGuidebook.Core
 {
@@ -267,35 +268,97 @@ namespace LCGuidebook.Core
 				+ ResourceManager.GetCostOf(Concealment.ToString(), TypesOfCostOfStage.Manufacture);
 		}
 
-		static public string[] Set(string propertyName, object value)
-		{
-			switch (propertyName)
-			{
-				case nameof(Range):
-					Range = (CarrierType)value;
-					break;
+		//static public string[] Set(string propertyName, object value)
+		//{
+		//	switch (propertyName)
+		//	{
+		//		case nameof(Range):
+		//			Range = (CarrierType)value;
+		//			break;
 
-				case nameof(Power):
-					Power = (Warhead.Types)value;
-					break;
+		//		case nameof(Power):
+		//			Power = (Warhead.Types)value;
+		//			break;
 
-				case nameof(Concealment):
-					Concealment = (Platform.Types)value;
-					break;
+		//		case nameof(Concealment):
+		//			Concealment = (Platform.Types)value;
+		//			break;
 
-				default:
-					throw new MemberAccessException(NO_SUCH_PROPERTY(propertyName));
-			}
+		//		default:
+		//			throw new MemberAccessException(NO_SUCH_PROPERTY(propertyName));
+		//	}
 
-			UpdateCost();
-			return new string[] { nameof(CurrentCost) };
-		}
+		//	UpdateCost();
+		//	return new string[] { nameof(CurrentCost) };
+		//}
 		#endregion
 
 		#region DeployNewInstallation
-		void DeployNewInstallation()
+		string[] DeployNewInstallation(Region deployedRegion)
 		{
+			Manufacture manufacture;
+			Deployment deployment;
 
+			Func<IDeployable> onCompletion = () => new Installation();
+
+			manufacture = new Manufacture(
+				"Sending a new missle defense system to reserve", onCompletion, 
+				ResourceManager.GetCostOf(nameof(Installation), TypesOfCostOfStage.Manufacture)
+			);
+			ResourceManager.Me.TaskSequence.AddNewTask(manufacture);
+			EventManager.TaskProgressAdvenced += NewInstallationManufactureCompleted;
+
+			deployment = new Deployment($"Deploying a new missile defense system in {deployedRegion}", 
+				deployedRegion, (IDeployable)manufacture.FinalProduct, 
+				ResourceManager.GetCostOf(nameof(Installation), TypesOfCostOfStage.Deployment));
+			ResourceManager.Me.TaskSequence.AddNewTask(deployment);
+			EventManager.TaskProgressAdvenced += NewDeploymentCompleted;
+
+			return new string[0];
+
+			static void NewDeploymentCompleted(Task sender, TaskProgressAdvancedEventArgs e)
+			{
+				if (e.IsTaskFinished &&
+					sender is Deployment deployment &&
+					deployment.DeployableObject.UID == e.RelatedGameObjectUid)
+				{
+					ResourceManager.Me.GetFromReserve<Installation>(e.RelatedGameObjectUid).DeployedRegion
+						= deployment.Destination;
+				}
+			}
+
+			static void NewInstallationManufactureCompleted(Task sender, TaskProgressAdvancedEventArgs e)
+			{
+				if (e.IsTaskFinished &&
+					sender is Manufacture manufacture &&
+					manufacture.FinalProduct.UID == e.RelatedGameObjectUid)
+				{
+					ResourceManager.Me.SendToReserve(manufacture.FinalProduct);
+				}
+			}
+		}
+		//string[] Set(string propertyName, object value)
+		//{
+		//	switch (propertyName)
+		//	{
+		//		case nameof(DeployedRegion):
+		//			DeployedRegion = (Region)value;
+		//			break;
+
+		//		default:
+		//			throw new InvalidOperationException();
+		//	}
+
+		//	return new string[] { nameof(DeployedRegion) };
+		//}
+
+		string[] RelocateInstallation(Installation installation, Region destination)
+		{
+			Transportation transportation;
+			transportation = new Transportation($"Transferring {installation} to a new destination {destination}", installation, null, 
+				ResourceManager.GetCostOf(nameof(Installation), TypesOfCostOfStage.Transportation));
+
+			return new string[0];
 		}
 		#endregion
 		#endregion
