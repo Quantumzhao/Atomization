@@ -44,7 +44,7 @@ namespace LCGuidebook.Core
 					}
 				});
 				tup.Item4 = false;
-				tup.Item1.Neighbors.Aggregate((acc, n) =>
+				tup.Item1.Neighbors.ForEach(n =>
 				{
 					var t = table.Find(r => r.Item1 == n);
 					if (tup.Item3 + 1 < t.Item3)
@@ -52,7 +52,6 @@ namespace LCGuidebook.Core
 						tup.Item3++;
 						t.Item2 = tup.Item1;
 					}
-					return acc;
 				});
 			}
 			var path = new LinkedList<Region>();
