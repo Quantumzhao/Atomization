@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<definition
+  xmlns="https://www.w3schools.com"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="https://www.w3schools.com/xml ../schema/costs.xsd"
+  xmlns:lcg="https://www.w3schools.com">
+  <entity name="Installation">
+    <cost title="Manufacture">
+      <effect duration="long">
+        <growth name="Installation Construction">
+          <target lcg:mainIndexTitle="Economy">
+            <expression coefficient="-5"/>
+          </target>
+        </growth>
+      </effect>
+      <requiredTime>
+        <expression coefficient="2"/>
+      </requiredTime>
+    </cost>
+    <cost title="Deployment">
+      <effect duration="long">
+        <growth name="Installation Deployment">
+          <target lcg:mainIndexTitle="Economy">
+            <expression coefficient="-1"/>
+          </target>
+        </growth>
+      </effect>
+    </cost>
+  </entity>
+</definition>
