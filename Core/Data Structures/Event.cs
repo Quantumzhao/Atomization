@@ -18,6 +18,7 @@ namespace LCGuidebook.Core
 
 	public class TaskProgressAdvancedEventArgs : GameEventArgs
 	{
+		private const string _NO_DESIGNATED_GAMEOBJECT = "No game object was specified";
 		public TaskProgressAdvancedEventArgs(int timeRemaining)
 		{
 			TimeRemaining = timeRemaining;
@@ -26,6 +27,7 @@ namespace LCGuidebook.Core
 
 		public readonly int TimeRemaining;
 
+		public string RelatedGameObjectUid { get; set; }
 		public bool IsTaskFinished => TimeRemaining <= 0;
 		public Task TaskInfo { get; set; }
 	}

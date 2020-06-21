@@ -18,6 +18,8 @@ namespace LCGuidebook.Core
 
 		public ConstrainedList<Warhead> Warheads { get; } = new ConstrainedList<Warhead>();
 		public Region DeployedRegion { get; set; }
+
+		private bool _IsActivated = false;
 		public bool IsActivated
 		{
 			get => _IsActivated;
@@ -62,8 +64,6 @@ namespace LCGuidebook.Core
 		}
 
 		private Region _Target;
-		private bool _IsActivated = false;
-
 		public Region Target
 		{
 			get => _Target;
