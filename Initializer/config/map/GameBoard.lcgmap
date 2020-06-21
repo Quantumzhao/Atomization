@@ -17,7 +17,7 @@
     <vertex identifier="I" name="Irish Sea" type="water"/>
   </declaration>
   <relation>
-    <edge from="A" to="B"/>
+    <edge from="A" to="B" weight="1"/>
     <edge from="B" to="C"/>
     <edge from="C" to="A"/>
     <edge from="D" to="E"/>
@@ -32,5 +32,9 @@
     <edge from="D" to="G"/>
     <edge from="E" to="H"/>
     <edge from="F" to="I"/>
+    <inclination from="A" to="B" weight="0"/>
+    <sovereign from="A" to="G"/>
+    <sovereign from="B" to="H"/>
+    <sovereign from="C" to="I"/>
   </relation>
 </definition>
