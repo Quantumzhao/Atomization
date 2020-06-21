@@ -2,7 +2,7 @@
 <HeaderConfiguration
   xmlns="https://www.w3schools.com"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="https://www.w3schools.com/xml ../schema/action_group.xsd">
+  xsi:schemaLocation="https://www.w3schools.com ../schema/action_group.xsd">
   <ActionGroup name="Nuclear" description="description" src="Nuclear.csx">
     <Execution name="Enroll new nuclear strike platform" description="description" method="EnrollNukeStrikePlatform"/>
     <Execution name="Destroy nuclear weapon" description="description" method="DestroyNuke"/>
