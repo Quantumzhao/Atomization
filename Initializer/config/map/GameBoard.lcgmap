@@ -1,8 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <definition
   xmlns="https://www.w3schools.com"
+  xmlns:xs="http://www.w3.org/2001/XMLSchema"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="https://www.w3schools.com/xml ../schema/GameBoard.xsd"
+  xsi:schemaLocation="https://www.w3schools.com ../schema/GameBoard.xsd"
   xmlns:lcg="https://www.w3schools.com">
   <declaration>
     <vertex identifier="A" name="America" type="superpower"/>

@@ -2,7 +2,7 @@
 <definition
   xmlns="https://www.w3schools.com"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="https://www.w3schools.com/xml ../schema/costs.xsd"
+  xsi:schemaLocation="https://www.w3schools.com ../schema/costs.xsd"
   xmlns:lcg="https://www.w3schools.com">
   <entity name="StrategicBomber">
     <cost title="Manufacture">
