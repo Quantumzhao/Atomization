@@ -1,6 +1,5 @@
 ﻿#define LCG_UI
 
-using Demo;
 using LCGuidebook.Initializer.Manager;
 using LCGuidebook.Core;
 using System;

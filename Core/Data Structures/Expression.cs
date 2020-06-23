@@ -1,9 +1,5 @@
 ﻿using System;
 using System.ComponentModel;
-using LCGuidebook;
-using LCGuidebook.Core;
-using LCGuidebook.Core.DataStructures;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace LCGuidebook.Core.DataStructures
 {

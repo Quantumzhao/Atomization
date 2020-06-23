@@ -1,15 +1,8 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Collections.Generic;
-using System.Text;
 using System.Xml;
-using Microsoft.CodeAnalysis.CSharp.Scripting;
-using Microsoft.CodeAnalysis.Scripting;
-using LCGuidebook.Core.DataStructures;
 using LCGuidebook.Core;
-using Initializer.Properties;
 using System.Linq;
-using System.Runtime.InteropServices;
 
 namespace LCGuidebook.Initializer.Manager
 {

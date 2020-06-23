@@ -1,15 +1,7 @@
 ﻿using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.ComponentModel;
-using System.Collections.ObjectModel;
-using System.Windows;
 using System;
 using System.Linq;
-using LCGuidebook;
-using LCGuidebook.Core;
 using LCGuidebook.Core.DataStructures;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
-using System.Globalization;
 
 namespace LCGuidebook.Core
 {

@@ -1,16 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.ComponentModel;
-using System.Collections.ObjectModel;
-using System.Windows;
-using System;
-using System.Linq;
-using LCGuidebook;
-using LCGuidebook.Core;
-using LCGuidebook.Core.DataStructures;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
-
-namespace LCGuidebook.Core.DataStructures
+﻿namespace LCGuidebook.Core.DataStructures
 {
 	public class CostOfStage
 	{
