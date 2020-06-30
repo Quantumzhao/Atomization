@@ -1,9 +1,5 @@
-﻿using LCGuidebook;
-using LCGuidebook.Core;
-using LCGuidebook.Core.DataStructures;
+﻿using LCGuidebook.Core.DataStructures;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Collections.Specialized;
 using System;
 
 namespace LCGuidebook.Core
