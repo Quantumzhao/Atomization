@@ -19,7 +19,7 @@ This game (simulator) is not adapted from any existed historical events. The dev
 ____
 ## Current Progress
 
-Currently, I am rewriting the underlying architecture of this game, since the previous one is too clumsy and awkward. The game content after this major refactor would be quite different from the old one. 
+The overall architecture is completed. All of the game features will be added in the form of plug-ins in the future. 
 
 # Todo
 
