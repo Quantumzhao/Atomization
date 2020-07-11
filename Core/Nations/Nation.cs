@@ -53,7 +53,7 @@ namespace LCGuidebook.Core
 		protected readonly Dictionary<string, IUniqueObject> _Reserve = new Dictionary<string, IUniqueObject>();
 
 		public readonly ValueComplexNTuple NationalIndices = new ValueComplexNTuple();
-		public readonly ValueComplexNTuple OutdatedNationalIndices = new ValueComplexNTuple();
+		//public readonly ValueComplexNTuple OutdatedNationalIndices = new ValueComplexNTuple();
 
 		public readonly List<ValueComplex> Figures = new List<ValueComplex>();
 		public readonly List<ValueComplex> OutdatedFigures = new List<ValueComplex>();

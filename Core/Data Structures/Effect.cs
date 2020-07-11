@@ -38,7 +38,7 @@ namespace LCGuidebook.Core.DataStructures
 			_Values[9] = satisfaction;
 			_Values[10] = bureaucracy;
 
-			for (int i = 0; i < Nation.NUM_VALUES; i++)
+			for (int i = 0; i < ValueComplexNTuple.NUM_VALUES; i++)
 			{
 				if (_Values[i] == null)
 				{
@@ -50,7 +50,7 @@ namespace LCGuidebook.Core.DataStructures
 		}
 		public readonly bool IsReadOnly;
 		public event PropertyChangedEventHandler PropertyChanged;
-		private readonly Expression[] _Values = new Expression[Nation.NUM_VALUES];
+		private readonly Expression[] _Values = new Expression[ValueComplexNTuple.NUM_VALUES];
 
 		public Expression this[MainIndexType index]
 		{
@@ -86,7 +86,7 @@ namespace LCGuidebook.Core.DataStructures
 		public static Effect operator +(Effect effect1, Effect effect2)
 		{
 			var newEffect = new Effect(isReadOnly:true);
-			for (int i = 0; i < Nation.NUM_VALUES; i++)
+			for (int i = 0; i < ValueComplexNTuple.NUM_VALUES; i++)
 			{
 				newEffect[i] = effect1[i] + effect2[i];
 			}

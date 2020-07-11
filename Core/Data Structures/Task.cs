@@ -119,7 +119,7 @@ namespace LCGuidebook.Core.DataStructures
 
 		public override void Execute()
 		{
-			ResourceManager.Me.OutdatedNationalIndices[_Index].Update(ResourceManager.Me.NationalIndices[_Index]);
+			ResourceManager.Me.OutdatedFigures[_Index].Update(ResourceManager.Me.NationalIndices[_Index]);
 		}
 
 		private void ImposeShortTermEffect()
