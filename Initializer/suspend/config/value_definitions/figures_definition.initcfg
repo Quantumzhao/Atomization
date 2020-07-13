@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<initFigures
+  xmlns="https://www.w3schools.com"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:lcg="https://www.w3schools.com"
+  xsi:schemaLocation="https://www.w3schools.com ../schema/figures_definition.xsd">
+  <figureDef name="Economy"/>
+  <figureDef name="Population"/>
+  <figureDef name="Army"/>
+  <figureDef name="Navy"/>
+  <figureDef name="Food"/>
+  <figureDef name="RawMaterial"/>
+  <figureDef name="NuclearMaterial"/>
+  <figureDef name="Stability"/>
+  <figureDef name="Nationalism"/>
+  <figureDef name="Satisfaction"/>
+  <figureDef name="Bureaucracy"/>
+</initFigures>

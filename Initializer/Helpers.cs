@@ -45,7 +45,7 @@ namespace LCGuidebook.Initializer.Manager
 			}
 		}
 
-		private static MainIndexType ToMainIndexType(string literal)
+		private static MainIndexType ToFigure(string literal)
 		{
 			return (MainIndexType)Enum.Parse(typeof(MainIndexType), literal);
 		}

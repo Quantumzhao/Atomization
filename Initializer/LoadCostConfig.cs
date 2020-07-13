@@ -64,7 +64,7 @@ namespace LCGuidebook.Initializer.Manager
 			Effect effect = new Effect();
 			foreach (XmlNode target in node.FirstChild.ChildNodes)
 			{
-				MainIndexType type = ToMainIndexType(target.Attributes["lcg:mainIndexTitle"]
+				MainIndexType type = ToFigure(target.Attributes["id"]
 					.InnerText.Trim());
 				var expression = BuildExpression(target.FirstChild);
 				effect[type] = expression;

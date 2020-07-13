@@ -6,6 +6,7 @@ namespace LCGuidebook.Initializer.Manager
 	{
 		public static void InitializeAll()
 		{
+			Loader.
 			Loader.InitializeMap();
 			//ResourceManager.Initialize();
 			Loader.InitializeCosts();

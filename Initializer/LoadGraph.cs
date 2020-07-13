@@ -88,7 +88,6 @@ namespace LCGuidebook.Initializer.Manager
 		{
 			Region valueOf(string id) => list.Find(r => r.Item1 == id).Item2;
 
-
 			foreach (XmlNode node in doc)
 			{
 				var from = valueOf(node.Attributes["from"].InnerText);
