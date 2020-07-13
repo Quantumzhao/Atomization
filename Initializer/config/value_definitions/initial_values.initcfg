@@ -2,7 +2,7 @@
 <initialConfiguration
   xmlns="https://www.w3schools.com"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="https://www.w3schools.com schema/initial_values.xsd"
+  xsi:schemaLocation="https://www.w3schools.com ../schema/initial_values.xsd"
   xmlns:lcg="https://www.w3schools.com">
   <!--x10^9-->
   <nationalIndex lcg:mainIndexTitle="Economy"> 20400 </nationalIndex>
