@@ -6,18 +6,19 @@ namespace LCGuidebook.Core.DataStructures
 {
 	public class ValueComplex
 	{
-		public ValueComplex(double initialValue = 0)
+		public ValueComplex(string name, double initialValue = 0)
 		{
 			_CurrentValue = initialValue;
 			Maximum = double.MaxValue;
 			Minimum = double.MinValue;
-			Growth = new Growth();
+			Name = name;
 		}
 
-		private double _CurrentValue;
+		public string Name { get; }
 
 		public event PropertyChangedEventHandler PropertyChanged;
 
+		private double _CurrentValue;
 		public double CurrentValue
 		{
 			get => _CurrentValue;
@@ -59,7 +60,7 @@ namespace LCGuidebook.Core.DataStructures
 			}
 		}
 
-		public Growth Growth { get; }
+		public Growth Growth { get; } = new Growth();
 
 		public void Update(ValueComplex actualValue)
 		{
@@ -82,23 +83,23 @@ namespace LCGuidebook.Core.DataStructures
 		}
 	}
 
-	public class ValueComplexNTuple
-	{
-		public ValueComplexNTuple()
-		{
-			for (int i = 0; i < NUM_VALUES; i++)
-			{
-				_Values[i] = new ValueComplex();
-			}
-		}
+	//public class ValueComplexNTuple
+	//{
+	//	public ValueComplexNTuple()
+	//	{
+	//		for (int i = 0; i < NUM_VALUES; i++)
+	//		{
+	//			_Values[i] = new ValueComplex();
+	//		}
+	//	}
 
-		public const int NUM_VALUES = 11;
+	//	public const int NUM_VALUES = 11;
 
-		private readonly ValueComplex[] _Values = new ValueComplex[NUM_VALUES];
+	//	private readonly ValueComplex[] _Values = new ValueComplex[NUM_VALUES];
 
-		public ValueComplex this[MainIndexType type] => _Values[(int)type];
-		public ValueComplex this[int type] => _Values[type];
-	}
+	//	public ValueComplex this[MainIndexType type] => _Values[(int)type];
+	//	public ValueComplex this[int type] => _Values[type];
+	//}
 
 	public enum MainIndexType
 	{

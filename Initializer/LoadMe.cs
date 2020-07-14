@@ -37,9 +37,9 @@ namespace LCGuidebook.Initializer.Manager
 			{
 				if (node.NodeType != XmlNodeType.Comment)
 				{
-					var index = ToFigure(node.Attributes["id"].Value);
+					var name = ToFigure(node.Attributes["id"].Value);
 					var value = int.Parse(node.InnerText);
-					ResourceManager.Me.NationalIndices[index].CurrentValue = value;
+					ResourceManager.Me.Figures.Add(name, new ValueComplex(name, value));
 				}
 			}
 		}
@@ -73,9 +73,9 @@ namespace LCGuidebook.Initializer.Manager
 
 				foreach (XmlNode target in growth.ChildNodes)
 				{
-					var idx = ToFigure(target.Attributes["id"].Value);
+					var figureName = ToFigure(target.Attributes["id"].Value);
 					var expression = BuildExpression(target.FirstChild);
-					ResourceManager.Me.NationalIndices[idx].Growth.AddTerm(name, expression);
+					ResourceManager.Me.Figures[figureName].Growth.AddTerm(name, expression);
 				}
 			}
 		}

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using LCGuidebook.Core;
+using System.Collections.Generic;
 using System.Xml;
 
 namespace LCGuidebook.Initializer.Manager
@@ -17,9 +18,12 @@ namespace LCGuidebook.Initializer.Manager
 			foreach (XmlNode node in doc)
 			{
 				var name = node.Attributes["name"].InnerText;
+				// identifier can be left blank, in which case is the same as name
 				var id = node.Attributes["identifier"]?.InnerText ?? name;
 				_FigureNamesMap.Add(id, name);
 			}
+
+			ResourceManager.NumOfFigures = _FigureNamesMap.Count;
 		}
 
 	}

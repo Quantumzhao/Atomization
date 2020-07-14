@@ -52,11 +52,11 @@ namespace LCGuidebook.Core
 
 		protected readonly Dictionary<string, IUniqueObject> _Reserve = new Dictionary<string, IUniqueObject>();
 
-		public readonly ValueComplexNTuple NationalIndices = new ValueComplexNTuple();
+		//public readonly ValueComplexNTuple NationalIndices = new ValueComplexNTuple();
 		//public readonly ValueComplexNTuple OutdatedNationalIndices = new ValueComplexNTuple();
 
-		public readonly List<ValueComplex> Figures = new List<ValueComplex>();
-		public readonly List<ValueComplex> OutdatedFigures = new List<ValueComplex>();
+		public readonly Dictionary<string, ValueComplex> Figures = new Dictionary<string, ValueComplex>();
+		public readonly Dictionary<string, ValueComplex> OutdatedFigures = new Dictionary<string, ValueComplex>();
 		// null stands for independence
 		public DynamicDictionary<Nation, double> Inclination { get; }
 
@@ -64,7 +64,7 @@ namespace LCGuidebook.Core
 
 		public double Tactics { get; set; }
 
-		public double AdjustedBureaucracyIndex => 0.1 * Math.Pow(1.2, NationalIndices[MainIndexType.Bureaucracy].CurrentValue);
+		public double AdjustedBureaucracyIndex => 0.1 * Math.Pow(1.2, Figures[MainIndexType.Bureaucracy].CurrentValue);
 
 		public TaskSequence TaskSequence { get; } = new TaskSequence();
 

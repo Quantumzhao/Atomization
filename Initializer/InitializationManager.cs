@@ -6,9 +6,8 @@ namespace LCGuidebook.Initializer.Manager
 	{
 		public static void InitializeAll()
 		{
-			Loader.
+			Loader.InitializeFigures();
 			Loader.InitializeMap();
-			//ResourceManager.Initialize();
 			Loader.InitializeCosts();
 
 			Loader.InitializeMe();

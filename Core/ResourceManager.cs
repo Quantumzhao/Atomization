@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using LCGuidebook.Core.DataStructures;
 using UIEngine;
@@ -11,14 +12,31 @@ namespace LCGuidebook.Core
 		//public static Queue<string> WatersNames { get; private set; }
 		//public static Queue<string> NationNames { get; private set; }
 
-		[Visible(nameof(Me))]
-		public static Superpower Me { get; set; }
+		private static readonly Dictionary<string, Dictionary<TypesOfCostOfStage, CostOfStage>> CostTable 
+			= new Dictionary<string, Dictionary<TypesOfCostOfStage, CostOfStage>>();
 
 		public static ObservableCollection<NuclearWeapon> MyNuclearWeapons { get; set; }
 			= new ObservableCollection<NuclearWeapon>();
 
-		private static readonly Dictionary<string, Dictionary<TypesOfCostOfStage, CostOfStage>> CostTable 
-			= new Dictionary<string, Dictionary<TypesOfCostOfStage, CostOfStage>>();
+		[Visible(nameof(Me))]
+		public static Superpower Me { get; set; }
+
+		private static int _NumOfFigures = -1;
+		public static int NumOfFigures
+		{
+			get => _NumOfFigures;
+			set
+			{
+				if (_NumOfFigures == -1)
+				{
+					_NumOfFigures = value;
+				}
+				else
+				{
+					throw new InvalidOperationException();
+				}
+			}
+		}
 
 		//public static void Initialize()
 		//{
@@ -81,8 +99,8 @@ namespace LCGuidebook.Core
 			public static void Initialize()
 			{
 				NukeDisposal = new CostOfStage(
-					longTermEffect: new Effect(),
-					shortTermEffect: new Effect(),
+					longTermEffect: new Effect(new Expression[NumOfFigures]),
+					shortTermEffect: new Effect(new Expression[NumOfFigures]),
 					requiredTime: (Expression)0					
 				);
 			}

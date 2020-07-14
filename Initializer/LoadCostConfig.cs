@@ -61,11 +61,10 @@ namespace LCGuidebook.Initializer.Manager
 
 		private static Effect BuildEffect(XmlNode node)
 		{
-			Effect effect = new Effect();
+			Effect effect = new Effect(new Expression[ResourceManager.NumOfFigures]);
 			foreach (XmlNode target in node.FirstChild.ChildNodes)
 			{
-				MainIndexType type = ToFigure(target.Attributes["id"]
-					.InnerText.Trim());
+				string type = ToFigure(target.Attributes["id"].InnerText);
 				var expression = BuildExpression(target.FirstChild);
 				effect[type] = expression;
 			}

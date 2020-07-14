@@ -67,9 +67,9 @@ namespace LCGuidebook.Core.DataStructures
 
 		private void ImposeLongTermEffect()
 		{
-			for (int i = 0; i < ValueComplexNTuple.NUM_VALUES; i++)
+			for (int i = 0; i < ResourceManager.NumOfFigures; i++)
 			{
-				ResourceManager.Me.NationalIndices[i].Growth.AddTerm(Name, Cost.LongTermEffect[i]);
+				ResourceManager.Me.Figures[i].Growth.AddTerm(Name, Cost.LongTermEffect[i]);
 			}
 		}
 	}
@@ -124,9 +124,9 @@ namespace LCGuidebook.Core.DataStructures
 
 		private void ImposeShortTermEffect()
 		{
-			for (int i = 0; i < ValueComplexNTuple.NUM_VALUES; i++)
+			for (int i = 0; i < ResourceManager.NumOfFigures; i++)
 			{
-				ResourceManager.Me.NationalIndices[i].CurrentValue -= Cost.ShortTermEffect[i].Value;
+				ResourceManager.Me.Figures[i].CurrentValue -= Cost.ShortTermEffect[i].Value;
 			}
 		}
 	}
