@@ -79,43 +79,43 @@ namespace LCGuidebook.Core.DataStructures
 		public Census(string name, int valueIndex) : base(name, null) 
 		{
 			_Index = valueIndex;
-			Init();
+			//Init();
 			ImposeShortTermEffect();
 		}
 
 		private int _Index;
 
-		private void Init()
-		{
-			Effect longTermEffect;
-			Expression requiredTime;
-			switch (_Index)
-			{
-				// Population
-				case 1:
-				// Stability
-				case 7:
-				// Nationalism
-				case 8:
-				// Satisfaction
-				case 9:
-				// Bureaucracy
-				case 10:
-					longTermEffect = new Effect(economy: new Expression(1, p => 1 + p * ResourceManager.Me.AdjustedBureaucracyIndex));
-					requiredTime = new Expression(2, p => p * ResourceManager.Me.AdjustedBureaucracyIndex);
-					break;
+		//private void Init()
+		//{
+		//	Effect longTermEffect;
+		//	Expression requiredTime;
+		//	switch (_Index)
+		//	{
+		//		// Population
+		//		case 1:
+		//		// Stability
+		//		case 7:
+		//		// Nationalism
+		//		case 8:
+		//		// Satisfaction
+		//		case 9:
+		//		// Bureaucracy
+		//		case 10:
+		//			longTermEffect = new Effect(economy: new Expression(1, p => 1 + p * ResourceManager.Me.AdjustedBureaucracyIndex));
+		//			requiredTime = new Expression(2, p => p * ResourceManager.Me.AdjustedBureaucracyIndex);
+		//			break;
 
-				default:
-					longTermEffect = Effect.GenerateEmptyEffect();
-					requiredTime = new Expression(1, p => p * ResourceManager.Me.AdjustedBureaucracyIndex);
-					break;
-			}
-			Cost = new CostOfStage(
-				longTermEffect,
-				shortTermEffect: new Effect(new Expression[ResourceManager.NumOfFigures]),
-				requiredTime
-			);
-		}
+		//		default:
+		//			longTermEffect = Effect.GenerateEmptyEffect();
+		//			requiredTime = new Expression(1, p => p * ResourceManager.Me.AdjustedBureaucracyIndex);
+		//			break;
+		//	}
+		//	Cost = new CostOfStage(
+		//		longTermEffect,
+		//		shortTermEffect: Effect.GenerateEmptyEffect(),
+		//		requiredTime
+		//	);
+		//}
 
 		public override void Execute()
 		{

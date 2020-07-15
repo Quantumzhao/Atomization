@@ -8,7 +8,7 @@
   <xs:element name="cost">
     <xs:complexType mixed="true">
       <xs:sequence minOccurs="0">
-        <xs:element name="effect" minOccurs="1" maxOccurs="unbounded">
+        <xs:element name="effect" minOccurs="0" maxOccurs="unbounded">
           <xs:complexType>
             <xs:sequence>
               <xs:element ref="growth" minOccurs="1" maxOccurs="1"/>
@@ -31,7 +31,7 @@
           </xs:complexType>
         </xs:element>
       </xs:sequence>
-      <xs:attribute name="title" use="required">
+      <xs:attribute name="title" use="optional">
         <xs:simpleType>
           <xs:restriction base="xs:string">
             <xs:enumeration value="Manufacture" />
