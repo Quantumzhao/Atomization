@@ -4,51 +4,15 @@
   targetNamespace="https://www.w3schools.com"
   xmlns="https://www.w3schools.com"
   elementFormDefault="qualified">
-  <xs:include id="GrowthDef" schemaLocation="growth_def.xsd" />
+  <xs:include schemaLocation="growth_def.xsd" />
+  <xs:include schemaLocation="cost_node_def.xsd"/>
   <xs:element name="definition">
     <xs:complexType>
       <xs:sequence>
         <xs:element name="entity" maxOccurs="1" minOccurs="0">
           <xs:complexType>
             <xs:sequence>
-              <xs:element name="cost" maxOccurs="unbounded" minOccurs="0">
-                <xs:complexType mixed="true">
-                  <xs:sequence minOccurs="0">
-                    <xs:element name="effect" minOccurs="1" maxOccurs="unbounded">
-                      <xs:complexType>
-                        <xs:sequence>
-                          <xs:element ref="growth" minOccurs="1" maxOccurs="1"/>
-                        </xs:sequence>
-                        <xs:attribute name="duration" use="required">
-                          <xs:simpleType>
-                            <xs:restriction base="xs:string">
-                              <xs:enumeration value="long" />
-                              <xs:enumeration value="short" />
-                            </xs:restriction>
-                          </xs:simpleType>
-                        </xs:attribute>
-                      </xs:complexType>
-                    </xs:element>
-                    <xs:element name="requiredTime" minOccurs="0" maxOccurs="1">
-                      <xs:complexType>
-                        <xs:sequence>
-                          <xs:element ref="expression" />
-                        </xs:sequence>
-                      </xs:complexType>
-                    </xs:element>
-                  </xs:sequence>
-                  <xs:attribute name="title" use="required">
-                    <xs:simpleType>
-                      <xs:restriction base="xs:string">
-                        <xs:enumeration value="Manufacture" />
-                        <xs:enumeration value="Deployment" />
-                        <xs:enumeration value="Transportation" />
-                        <xs:enumeration value="Maintenance" />
-                      </xs:restriction>
-                    </xs:simpleType>
-                  </xs:attribute>
-                </xs:complexType>
-              </xs:element>
+              <xs:element maxOccurs="unbounded" minOccurs="0" ref="cost"/>
             </xs:sequence>
             <xs:attribute name="name" />
           </xs:complexType>
