@@ -106,20 +106,20 @@ namespace LCGuidebook.Core.DataStructures
 					break;
 
 				default:
-					longTermEffect = new Effect();
+					longTermEffect = Effect.GenerateEmptyEffect();
 					requiredTime = new Expression(1, p => p * ResourceManager.Me.AdjustedBureaucracyIndex);
 					break;
 			}
 			Cost = new CostOfStage(
 				longTermEffect,
-				shortTermEffect: new Effect(),
+				shortTermEffect: new Effect(new Expression[ResourceManager.NumOfFigures]),
 				requiredTime
 			);
 		}
 
 		public override void Execute()
 		{
-			ResourceManager.Me.OutdatedFigures[_Index].Update(ResourceManager.Me.NationalIndices[_Index]);
+			ResourceManager.Me.OutdatedFigures[_Index].Update(ResourceManager.Me.Figures[_Index]);
 		}
 
 		private void ImposeShortTermEffect()

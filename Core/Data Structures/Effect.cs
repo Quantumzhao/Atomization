@@ -54,21 +54,6 @@ namespace LCGuidebook.Core.DataStructures
 		//		}
 		//	}
 		//}
-		public Expression this[string name]
-		{
-			get => _Values[(int)index];
-			set
-			{
-				if (!IsReadOnly)
-				{
-					_Values[(int)index] = value;
-				}
-				else
-				{
-					throw new InvalidOperationException();
-				}
-			}
-		}
 
 		public Expression this[int index]
 		{
@@ -95,5 +80,7 @@ namespace LCGuidebook.Core.DataStructures
 			}
 			return newEffect;
 		}
+
+		public static Effect GenerateEmptyEffect() => new Effect(new Expression[ResourceManager.NumOfFigures]);
 	}
 }

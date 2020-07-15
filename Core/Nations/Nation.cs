@@ -1,6 +1,7 @@
 ﻿using LCGuidebook.Core.DataStructures;
 using System.Collections.Generic;
 using System;
+using System.Linq;
 
 namespace LCGuidebook.Core
 {
@@ -55,16 +56,19 @@ namespace LCGuidebook.Core
 		//public readonly ValueComplexNTuple NationalIndices = new ValueComplexNTuple();
 		//public readonly ValueComplexNTuple OutdatedNationalIndices = new ValueComplexNTuple();
 
-		public readonly Dictionary<string, ValueComplex> Figures = new Dictionary<string, ValueComplex>();
-		public readonly Dictionary<string, ValueComplex> OutdatedFigures = new Dictionary<string, ValueComplex>();
+		public readonly List<ValueComplex> Figures = new List<ValueComplex>();
+		public readonly List<ValueComplex> OutdatedFigures = new List<ValueComplex>();
+		// Other figures that derived from main figures, e.g. adjusted bureaucracy
+		public readonly List<Behavior> Behaviors = new List<Behavior>();
+
 		// null stands for independence
 		public DynamicDictionary<Nation, double> Inclination { get; }
 
 		public List<Waters> TerritorialSea { get; } = new List<Waters>();
 
-		public double Tactics { get; set; }
-
-		public double AdjustedBureaucracyIndex => 0.1 * Math.Pow(1.2, Figures[MainIndexType.Bureaucracy].CurrentValue);
+		// don't delete
+		//public double Tactics { get; set; }
+		//public double AdjustedBureaucracyIndex => 0.1 * Math.Pow(1.2, Figures[MainIndexType.Bureaucracy].CurrentValue);
 
 		public TaskSequence TaskSequence { get; } = new TaskSequence();
 
@@ -83,6 +87,13 @@ namespace LCGuidebook.Core
 		{
 			Census census = new Census("Generating statistics", nationalIndex);
 			ResourceManager.Me.TaskSequence.AddNewTask(census);
+		}
+
+		public ValueComplex GetFigureByName(string name) => Figures.Single(v => v.Name == name);
+
+		public class Behavior
+		{
+
 		}
 	}
 

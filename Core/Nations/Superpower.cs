@@ -206,7 +206,7 @@ namespace LCGuidebook.Core
 			};
 
 			finalProductManufacture = new Manufacture("Final Product", Assemble, 
-				new CostOfStage(new Effect(), new Effect(), (Expression)0));
+				new CostOfStage(Effect.GenerateEmptyEffect(), Effect.GenerateEmptyEffect(), (Expression)0));
 			EventManager.TaskProgressAdvenced += OnFinalProductCompleted;
 
 			throw new NotImplementedException();
@@ -252,7 +252,7 @@ namespace LCGuidebook.Core
 			=> $"The property \"{name}\" does not exist in the script";
 
 		static public CostOfStage CurrentCost { get; private set; } 
-			= new CostOfStage(new Effect(), new Effect(), (Expression)0);
+			= new CostOfStage(Effect.GenerateEmptyEffect(), Effect.GenerateEmptyEffect(), (Expression)0);
 
 		static public CarrierType Range { get; private set; }
 

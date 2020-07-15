@@ -39,7 +39,7 @@ namespace LCGuidebook.Initializer.Manager
 				{
 					var name = ToFigure(node.Attributes["id"].Value);
 					var value = int.Parse(node.InnerText);
-					ResourceManager.Me.Figures.Add(name, new ValueComplex(name, value));
+					ResourceManager.Me.Figures.Add(new ValueComplex(name, value));
 				}
 			}
 		}
@@ -75,7 +75,7 @@ namespace LCGuidebook.Initializer.Manager
 				{
 					var figureName = ToFigure(target.Attributes["id"].Value);
 					var expression = BuildExpression(target.FirstChild);
-					ResourceManager.Me.Figures[figureName].Growth.AddTerm(name, expression);
+					ResourceManager.Me.GetFigureByName(figureName).Growth.AddTerm(name, expression);
 				}
 			}
 		}
