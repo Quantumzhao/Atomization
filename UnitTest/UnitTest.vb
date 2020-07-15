@@ -40,7 +40,7 @@ Namespace LCGuidebook.UnitTest
                 Assert.Fail()
             End If
 
-            If ResourceManager.Me.NationalIndices(MainIndexType.Economy).Growth.Items.Count <> 0 Then
+            If ResourceManager.Me.GetFigureByName("Economy").Growth.Items.Count <> 0 Then
                 Assert.Pass()
             End If
 

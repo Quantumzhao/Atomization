@@ -76,7 +76,8 @@ namespace LCGuidebook.Core.DataStructures
 
 	public class Census : Task
 	{
-		public Census(string name, int valueIndex) : base(name, null) 
+		public Census(string name, int valueIndex) : base(name, 
+			ResourceManager.GetCostOf(ResourceManager.Me.Figures[valueIndex].Name, TypesOfCostOfStage.Census))
 		{
 			_Index = valueIndex;
 			//Init();

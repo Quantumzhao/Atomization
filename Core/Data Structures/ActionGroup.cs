@@ -71,7 +71,6 @@ namespace LCGuidebook.Core.DataStructures
 
 		public event PropertyChangedEventHandler PropertyChanged;
 
-		private object _Value;
 		public object Value
 		{
 			get => Group.Script.ContinueWith($"{Name}\n").RunAsync().Result.ReturnValue;

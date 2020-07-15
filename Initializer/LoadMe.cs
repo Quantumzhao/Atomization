@@ -37,7 +37,7 @@ namespace LCGuidebook.Initializer.Manager
 			{
 				if (node.NodeType != XmlNodeType.Comment)
 				{
-					var name = ToFigure(node.Attributes["id"].Value);
+					var name = GetFigureNameById(node.Attributes["id"].Value);
 					var value = int.Parse(node.InnerText);
 					ResourceManager.Me.Figures.Add(new ValueComplex(name, value));
 				}
@@ -73,7 +73,7 @@ namespace LCGuidebook.Initializer.Manager
 
 				foreach (XmlNode target in growth.ChildNodes)
 				{
-					var figureName = ToFigure(target.Attributes["id"].Value);
+					var figureName = GetFigureNameById(target.Attributes["id"].Value);
 					var expression = BuildExpression(target.FirstChild);
 					ResourceManager.Me.GetFigureByName(figureName).Growth.AddTerm(name, expression);
 				}

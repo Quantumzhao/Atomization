@@ -7,11 +7,12 @@
   <xs:element name="initialConfiguration">
     <xs:complexType>
       <xs:sequence>
-        <xs:element maxOccurs="11" name="figure">
+        <xs:element maxOccurs="unbounded" name="figure">
           <xs:complexType>
             <xs:simpleContent>
               <xs:extension base="xs:integer">
-                <xs:attribute name="id"/>
+                <xs:attribute name="id" type="xs:string"/>
+                <xs:attribute name="index" type="xs:integer" use="optional"/>
               </xs:extension>
             </xs:simpleContent>
           </xs:complexType>

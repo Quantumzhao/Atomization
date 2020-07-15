@@ -45,12 +45,6 @@ namespace LCGuidebook.Initializer.Manager
 			}
 		}
 
-		private static string ToFigure(string id)
-		{
-			return _FigureNamesMap[id];
-			//return (MainIndexType)Enum.Parse(typeof(MainIndexType), literal);
-		}
-
 		private static string GeneratePath(params string[] relativePath)
 		{
 			StringBuilder stringBuilder = new StringBuilder(Resources.InitializerRootPath);
@@ -79,7 +73,7 @@ namespace LCGuidebook.Initializer.Manager
 				foreach (Match result in results)
 				{
 					expBodyLitCpy = expBodyLitCpy.Replace(result.Value,
-						$"ResourceManager.Me.NationalIndices[MainIndexType.{result.Value}].CurrentValue");
+						$"ResourceManager.Me.GetCurrentValueOfFigure({result.Value})");
 				}
 				var option = ScriptOptions.Default.AddReferences(typeof(ValueComplex).Assembly);
 				Func<double, double> expBody = CSharpScript.EvaluateAsync<Func<double, double>>

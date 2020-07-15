@@ -28,6 +28,7 @@
 		Manufacture,
 		Transportation,
 		Deployment,
-		Maintenance
+		Maintenance,
+		Census
 	}
 }

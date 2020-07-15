@@ -33,4 +33,10 @@
     </EmbeddedResource>
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="config\schema\cost_node_def.xsd">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+
 </Project>

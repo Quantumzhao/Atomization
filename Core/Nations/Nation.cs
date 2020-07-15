@@ -59,7 +59,7 @@ namespace LCGuidebook.Core
 		public readonly List<ValueComplex> Figures = new List<ValueComplex>();
 		public readonly List<ValueComplex> OutdatedFigures = new List<ValueComplex>();
 		// Other figures that derived from main figures, e.g. adjusted bureaucracy
-		public readonly List<Behavior> Behaviors = new List<Behavior>();
+		public readonly List<MiscFigure> DerivedFigures = new List<MiscFigure>();
 
 		// null stands for independence
 		public DynamicDictionary<Nation, double> Inclination { get; }
@@ -91,9 +91,16 @@ namespace LCGuidebook.Core
 
 		public ValueComplex GetFigureByName(string name) => Figures.Single(v => v.Name == name);
 
-		public class Behavior
-		{
+		/// <summary>
+		///		Search for the given figure in both<see cref="Figures" and <see cref="DerivedFigures"/>/>
+		/// </summary>
+		public double GetCurrentValueOfFigure(string name) 
+			=> GetFigureByName(name)?.CurrentValue ?? DerivedFigures.Single(m => m.Name == name).Value;
 
+		public class MiscFigure
+		{
+			public string Name { get; set; }
+			public double Value { get; }
 		}
 	}
 

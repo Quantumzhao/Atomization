@@ -16,19 +16,39 @@ namespace LCGuidebook.Initializer.Manager
 			foreach (var filePath in filePaths)
 			{
 				var doc = ToXmlDoc(filePath);
-				foreach (XmlNode cost in doc[0].ChildNodes)
+				if (filePath.EndsWith("Task.Census.costcfg"))
 				{
-					var tup = BuildCost(cost);
-					ResourceManager.RegisterCost(doc[0].Attributes["name"].InnerText.Trim(), 
-						tup.Item1, tup.Item2);
+					foreach (XmlNode node in doc)
+					{
+						var id = node.Attributes["id"].InnerText;
+						var (_, censusCost) = BuildCost(node.FirstChild);
+						ResourceManager.RegisterCost($"LCG.{GetFigureNameById(id)}", TypesOfCostOfStage.Census, censusCost);
+					}
+				}
+				else
+				{
+					foreach (XmlNode cost in doc[0].ChildNodes)
+					{
+						var tup = BuildCost(cost);
+						ResourceManager.RegisterCost(doc[0].Attributes["name"].InnerText.Trim(), 
+							tup.Item1, tup.Item2);
+					}
 				}
 			}
 		}
 
 		private static (TypesOfCostOfStage, CostOfStage) BuildCost(XmlNode node)
 		{
-			var type = (TypesOfCostOfStage)
+			TypesOfCostOfStage type;
+			if (node.Attributes?["title"] == null)
+			{
+				type = TypesOfCostOfStage.Census;
+			}
+			else
+			{
+				type = (TypesOfCostOfStage)
 				Enum.Parse(typeof(TypesOfCostOfStage), node.Attributes["title"].InnerText.Trim());
+			}
 			Effect longTermEffect = null;
 			Effect shortTermEffect = null;
 			Expression requiredTime = null;
