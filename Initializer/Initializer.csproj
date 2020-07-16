@@ -39,4 +39,9 @@
     </None>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="interfaces\action_group\" />
+    <Folder Include="library\class_defs\" />
+  </ItemGroup>
+
 </Project>
