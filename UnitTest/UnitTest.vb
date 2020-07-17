@@ -49,7 +49,7 @@ Namespace LCGuidebook.UnitTest
         <Test>
         Public Sub TestXmlLoadingOfDemo()
 
-            Assert.AreEqual(ResourceManager.NumOfFigures, 0)
+            Assert.AreEqual(ResourceManager.NumOfFigures, 1)
 
             Assert.AreEqual(ResourceManager.Regions.Count, 9)
         End Sub

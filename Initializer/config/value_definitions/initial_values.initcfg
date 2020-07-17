@@ -4,4 +4,7 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="https://www.w3schools.com ../schema/initial_values.xsd"
   xmlns:lcg="https://www.w3schools.com">
+  <figure id="HP">
+    100
+  </figure>
 </initialConfiguration>

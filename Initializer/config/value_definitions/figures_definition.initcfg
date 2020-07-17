@@ -4,4 +4,5 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="https://www.w3schools.com ../schema/figures_definition.xsd"
   xmlns:lcg="https://www.w3schools.com">
+  <figureDef name="Health" identifier="HP"/>
 </initFigures>

@@ -89,19 +89,19 @@ namespace LCGuidebook.Core
 		AerialBomb
 	}
 
-	public abstract class NuclearMissile : NuclearWeapon
-	{
-	}
+	//public abstract class NuclearMissile : NuclearWeapon
+	//{
+	//}
 
-	public class IRBM : NuclearMissile
-	{
-	}
+	//public class IRBM : NuclearMissile
+	//{
+	//}
 
-	public class ICBM : NuclearMissile
-	{
-	}
+	//public class ICBM : NuclearMissile
+	//{
+	//}
 
-	public class NuclearBomb : NuclearWeapon
-	{
-	}
+	//public class NuclearBomb : NuclearWeapon
+	//{
+	//}
 }
