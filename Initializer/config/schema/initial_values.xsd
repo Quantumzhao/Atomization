@@ -7,7 +7,7 @@
   <xs:element name="initialConfiguration">
     <xs:complexType>
       <xs:sequence>
-        <xs:element maxOccurs="unbounded" name="figure">
+        <xs:element minOccurs="0" maxOccurs="unbounded" name="figure">
           <xs:complexType>
             <xs:simpleContent>
               <xs:extension base="xs:integer">

@@ -4,22 +4,4 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="https://www.w3schools.com ../schema/initial_values.xsd"
   xmlns:lcg="https://www.w3schools.com">
-  <!--x10^9-->
-  <figure id="Economy"> 20400 </figure>
-  <!--x10^6-->
-  <figure id="Population"> 20000 </figure>
-  <!--x10^3-->
-  <figure id="Army"> 50000 </figure>
-  <!--x10^3-->
-  <figure id="Navy"> 5000 </figure>
-  <!--x10^6-->
-  <figure id="Food"> 20000 </figure>
-  <!--x10^3-->
-  <figure id="RawMaterial"> 4000 </figure>
-  <!--x10^3-->
-  <figure id="NuclearMaterial"> 100 </figure>
-  <figure id="Stability"> 75 </figure>
-  <figure id="Bureaucracy"> 10 </figure>
-  <figure id="Satisfaction"> 100 </figure>
-  <figure id="Nationalism"> 20 </figure>
 </initialConfiguration>

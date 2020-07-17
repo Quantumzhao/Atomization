@@ -15,7 +15,7 @@ Namespace LCGuidebook.UnitTest
             InitializationManager.InitializeAll()
         End Sub
 
-        <Test>
+        'don't use it for now
         Public Sub TestBasicOperation()
 
             Dim original = ResourceManager.Me.NuclearPlatforms.Count
@@ -44,6 +44,14 @@ Namespace LCGuidebook.UnitTest
                 Assert.Pass()
             End If
 
+        End Sub
+
+        <Test>
+        Public Sub TestXmlLoadingOfDemo()
+
+            Assert.AreEqual(ResourceManager.NumOfFigures, 0)
+
+            Assert.AreEqual(ResourceManager.Regions.Count, 9)
         End Sub
 
     End Class
