@@ -56,7 +56,7 @@ namespace LCGuidebook.Initializer.Manager
 				}
 
 				var procedureName = proc.InnerText.Trim();
-				var code = ToCSCode(GeneratePath("library", "setup", "additional_initializations.csx"));
+				var code = ToCSCode(GeneratePath("library", "setup", proc.Attributes["file"].InnerText));
 				var script = CSharpScript.Create($"{code}{procedureName}()",
 					ScriptOptions.Default.WithReferences(typeof(Superpower).Assembly));
 				script.RunAsync();

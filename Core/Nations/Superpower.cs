@@ -367,7 +367,11 @@ namespace LCGuidebook.Core
 		#region TestPack
 		public static string[] LaunchNuke(Nation from, Nation to)
 		{
-			Transportation transportation;
+			var name = "Delivering payload";
+			var missile = (ResourceManager.Me.MiscProperties["NukeArsenal"] as Queue<NuclearMissile>).Dequeue();
+			var transportations = Transportation.Create(name, missile, to, 
+				ResourceManager.GetCostOf(nameof(NuclearMissile), TypesOfCostOfStage.Transportation));
+			transportations.ForEach(t => ResourceManager.Me.TaskSequence.AddNewTask(t));
 
 			return new string[0];
 		}
@@ -384,10 +388,24 @@ namespace LCGuidebook.Core
 
 		public static string[] Expand(Nation from, Nation to)
 		{
+			Policy policy;
+
+			var name = $"Making {to} an alliance";
+			CostOfStage cost = 
+				new CostOfStage(Effect.GenerateEmptyEffect(), Effect.GenerateEmptyEffect(), (Expression)8);
+			Action action = () =>
+			{
+				from.Inclination[ResourceManager.Me] = 1;
+				ResourceManager.Me.Inclination[from] = 1;
+			};
+
+			policy = new Policy(name, cost, action);
+			ResourceManager.Me.TaskSequence.AddNewTask(policy);
+
 			return new string[0];
 		}
 
-		public static string[] Defend(Nation nation)
+		public static string[] TryDefend(Nation nation)
 		{
 			return new string[0];
 		}

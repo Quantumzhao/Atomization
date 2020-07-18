@@ -176,6 +176,13 @@ namespace LCGuidebook.Core.DataStructures
 			Cost = cost;
 			NextStop = nextStop;
 		}
+
+		public static List<Transportation> Create(string name, IDeployable deployable, 
+			Region dest, CostOfStage cost)
+		{
+			throw new NotImplementedException();
+		}
+
 		public IDeployable Cargo { get; private set; }
 		public Region NextStop { get; set; }
 

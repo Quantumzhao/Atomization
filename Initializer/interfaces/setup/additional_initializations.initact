@@ -3,4 +3,7 @@
   xmlns="https://www.w3schools.com"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="https://www.w3schools.com/xml ../schema/add_init_setup.xsd">
+  <procedure file="additional_initializations.csx" order="0">
+    InitNationalProperties
+  </procedure>
 </initSequence>

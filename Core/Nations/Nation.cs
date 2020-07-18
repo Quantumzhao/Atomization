@@ -33,19 +33,6 @@ namespace LCGuidebook.Core
 	/// </summary>
 	public abstract class Nation : Region
 	{
-		//public const int NUM_VALUES = 11;
-		public const int ECONOMY = 0;
-		public const int POPULATION = 1;
-		public const int ARMY = 2;
-		public const int NAVY = 3;
-		public const int FOOD = 4;
-		public const int RAW_MATERIAL = 5;
-		public const int NUCLEAR_MATERIAL = 6;
-		public const int STABILITY = 7;
-		public const int NATIONALISM = 8;
-		public const int SATISFACTION = 9;
-		public const int BUREAUCRACY = 10;
-
 		public Nation(string name) : base(name)
 		{
 			Inclination = new DynamicDictionary<Nation, double>(valueRestriction: d => d <= 1 && d >= -1);
@@ -60,6 +47,7 @@ namespace LCGuidebook.Core
 		public readonly List<ValueComplex> OutdatedFigures = new List<ValueComplex>();
 		// Other figures that derived from main figures, e.g. adjusted bureaucracy
 		public readonly List<MiscFigure> DerivedFigures = new List<MiscFigure>();
+		public readonly Dictionary<string, object> MiscProperties = new Dictionary<string, object>();
 
 		// null stands for independence
 		public DynamicDictionary<Nation, double> Inclination { get; }

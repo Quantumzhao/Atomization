@@ -10,5 +10,10 @@
         <expression coefficient="4" />
       </requiredTime>
     </cost>
+    <cost title="Transportation">
+      <requiredTime>
+        <expression coefficient="1"/>
+      </requiredTime>
+    </cost>
   </entity>
 </definition>
