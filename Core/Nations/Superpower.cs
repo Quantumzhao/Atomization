@@ -378,11 +378,42 @@ namespace LCGuidebook.Core
 
 		public static string[] BuildNuke(Nation nation)
 		{
+			Manufacture manufacture;
+
+			var name = "Building a missile";
+			var cost = ResourceManager.GetCostOf(nameof(NuclearMissile), TypesOfCostOfStage.Manufacture);
+			Func<IDestroyable> onCompletion = () => new NuclearMissile(nation);
+
+			manufacture = new Manufacture(name, onCompletion, cost);
+			ResourceManager.Me.TaskSequence.AddNewTask(manufacture);
+			EventManager.TaskProgressAdvenced += NewMissileManufactured;
+
 			return new string[0];
+		}
+
+		private static void NewMissileManufactured(Task sender, TaskProgressAdvancedEventArgs e)
+		{
+			if (e.IsTaskFinished &&
+				sender is Manufacture manufacture &&
+				manufacture.FinalProduct.UID == e.RelatedGameObjectUid)
+			{
+				(((manufacture.FinalProduct as NuclearMissile).DeployedRegion as Nation)
+					.MiscProperties["NukeArsenal"] as Queue<NuclearMissile>)
+					.Enqueue(manufacture.FinalProduct as NuclearMissile);
+			}
 		}
 
 		public static string[] DestroyNuke(Nation nation)
 		{
+			Deployment deployment;
+
+			var name = "Deconstructing a missile";
+			var cost = ResourceManager.GetCostOf(nameof(NuclearMissile), TypesOfCostOfStage.Deployment);
+
+			deployment = new Deployment(name, null, 
+				(nation.MiscProperties["NukeArsenal"] as Queue<NuclearMissile>).Dequeue(), cost);
+			ResourceManager.Me.TaskSequence.AddNewTask(deployment);
+
 			return new string[0];
 		}
 

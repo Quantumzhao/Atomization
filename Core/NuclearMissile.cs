@@ -7,6 +7,11 @@ namespace LCGuidebook.Core
 {
 	public class NuclearMissile : IDeployable
 	{
+		public NuclearMissile(Nation deployedRegion)
+		{
+			DeployedRegion = deployedRegion;
+		}
+
 		public int Damage { get; set; }
 		public bool IsActivated { get; set; }
 		public Region DeployedRegion { get; set; }
