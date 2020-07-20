@@ -12,9 +12,11 @@ namespace LCGuidebook.Core
 			DeployedRegion = deployedRegion;
 		}
 
-		public int Damage { get; set; }
+		public int Damage { get; set; } = 50;
 		public bool IsActivated { get; set; }
 		public Region DeployedRegion { get; set; }
+		public Nation Target { get; set; }
+		public Region Position { get; set; }
 
 		public string UID { get; } = GameManager.GenerateUID();
 
