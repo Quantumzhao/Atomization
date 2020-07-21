@@ -1,4 +1,6 @@
-﻿using LCGuidebook.Core;
+﻿#define FROM_XML
+
+using LCGuidebook.Core;
 using LCGuidebook.Core.DataStructures;
 using Microsoft.CodeAnalysis.CSharp.Scripting;
 using Microsoft.CodeAnalysis.Scripting;
@@ -96,6 +98,7 @@ namespace LCGuidebook.Initializer.Manager
 		{
 			var TopLevelGroups = new List<ActionGroup>();
 
+#if FROM_XML
 			foreach (var path in Directory.GetFiles(GeneratePath("interfaces", "action_group")))
 			{
 				foreach (XmlNode node in ToXmlDoc(path))
@@ -103,6 +106,9 @@ namespace LCGuidebook.Initializer.Manager
 					TopLevelGroups.Add(BuildActionGroup(node));
 				}
 			}
+#else
+			
+#endif
 			return TopLevelGroups;
 		}
 
