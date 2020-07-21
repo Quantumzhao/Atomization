@@ -39,8 +39,13 @@ namespace LCGuidebook.Core.DataStructures
 		string UID { get; }
 	}
 
-	public interface IActionGroup
+	public interface IActionGroupField
 	{
+		object Value { get; set; }
+	}
 
+	public interface IActionGroupExecution
+	{
+		void Execute();
 	}
 }

@@ -9,22 +9,6 @@
       <xs:sequence>
         <xs:element name="Execution" minOccurs="0" maxOccurs="unbounded">
           <xs:complexType>
-            <xs:sequence>
-<!--
-              <xs:element name="Parameter" minOccurs="0" maxOccurs="unbounded">
-                <xs:complexType>
-                  <xs:attribute name="displayName" type="xs:string" use="required" />
-                  <xs:attribute name="type" type="xs:string" use="required" />
-                  <xs:attribute name="description" type="xs:string" />
-                </xs:complexType>
-              </xs:element>
-              <xs:element name="Body" minOccurs="1" maxOccurs="1">
-                <xs:complexType>
-                  <xs:attribute name="title" type="xs:string" use="required" />
-                </xs:complexType>
-              </xs:element>
--->
-            </xs:sequence>
             <xs:attribute name="name" type="xs:string" use="required" />
             <xs:attribute name="description" type="xs:string"/>
             <xs:attribute name="method" type="xs:string" use="required"/>
@@ -33,6 +17,7 @@
         <xs:element name="Field" minOccurs="0" maxOccurs="unbounded">
           <xs:complexType>
             <xs:attribute name="name" type="xs:string" use="required" />
+            <xs:attribute name="propertyName" type="xs:string" use="optional"/>
             <xs:attribute name="isReadOnly" type="xs:boolean" use="required" />
             <xs:attribute name="type" type="xs:string" use="optional" />
           </xs:complexType>

@@ -53,6 +53,9 @@ namespace LCGuidebook.Core.DataStructures
 			Group = parent;
 		}
 
+		/// <summary>
+		///		The name that will be displayed on the UI. 
+		/// </summary>
 		public string Name { get; set; }
 
 		public string Description { get; set; }
@@ -64,21 +67,28 @@ namespace LCGuidebook.Core.DataStructures
 		public ActionGroup Group { get; private set; }
 	}
 
-	public class Field : AbstractAction, INotifyPropertyChanged
+	public class Field : AbstractAction, INotifyPropertyChanged, IActionGroupField
 	{
-		public Field(ActionGroup parent) : base(parent) { }
+		public Field(ActionGroup parent, string name, string bindedFieldName) : base(parent)
+		{
+			Name = name;
+			BindedFieldName = bindedFieldName;
+		}
+
 		public static object TempRightValue { get; private set; }
+
+		public string BindedFieldName { get; set; }
 
 		public event PropertyChangedEventHandler PropertyChanged;
 
 		public object Value
 		{
-			get => Group.Script.ContinueWith($"{Name}\n").RunAsync().Result.ReturnValue;
+			get => Group.Script.ContinueWith($"{BindedFieldName}\n").RunAsync().Result.ReturnValue;
 			set
 			{
 				TempRightValue = value;
 				string[] changedProperties = Group.Script.ContinueWith(
-					$"Set({Name}, LCGuidebook.Core.DataStructures.Bulletinboard.{nameof(TempRightValue)})\n")
+					$"Set({BindedFieldName}, LCGuidebook.Core.DataStructures.Field.{nameof(TempRightValue)})\n")
 					.RunAsync().Result.ReturnValue as string[];
 				Group.RefreshFields(changedProperties);
 				TempRightValue = null;
@@ -89,7 +99,7 @@ namespace LCGuidebook.Core.DataStructures
 			=> PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Value)));
 	}
 
-	public class Execution : AbstractAction
+	public class Execution : AbstractAction, IActionGroupExecution
 	{
 		public Execution(ActionGroup parent, string name, string bindedMethodName, string description = "")
 			: base(parent)
@@ -105,20 +115,5 @@ namespace LCGuidebook.Core.DataStructures
 		{
 			Group.Script.ContinueWith($"{Name}()\n;");
 		}
-
-		//public class Parameter
-		//{
-		//	public Parameter(string typeName, string name, string description = "")
-		//	{
-		//		Name = name;
-		//		Description = description;
-		//		ObjectType = Type.GetType(typeName);
-		//	}
-
-		//	public readonly Type ObjectType;
-		//	public string Description { get; set; }
-		//	public string Name { get; set; }
-		//	public object ObjectData { get; set; } = null;
-		//}
 	}
 }

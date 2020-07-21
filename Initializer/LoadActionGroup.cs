@@ -84,14 +84,15 @@ namespace LCGuidebook.Initializer.Manager
 		private static Field BuildField(XmlNode node, ActionGroup parent)
 		{
 			var name = node.Attributes["name"].Value;
+			var bindedFieldName = node.Attributes["propertyName"]?.Value ?? name;
 			var isReadOnly = bool.Parse(node.Attributes["isReadOnly"].Value);
-			Field bulletinboard = new Field(parent);
+			Field field = new Field(parent, name, bindedFieldName);
 			if (isReadOnly)
 			{
-				bulletinboard.AppendVisibleAttribute(new VisibleAttribute(name) { IsControlEnabled = false });
+				field.AppendVisibleAttribute(new VisibleAttribute(name) { IsControlEnabled = false });
 			}
 
-			return bulletinboard;
+			return field;
 		}
 
 		public static List<ActionGroup> GetAllActionGroups()

@@ -3,11 +3,49 @@ using LCGuidebook.Core.DataStructures;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Reflection;
 
 namespace LCGuidebook.Initializer
 {
+	public class AsmField : AbstractAction, IActionGroupField
+	{
+		public AsmField(ActionGroup parent) : base(parent) { }
+
+		public object Value { get; set; }
+	}
+
+	public class AsmExecution : AbstractAction, IActionGroupExecution
+	{
+		public AsmExecution(ActionGroup parent, MethodInfo body) : base(parent) => Body = body;
+
+		public MethodInfo Body { get; set; }
+		public object[] Arguments { get; set; } = Array.Empty<object>();
+
+		public void Execute()
+		{
+			Body.Invoke(null, Arguments);
+		}
+	}
+
+	public class AssemblyCodeLoader
+	{
+		public static ActionGroup BuildActionGroup()
+		{
+			var ret = new ActionGroup("Test");
+
+			foreach (var method in typeof(Playground).GetMethods(BindingFlags.Public & BindingFlags.Static))
+			{
+				ret.Actions.Add(new AsmExecution(ret, method));
+			}
+
+			return ret;
+		}
+
+	}
+
 	public static class Playground
 	{
+
 		#region Temp holder for static commands
 		//public static void DeployNewNuclearStrikePlatform(Platform.Types type, Region region)
 		//{
