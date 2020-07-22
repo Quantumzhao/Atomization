@@ -99,7 +99,7 @@ namespace LCGuidebook.Initializer.Manager
 		{
 			var TopLevelGroups = new List<ActionGroup>();
 
-#if FROM_XML
+#if !FROM_XML
 			foreach (var path in Directory.GetFiles(GeneratePath("interfaces", "action_group")))
 			{
 				foreach (XmlNode node in ToXmlDoc(path))
@@ -108,7 +108,7 @@ namespace LCGuidebook.Initializer.Manager
 				}
 			}
 #else
-			
+			TopLevelGroups.Add(AssemblyCodeLoader.BuildActionGroup());
 #endif
 			return TopLevelGroups;
 		}
