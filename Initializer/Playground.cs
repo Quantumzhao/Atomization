@@ -370,7 +370,7 @@ namespace LCGuidebook.Initializer
 			var name = "Delivering payload";
 			var missile = (ResourceManager.Me.MiscProperties["NukeArsenal"] as Queue<NuclearMissile>).Dequeue();
 			missile.Target = to;
-			var transportations = Transportation.Create(name, missile, to,
+			var transportations = Transportation.Create(name, missile, from, to,
 				ResourceManager.GetCostOf(nameof(NuclearMissile), TypesOfCostOfStage.Transportation));
 			transportations.ForEach(t => ResourceManager.Me.TaskSequence.AddNewTask(t));
 

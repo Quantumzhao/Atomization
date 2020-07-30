@@ -81,26 +81,23 @@ namespace LCGuidebook.Core
 			var retList = new List<(Transportation, Action<Transportation>)>();
 			var route = ShortestPath(from, to);
 
-			Transportation prev = null;
 			var iter = route.First;
 			while (iter.Next != null)
 			{
 				Transportation transportation;
 				Action<Transportation> action;
 
-				transportation = new Transportation($"Transferring {cargo} to a new destination {to}", cargo, iter.Next.Value,
+				transportation = new Transportation($"Transferring {cargo} to a new destination: {to}", cargo, iter.Next.Value,
 					ResourceManager.GetCostOf(nameof(Installation), TypesOfCostOfStage.Transportation));
-				action = tr => EventManager.TaskProgressAdvenced += OnTransportationArrived;
-
-				void OnTransportationArrived(Task sender, TaskProgressAdvancedEventArgs e)
+				action = tr => EventManager.TaskProgressAdvenced += (Task sender, TaskProgressAdvancedEventArgs e) =>
 				{
 					if (e.IsTaskFinished &&
 						sender is Transportation transportation &&
 						transportation.Cargo.UID == e.RelatedGameObjectUid)
 					{
-						
+
 					}
-				}
+				};
 
 				retList.Add((transportation, action));
 

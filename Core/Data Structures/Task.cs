@@ -178,9 +178,13 @@ namespace LCGuidebook.Core.DataStructures
 		}
 
 		public static List<Transportation> Create(string name, IDeployable deployable, 
-			Region dest, CostOfStage cost)
+			Region from, Region to, CostOfStage cost)
 		{
-			throw new NotImplementedException();
+			var list = new List<Transportation>();
+			var route = Misc.CreateTransportationRoute(from, to, deployable);
+
+
+			return list;
 		}
 
 		public IDeployable Cargo { get; private set; }
