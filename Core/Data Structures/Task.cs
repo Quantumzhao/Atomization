@@ -181,7 +181,7 @@ namespace LCGuidebook.Core.DataStructures
 			Region from, Region to, CostOfStage cost)
 		{
 			var list = new List<Transportation>();
-			var route = Misc.CreateTransportationRoute(from, to, deployable);
+			//var route = Misc.CreateTransportationRoute(from, to, deployable);
 
 
 			return list;
