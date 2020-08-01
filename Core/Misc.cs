@@ -33,15 +33,17 @@ namespace LCGuidebook.Core
 		{
 			// Assume all weight between nodes are 1 for now
 			// (node, predecessor, distance, isOutside)
-			var table = ResourceManager.Regions.Select<Region, (Region, Region, int, bool)>(r => 
-			{ 
-				if (r == start) return (r, null, int.MaxValue, true); 
-				else return (r, null, 0, true); }
+			var table = ResourceManager.Regions.Select<Region, (Region, Region, int, bool)>(r =>
+			{
+				if (r == start) return (r, null, int.MaxValue, true);
+				else return (r, null, 0, true);
+			}
 			).ToList();
 			while (table.Count != 0)
 			{
 				// find the tuple with least distance
-				var tup = table.Aggregate((acc, t) => {
+				var tup = table.Aggregate((acc, t) =>
+				{
 					if (acc.Item3 > t.Item3)
 					{
 						return t;
@@ -71,40 +73,6 @@ namespace LCGuidebook.Core
 				iter = table.Find(t => t.Item1 == iter.Item2);
 			}
 			return path;
-		}
-
-		/// <summary>
-		///		Assume <paramref name="from"/> is the same as <paramref name="cargo"/>'s current location
-		/// </summary>
-		public static List<(Transportation, Action<Transportation>)> CreateTransportationRoute(Region from, Region to, IDeployable cargo)
-		{
-			var retList = new List<(Transportation, Action<Transportation>)>();
-			var route = ShortestPath(from, to);
-
-			var iter = route.First;
-			while (iter.Next != null)
-			{
-				Transportation transportation;
-				Action<Transportation> action;
-
-				transportation = new Transportation($"Transferring {cargo} to a new destination: {to}", cargo, iter.Next.Value,
-					ResourceManager.GetCostOf(nameof(Installation), TypesOfCostOfStage.Transportation));
-				action = tr => EventManager.TaskProgressAdvenced += (Task sender, TaskProgressAdvancedEventArgs e) =>
-				{
-					if (e.IsTaskFinished &&
-						sender is Transportation transportation &&
-						transportation.Cargo.UID == e.RelatedGameObjectUid)
-					{
-
-					}
-				};
-
-				retList.Add((transportation, action));
-
-				iter = iter.Next;
-			}
-			throw new NotImplementedException();
-
 		}
 	}
 }

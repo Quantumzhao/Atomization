@@ -182,6 +182,32 @@ namespace LCGuidebook.Core.DataStructures
 		{
 			var list = new List<Transportation>();
 			//var route = Misc.CreateTransportationRoute(from, to, deployable);
+			var retList = new List<(Transportation, Action<Transportation>)>();
+			var route = Misc.ShortestPath(from, to);
+
+			var iter = route.First;
+			while (iter.Next != null)
+			{
+				Transportation transportation;
+				Action<Transportation> action;
+
+				transportation = new Transportation($"Transferring {deployable} to a new destination: {to}", deployable, iter.Next.Value,
+					ResourceManager.GetCostOf(nameof(Installation), TypesOfCostOfStage.Transportation));
+				action = tr => EventManager.TaskProgressAdvenced += (Task sender, TaskProgressAdvancedEventArgs e) =>
+				{
+					if (e.IsTaskFinished &&
+						sender is Transportation transportation &&
+						transportation.Cargo.UID == e.RelatedGameObjectUid)
+					{
+
+					}
+				};
+
+				retList.Add((transportation, action));
+
+				iter = iter.Next;
+			}
+			throw new NotImplementedException();
 
 
 			return list;
