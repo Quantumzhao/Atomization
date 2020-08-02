@@ -210,7 +210,7 @@ namespace LCGuidebook.Core.DataStructures
 			throw new NotImplementedException();
 
 
-			return list;
+			//return list;
 		}
 
 		public IDeployable Cargo { get; private set; }
