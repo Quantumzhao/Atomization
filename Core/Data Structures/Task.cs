@@ -26,7 +26,7 @@ namespace LCGuidebook.Core.DataStructures
 
 		public Impact Impact { get; set; }
 
-		public TaskStatus Status { get; protected set; } = TaskStatus.Proceeding;
+		public bool IsPending { get; protected set; } = false;
 
 		public ConfidentialLevel ConfidentialLevel { get; set; }
 
@@ -49,6 +49,11 @@ namespace LCGuidebook.Core.DataStructures
 
 		private void AdvanceProgress()
 		{
+			if (IsPending)
+			{
+				return;
+			}
+
 			_TimeElapsed++;
 			ImposeLongTermEffect();
 			var timeRemaining = Misc.Round(Cost.RequiredTime.Value - _TimeElapsed);
@@ -213,11 +218,5 @@ namespace LCGuidebook.Core.DataStructures
 			DeployableObject.IsActivated = true;
 			DeployableObject.DeployedRegion = Destination;
 		}
-	}
-
-	public enum TaskStatus
-	{
-		Pending, 
-		Proceeding
 	}
 }
