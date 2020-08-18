@@ -125,68 +125,67 @@ namespace LCGuidebook.Core.DataStructures
 		// Any object that is manufactured will not be automatically added to anywhere. 
 		// Its destination should always be explicitly stated. 
 		// e.g. send it to reserve
-		public Manufacture(string name, Func<IDestroyable> onCompleteAction, CostOfStage cost)
+		public Manufacture(string name, Func<IDestroyable> produce, CostOfStage cost, Action<Manufacture> afterCompleted = null)
 			: base(name, cost) 
 		{
-			_OnCompleteAction = onCompleteAction;
+			_Produce = produce;
+			_AfterCompleted = afterCompleted;
 		}
 
-		private readonly Func<IDestroyable> _OnCompleteAction;
+		private readonly Func<IDestroyable> _Produce;
+		private readonly Action<Manufacture> _AfterCompleted;
 
 		public IDestroyable FinalProduct { get; private set; } = null;
 
 		public override void Execute()
 		{
-			FinalProduct = _OnCompleteAction();			
+			FinalProduct = _Produce();
+			_AfterCompleted?.Invoke(this);
 		}
 	}
 
 	public class Transportation : Task
 	{
 		public Transportation(string name, IDeployable deployable, Region nextStop, 
-			CostOfStage cost) : base(name, cost) 
+			CostOfStage cost, Action<Transportation> afterCompleted = null) : base(name, cost) 
 		{
 			Name = name;
 			Cargo = deployable;
 			Cost = cost;
 			NextStop = nextStop;
+			_AfterCompleted = afterCompleted;
 		}
 
 		public static List<Transportation> Create(string name, IDeployable deployable, 
 			Region from, Region to, CostOfStage cost)
 		{
 			var list = new List<Transportation>();
-			//var route = Misc.CreateTransportationRoute(from, to, deployable);
-			var retList = new List<(Transportation, Action<Transportation>)>();
 			var route = Misc.ShortestPath(from, to);
-
 			var iter = route.First;
+			Transportation prev = null;
+
 			while (iter.Next != null)
 			{
 				Transportation transportation;
-				Action<Transportation> action;
 
 				transportation = new Transportation($"Transferring {deployable} to a new destination: {to}", deployable, iter.Next.Value,
 					ResourceManager.GetCostOf(nameof(Installation), TypesOfCostOfStage.Transportation));
-				action = tr => EventManager.TaskProgressAdvenced += (Task sender, TaskProgressAdvancedEventArgs e) =>
+
+				if (prev != null)
 				{
-					if (e.IsTaskFinished &&
-						sender is Transportation transportation &&
-						transportation.Cargo.UID == e.RelatedGameObjectUid)
-					{
+					prev._AfterCompleted = p => transportation.IsPending = false;
+				}
 
-					}
-				};
+				list.Add(transportation);
 
-				retList.Add((transportation, action));
-
+				prev = transportation;
 				iter = iter.Next;
 			}
-			throw new NotImplementedException();
 
-
-			//return list;
+			return list;
 		}
+
+		private Action<Transportation> _AfterCompleted;
 
 		public IDeployable Cargo { get; private set; }
 		public Region NextStop { get; set; }
@@ -196,6 +195,7 @@ namespace LCGuidebook.Core.DataStructures
 			if (NextStop != null)
 			{
 				Cargo.DeployedRegion = NextStop;
+				_AfterCompleted?.Invoke(this);
 			}
 		}
 	}
