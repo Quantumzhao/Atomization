@@ -153,6 +153,7 @@ namespace LCGuidebook.Core.DataStructures
 			Cargo = deployable;
 			Cost = cost;
 			NextStop = nextStop;
+			IsPending = true;
 			_AfterCompleted = afterCompleted;
 		}
 
