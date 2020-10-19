@@ -33,7 +33,7 @@ namespace LCGuidebook.Core
 	/// </summary>
 	public abstract class Nation : Region
 	{
-		public Nation(string name) : base(name)
+		protected Nation(string name) : base(name)
 		{
 			Inclination = new DynamicDictionary<Nation, double>(valueRestriction: d => d <= 1 && d >= -1);
 		}

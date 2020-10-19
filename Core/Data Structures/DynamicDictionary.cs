@@ -17,7 +17,7 @@ namespace LCGuidebook.Core.DataStructures
 			_DefaultV = defaultV;
 		}
 
-		private Dictionary<K, V> _Dictionary = new Dictionary<K, V>();
+		private readonly Dictionary<K, V> _Dictionary = new Dictionary<K, V>();
 		private readonly Func<K, bool> _KeyRestriction;
 		private readonly Func<V, bool> _ValueRestriction;
 		private readonly Func<V, V> _Rectification;

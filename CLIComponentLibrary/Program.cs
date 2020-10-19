@@ -9,6 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using UIEngine;
+using UIEngine.Nodes;
 
 namespace CLITestProject
 {
@@ -93,7 +94,7 @@ namespace CLITestProject
 							Tabulate((dstNode as CollectionNode).Collection);
 						}
 
-						if (!dstNode.IsValueType)
+						if (!dstNode.IsLeaf)
 						{
 							PrintElements("Objects: ", dstNode.Properties.ToList());
 							PrintElements("Methods: ", dstNode.Methods.ToList());
@@ -105,17 +106,17 @@ namespace CLITestProject
 					}
 					else
 					{
-						PrintElements("Objects: ", Dashboard.GetRootObjectNodes().ToList());
-						PrintElements("Methods: ", Dashboard.GetRootMethodNodes().ToList());
+						PrintElements("Objects: ", Dashboard.GetRootNodes<ObjectNode>().ToList());
+						PrintElements("Methods: ", Dashboard.GetRootNodes<MethodNode>().ToList());
 					}
 				}
 				else if (_CurrentNode is MethodNode methodNode)
 				{
-					Console.Write($"{methodNode.ReturnNode.Type.RestrictedType}{methodNode.Header}(");
+					Console.Write($"{methodNode.ReturnNode.TypeName}{methodNode.Header}(");
 					for (int i = 0; i < methodNode.Signatures.Count; i++)
 					{
 						var para = methodNode.Signatures[i];
-						Console.Write($"{para.Type.RestrictedType} {para.Header}");
+						Console.Write($"{para.TypeName} {para.Header}");
 						if (i != methodNode.Signatures.Count - 1)
 						{
 							Console.Write(", ");

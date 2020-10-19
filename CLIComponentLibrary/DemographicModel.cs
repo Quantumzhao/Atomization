@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UIEngine;
+using UIEngine.Core;
 
 namespace Demo
 {
@@ -123,7 +124,7 @@ namespace Demo
 			set
 			{
 				_Age = value;
-				Dashboard.NotifyPropertyChanged(this, nameof(Age), value);
+				//Dashboard.NotifyPropertyChanged(this, nameof(Age), value);
 			}
 		}
 
@@ -135,7 +136,7 @@ namespace Demo
 			set
 			{
 				_Gender = value;
-				Dashboard.NotifyPropertyChanged(this, nameof(Gender), value);
+				//Dashboard.NotifyPropertyChanged(this, nameof(Gender), value);
 			}
 		}
 
@@ -147,7 +148,7 @@ namespace Demo
 			set
 			{
 				_Is_Married = value;
-				Dashboard.NotifyPropertyChanged(this, nameof(Is_Married), value);
+				//Dashboard.NotifyPropertyChanged(this, nameof(Is_Married), value);
 			}
 		}
 
@@ -162,7 +163,7 @@ namespace Demo
 			set
 			{
 				_Father = value;
-				Dashboard.NotifyPropertyChanged(this, nameof(Father), value);
+				//Dashboard.NotifyPropertyChanged(this, nameof(Father), value);
 			}
 		}
 
@@ -174,7 +175,7 @@ namespace Demo
 			set
 			{
 				_Mother = value;
-				Dashboard.NotifyPropertyChanged(this, nameof(Mother), value);
+				//Dashboard.NotifyPropertyChanged(this, nameof(Mother), value);
 			}
 		}
 
